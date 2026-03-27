@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artificial Intelligence — Sunjun Hwang</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="../../css/pages.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <a href="../../index.html#research" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Research</a>
+
+  <main class="page-content">
+    <div class="container">
+      <h1 class="page-title">
+        <span class="page-icon"><i class="fas fa-brain"></i></span>
+        Artificial Intelligence
+      </h1>
+      <p class="page-subtitle">From Security to Understanding</p>
+
+      <div class="research-detail">
+
+        <section class="detail-section">
+          <h2>Overview</h2>
+          <p>Deep learning has achieved remarkable performance across many fields—but it remains vulnerable to adversarial threats and interpretability challenges.</p>
+          <p>My research focuses on developing trustworthy and secure AI systems. I investigate adversarial attacks such as FGSM and PGD, design defense strategies against them, and apply deep learning to real-world problems including data analytics and image classification.</p>
+          <p>By addressing both vulnerability and applicability, I aim to improve the robustness and reliability of deep neural networks in practical environments.</p>
+        </section>
+
+        <section class="detail-section">
+          <h2>Adversarial Training of ViT for Robust Classification</h2>
+          <p>Despite the strong performance of Vision Transformers (ViTs) in image classification tasks, they remain vulnerable to adversarial examples—inputs crafted to fool the model with imperceptible perturbations. This vulnerability poses serious concerns for real-world deployment.</p>
+          <p>In this study, we apply adversarial training to a ViT-B32 model on the CIFAR-10 dataset to improve robustness against three major attack types: FGSM, PGD, and CW. Experimental results demonstrate that incorporating adversarial examples into the training process significantly enhances the model's resistance to attacks, especially when using a combination of FGSM and PGD. Notably, defense against CW attacks required their explicit inclusion during training.</p>
+          <p>Our findings show that adversarial training can maintain high classification accuracy on clean images while significantly improving robustness under adversarial conditions. This highlights the practical potential of ViT models in secure and trustworthy AI systems.</p>
+        </section>
+
+        <section class="detail-section">
+          <h2>Federated Learning for Chest X-ray Classification</h2>
+          <p>We trained a federated learning system on the NIH ChestX-ray14 dataset, splitting it across 50 clients to simulate multiple hospitals. Each client trained locally on heterogeneous models (ResNet, DenseNet, VGG, etc.), and the server aggregated updates using FedAvg to build a global model.</p>
+          <p>Our approach achieved accuracy within 1–2% of centralized training while preserving patient privacy. Communication-efficient strategies reduced training time by about 30%, and the model converged reliably despite client heterogeneity. This work demonstrates a practical way to build privacy-preserving medical AI systems without sacrificing performance.</p>
+        </section>
+
+        <section class="detail-section">
+          <h2>Tools & Frameworks</h2>
+          <div class="detail-tags">
+            <span class="tag">PyTorch</span>
+            <span class="tag">TensorFlow</span>
+            <span class="tag">Keras</span>
+            <span class="tag">scikit-learn</span>
+            <span class="tag">NumPy</span>
+            <span class="tag">pandas</span>
+          </div>
+        </section>
+
+        <section class="detail-section">
+          <h2>Related Publications</h2>
+          <ul class="detail-list publications">
+            <li>"Functional Recovery of Deep Neural Networks via Logit-Based External Calibration" — KICS 2026</li>
+            <li>"Logit-based Knowledge Distillation for Heterogeneous Medical Image Federated Learning" — KIIT Conference 2025</li>
+            <li>"Post-hoc Defense with Knowledge Distillation in Federated Learning: An Empirical Study against FGSM and PGD Attacks" — KICS Conference 2025</li>
+            <li>"Performance Comparison of Deep Learning Models for Seismic Signal Denoising" — KIIT Conference 2025</li>
+            <li>"A Study on Robustness Enhancement and Multi-Adversarial Attacks in Vision Transformer-based Image Classification Models" — KIIT Conference 2025</li>
+          </ul>
+        </section>
+
+        <section class="detail-section">
+          <h2>Reading List</h2>
+          <ul class="detail-list reading-list">
+            <li><a href="https://arxiv.org/abs/1412.6572" target="_blank">Explaining and Harnessing Adversarial Examples — Ian J. Goodfellow et al., ICLR 2015</a></li>
+            <li><a href="https://arxiv.org/abs/1706.03762" target="_blank">Attention Is All You Need — Vaswani et al., NeurIPS 2017</a></li>
+            <li><a href="https://arxiv.org/abs/2010.11929" target="_blank">An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale — Dosovitskiy et al., ICLR 2021</a></li>
+            <li><a href="https://arxiv.org/abs/1602.05629" target="_blank">Communication-Efficient Learning of Deep Networks from Decentralized Data (FedAvg) — McMahan et al., AISTATS 2017</a></li>
+            <li><a href="https://arxiv.org/abs/1503.02531" target="_blank">Distilling the Knowledge in a Neural Network — Hinton et al., NeurIPS Workshop 2015</a></li>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <script src="../../js/theme.js"></script>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

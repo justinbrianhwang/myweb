@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Autonomous Vehicle — Sunjun Hwang</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="../../css/pages.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <a href="../../index.html#research" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Research</a>
+
+  <main class="page-content">
+    <div class="container">
+      <h1 class="page-title">
+        <span class="page-icon"><i class="fas fa-car"></i></span>
+        Autonomous Vehicle
+      </h1>
+      <p class="page-subtitle">End-to-End Driving, Multi-Modal Fusion, and Structured Scene Understanding</p>
+
+      <div class="research-detail">
+
+        <!-- Transfuser -->
+        <section class="detail-section">
+          <h2>Transfuser for Robust End-to-End Autonomous Driving</h2>
+          <p>End-to-end autonomous driving systems must reliably interpret complex urban environments using both visual and geometric information. However, conventional models often struggle to fuse camera and LiDAR data effectively, leading to failures in dense traffic, occlusions, or low-light conditions.</p>
+          <p>Transfuser addresses this limitation by introducing a Transformer-based multi-sensor fusion architecture that jointly processes RGB images and LiDAR point cloud features. The model aligns spatial cues from both modalities through cross-attention, enabling richer scene understanding and more accurate waypoint prediction.</p>
+          <p>In this study, Transfuser is trained and evaluated on the CARLA autonomous driving benchmark. Experimental results show that its attention-based fusion significantly improves performance in challenging scenarios—especially those involving dynamic agents, complex intersections, or partial sensor degradation. Compared to single-modality models, Transfuser demonstrates higher route completion rates, better collision avoidance, and more stable lateral control.</p>
+          <p>These findings highlight that Transformer-driven multi-modal fusion is a powerful approach for building reliable, real-world autonomous driving systems. Transfuser's ability to integrate complementary sensor information makes it a strong foundation for secure, robust, and scalable autonomous driving pipelines.</p>
+        </section>
+
+        <!-- InterFuser -->
+        <section class="detail-section">
+          <h2>InterFuser for Interpretable and Robust End-to-End Autonomous Driving</h2>
+          <p>End-to-end autonomous driving models have achieved promising performance by directly mapping raw sensor inputs to driving actions. However, many existing approaches remain limited in interpretability and robustness, as their fusion mechanisms often obscure how different sensor modalities and intermediate representations influence decision-making.</p>
+          <p>InterFuser is proposed to address this challenge by introducing an intermediate-aware sensor fusion architecture for end-to-end autonomous driving. Instead of performing fusion only at a single latent level, InterFuser explicitly integrates multi-modal features across multiple semantic stages, enabling more structured interaction between perception, reasoning, and control.</p>
+          <p>The architecture leverages Transformer-based fusion blocks to combine RGB camera inputs and LiDAR-derived features while preserving modality-specific information at intermediate layers. Through staged cross-attention and hierarchical feature alignment, InterFuser facilitates clearer information flow and improves the model's ability to reason under ambiguous or partially degraded sensor conditions.</p>
+          <p>In this study, InterFuser is implemented and evaluated in the CARLA autonomous driving benchmark. Qualitative and quantitative results indicate that the model exhibits more stable driving behavior, improved handling of complex intersections, and increased resilience to occlusions and dynamic traffic compared to conventional single-stage fusion approaches. Notably, the intermediate fusion design also enables deeper analysis of internal representations, offering insights into how different sensor cues contribute to final control decisions.</p>
+          <p>These results suggest that intermediate-level multi-modal fusion is a promising direction for building autonomous driving systems that are not only robust but also more interpretable. InterFuser provides a flexible research framework for exploring explainable end-to-end driving and serves as a strong foundation for future work on secure, reliable, and transparent autonomous driving systems.</p>
+          <div class="detail-tags" style="margin-top: 16px;">
+            <a href="https://github.com/justinbrianhwang/InterFuser-UI" target="_blank" class="tag github-tag"><i class="fab fa-github"></i> justinbrianhwang/InterFuser-UI</a>
+          </div>
+        </section>
+
+        <!-- GNN -->
+        <section class="detail-section">
+          <h2>Graph Neural Networks for Scene Graph-Based Object Understanding</h2>
+          <p>Scene understanding in autonomous driving requires modeling not only individual objects but also the relationships between them. Conventional perception pipelines often treat objects independently, limiting the ability to reason about contextual interactions such as proximity, occlusion, and traffic dynamics. Graph Neural Networks (GNNs) provide a natural framework for structured reasoning by representing traffic scenes as graphs, where nodes correspond to objects and edges encode spatial or semantic relationships.</p>
+          <p>In this work, we propose a scene graph-based object classification framework built on Graph Neural Networks. Scene graphs are constructed from CARLA simulation data, where each frame is represented as a structured graph composed of node features, edge attributes, object labels, and ego vehicle state. A baseline Graph Convolutional Network (GCN) model is first implemented to perform multi-task learning, predicting both object type (vehicle, pedestrian, traffic_light, traffic_sign) and object visibility. This establishes a structured alternative to traditional independent object classification.</p>
+          <p>To further capture temporal dynamics in evolving traffic environments, we extend the baseline to a dynamic spatio-temporal GNN architecture. Consecutive scene graphs are organized into temporal sequences, enabling the model to incorporate historical context from previous frames. Dynamic node embeddings are formed by fusing prior hidden representations with current node features through gated mechanisms. Spatio-temporal correlation is enhanced via cross-attention modules that selectively extract relevant information from past frames. Additionally, the adjacency structure is updated dynamically at each timestep, allowing the model to reflect changing interactions among traffic participants.</p>
+          <p>The proposed framework is evaluated in the CARLA autonomous driving environment. Experimental results demonstrate that dynamic graph modeling improves classification stability and robustness under occlusions, dense traffic, and partially degraded observations. The multi-task visibility prediction further enhances the model's awareness of perceptual uncertainty. Compared to static graph baselines, the dynamic GNN exhibits improved accuracy and stronger generalization across complex driving scenarios.</p>
+          <p>These findings highlight the effectiveness of graph-based structured reasoning for autonomous scene understanding. By explicitly modeling object relationships and temporal evolution, GNN-based scene graph learning provides a promising direction for building more context-aware, robust, and interpretable perception systems in autonomous driving research.</p>
+        </section>
+
+        <!-- Benchmarking -->
+        <section class="detail-section">
+          <h2>Unified Real-Time Heterogeneous Benchmarking Interface</h2>
+          <p>Autonomous driving models are often evaluated independently, making it difficult to directly compare how architectural differences influence real-time driving behavior. To address this, we developed a unified evaluation interface that runs seven architecturally heterogeneous autonomous driving models simultaneously within the same simulation environment. Each model differs in perception backbones, fusion strategies, and planning representations, yet all operate under identical simulation conditions with standardized input streams and synchronized scenarios.</p>
+          <p>The system provides real-time visualization of steering, throttle, braking, and safety-related control signals across models. By aligning outputs temporally, the framework enables direct behavioral comparison rather than relying solely on aggregate performance metrics. This makes it possible to observe how different architectural choices affect acceleration patterns, braking responses, lane stability, and obstacle handling in complex environments.</p>
+          <p>Designed as a structured behavioral analysis platform, the interface supports scenario-based failure analysis and safety evaluation under controlled conditions. It is extensible to adversarial perturbation experiments, constraint-based assessments, and supervisory modules such as rule-based or LLM-driven safety monitors. By benchmarking heterogeneous models within a consistent and reproducible setup, this system provides a scalable foundation for comparative analysis and safety validation in autonomous driving research.</p>
+        </section>
+
+        <!-- OpenEMMA -->
+        <section class="detail-section">
+          <h2>OpenEMMA: An Open Multimodal Architecture for Autonomous Driving</h2>
+          <p>Autonomous driving systems increasingly rely on multimodal perception to understand complex road environments. However, many existing end-to-end driving models primarily focus on direct mappings from sensor inputs to control commands, which limits their ability to incorporate richer contextual reasoning. OpenEMMA is proposed as an open and extensible framework designed to support structured multimodal understanding within autonomous driving pipelines.</p>
+          <p>The framework introduces a modular architecture that processes heterogeneous inputs such as multi-view camera observations and spatial scene representations. Instead of handling each modality independently, OpenEMMA aligns these inputs through shared representation spaces that enable cross-modal interaction between perception and decision-making components. This design allows the model to capture relationships among road structures, surrounding vehicles, and dynamic scene elements while maintaining a coherent understanding of the driving environment.</p>
+          <p>To integrate information across modalities, OpenEMMA employs attention-based fusion mechanisms that combine features from multiple sensory streams while preserving modality-specific characteristics. This structured fusion strategy enables more stable reasoning in complex traffic scenarios and supports more consistent driving behavior when compared with conventional perception-driven pipelines.</p>
+          <p>Overall, OpenEMMA provides a flexible research platform for multimodal autonomous driving systems. Its open and modular design allows researchers to easily extend the framework with additional perception modules or reasoning components, making it a promising foundation for future work on robust and interpretable autonomous driving models.</p>
+          <div class="detail-tags" style="margin-top: 16px;">
+            <a href="https://github.com/justinbrianhwang/OpenEMMA-UI" target="_blank" class="tag github-tag"><i class="fab fa-github"></i> justinbrianhwang/OpenEMMA-UI</a>
+          </div>
+        </section>
+
+        <!-- Tools -->
+        <section class="detail-section">
+          <h2>Tools & Platforms</h2>
+          <div class="detail-tags">
+            <span class="tag">CARLA Simulator</span>
+            <span class="tag">PyBullet</span>
+            <span class="tag">PyTorch</span>
+            <span class="tag">Python</span>
+            <span class="tag">Graph Neural Networks</span>
+            <span class="tag">Transformer</span>
+          </div>
+        </section>
+
+        <section class="detail-section">
+          <h2>Reading List</h2>
+          <ul class="detail-list reading-list">
+            <li><a href="https://arxiv.org/abs/2205.15997" target="_blank">TransFuser: Imitation with Transformer-Based Sensor Fusion for Autonomous Driving — Chitta et al., PAMI 2023</a></li>
+            <li><a href="https://arxiv.org/abs/2207.14024" target="_blank">Safety-Enhanced Autonomous Driving Using Interpretable Sensor Fusion Transformer (InterFuser) — Shao et al., CoRL 2023</a></li>
+            <li><a href="https://arxiv.org/abs/1710.10903" target="_blank">Graph Attention Networks — Velickovic et al., ICLR 2018</a></li>
+            <li><a href="https://arxiv.org/abs/1609.02907" target="_blank">Semi-Supervised Classification with Graph Convolutional Networks — Kipf & Welling, ICLR 2017</a></li>
+            <li><a href="https://arxiv.org/abs/2312.14150" target="_blank">OpenEMMA: Open-Source Multimodal Model for End-to-End Autonomous Driving — Xing et al., 2024</a></li>
+            <li><a href="https://arxiv.org/abs/2003.06417" target="_blank">Learning by Cheating — Chen et al., CoRL 2020</a></li>
+          </ul>
+        </section>
+
+        <!-- Demo Videos -->
+        <section class="detail-section">
+          <h2><i class="fas fa-play-circle"></i> Demo Videos</h2>
+          <div class="video-grid">
+            <a href="https://youtu.be/PR7JdTRGTVM" target="_blank" class="video-card">
+              <div class="video-thumb">
+                <img src="https://img.youtube.com/vi/PR7JdTRGTVM/maxresdefault.jpg" alt="Demo Video" onerror="this.src='https://img.youtube.com/vi/PR7JdTRGTVM/hqdefault.jpg'">
+                <div class="play-overlay"><i class="fas fa-play"></i></div>
+              </div>
+            </a>
+            <a href="https://youtu.be/3Ib4MReRG60" target="_blank" class="video-card">
+              <div class="video-thumb">
+                <img src="https://img.youtube.com/vi/3Ib4MReRG60/maxresdefault.jpg" alt="Demo Video" onerror="this.src='https://img.youtube.com/vi/3Ib4MReRG60/hqdefault.jpg'">
+                <div class="play-overlay"><i class="fas fa-play"></i></div>
+              </div>
+            </a>
+            <a href="https://youtu.be/nGFZfqjub6I" target="_blank" class="video-card">
+              <div class="video-thumb">
+                <img src="https://img.youtube.com/vi/nGFZfqjub6I/maxresdefault.jpg" alt="Demo Video" onerror="this.src='https://img.youtube.com/vi/nGFZfqjub6I/hqdefault.jpg'">
+                <div class="play-overlay"><i class="fas fa-play"></i></div>
+              </div>
+            </a>
+            <a href="https://youtu.be/UnAts81OVHg" target="_blank" class="video-card">
+              <div class="video-thumb">
+                <img src="https://img.youtube.com/vi/UnAts81OVHg/maxresdefault.jpg" alt="Demo Video" onerror="this.src='https://img.youtube.com/vi/UnAts81OVHg/hqdefault.jpg'">
+                <div class="play-overlay"><i class="fas fa-play"></i></div>
+              </div>
+            </a>
+            <a href="https://youtu.be/-hqY_IJ-oLM" target="_blank" class="video-card">
+              <div class="video-thumb">
+                <img src="https://img.youtube.com/vi/-hqY_IJ-oLM/maxresdefault.jpg" alt="Demo Video" onerror="this.src='https://img.youtube.com/vi/-hqY_IJ-oLM/hqdefault.jpg'">
+                <div class="play-overlay"><i class="fas fa-play"></i></div>
+              </div>
+            </a>
+            <a href="https://youtu.be/pzgwQWKU4Jw" target="_blank" class="video-card">
+              <div class="video-thumb">
+                <img src="https://img.youtube.com/vi/pzgwQWKU4Jw/maxresdefault.jpg" alt="Demo Video" onerror="this.src='https://img.youtube.com/vi/pzgwQWKU4Jw/hqdefault.jpg'">
+                <div class="play-overlay"><i class="fas fa-play"></i></div>
+              </div>
+            </a>
+            <a href="https://youtu.be/AERzIHNX52g" target="_blank" class="video-card">
+              <div class="video-thumb">
+                <img src="https://img.youtube.com/vi/AERzIHNX52g/maxresdefault.jpg" alt="Demo Video" onerror="this.src='https://img.youtube.com/vi/AERzIHNX52g/hqdefault.jpg'">
+                <div class="play-overlay"><i class="fas fa-play"></i></div>
+              </div>
+            </a>
+            <a href="https://youtu.be/BwOTBmsP8jI" target="_blank" class="video-card">
+              <div class="video-thumb">
+                <img src="https://img.youtube.com/vi/BwOTBmsP8jI/maxresdefault.jpg" alt="Demo Video" onerror="this.src='https://img.youtube.com/vi/BwOTBmsP8jI/hqdefault.jpg'">
+                <div class="play-overlay"><i class="fas fa-play"></i></div>
+              </div>
+            </a>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <script src="../../js/theme.js"></script>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

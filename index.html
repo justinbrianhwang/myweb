@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sunjun Hwang — AI & Quantum Computing</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+  <!-- ===== INTRO SPLASH ===== -->
+  <div class="intro" id="intro">
+    <div class="intro-content">
+      <svg class="intro-svg" viewBox="0 0 600 320">
+        <text class="intro-line line-1" x="300" y="70">Sunjun</text>
+        <text class="intro-line line-2" x="300" y="140">Justin</text>
+        <text class="intro-line line-3" x="300" y="210">Brian</text>
+        <text class="intro-line line-4" x="300" y="280">Hwang</text>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="main-content" id="mainContent">
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+      <canvas id="particleCanvas"></canvas>
+      <div class="hero-content">
+        <div class="hero-greeting animate-in">Hello, I'm</div>
+        <h1 class="hero-name animate-in delay-1">
+          <span class="gradient-text">Sunjun Hwang</span>
+        </h1>
+        <p class="hero-tagline animate-in delay-2">AI & Quantum Computing Researcher</p>
+        <div class="hero-stats animate-in delay-3">
+          <div class="stat">
+            <span class="stat-number" data-target="7">0</span><span class="stat-plus">+</span>
+            <span class="stat-label">Publications</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-target="12">0</span><span class="stat-plus">+</span>
+            <span class="stat-label">Projects</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-target="10">0</span><span class="stat-plus">+</span>
+            <span class="stat-label">Presentations</span>
+          </div>
+          <div class="stat">
+            <span class="stat-number" data-target="4">0</span>
+            <span class="stat-label">Awards</span>
+          </div>
+        </div>
+        <div class="hero-cta animate-in delay-4">
+          <a href="#about" class="btn btn-primary">Explore My Work</a>
+          <a href="#contact" class="btn btn-outline">Get in Touch</a>
+        </div>
+      </div>
+      <div class="scroll-indicator animate-in delay-5">
+        <div class="mouse">
+          <div class="wheel"></div>
+        </div>
+        <span>Scroll Down</span>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about" id="about">
+      <div class="container">
+        <h2 class="section-title reveal">
+          <span class="section-number">01.</span> About Me
+        </h2>
+        <div class="about-grid">
+          <div class="about-image reveal reveal-left">
+            <div class="image-frame">
+              <img src="assets/Profile.png" alt="Sunjun Hwang" class="profile-photo">
+              <div class="image-decoration"></div>
+            </div>
+            <div class="about-links">
+              <a href="mailto:sunjun7559@gmail.com" class="about-link"><i class="fas fa-envelope"></i> sunjun7559@gmail.com</a>
+              <a href="https://www.yonsei.ac.kr/sites/en_sc/index.do" target="_blank" class="about-link"><i class="fas fa-graduation-cap"></i> BS Yonsei University</a>
+              <a href="https://www.sjhwangcv.com" target="_blank" class="about-link"><i class="fas fa-file-alt"></i> CV</a>
+              <a href="https://www.sjhwangresearch.com" target="_blank" class="about-link"><i class="fas fa-flask"></i> Current Research</a>
+            </div>
+          </div>
+          <div class="about-text reveal reveal-right">
+            <p class="about-intro">
+              I'm a researcher passionate about pushing the boundaries of
+              <strong>Artificial Intelligence</strong> and <strong>Quantum Computing</strong>
+              at Yonsei University's RAISE Lab.
+            </p>
+            <div class="research-areas">
+              <h3>Research Areas</h3>
+              <div class="area-tags">
+                <span class="tag">Quantum Computing</span>
+                <span class="tag">Artificial Intelligence</span>
+                <span class="tag">AI Semiconductor</span>
+                <span class="tag">Autonomous Driving</span>
+                <span class="tag">AI Security</span>
+              </div>
+            </div>
+            <div class="strengths">
+              <div class="strength-item">
+                <div class="strength-icon"><i class="fas fa-book-open"></i></div>
+                <div>
+                  <h4>Proactive Learning</h4>
+                  <p>Learning through study groups and personal projects</p>
+                </div>
+              </div>
+              <div class="strength-item">
+                <div class="strength-icon"><i class="fas fa-users"></i></div>
+                <div>
+                  <h4>Collaboration</h4>
+                  <p>Conducted and participated in various team-based projects</p>
+                </div>
+              </div>
+              <div class="strength-item">
+                <div class="strength-icon"><i class="fas fa-pen-fancy"></i></div>
+                <div>
+                  <h4>Consistent Documentation</h4>
+                  <p>Maintained GitHub repositories and personal portfolio</p>
+                </div>
+              </div>
+              <div class="strength-item">
+                <div class="strength-icon"><i class="fas fa-tasks"></i></div>
+                <div>
+                  <h4>Planned Development</h4>
+                  <p>Managed tasks and timelines with Git and Notion</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <blockquote class="quote reveal">
+          <p>"When something is important enough, you do it even if the odds are not in your favor."</p>
+          <cite>— Elon Musk</cite>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- Research Section -->
+    <section class="section research" id="research">
+      <div class="container">
+        <h2 class="section-title reveal">
+          <span class="section-number">02.</span> Research Areas
+        </h2>
+        <div class="research-grid">
+          <a href="pages/research/quantum.html" class="research-card reveal">
+            <div class="card-icon"><i class="fas fa-atom"></i></div>
+            <h3>Quantum Computer</h3>
+            <p>Exploring quantum algorithms and hybrid quantum-classical systems for real-world applications.</p>
+            <div class="card-hover-line"></div>
+          </a>
+          <a href="pages/research/ai.html" class="research-card reveal">
+            <div class="card-icon"><i class="fas fa-brain"></i></div>
+            <h3>Artificial Intelligence</h3>
+            <p>Deep learning, federated learning, and adversarial robustness in neural networks.</p>
+            <div class="card-hover-line"></div>
+          </a>
+          <a href="pages/research/autonomous.html" class="research-card reveal">
+            <div class="card-icon"><i class="fas fa-car"></i></div>
+            <h3>Autonomous Vehicle</h3>
+            <p>Simulation and development of autonomous driving systems using CARLA and reinforcement learning.</p>
+            <div class="card-hover-line"></div>
+          </a>
+          <a href="pages/research/security.html" class="research-card reveal">
+            <div class="card-icon"><i class="fas fa-shield-alt"></i></div>
+            <h3>AI Security</h3>
+            <p>Adversarial attacks, defense mechanisms, and robustness analysis for AI systems.</p>
+            <div class="card-hover-line"></div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- News Section continues below -->
+
+    <!-- News Section -->
+    <section class="section news" id="news">
+      <div class="container">
+        <h2 class="section-title reveal">
+          <span class="section-number">04.</span> News
+        </h2>
+        <div class="timeline reveal">
+          <div class="timeline-year">
+            <button class="year-toggle active" data-year="2026">
+              <span>2026</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="year-content active">
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-text">
+                  <span class="timeline-date">January 2026</span>
+                  <p>Our Paper, "Functional Recovery of Deep Neural Networks via Logit-Based External Calibration" has been accepted to KICS</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-year">
+            <button class="year-toggle active" data-year="2025">
+              <span>2025</span>
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="year-content active">
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-text">
+                  <span class="timeline-date">December 2025</span>
+                  <p>Our Paper, "Adversarial Robustness Analysis of Deep Learning-Based Automatic Modulation Classification in Wireless Communication" has been accepted to ICAIIC IEEE 2026</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-text">
+                  <span class="timeline-date">December 2025</span>
+                  <p>Our Paper, "Design and Implementation of an FPGA-Based Real-Time Voice Risk Detection System" has been accepted to KCS 2026</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-text">
+                  <span class="timeline-date">December 2025</span>
+                  <p>Our Paper, "Quantum-Secured Hybrid Communication System for Tactical Military Networks: Implementation and Performance Analysis of BB84 Protocol Based on Penny Lane" has been accepted to JKICS 2026</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-text">
+                  <span class="timeline-date">November 2025</span>
+                  <p>Our Paper, "Quantum Noise-based Adversarial Attack on Diffusion Models and Analysis of Defense Mechanisms" has been accepted to KIIT-JICS 2026</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-text">
+                  <span class="timeline-date">November 2025</span>
+                  <p>Our Paper, "Logit-based Knowledge Distillation for Heterogeneous Medical Image Federated Learning" has been accepted to KIIT Conference</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-text">
+                  <span class="timeline-date">October 2025</span>
+                  <p>Our Paper, "Post-hoc Defense with Knowledge Distillation in Federated Learning: An Empirical Study against FGSM and PGD Attacks" has been accepted to KICS Conference</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-text">
+                  <span class="timeline-date">September 2025</span>
+                  <p>Our Paper, "Classification of Pneumonia in Chest X-rays Using a Hybrid Neural Network Based on a 3-Qubit Quantum Circuit" has been accepted to KSLI Conference</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-text">
+                  <span class="timeline-date">September 2025</span>
+                  <p>Our Paper, "Performance Comparison of Deep Learning Models for Seismic Signal Denoising" has been accepted to KIIT Conference</p>
+                </div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-text">
+                  <span class="timeline-date">May 2025</span>
+                  <p>Our Paper, "A Study on Robustness Enhancement and Multi-Adversarial Attacks in Vision Transformer-based Image Classification Models" has been accepted to KIIT Conference</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact / Footer -->
+    <section class="section contact" id="contact">
+      <div class="container">
+        <h2 class="section-title reveal">
+          <span class="section-number">05.</span> Get in Touch
+        </h2>
+        <p class="contact-text reveal">
+          If you are interested in quantum computing technology, computer vision technology,
+          deep learning technology, or web programming, please feel free to contact me via email.
+        </p>
+        <p class="contact-lab reveal">Supported by Yonsei University, RAISE Lab</p>
+        <a href="mailto:sunjun7559@gmail.com" class="btn btn-primary btn-large reveal">
+          <i class="fas fa-envelope"></i> Say Hello
+        </a>
+        <div class="social-links reveal">
+          <a href="https://scholar.google.com/citations?user=6X2EVE0AAAAJ" target="_blank" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+          <a href="https://github.com/justinbrianhwang" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/sunjunhwang/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://www.instagram.com/jun_bri0123/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="mailto:sunjun7559@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+          <a href="https://www.youtube.com/@sjquantumprof" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="https://orcid.org/0009-0007-5173-2876" target="_blank" aria-label="ORCID"><i class="fab fa-orcid"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+    </footer>
+
+  </main>
+
+  <script src="js/theme.js"></script>
+  <script src="js/sidebar.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>
