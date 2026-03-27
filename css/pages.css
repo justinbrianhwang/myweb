@@ -748,6 +748,107 @@
   color: var(--text-secondary);
 }
 
+/* ===== Pupil Page ===== */
+.pupil-section {
+  margin-bottom: 48px;
+}
+
+.pupil-category {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pupil-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.pupil-card {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  transition: all 0.3s ease;
+  align-items: center;
+}
+
+.pupil-card:hover {
+  border-color: rgba(108, 99, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.pupil-photo {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--bg-secondary);
+  border: 2px solid var(--border);
+}
+
+.pupil-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pupil-avatar-fallback {
+  width: 100%;
+  height: 100%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  color: var(--text-secondary);
+}
+
+.pupil-info h3 {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.pupil-interest {
+  font-size: 0.83rem;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+}
+
+.pupil-interest i {
+  color: var(--accent);
+  margin-right: 4px;
+  width: 14px;
+  text-align: center;
+}
+
+.pupil-email {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: var(--transition);
+}
+
+.pupil-email:hover {
+  color: var(--accent-light);
+}
+
+.pupil-email i {
+  color: var(--accent);
+  font-size: 0.7rem;
+}
+
 /* ===== Semester Timeline (Coursework page) ===== */
 .semester-timeline {
   display: flex;
