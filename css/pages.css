@@ -853,53 +853,61 @@
 .semester-timeline {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 24px;
 }
 
-.semester-block {
+.semester-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  padding: 28px;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 14px;
-  padding: 28px;
 }
 
-.semester-header {
-  margin-bottom: 16px;
+.semester-col {
+  min-width: 0;
 }
 
-.semester-badge {
-  display: inline-block;
-  padding: 6px 16px;
-  border-radius: 50px;
+.semester-label {
   font-family: var(--font-display);
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   font-weight: 700;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--border);
 }
 
-.semester-badge.spring {
-  background: rgba(108, 99, 255, 0.15);
-  color: var(--accent-light);
-}
+.semester-label.spring { color: var(--accent-light); }
+.semester-label.summer { color: #f5a623; }
+.semester-label.fall { color: #e94560; }
+.semester-label.winter { color: #00c9a7; }
 
-.semester-badge.fall {
-  background: rgba(233, 69, 96, 0.15);
-  color: #e94560;
-}
-
-.course-list {
+.course-list-simple {
   list-style: none;
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  flex-direction: column;
+  gap: 6px;
 }
 
-.course-list li {
-  padding: 8px 16px;
-  background: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font-size: 0.88rem;
+.course-list-simple li {
+  padding: 6px 0 6px 16px;
+  font-size: 0.9rem;
   color: var(--text-primary);
+  position: relative;
+  line-height: 1.5;
+}
+
+.course-list-simple li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 13px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--text-secondary);
 }
 
 .course-tag {
@@ -917,7 +925,6 @@
 .course-research {
   font-style: italic;
   color: var(--text-secondary) !important;
-  border-style: dashed !important;
 }
 
 /* ===== Light Mode ===== */
@@ -1124,7 +1131,7 @@
   }
 
   /* Semester */
-  .semester-block {
+  .semester-row {
     padding: 20px;
   }
 
@@ -1341,18 +1348,17 @@
     padding: 16px;
   }
 
-  .semester-badge {
-    font-size: 0.85rem;
-    padding: 5px 14px;
+  .semester-row {
+    grid-template-columns: 1fr;
+    padding: 16px;
   }
 
-  .course-list {
-    gap: 6px;
+  .semester-label {
+    font-size: 0.95rem;
   }
 
-  .course-list li {
-    font-size: 0.78rem;
-    padding: 5px 10px;
+  .course-list-simple li {
+    font-size: 0.82rem;
   }
 
   /* Lightbox */

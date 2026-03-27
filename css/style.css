@@ -1317,7 +1317,7 @@ a:hover {
     font-size: 48px;
   }
 
-  /* Scroll indicator */
+  /* Scroll indicator - hide on small heights */
   .scroll-indicator {
     bottom: 24px;
     font-size: 0.65rem;
@@ -1567,5 +1567,20 @@ a:hover {
 
   .sidebar {
     width: 240px;
+  }
+}
+
+/* ===== Short viewport height ===== */
+@media (max-height: 700px) {
+  .scroll-indicator {
+    display: none;
+  }
+
+  .hero-stats {
+    margin-bottom: 32px;
+  }
+
+  .hero-tagline {
+    margin-bottom: 24px;
   }
 }
