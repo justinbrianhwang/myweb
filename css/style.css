@@ -657,9 +657,8 @@ a:hover {
 
 .profile-photo {
   width: 220px;
-  height: 220px;
+  height: auto;
   border-radius: 16px;
-  object-fit: cover;
   border: 1px solid var(--border);
   display: block;
 }
