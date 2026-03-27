@@ -473,8 +473,41 @@ a:hover {
   font-size: 1.3rem;
   color: var(--text-secondary);
   font-weight: 300;
-  margin-bottom: 48px;
+  margin-bottom: 16px;
   letter-spacing: 1px;
+}
+
+.hero-identity {
+  font-size: 1.05rem;
+  color: var(--accent-light);
+  font-weight: 400;
+  font-style: italic;
+  margin-bottom: 20px;
+  opacity: 0.85;
+  letter-spacing: 0.5px;
+}
+
+.hero-keywords {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.hero-keyword {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.hero-keyword-sep {
+  color: var(--accent);
+  font-weight: 300;
+  font-size: 1rem;
+  opacity: 0.5;
 }
 
 .hero-stats {
@@ -724,6 +757,50 @@ a:hover {
 }
 
 .about-intro strong {
+  color: var(--text-primary);
+}
+
+.about-story {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.story-block {
+  padding: 20px 24px;
+  border-radius: 12px;
+  background: var(--bg-card);
+  border-left: 3px solid var(--accent);
+  transition: var(--transition);
+}
+
+.story-block:hover {
+  transform: translateX(4px);
+}
+
+.story-block h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent-light);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.story-block h3 i {
+  font-size: 0.85rem;
+  color: var(--accent);
+}
+
+.story-block p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.story-block p strong {
   color: var(--text-primary);
 }
 
@@ -1369,7 +1446,22 @@ a:hover {
 
   .hero-tagline {
     font-size: 0.95rem;
+    margin-bottom: 10px;
+  }
+
+  .hero-identity {
+    font-size: 0.85rem;
+    margin-bottom: 14px;
+  }
+
+  .hero-keywords {
+    gap: 8px;
     margin-bottom: 28px;
+  }
+
+  .hero-keyword {
+    font-size: 0.7rem;
+    letter-spacing: 1px;
   }
 
   .hero-stats {
