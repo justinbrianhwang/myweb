@@ -627,6 +627,22 @@
 }
 
 /* Page-themed buttons */
+/* Page-themed skill category overrides */
+.page-content[data-theme] .skill-category h3 i {
+  color: rgb(var(--page-color, 108, 99, 255));
+}
+
+.page-content[data-theme] .skill-item {
+  background: rgba(var(--page-color, 108, 99, 255), 0.08);
+  border-color: rgba(var(--page-color, 108, 99, 255), 0.15);
+}
+
+.page-content[data-theme] .skill-item:hover {
+  background: rgba(var(--page-color, 108, 99, 255), 0.2);
+  border-color: rgb(var(--page-color, 108, 99, 255));
+}
+
+/* Page-themed buttons */
 .page-content[data-theme] .btn-outline {
   color: rgb(var(--page-color, 108, 99, 255));
   border-color: rgb(var(--page-color, 108, 99, 255));
