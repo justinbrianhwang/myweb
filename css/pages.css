@@ -767,19 +767,149 @@
 }
 
 .pupil-card {
-  display: flex;
-  gap: 16px;
   padding: 20px;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 14px;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  cursor: pointer;
+  position: relative;
+}
+
+.pupil-card-header {
+  display: flex;
+  gap: 16px;
   align-items: center;
 }
 
 .pupil-card:hover {
   border-color: rgba(108, 99, 255, 0.3);
   transform: translateY(-2px);
+}
+
+.pupil-card.expanded {
+  grid-column: 1 / -1;
+  border-color: rgba(108, 99, 255, 0.5);
+  box-shadow: 0 8px 32px rgba(108, 99, 255, 0.1);
+}
+
+.pupil-card.expanded:hover {
+  transform: none;
+}
+
+/* Expand indicator */
+.pupil-expand-hint {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  opacity: 0.4;
+  transition: opacity 0.3s;
+}
+
+.pupil-card:hover .pupil-expand-hint {
+  opacity: 0.8;
+}
+
+.pupil-card.expanded .pupil-expand-hint i {
+  transform: rotate(180deg);
+}
+
+/* Detail section */
+.pupil-detail {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              opacity 0.3s ease,
+              margin-top 0.3s ease;
+  margin-top: 0;
+}
+
+.pupil-card.expanded .pupil-detail {
+  max-height: 500px;
+  opacity: 1;
+  margin-top: 18px;
+}
+
+.pupil-detail-inner {
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.pupil-detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pupil-detail-item.full-width {
+  grid-column: 1 / -1;
+}
+
+.pupil-detail-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.pupil-detail-value {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+}
+
+.pupil-detail-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 2px;
+}
+
+.pupil-detail-tag {
+  font-size: 0.72rem;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(108, 99, 255, 0.1);
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.pupil-social-links {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.pupil-social-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(108, 99, 255, 0.08);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  transition: all 0.25s ease;
+}
+
+.pupil-social-links a:hover {
+  background: rgba(108, 99, 255, 0.2);
+  color: var(--accent);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  .pupil-detail-inner {
+    grid-template-columns: 1fr;
+  }
 }
 
 .pupil-photo {
