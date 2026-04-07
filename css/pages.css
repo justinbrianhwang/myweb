@@ -42,6 +42,15 @@
   gap: 16px;
 }
 
+/* Page theme colors matching sidebar */
+.page-content[data-theme="skills"]     { --page-color: 255, 107, 107; }
+.page-content[data-theme="experience"] { --page-color: 78, 205, 196; }
+.page-content[data-theme="about"]      { --page-color: 245, 166, 35; }
+.page-content[data-theme="research"]   { --page-color: 0, 201, 167; }
+.page-content[data-theme="home"]       { --page-color: 233, 69, 96; }
+.page-content[data-theme="cv"]         { --page-color: 108, 99, 255; }
+.page-content[data-theme="contact"]    { --page-color: 247, 215, 148; }
+
 .page-icon {
   display: inline-flex;
   align-items: center;
@@ -49,8 +58,8 @@
   width: 56px;
   height: 56px;
   border-radius: 16px;
-  background: rgba(108, 99, 255, 0.1);
-  color: var(--accent);
+  background: rgba(var(--page-color, 108, 99, 255), 0.1);
+  color: rgb(var(--page-color, 108, 99, 255));
   font-size: 1.4rem;
   flex-shrink: 0;
 }
