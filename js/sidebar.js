@@ -38,6 +38,8 @@ function createSidebar() {
           <li><a href="${basePath}pages/people.html">The people who made me</a></li>
           <li><a href="${basePath}pages/photos.html">Photos</a></li>
           <li><a href="${basePath}pages/schedule.html">Schedule</a></li>
+          <li><a href="https://sjhwangpaper.com/" target="_blank">Paper Review</a></li>
+          <li><a href="${basePath}pages/pupil.html">Pupil</a></li>
         </ul>
       </li>
       <li><a href="https://www.sjhwangcv.com" target="_blank" class="menu-item"><span class="menu-color color-cv"></span>CV</a></li>
@@ -57,8 +59,6 @@ function createSidebar() {
           <li><a href="https://www.instagram.com/jun_bri0123/" target="_blank">Instagram</a></li>
           <li><a href="https://orcid.org/0009-0007-5173-2876" target="_blank">ORCID</a></li>
           <li><a href="https://blog.naver.com/sjhwang__" target="_blank">Naver Blog</a></li>
-          <li><a href="https://sjhwangpaper.com/" target="_blank">Paper Review</a></li>
-          <li><a href="https://www.sjhwangresearch.com" target="_blank">Current Research</a></li>
         </ul>
       </li>
     </ul>
