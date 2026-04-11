@@ -57,6 +57,7 @@ function createSidebar() {
           <li><a href="https://www.instagram.com/jun_bri0123/" target="_blank">Instagram</a></li>
           <li><a href="https://orcid.org/0009-0007-5173-2876" target="_blank">ORCID</a></li>
           <li><a href="https://blog.naver.com/sjhwang__" target="_blank">Naver Blog</a></li>
+          <li><a href="https://sjhwangpaper.com/" target="_blank">Papers</a></li>
           <li><a href="https://www.sjhwangresearch.com" target="_blank">Current Research</a></li>
         </ul>
       </li>
