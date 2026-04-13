@@ -38,8 +38,6 @@ function createSidebar() {
           <li><a href="${basePath}pages/people.html">The people who made me</a></li>
           <li><a href="${basePath}pages/photos.html">Photos</a></li>
           <li><a href="${basePath}pages/schedule.html">Schedule</a></li>
-          <li><a href="https://sjhwangpaper.com/" target="_blank">Paper Review</a></li>
-          <li><a href="${basePath}pages/pupil.html">Pupil</a></li>
         </ul>
       </li>
       <li><a href="https://www.sjhwangcv.com" target="_blank" class="menu-item"><span class="menu-color color-cv"></span>CV</a></li>
