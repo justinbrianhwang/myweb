@@ -108,6 +108,20 @@
       color: white;
     }
 
+    .deadline-section-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin: 56px 0 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .deadline-section-title i {
+      color: rgb(var(--page-color, 108, 99, 255));
+    }
+
     @media (max-width: 768px) {
       .deadline-embed-wrapper {
         height: calc(100vh - 220px);
@@ -156,6 +170,41 @@
           </a>
         </div>
       </div>
+
+      <!-- Security Deadlines -->
+      <h2 class="deadline-section-title">
+        <i class="fas fa-shield-alt"></i> Security Conference Deadlines
+      </h2>
+      <p class="page-subtitle">Upcoming security-focused conference deadlines from sec-deadlines.github.io.</p>
+
+      <div class="deadline-meta">
+        <div class="deadline-meta-info">
+          <i class="fas fa-globe"></i>
+          <span>Source: sec-deadlines.github.io</span>
+        </div>
+        <a href="https://sec-deadlines.github.io/" target="_blank" class="deadline-open-btn">
+          <i class="fas fa-external-link-alt"></i> Open in new tab
+        </a>
+      </div>
+
+      <div class="deadline-embed-wrapper">
+        <iframe
+          id="secDeadlineFrame"
+          src="https://sec-deadlines.github.io/"
+          title="Security Conference Deadlines"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          sandbox="allow-same-origin allow-scripts allow-popups allow-forms">
+        </iframe>
+        <div class="deadline-fallback" id="secDeadlineFallback">
+          <i class="fas fa-exclamation-triangle"></i>
+          <h3>Embedding blocked</h3>
+          <p>This site does not allow embedding. Please open it directly in a new tab to view the deadlines.</p>
+          <a href="https://sec-deadlines.github.io/" target="_blank" class="deadline-open-btn">
+            <i class="fas fa-external-link-alt"></i> Open Security Deadlines
+          </a>
+        </div>
+      </div>
     </div>
   </main>
 
@@ -164,16 +213,20 @@
   </footer>
 
   <script>
-    // Fallback if iframe fails to load (e.g. X-Frame-Options blocks)
-    const frame = document.getElementById('deadlineFrame');
-    const fallback = document.getElementById('deadlineFallback');
-    let loaded = false;
+    // Fallback if iframes fail to load (e.g. X-Frame-Options blocks)
+    function setupFrameFallback(frameId, fallbackId) {
+      const frame = document.getElementById(frameId);
+      const fallback = document.getElementById(fallbackId);
+      if (!frame || !fallback) return;
+      let loaded = false;
+      frame.addEventListener('load', () => { loaded = true; });
+      setTimeout(() => {
+        if (!loaded) fallback.classList.add('show');
+      }, 5000);
+    }
 
-    frame.addEventListener('load', () => { loaded = true; });
-
-    setTimeout(() => {
-      if (!loaded) fallback.classList.add('show');
-    }, 5000);
+    setupFrameFallback('deadlineFrame', 'deadlineFallback');
+    setupFrameFallback('secDeadlineFrame', 'secDeadlineFallback');
   </script>
 </body>
 </html>
