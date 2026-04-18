@@ -143,6 +143,7 @@
 
     .tier-badge--a-star { background: #fbeae5; color: #c53030; }
     .tier-badge--a      { background: #fff1cc; color: #b7791f; }
+    .tier-badge--a-b2   { background: #fde8ec; color: #a04860; }
     .tier-badge--a-b    { background: #e0e7ff; color: #4c51bf; }
     .tier-badge--b      { background: #d4f1e3; color: #2f855a; }
     .tier-badge--b-c    { background: #d4e4f7; color: #2b6cb0; }
@@ -249,7 +250,8 @@
       <div class="tier-legend">
         <span class="tier-legend-item"><span class="tier-badge tier-badge--a-star">A*</span> Top-tier</span>
         <span class="tier-legend-item"><span class="tier-badge tier-badge--a">A</span> Excellent</span>
-        <span class="tier-legend-item"><span class="tier-badge tier-badge--a-b">A-/B+</span> Between A and B</span>
+        <span class="tier-legend-item"><span class="tier-badge tier-badge--a-b2">A/B</span> Between A and B</span>
+        <span class="tier-legend-item"><span class="tier-badge tier-badge--a-b">A-/B+</span> A minus / B plus</span>
         <span class="tier-legend-item"><span class="tier-badge tier-badge--b">B</span> Good</span>
         <span class="tier-legend-item"><span class="tier-badge tier-badge--b-c">B/C</span> Between B and C</span>
         <span class="tier-legend-item"><span class="tier-badge tier-badge--c">C</span> Standard</span>
@@ -264,6 +266,7 @@
           <button class="tier-filter-btn active" data-tier="all">All</button>
           <button class="tier-filter-btn" data-tier="A*">A*</button>
           <button class="tier-filter-btn" data-tier="A">A</button>
+          <button class="tier-filter-btn" data-tier="A/B">A/B</button>
           <button class="tier-filter-btn" data-tier="A-/B+">A-/B+</button>
           <button class="tier-filter-btn" data-tier="B">B</button>
           <button class="tier-filter-btn" data-tier="B/C">B/C</button>
@@ -352,7 +355,7 @@
       { name: "ICMLA", acceptance: "35-50%", field: "ML", tier: "B/C", format: "Hybrid" },
       { name: "WCNC", acceptance: "30-40%", field: "Network", tier: "B/C", format: "Hybrid" },
       { name: "GLOBECOM", acceptance: "35-45%", field: "Network", tier: "B/C", format: "Hybrid" },
-      { name: "INFOCOM", acceptance: "~20%", field: "Network", tier: "A", format: "Hybrid" },
+      { name: "INFOCOM", acceptance: "~20%", field: "Network", tier: "A/B", format: "Hybrid" },
       { name: "ICCS", acceptance: "30-40%", field: "Computing", tier: "B/C", format: "Hybrid" },
       { name: "ICCSA", acceptance: "30-50%", field: "Computing", tier: "B/C", format: "Hybrid" },
       { name: "ICUFN", acceptance: "30-50%", field: "Network", tier: "C", format: "Hybrid" },
@@ -592,6 +595,7 @@
     const TIER_CLASS = {
       "A*":    "tier-badge--a-star",
       "A":     "tier-badge--a",
+      "A/B":   "tier-badge--a-b2",
       "A-/B+": "tier-badge--a-b",
       "B":     "tier-badge--b",
       "B/C":   "tier-badge--b-c",

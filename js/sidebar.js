@@ -54,6 +54,7 @@ function createSidebar() {
           <li><a href="${basePath}pages/conference-tier.html">Conference Tier</a></li>
         </ul>
       </li>
+      <li><a href="${basePath}pages/journal.html" class="menu-item"><span class="menu-color color-journal"></span>Journal</a></li>
       <li class="has-submenu">
         <button class="menu-item submenu-toggle">
           <span><span class="menu-color color-contact"></span>Contact</span>

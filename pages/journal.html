@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CS Journals — Sunjun Hwang</title>
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .j-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 24px 0 20px;
+      align-items: center;
+    }
+
+    .j-search {
+      flex: 1;
+      min-width: 240px;
+      position: relative;
+    }
+
+    .j-search i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .j-search input {
+      width: 100%;
+      padding: 12px 16px 12px 40px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      transition: all 0.25s ease;
+    }
+
+    .j-search input:focus {
+      outline: none;
+      border-color: rgb(var(--page-color, 108, 99, 255));
+      box-shadow: 0 0 0 3px rgba(var(--page-color, 108, 99, 255), 0.1);
+    }
+
+    .j-filter-group {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .j-filter-btn {
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .j-filter-btn:hover {
+      border-color: rgba(var(--page-color, 108, 99, 255), 0.4);
+    }
+
+    .j-filter-btn.active {
+      background: rgb(var(--page-color, 108, 99, 255));
+      color: white;
+      border-color: rgb(var(--page-color, 108, 99, 255));
+    }
+
+    .j-filter-row {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .j-filter-label {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-right: 8px;
+      align-self: center;
+      min-width: 50px;
+    }
+
+    .j-table-wrapper {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      overflow-x: auto;
+    }
+
+    .j-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    .j-table thead {
+      background: rgba(var(--page-color, 108, 99, 255), 0.06);
+      border-bottom: 2px solid rgba(var(--page-color, 108, 99, 255), 0.15);
+    }
+
+    .j-table th {
+      padding: 14px 16px;
+      text-align: left;
+      font-weight: 700;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: rgb(var(--page-color, 108, 99, 255));
+      white-space: nowrap;
+    }
+
+    .j-table tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s ease;
+    }
+
+    .j-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .j-table tbody tr:hover {
+      background: rgba(var(--page-color, 108, 99, 255), 0.04);
+    }
+
+    .j-table td {
+      padding: 12px 16px;
+      color: var(--text-primary);
+      vertical-align: top;
+    }
+
+    .j-name {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .j-abbr {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      font-weight: 400;
+      margin-top: 2px;
+    }
+
+    .j-pub {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+    }
+
+    .j-host {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      opacity: 0.7;
+      margin-top: 2px;
+    }
+
+    .q-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      min-width: 40px;
+      text-align: center;
+    }
+
+    .q-badge--q1 { background: #fbeae5; color: #c53030; }
+    .q-badge--q2 { background: #fff1cc; color: #b7791f; }
+    .q-badge--q3 { background: #d4e4f7; color: #2b6cb0; }
+    .q-badge--q4 { background: #e5e7eb; color: #4b5563; }
+
+    .field-chip {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.73rem;
+      font-weight: 500;
+      background: rgba(var(--page-color, 108, 99, 255), 0.08);
+      color: rgb(var(--page-color, 108, 99, 255));
+      white-space: nowrap;
+    }
+
+    .if-cell {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 0.88rem;
+    }
+
+    .j-strength {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      max-width: 280px;
+    }
+
+    .j-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin: 24px 0 12px;
+      padding: 14px 18px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+    }
+
+    .j-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .j-empty {
+      padding: 40px;
+      text-align: center;
+      color: var(--text-secondary);
+    }
+
+    .j-count {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-top: 10px;
+      text-align: right;
+    }
+
+    @media (max-width: 768px) {
+      .j-table {
+        font-size: 0.8rem;
+      }
+      .j-table th,
+      .j-table td {
+        padding: 10px 12px;
+      }
+      .j-strength {
+        max-width: 200px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+
+  <main class="page-content" data-theme="journal">
+    <div class="container">
+      <h1 class="page-title">
+        <span class="page-icon"><i class="fas fa-book"></i></span>
+        CS Journals
+      </h1>
+      <p class="page-subtitle">SCIE-indexed journals across CS with publishers, tiers, and strengths.</p>
+
+      <div class="j-legend">
+        <span class="j-legend-item"><span class="q-badge q-badge--q1">Q1</span> Top 25% (IF)</span>
+        <span class="j-legend-item"><span class="q-badge q-badge--q2">Q2</span> 25–50%</span>
+        <span class="j-legend-item"><span class="q-badge q-badge--q3">Q3</span> 50–75%</span>
+        <span class="j-legend-item"><span class="q-badge q-badge--q4">Q4</span> Bottom 25%</span>
+      </div>
+
+      <div class="j-controls">
+        <div class="j-search">
+          <i class="fas fa-search"></i>
+          <input type="text" id="jSearch" placeholder="Search by journal name, abbreviation, or publisher...">
+        </div>
+      </div>
+
+      <div class="j-filter-row">
+        <span class="j-filter-label">Field</span>
+        <div class="j-filter-group" id="fieldFilters"></div>
+      </div>
+
+      <div class="j-filter-row">
+        <span class="j-filter-label">Tier</span>
+        <div class="j-filter-group" id="tierFilters">
+          <button class="j-filter-btn active" data-q="all">All</button>
+          <button class="j-filter-btn" data-q="Q1">Q1</button>
+          <button class="j-filter-btn" data-q="Q2">Q2</button>
+          <button class="j-filter-btn" data-q="Q3">Q3</button>
+          <button class="j-filter-btn" data-q="Q4">Q4</button>
+        </div>
+      </div>
+
+      <div class="j-table-wrapper">
+        <table class="j-table" id="jTable">
+          <thead>
+            <tr>
+              <th>Journal</th>
+              <th>Publisher / Hosting Society</th>
+              <th>Field</th>
+              <th>Tier</th>
+              <th>IF</th>
+              <th>Strengths</th>
+            </tr>
+          </thead>
+          <tbody id="jTableBody"></tbody>
+        </table>
+        <div class="j-empty" id="jEmpty" style="display:none;">
+          <i class="fas fa-inbox" style="font-size:2rem; opacity:0.3; margin-bottom:10px;"></i>
+          <p>No journals match your filter.</p>
+        </div>
+      </div>
+
+      <div class="j-count" id="jCount"></div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    const JOURNALS = [
+      // ── AI / ML / DL ──
+      { name: "Nature Machine Intelligence", abbr: "Nat. Mach. Intell.", publisher: "Nature Portfolio", host: "Springer Nature", field: "AI/ML", tier: "Q1", if: "25.9", strength: "High-impact AI research across ML, neuroscience, and cognition" },
+      { name: "IEEE Transactions on Pattern Analysis and Machine Intelligence", abbr: "TPAMI", publisher: "IEEE", host: "IEEE Computer Society", field: "AI/CV", tier: "Q1", if: "20.8", strength: "Computer vision, pattern recognition, ML foundations" },
+      { name: "Journal of Machine Learning Research", abbr: "JMLR", publisher: "JMLR.org / MIT Press", host: "Open Access", field: "AI/ML", tier: "Q1", if: "4.3", strength: "Theoretical and applied ML, open access" },
+      { name: "IEEE Transactions on Neural Networks and Learning Systems", abbr: "TNNLS", publisher: "IEEE", host: "IEEE Comp. Intelligence Society", field: "AI/ML", tier: "Q1", if: "10.4", strength: "Neural networks, deep learning, learning theory" },
+      { name: "Artificial Intelligence", abbr: "AIJ", publisher: "Elsevier", host: "—", field: "AI", tier: "Q1", if: "5.1", strength: "Foundational AI: planning, reasoning, knowledge representation" },
+      { name: "Journal of Artificial Intelligence Research", abbr: "JAIR", publisher: "AI Access Foundation", host: "Open Access", field: "AI", tier: "Q1", if: "4.5", strength: "Broad AI topics, open access, fast review" },
+      { name: "IEEE Transactions on Knowledge and Data Engineering", abbr: "TKDE", publisher: "IEEE", host: "IEEE Computer Society", field: "AI/Data", tier: "Q1", if: "8.9", strength: "Knowledge engineering, data mining, databases" },
+      { name: "Machine Learning", abbr: "MLJ", publisher: "Springer", host: "—", field: "AI/ML", tier: "Q1", if: "4.3", strength: "ML algorithms, theory, applications" },
+      { name: "Neural Networks", abbr: "NN", publisher: "Elsevier", host: "INNS / JNNS / ENNS", field: "AI/ML", tier: "Q1", if: "7.8", strength: "Neural network architectures, biological inspiration" },
+      { name: "Neural Computation", abbr: "NECO", publisher: "MIT Press", host: "—", field: "AI/ML", tier: "Q2", if: "2.7", strength: "Computational neuroscience, neural network theory" },
+      { name: "Neurocomputing", abbr: "NEUCOM", publisher: "Elsevier", host: "—", field: "AI/ML", tier: "Q1", if: "6.0", strength: "Applied neural computing, signal processing" },
+      { name: "ACM Transactions on Intelligent Systems and Technology", abbr: "TIST", publisher: "ACM", host: "ACM SIGAI", field: "AI", tier: "Q2", if: "4.3", strength: "Intelligent systems, applications of AI" },
+      { name: "Expert Systems with Applications", abbr: "ESWA", publisher: "Elsevier", host: "—", field: "AI", tier: "Q1", if: "8.5", strength: "Applied expert systems, decision support" },
+      { name: "Applied Soft Computing", abbr: "ASOC", publisher: "Elsevier", host: "—", field: "AI", tier: "Q1", if: "8.7", strength: "Fuzzy logic, evolutionary computation, neural networks" },
+      { name: "Knowledge-Based Systems", abbr: "KBS", publisher: "Elsevier", host: "—", field: "AI", tier: "Q1", if: "8.8", strength: "Knowledge representation, reasoning systems" },
+      { name: "Engineering Applications of AI", abbr: "EAAI", publisher: "Elsevier", host: "IFAC", field: "AI", tier: "Q1", if: "8.0", strength: "Industrial AI applications, engineering problems" },
+      { name: "Information Sciences", abbr: "INS", publisher: "Elsevier", host: "—", field: "AI/Data", tier: "Q1", if: "8.1", strength: "Information theory, soft computing, data science" },
+      { name: "Neural Processing Letters", abbr: "NPL", publisher: "Springer", host: "—", field: "AI/ML", tier: "Q2", if: "3.1", strength: "Short papers on neural computation" },
+      { name: "AI Magazine", abbr: "AIMag", publisher: "AAAI", host: "AAAI", field: "AI", tier: "Q3", if: "2.5", strength: "AI research surveys and perspectives" },
+      { name: "Data Mining and Knowledge Discovery", abbr: "DMKD", publisher: "Springer", host: "—", field: "AI/Data", tier: "Q1", if: "4.8", strength: "Data mining theory and methods" },
+      { name: "International Journal of Approximate Reasoning", abbr: "IJAR", publisher: "Elsevier", host: "—", field: "AI", tier: "Q2", if: "3.9", strength: "Uncertainty, fuzzy reasoning, probabilistic AI" },
+      { name: "Fuzzy Sets and Systems", abbr: "FSS", publisher: "Elsevier", host: "IFSA", field: "AI", tier: "Q1", if: "3.9", strength: "Fuzzy logic, fuzzy systems theory" },
+      { name: "Foundations and Trends in Machine Learning", abbr: "FnT-ML", publisher: "Now Publishers", host: "—", field: "AI/ML", tier: "Q1", if: "55.5", strength: "In-depth ML monographs and surveys" },
+
+      // ── Computer Vision ──
+      { name: "IEEE Transactions on Image Processing", abbr: "TIP", publisher: "IEEE", host: "IEEE Signal Processing Society", field: "CV", tier: "Q1", if: "10.8", strength: "Image processing, low-level vision, analysis" },
+      { name: "International Journal of Computer Vision", abbr: "IJCV", publisher: "Springer", host: "—", field: "CV", tier: "Q1", if: "11.6", strength: "Vision theory, 3D reconstruction, object recognition" },
+      { name: "Pattern Recognition", abbr: "PR", publisher: "Elsevier", host: "IAPR", field: "CV", tier: "Q1", if: "7.5", strength: "Pattern recognition, deep learning for vision" },
+      { name: "Computer Vision and Image Understanding", abbr: "CVIU", publisher: "Elsevier", host: "—", field: "CV", tier: "Q2", if: "4.3", strength: "Image understanding, scene analysis" },
+      { name: "IEEE Transactions on Multimedia", abbr: "TMM", publisher: "IEEE", host: "IEEE Signal Processing Society", field: "CV/Multimedia", tier: "Q1", if: "8.4", strength: "Multimedia processing, video, audio-visual" },
+      { name: "Image and Vision Computing", abbr: "IVC", publisher: "Elsevier", host: "BMVA", field: "CV", tier: "Q2", if: "4.2", strength: "Applied vision, image computing" },
+      { name: "Pattern Recognition Letters", abbr: "PRL", publisher: "Elsevier", host: "IAPR", field: "CV", tier: "Q2", if: "3.9", strength: "Short papers on pattern recognition" },
+      { name: "Machine Vision and Applications", abbr: "MVA", publisher: "Springer", host: "—", field: "CV", tier: "Q3", if: "2.4", strength: "Industrial vision applications" },
+
+      // ── NLP / Speech ──
+      { name: "Computational Linguistics", abbr: "CL", publisher: "MIT Press", host: "ACL", field: "NLP", tier: "Q2", if: "4.9", strength: "Computational linguistics theory, long papers" },
+      { name: "Transactions of the Association for Computational Linguistics", abbr: "TACL", publisher: "MIT Press", host: "ACL", field: "NLP", tier: "Q1", if: "10.9", strength: "High-quality NLP research, fast review" },
+      { name: "IEEE/ACM Transactions on Audio, Speech, and Language Processing", abbr: "TASLP", publisher: "IEEE/ACM", host: "IEEE SPS + ACM", field: "NLP/Speech", tier: "Q1", if: "5.4", strength: "Speech recognition, language processing, audio" },
+      { name: "Speech Communication", abbr: "SPECOM", publisher: "Elsevier", host: "ISCA", field: "NLP/Speech", tier: "Q2", if: "3.2", strength: "Speech science, acoustic processing" },
+      { name: "Natural Language Engineering", abbr: "NLE", publisher: "Cambridge Univ. Press", host: "—", field: "NLP", tier: "Q3", if: "2.6", strength: "Applied NLP, engineering aspects" },
+      { name: "Language Resources and Evaluation", abbr: "LRE", publisher: "Springer", host: "ELRA", field: "NLP", tier: "Q3", if: "2.6", strength: "NLP resources, corpora, evaluation" },
+
+      // ── Security / Cryptography ──
+      { name: "IEEE Transactions on Information Forensics and Security", abbr: "TIFS", publisher: "IEEE", host: "IEEE Signal Processing Society", field: "Security", tier: "Q1", if: "7.2", strength: "Forensics, watermarking, biometrics, security ML" },
+      { name: "IEEE Transactions on Dependable and Secure Computing", abbr: "TDSC", publisher: "IEEE", host: "IEEE Computer Society", field: "Security", tier: "Q1", if: "7.3", strength: "Dependable systems, secure computing, attacks" },
+      { name: "Computers & Security", abbr: "COSE", publisher: "Elsevier", host: "IFIP TC-11", field: "Security", tier: "Q1", if: "5.6", strength: "Applied security, intrusion detection, malware" },
+      { name: "Journal of Cryptology", abbr: "JoC", publisher: "Springer", host: "IACR", field: "Crypto", tier: "Q1", if: "2.3", strength: "Cryptographic theory, protocols, primitives" },
+      { name: "ACM Transactions on Privacy and Security", abbr: "TOPS", publisher: "ACM", host: "ACM SIGSAC", field: "Security", tier: "Q2", if: "3.0", strength: "Privacy, security policies, formal methods" },
+      { name: "Designs, Codes and Cryptography", abbr: "DCC", publisher: "Springer", host: "—", field: "Crypto", tier: "Q2", if: "1.6", strength: "Coding theory, combinatorics, cryptography" },
+      { name: "Journal of Computer Security", abbr: "JCS", publisher: "IOS Press", host: "—", field: "Security", tier: "Q3", if: "1.1", strength: "Computer security foundations" },
+      { name: "IEEE Security & Privacy", abbr: "S&P Mag", publisher: "IEEE", host: "IEEE Computer Society", field: "Security", tier: "Q2", if: "2.9", strength: "Magazine-style security articles, practical" },
+      { name: "International Journal of Information Security", abbr: "IJIS", publisher: "Springer", host: "—", field: "Security", tier: "Q2", if: "3.2", strength: "Information security, network security" },
+      { name: "Journal of Information Security and Applications", abbr: "JISA", publisher: "Elsevier", host: "—", field: "Security", tier: "Q2", if: "3.8", strength: "Applied security, privacy-preserving systems" },
+      { name: "Cryptography and Communications", abbr: "CCDS", publisher: "Springer", host: "—", field: "Crypto", tier: "Q2", if: "1.7", strength: "Cryptography, coding, discrete structures" },
+      { name: "Security and Communication Networks", abbr: "SCN", publisher: "Hindawi / Wiley", host: "—", field: "Security", tier: "Q3", if: "1.5", strength: "Network security, privacy protocols" },
+      { name: "Computers & Electrical Engineering", abbr: "CAEE", publisher: "Elsevier", host: "—", field: "Security/Systems", tier: "Q2", if: "4.0", strength: "Electrical/computer engineering, security systems" },
+
+      // ── Quantum Computing / Physics ──
+      { name: "Nature Physics", abbr: "Nat. Phys.", publisher: "Nature Portfolio", host: "Springer Nature", field: "Physics/Quantum", tier: "Q1", if: "18.7", strength: "Top physics research, quantum experiments" },
+      { name: "Physical Review X", abbr: "PRX", publisher: "APS", host: "American Physical Society", field: "Physics/Quantum", tier: "Q1", if: "11.6", strength: "High-impact physics, interdisciplinary" },
+      { name: "Quantum", abbr: "Quantum", publisher: "Verein zur Förderung des Open Access", host: "Open Access", field: "Quantum", tier: "Q1", if: "5.1", strength: "Open access quantum science journal" },
+      { name: "PRX Quantum", abbr: "PRX Quantum", publisher: "APS", host: "American Physical Society", field: "Quantum", tier: "Q1", if: "9.2", strength: "Quantum information and technology focus" },
+      { name: "npj Quantum Information", abbr: "npj QI", publisher: "Nature Portfolio", host: "Springer Nature", field: "Quantum", tier: "Q1", if: "6.6", strength: "Quantum info research, open access" },
+      { name: "Quantum Science and Technology", abbr: "QST", publisher: "IOP Publishing", host: "—", field: "Quantum", tier: "Q1", if: "6.5", strength: "Quantum computing, communication, sensing" },
+      { name: "Quantum Information Processing", abbr: "QIP", publisher: "Springer", host: "—", field: "Quantum", tier: "Q2", if: "2.3", strength: "Quantum algorithms, protocols, processing" },
+      { name: "Physical Review A", abbr: "PRA", publisher: "APS", host: "American Physical Society", field: "Physics/Quantum", tier: "Q1", if: "2.9", strength: "Atomic, molecular, optical, quantum physics" },
+      { name: "Quantum Information & Computation", abbr: "QIC", publisher: "Rinton Press", host: "—", field: "Quantum", tier: "Q3", if: "0.9", strength: "Quantum computing theory" },
+      { name: "International Journal of Quantum Information", abbr: "IJQI", publisher: "World Scientific", host: "—", field: "Quantum", tier: "Q3", if: "1.0", strength: "Quantum information foundations" },
+      { name: "Communications in Mathematical Physics", abbr: "CMP", publisher: "Springer", host: "—", field: "Physics/Quantum", tier: "Q2", if: "2.4", strength: "Mathematical physics, quantum theory" },
+      { name: "Physical Review Letters", abbr: "PRL", publisher: "APS", host: "American Physical Society", field: "Physics", tier: "Q1", if: "8.6", strength: "Top-tier physics letters, broad coverage" },
+      { name: "Reviews of Modern Physics", abbr: "RMP", publisher: "APS", host: "American Physical Society", field: "Physics", tier: "Q1", if: "44.9", strength: "Comprehensive reviews in physics" },
+      { name: "Nature", abbr: "Nature", publisher: "Nature Portfolio", host: "Springer Nature", field: "Physics/General", tier: "Q1", if: "50.5", strength: "General science, breakthrough discoveries" },
+      { name: "Science", abbr: "Science", publisher: "AAAS", host: "American Assoc. for the Advancement of Science", field: "Physics/General", tier: "Q1", if: "56.9", strength: "General science, top impact" },
+      { name: "Nature Communications", abbr: "Nat. Commun.", publisher: "Nature Portfolio", host: "Springer Nature", field: "Physics/General", tier: "Q1", if: "14.7", strength: "Broad open-access high-impact research" },
+      { name: "New Journal of Physics", abbr: "NJP", publisher: "IOP Publishing", host: "IOP + DPG", field: "Physics/Quantum", tier: "Q1", if: "2.8", strength: "Open-access broad physics" },
+      { name: "Journal of Physics A: Mathematical and Theoretical", abbr: "J. Phys. A", publisher: "IOP Publishing", host: "IOP", field: "Physics", tier: "Q2", if: "2.0", strength: "Mathematical physics, theoretical" },
+      { name: "European Physical Journal", abbr: "EPJ", publisher: "Springer", host: "EPS", field: "Physics", tier: "Q2", if: "2.0", strength: "Broad European physics coverage" },
+      { name: "Physical Review B", abbr: "PRB", publisher: "APS", host: "American Physical Society", field: "Physics", tier: "Q1", if: "3.7", strength: "Condensed matter, materials physics" },
+      { name: "Physical Review D", abbr: "PRD", publisher: "APS", host: "American Physical Society", field: "Physics", tier: "Q1", if: "5.0", strength: "Particles, fields, gravitation, cosmology" },
+      { name: "Annalen der Physik", abbr: "Ann. Phys.", publisher: "Wiley-VCH", host: "—", field: "Physics", tier: "Q2", if: "3.0", strength: "Fundamental physics, long history (Einstein's journal)" },
+
+      // ── Medical AI / Medical Informatics ──
+      { name: "Nature Medicine", abbr: "Nat. Med.", publisher: "Nature Portfolio", host: "Springer Nature", field: "Medical", tier: "Q1", if: "82.9", strength: "Top clinical and translational medicine" },
+      { name: "The Lancet Digital Health", abbr: "LDH", publisher: "Elsevier (The Lancet)", host: "—", field: "Medical", tier: "Q1", if: "23.8", strength: "Digital health, medical AI clinical studies" },
+      { name: "npj Digital Medicine", abbr: "npj DM", publisher: "Nature Portfolio", host: "Springer Nature", field: "Medical", tier: "Q1", if: "15.2", strength: "Digital medicine, open access" },
+      { name: "Medical Image Analysis", abbr: "MedIA", publisher: "Elsevier", host: "MICCAI Society", field: "Medical", tier: "Q1", if: "10.7", strength: "Medical image analysis, deep learning" },
+      { name: "IEEE Transactions on Medical Imaging", abbr: "TMI", publisher: "IEEE", host: "IEEE Signal Processing Soc. / EMBS", field: "Medical", tier: "Q1", if: "10.6", strength: "Medical imaging methods, MRI, CT, US" },
+      { name: "Journal of Biomedical Informatics", abbr: "JBI", publisher: "Elsevier", host: "—", field: "Medical", tier: "Q1", if: "4.5", strength: "Biomedical informatics, EHR, clinical NLP" },
+      { name: "Artificial Intelligence in Medicine", abbr: "AIIM", publisher: "Elsevier", host: "AIME Society", field: "Medical", tier: "Q1", if: "7.5", strength: "AI applications in clinical medicine" },
+      { name: "IEEE Journal of Biomedical and Health Informatics", abbr: "JBHI", publisher: "IEEE", host: "IEEE EMBS", field: "Medical", tier: "Q1", if: "7.7", strength: "Biomedical informatics, health data, wearables" },
+      { name: "Computer Methods and Programs in Biomedicine", abbr: "CMPB", publisher: "Elsevier", host: "—", field: "Medical", tier: "Q1", if: "4.9", strength: "Biomedical software, algorithms" },
+      { name: "Journal of the American Medical Informatics Association", abbr: "JAMIA", publisher: "Oxford Univ. Press", host: "AMIA", field: "Medical", tier: "Q1", if: "6.4", strength: "Medical informatics, EHR, clinical decision" },
+      { name: "International Journal of Medical Informatics", abbr: "IJMI", publisher: "Elsevier", host: "IMIA", field: "Medical", tier: "Q2", if: "3.7", strength: "Health informatics, clinical systems" },
+      { name: "Computerized Medical Imaging and Graphics", abbr: "CMIG", publisher: "Elsevier", host: "—", field: "Medical", tier: "Q2", if: "5.4", strength: "Medical imaging visualization, graphics" },
+      { name: "Physics in Medicine and Biology", abbr: "PMB", publisher: "IOP Publishing", host: "IPEM", field: "Medical", tier: "Q1", if: "3.5", strength: "Medical physics, radiation, imaging" },
+      { name: "IEEE Transactions on Biomedical Engineering", abbr: "TBME", publisher: "IEEE", host: "IEEE EMBS", field: "Medical", tier: "Q1", if: "4.4", strength: "Biomedical engineering, signal processing" },
+      { name: "Neuroimage", abbr: "NeuroImage", publisher: "Elsevier", host: "OHBM", field: "Medical", tier: "Q1", if: "4.7", strength: "Neuroimaging, brain mapping" },
+      { name: "Medical Physics", abbr: "Med. Phys.", publisher: "Wiley", host: "AAPM", field: "Medical", tier: "Q1", if: "3.8", strength: "Medical physics, radiation oncology" },
+      { name: "npj Precision Oncology", abbr: "npj PO", publisher: "Nature Portfolio", host: "Springer Nature", field: "Medical", tier: "Q1", if: "6.8", strength: "Cancer AI, genomics, precision medicine" },
+
+      // ── Bioinformatics ──
+      { name: "Bioinformatics", abbr: "Bioinf.", publisher: "Oxford Univ. Press", host: "ISCB", field: "Medical/Bio", tier: "Q1", if: "4.4", strength: "Bioinformatics methods, genomics, proteomics" },
+      { name: "Briefings in Bioinformatics", abbr: "BIB", publisher: "Oxford Univ. Press", host: "—", field: "Medical/Bio", tier: "Q1", if: "9.5", strength: "Reviews of bioinformatics methods" },
+      { name: "PLOS Computational Biology", abbr: "PLOS CB", publisher: "PLOS", host: "ISCB", field: "Medical/Bio", tier: "Q1", if: "4.3", strength: "Open access computational biology" },
+      { name: "BMC Bioinformatics", abbr: "BMC Bio", publisher: "BMC / Springer Nature", host: "—", field: "Medical/Bio", tier: "Q2", if: "2.9", strength: "Open access bioinformatics" },
+      { name: "Journal of Computational Biology", abbr: "JCB", publisher: "Mary Ann Liebert", host: "—", field: "Medical/Bio", tier: "Q3", if: "1.4", strength: "Algorithms for biology, genomics" },
+
+      // ── Systems / Networks / General CS ──
+      { name: "Communications of the ACM", abbr: "CACM", publisher: "ACM", host: "ACM", field: "General CS", tier: "Q1", if: "11.2", strength: "Broad CS coverage, research highlights" },
+      { name: "Journal of the ACM", abbr: "JACM", publisher: "ACM", host: "ACM", field: "General CS/Theory", tier: "Q1", if: "2.9", strength: "Top theoretical CS research" },
+      { name: "IEEE Transactions on Computers", abbr: "TC", publisher: "IEEE", host: "IEEE Computer Society", field: "Systems/Arch", tier: "Q1", if: "3.7", strength: "Computer architecture, systems, algorithms" },
+      { name: "ACM Transactions on Computer Systems", abbr: "TOCS", publisher: "ACM", host: "ACM SIGOPS", field: "Systems", tier: "Q2", if: "2.3", strength: "Operating systems, distributed systems" },
+      { name: "IEEE Transactions on Parallel and Distributed Systems", abbr: "TPDS", publisher: "IEEE", host: "IEEE Computer Society", field: "Systems/HPC", tier: "Q1", if: "6.0", strength: "Parallel computing, distributed systems" },
+      { name: "IEEE Transactions on Software Engineering", abbr: "TSE", publisher: "IEEE", host: "IEEE Computer Society", field: "SE", tier: "Q1", if: "7.4", strength: "Software engineering research" },
+      { name: "ACM Transactions on Software Engineering and Methodology", abbr: "TOSEM", publisher: "ACM", host: "ACM SIGSOFT", field: "SE", tier: "Q1", if: "4.4", strength: "SE methodology, empirical studies" },
+      { name: "IEEE/ACM Transactions on Networking", abbr: "ToN", publisher: "IEEE/ACM", host: "IEEE ComSoc + ACM SIGCOMM", field: "Network", tier: "Q1", if: "3.8", strength: "Computer networks, protocols, performance" },
+      { name: "Computer Networks", abbr: "COMNET", publisher: "Elsevier", host: "—", field: "Network", tier: "Q2", if: "5.6", strength: "Networking research, IoT, 5G" },
+      { name: "IEEE Network", abbr: "Network", publisher: "IEEE", host: "IEEE Communications Society", field: "Network", tier: "Q2", if: "7.5", strength: "Magazine-style networking articles" },
+      { name: "ACM Computing Surveys", abbr: "CSUR", publisher: "ACM", host: "ACM", field: "General CS", tier: "Q1", if: "23.8", strength: "Comprehensive surveys across all CS" },
+      { name: "ACM Transactions on Database Systems", abbr: "TODS", publisher: "ACM", host: "ACM SIGMOD", field: "Data", tier: "Q1", if: "2.1", strength: "Database systems, theory" },
+      { name: "IEEE Transactions on Cloud Computing", abbr: "TCC", publisher: "IEEE", host: "IEEE Computer Society", field: "Cloud", tier: "Q2", if: "5.3", strength: "Cloud computing, virtualization, services" },
+      { name: "Future Generation Computer Systems", abbr: "FGCS", publisher: "Elsevier", host: "—", field: "Systems/Cloud", tier: "Q1", if: "6.2", strength: "Grid, cloud, edge computing" },
+      { name: "Journal of Parallel and Distributed Computing", abbr: "JPDC", publisher: "Elsevier", host: "—", field: "HPC", tier: "Q2", if: "3.4", strength: "Parallel algorithms, distributed systems" },
+      { name: "Journal of Systems Architecture", abbr: "JSA", publisher: "Elsevier", host: "—", field: "Systems/Arch", tier: "Q2", if: "3.7", strength: "Embedded systems, architecture" },
+      { name: "IEEE Transactions on Services Computing", abbr: "TSC", publisher: "IEEE", host: "IEEE Computer Society", field: "Cloud/Web", tier: "Q1", if: "5.5", strength: "Service-oriented computing, web services" },
+      { name: "Empirical Software Engineering", abbr: "EMSE", publisher: "Springer", host: "—", field: "SE", tier: "Q1", if: "4.1", strength: "Empirical studies in software engineering" },
+      { name: "Information Systems", abbr: "IS", publisher: "Elsevier", host: "—", field: "Data", tier: "Q1", if: "3.5", strength: "Information systems, data management" },
+      { name: "VLDB Journal", abbr: "VLDBJ", publisher: "Springer", host: "VLDB Endowment", field: "Data", tier: "Q1", if: "4.2", strength: "Databases, large-scale data" },
+      { name: "Data & Knowledge Engineering", abbr: "DKE", publisher: "Elsevier", host: "—", field: "Data", tier: "Q2", if: "2.7", strength: "Data modeling, knowledge engineering" },
+
+      // ── Robotics ──
+      { name: "IEEE Transactions on Robotics", abbr: "T-RO", publisher: "IEEE", host: "IEEE Robotics & Automation Society", field: "Robotics", tier: "Q1", if: "9.4", strength: "Top robotics research" },
+      { name: "International Journal of Robotics Research", abbr: "IJRR", publisher: "SAGE", host: "—", field: "Robotics", tier: "Q1", if: "9.2", strength: "Robotics theory and applications" },
+      { name: "IEEE Robotics and Automation Letters", abbr: "RA-L", publisher: "IEEE", host: "IEEE Robotics & Automation Society", field: "Robotics", tier: "Q1", if: "4.6", strength: "Fast-review robotics letters" },
+      { name: "Autonomous Robots", abbr: "AuRo", publisher: "Springer", host: "—", field: "Robotics", tier: "Q2", if: "3.5", strength: "Autonomous systems, mobile robots" },
+      { name: "Journal of Field Robotics", abbr: "JFR", publisher: "Wiley", host: "—", field: "Robotics", tier: "Q1", if: "4.8", strength: "Field robots, outdoor robotics" },
+      { name: "Robotics and Autonomous Systems", abbr: "RAS", publisher: "Elsevier", host: "—", field: "Robotics", tier: "Q2", if: "4.3", strength: "Autonomous robotic systems" },
+      { name: "IEEE Transactions on Automation Science and Engineering", abbr: "T-ASE", publisher: "IEEE", host: "IEEE Robotics & Automation Society", field: "Robotics", tier: "Q1", if: "5.9", strength: "Automation science, industrial robotics" },
+
+      // ── Signal Processing ──
+      { name: "IEEE Transactions on Signal Processing", abbr: "TSP", publisher: "IEEE", host: "IEEE Signal Processing Society", field: "Signal", tier: "Q1", if: "5.4", strength: "Signal processing theory and algorithms" },
+      { name: "Signal Processing", abbr: "SP", publisher: "Elsevier", host: "EURASIP", field: "Signal", tier: "Q1", if: "3.4", strength: "Signal processing applications, methods" },
+      { name: "IEEE Signal Processing Letters", abbr: "SPL", publisher: "IEEE", host: "IEEE Signal Processing Society", field: "Signal", tier: "Q2", if: "3.9", strength: "Fast-review signal processing letters" },
+      { name: "Digital Signal Processing", abbr: "DSP", publisher: "Elsevier", host: "—", field: "Signal", tier: "Q2", if: "2.9", strength: "Applied digital signal processing" },
+      { name: "EURASIP Journal on Advances in Signal Processing", abbr: "EURASIP ASP", publisher: "Springer", host: "EURASIP", field: "Signal", tier: "Q3", if: "1.7", strength: "Open access signal processing" },
+      { name: "IEEE Signal Processing Magazine", abbr: "SPM", publisher: "IEEE", host: "IEEE Signal Processing Society", field: "Signal", tier: "Q1", if: "14.8", strength: "Tutorial signal processing articles" },
+
+      // ── Graphics / Multimedia ──
+      { name: "ACM Transactions on Graphics", abbr: "TOG", publisher: "ACM", host: "ACM SIGGRAPH", field: "Graphics", tier: "Q1", if: "7.8", strength: "Top graphics research (SIGGRAPH papers)" },
+      { name: "IEEE Transactions on Visualization and Computer Graphics", abbr: "TVCG", publisher: "IEEE", host: "IEEE Computer Society", field: "Graphics/Vis", tier: "Q1", if: "4.7", strength: "Visualization, graphics, VR/AR" },
+      { name: "Computer Graphics Forum", abbr: "CGF", publisher: "Wiley", host: "Eurographics Association", field: "Graphics", tier: "Q2", if: "2.5", strength: "Eurographics journal, broad graphics" },
+      { name: "The Visual Computer", abbr: "TVC", publisher: "Springer", host: "—", field: "Graphics", tier: "Q2", if: "3.0", strength: "Visual computing, graphics applications" },
+      { name: "IEEE Transactions on Circuits and Systems for Video Technology", abbr: "TCSVT", publisher: "IEEE", host: "IEEE Circuits and Systems Society", field: "CV/Multimedia", tier: "Q1", if: "8.3", strength: "Video processing, circuits for multimedia" },
+      { name: "Multimedia Systems", abbr: "MMSys", publisher: "Springer", host: "—", field: "Multimedia", tier: "Q3", if: "3.9", strength: "Multimedia systems, delivery" },
+
+      // ── HCI ──
+      { name: "ACM Transactions on Computer-Human Interaction", abbr: "TOCHI", publisher: "ACM", host: "ACM SIGCHI", field: "HCI", tier: "Q1", if: "4.2", strength: "HCI theory, empirical studies" },
+      { name: "International Journal of Human-Computer Studies", abbr: "IJHCS", publisher: "Elsevier", host: "—", field: "HCI", tier: "Q1", if: "5.3", strength: "Human-computer studies, user modeling" },
+      { name: "Interacting with Computers", abbr: "IwC", publisher: "Oxford Univ. Press", host: "BCS", field: "HCI", tier: "Q3", if: "1.1", strength: "Interaction design, usability" },
+      { name: "Behaviour & Information Technology", abbr: "BIT", publisher: "Taylor & Francis", host: "—", field: "HCI", tier: "Q2", if: "3.5", strength: "Behavior, IT interaction" },
+      { name: "Human-Computer Interaction", abbr: "HCI Journal", publisher: "Taylor & Francis", host: "—", field: "HCI", tier: "Q2", if: "5.4", strength: "HCI long-form research" },
+
+      // ── Theory / Algorithms ──
+      { name: "SIAM Journal on Computing", abbr: "SICOMP", publisher: "SIAM", host: "SIAM", field: "Theory", tier: "Q1", if: "1.2", strength: "Theoretical CS, algorithms" },
+      { name: "Algorithmica", abbr: "Algo.", publisher: "Springer", host: "—", field: "Theory", tier: "Q2", if: "1.3", strength: "Algorithm design and analysis" },
+      { name: "Theoretical Computer Science", abbr: "TCS", publisher: "Elsevier", host: "EATCS", field: "Theory", tier: "Q2", if: "0.9", strength: "Theoretical foundations of CS" },
+      { name: "Information and Computation", abbr: "I&C", publisher: "Elsevier", host: "—", field: "Theory", tier: "Q3", if: "1.0", strength: "Information theory, computation" },
+      { name: "Journal of Combinatorial Theory", abbr: "JCT", publisher: "Elsevier", host: "—", field: "Theory", tier: "Q1", if: "1.1", strength: "Combinatorics, discrete math" },
+      { name: "Journal of Complexity", abbr: "J. Comp.", publisher: "Elsevier", host: "—", field: "Theory", tier: "Q2", if: "1.8", strength: "Complexity theory, algorithms" },
+
+      // ── Hardware / Architecture ──
+      { name: "IEEE Micro", abbr: "Micro", publisher: "IEEE", host: "IEEE Computer Society", field: "Arch", tier: "Q2", if: "3.3", strength: "Microprocessor architecture, top picks" },
+      { name: "ACM Transactions on Computer Architecture and Code Optimization", abbr: "TACO", publisher: "ACM", host: "ACM SIGARCH", field: "Arch", tier: "Q1", if: "2.1", strength: "Computer architecture, compilers" },
+      { name: "ACM Transactions on Architecture and Code Optimization", abbr: "TACO", publisher: "ACM", host: "ACM SIGARCH", field: "Arch", tier: "Q1", if: "2.1", strength: "Architecture and code optimization" },
+      { name: "IEEE Transactions on Very Large Scale Integration Systems", abbr: "TVLSI", publisher: "IEEE", host: "IEEE Circuits and Systems / CEDA", field: "Arch/EDA", tier: "Q1", if: "2.8", strength: "VLSI circuits, systems" },
+      { name: "IEEE Transactions on Computer-Aided Design", abbr: "TCAD", publisher: "IEEE", host: "IEEE CEDA", field: "EDA", tier: "Q1", if: "2.9", strength: "EDA, CAD for circuits" },
+      { name: "ACM Transactions on Design Automation of Electronic Systems", abbr: "TODAES", publisher: "ACM", host: "ACM SIGDA", field: "EDA", tier: "Q1", if: "2.3", strength: "Design automation, electronic systems" },
+      { name: "Integration, the VLSI Journal", abbr: "INTEGRATION", publisher: "Elsevier", host: "—", field: "Arch/EDA", tier: "Q3", if: "2.2", strength: "VLSI integration, chip design" },
+      { name: "IEEE Transactions on Circuits and Systems I", abbr: "TCAS-I", publisher: "IEEE", host: "IEEE Circuits and Systems Society", field: "Arch", tier: "Q1", if: "5.2", strength: "Circuits, systems theory" },
+
+      // ── Programming Languages ──
+      { name: "ACM Transactions on Programming Languages and Systems", abbr: "TOPLAS", publisher: "ACM", host: "ACM SIGPLAN", field: "PL", tier: "Q1", if: "1.3", strength: "Programming language theory" },
+      { name: "Science of Computer Programming", abbr: "SCP", publisher: "Elsevier", host: "—", field: "PL", tier: "Q2", if: "1.5", strength: "Programming language research" },
+      { name: "Journal of Functional Programming", abbr: "JFP", publisher: "Cambridge Univ. Press", host: "—", field: "PL", tier: "Q3", if: "0.9", strength: "Functional programming" },
+      { name: "Higher-Order and Symbolic Computation", abbr: "HOSC", publisher: "Springer", host: "—", field: "PL", tier: "Q3", if: "0.7", strength: "Symbolic computation, PL semantics" },
+      { name: "Formal Methods in System Design", abbr: "FMSD", publisher: "Springer", host: "—", field: "PL/SE", tier: "Q2", if: "0.7", strength: "Formal methods, verification" },
+
+      // ── Software Engineering 추가 ──
+      { name: "Journal of Systems and Software", abbr: "JSS", publisher: "Elsevier", host: "—", field: "SE", tier: "Q1", if: "3.7", strength: "Systems and software research" },
+      { name: "Information and Software Technology", abbr: "IST", publisher: "Elsevier", host: "—", field: "SE", tier: "Q1", if: "3.9", strength: "Applied software engineering" },
+      { name: "Software: Practice and Experience", abbr: "SPE", publisher: "Wiley", host: "—", field: "SE", tier: "Q2", if: "2.6", strength: "Practical software engineering" },
+      { name: "Automated Software Engineering", abbr: "ASEJ", publisher: "Springer", host: "—", field: "SE", tier: "Q2", if: "2.2", strength: "Automated SE methods" },
+      { name: "Software Quality Journal", abbr: "SQJ", publisher: "Springer", host: "—", field: "SE", tier: "Q3", if: "2.1", strength: "Software quality, testing" },
+
+      // ── Data Mining / Data Science ──
+      { name: "Data Mining and Knowledge Discovery", abbr: "DMKD", publisher: "Springer", host: "—", field: "Data", tier: "Q1", if: "4.8", strength: "Data mining algorithms, KDD" },
+      { name: "IEEE Transactions on Big Data", abbr: "TBD", publisher: "IEEE", host: "IEEE Computer Society", field: "Data", tier: "Q1", if: "7.2", strength: "Big data methods, systems" },
+      { name: "Big Data Research", abbr: "BDR", publisher: "Elsevier", host: "—", field: "Data", tier: "Q1", if: "3.5", strength: "Big data research, applications" },
+      { name: "ACM Transactions on Knowledge Discovery from Data", abbr: "TKDD", publisher: "ACM", host: "ACM SIGKDD", field: "Data", tier: "Q2", if: "3.6", strength: "KDD research, data mining" },
+      { name: "International Journal of Data Science and Analytics", abbr: "IJDSA", publisher: "Springer", host: "—", field: "Data", tier: "Q2", if: "3.4", strength: "Data science methodology" },
+
+      // ── Information Retrieval / Web ──
+      { name: "ACM Transactions on Information Systems", abbr: "TOIS", publisher: "ACM", host: "ACM SIGIR", field: "IR/Web", tier: "Q1", if: "5.4", strength: "Information retrieval, search" },
+      { name: "Information Retrieval Journal", abbr: "IR", publisher: "Springer", host: "—", field: "IR/Web", tier: "Q2", if: "2.6", strength: "IR theory and evaluation" },
+      { name: "Information Processing & Management", abbr: "IPM", publisher: "Elsevier", host: "—", field: "IR/Web", tier: "Q1", if: "8.6", strength: "IR, text processing, digital libraries" },
+      { name: "ACM Transactions on the Web", abbr: "TWEB", publisher: "ACM", host: "ACM SIGWEB", field: "IR/Web", tier: "Q2", if: "2.5", strength: "Web research, semantic web" },
+      { name: "Journal of Web Semantics", abbr: "JWS", publisher: "Elsevier", host: "—", field: "IR/Web", tier: "Q2", if: "2.5", strength: "Semantic web, ontologies" },
+
+      // ── Real-Time / Embedded ──
+      { name: "Real-Time Systems", abbr: "RTS", publisher: "Springer", host: "—", field: "RT/Embedded", tier: "Q2", if: "1.9", strength: "Real-time systems, scheduling" },
+      { name: "ACM Transactions on Embedded Computing Systems", abbr: "TECS", publisher: "ACM", host: "ACM SIGBED", field: "RT/Embedded", tier: "Q2", if: "2.1", strength: "Embedded computing, co-design" },
+      { name: "ACM Transactions on Cyber-Physical Systems", abbr: "TCPS", publisher: "ACM", host: "ACM", field: "RT/Embedded", tier: "Q1", if: "2.3", strength: "CPS theory and design" },
+      { name: "Journal of Real-Time Image Processing", abbr: "JRTIP", publisher: "Springer", host: "—", field: "RT/CV", tier: "Q2", if: "2.9", strength: "Real-time image processing" },
+      { name: "IEEE Transactions on Industrial Informatics", abbr: "TII", publisher: "IEEE", host: "IEEE Industrial Electronics Society", field: "Embedded/Industry", tier: "Q1", if: "12.3", strength: "Industrial informatics, IIoT" },
+
+      // ── Mathematical / Optimization ──
+      { name: "Mathematical Programming", abbr: "MP", publisher: "Springer", host: "Math. Optim. Society", field: "Optimization", tier: "Q1", if: "2.7", strength: "Mathematical programming, optimization" },
+      { name: "SIAM Journal on Optimization", abbr: "SIOPT", publisher: "SIAM", host: "SIAM", field: "Optimization", tier: "Q1", if: "3.1", strength: "Optimization theory and methods" },
+      { name: "Journal of Optimization Theory and Applications", abbr: "JOTA", publisher: "Springer", host: "—", field: "Optimization", tier: "Q2", if: "1.6", strength: "Optimization applications" },
+      { name: "Optimization Letters", abbr: "OPTL", publisher: "Springer", host: "—", field: "Optimization", tier: "Q3", if: "1.6", strength: "Short optimization papers" },
+
+      // ── Transactions on IoT / Communications ──
+      { name: "IEEE Internet of Things Journal", abbr: "IoT-J", publisher: "IEEE", host: "IEEE Computer/ComSoc/Sensors", field: "Network/IoT", tier: "Q1", if: "10.6", strength: "IoT systems, applications" },
+      { name: "IEEE Transactions on Wireless Communications", abbr: "TWC", publisher: "IEEE", host: "IEEE Communications Society", field: "Network", tier: "Q1", if: "8.3", strength: "Wireless communications theory" },
+      { name: "IEEE Transactions on Communications", abbr: "TCOM", publisher: "IEEE", host: "IEEE Communications Society", field: "Network", tier: "Q1", if: "7.4", strength: "General communications, protocols" },
+      { name: "IEEE Transactions on Mobile Computing", abbr: "TMC", publisher: "IEEE", host: "IEEE Computer Society", field: "Network", tier: "Q1", if: "7.7", strength: "Mobile computing, wireless" },
+      { name: "Ad Hoc Networks", abbr: "ADHOC", publisher: "Elsevier", host: "—", field: "Network", tier: "Q2", if: "4.4", strength: "Ad hoc networks, sensor networks" },
+    ];
+
+    const FIELDS = ["All", ...new Set(JOURNALS.map(j => j.field))].sort();
+    const fieldFilters = document.getElementById('fieldFilters');
+    fieldFilters.innerHTML = FIELDS.map((f, i) =>
+      `<button class="j-filter-btn${i === 0 ? ' active' : ''}" data-field="${f}">${f}</button>`
+    ).join('');
+
+    const Q_CLASS = { "Q1": "q-badge--q1", "Q2": "q-badge--q2", "Q3": "q-badge--q3", "Q4": "q-badge--q4" };
+
+    const tbody = document.getElementById('jTableBody');
+    const empty = document.getElementById('jEmpty');
+    const count = document.getElementById('jCount');
+    const search = document.getElementById('jSearch');
+    const tierFilters = document.getElementById('tierFilters');
+
+    let activeField = 'All';
+    let activeTier = 'all';
+    let query = '';
+
+    function render() {
+      const q = query.toLowerCase();
+      const filtered = JOURNALS.filter(j => {
+        const matchField = activeField === 'All' || j.field === activeField;
+        const matchTier = activeTier === 'all' || j.tier === activeTier;
+        const matchText = !q
+          || j.name.toLowerCase().includes(q)
+          || j.abbr.toLowerCase().includes(q)
+          || j.publisher.toLowerCase().includes(q)
+          || j.host.toLowerCase().includes(q)
+          || j.strength.toLowerCase().includes(q);
+        return matchField && matchTier && matchText;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '';
+        empty.style.display = 'block';
+        count.textContent = '';
+        return;
+      }
+      empty.style.display = 'none';
+      tbody.innerHTML = filtered.map(j => `
+        <tr>
+          <td class="j-name">${j.name}<span class="j-abbr">${j.abbr}</span></td>
+          <td class="j-pub">${j.publisher}<span class="j-host">${j.host === '—' ? '' : j.host}</span></td>
+          <td><span class="field-chip">${j.field}</span></td>
+          <td><span class="q-badge ${Q_CLASS[j.tier] || ''}">${j.tier}</span></td>
+          <td class="if-cell">${j.if}</td>
+          <td class="j-strength">${j.strength}</td>
+        </tr>
+      `).join('');
+      count.textContent = `Showing ${filtered.length} of ${JOURNALS.length} journals`;
+    }
+
+    search.addEventListener('input', e => {
+      query = e.target.value;
+      render();
+    });
+
+    fieldFilters.addEventListener('click', e => {
+      const btn = e.target.closest('.j-filter-btn');
+      if (!btn) return;
+      fieldFilters.querySelectorAll('.j-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeField = btn.dataset.field;
+      render();
+    });
+
+    tierFilters.addEventListener('click', e => {
+      const btn = e.target.closest('.j-filter-btn');
+      if (!btn) return;
+      tierFilters.querySelectorAll('.j-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeTier = btn.dataset.q;
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>
