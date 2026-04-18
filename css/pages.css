@@ -701,6 +701,22 @@
   font-size: 1.3rem;
   color: rgb(var(--page-color, 108, 99, 255));
   flex-shrink: 0;
+  overflow: hidden;
+}
+
+.exp-icon--img {
+  background: #fff;
+  padding: 4px;
+}
+
+.exp-icon--img.exp-icon--dark {
+  background: #1a1a2e;
+}
+
+.exp-icon--img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .exp-card h2 {
