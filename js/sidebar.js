@@ -44,7 +44,16 @@ function createSidebar() {
       <li><a href="https://www.sjhwangresearch.com" target="_blank" class="menu-item"><span class="menu-color color-research"></span>Research</a></li>
       <li><a href="${basePath}pages/skills.html" class="menu-item"><span class="menu-color color-skills"></span>Skills & Tools & Education</a></li>
       <li><a href="${basePath}pages/experience.html" class="menu-item"><span class="menu-color color-exp"></span>Experience</a></li>
-      <li><a href="${basePath}pages/deadlines.html" class="menu-item"><span class="menu-color color-deadlines"></span>CS Deadlines</a></li>
+      <li class="has-submenu">
+        <button class="menu-item submenu-toggle">
+          <span><span class="menu-color color-deadlines"></span>CS Conference</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <ul class="submenu">
+          <li><a href="${basePath}pages/deadlines.html">CS Deadlines</a></li>
+          <li><a href="${basePath}pages/conference-tier.html">Conference Tier</a></li>
+        </ul>
+      </li>
       <li class="has-submenu">
         <button class="menu-item submenu-toggle">
           <span><span class="menu-color color-contact"></span>Contact</span>

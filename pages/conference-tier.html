@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conference Tier — Sunjun Hwang</title>
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .tier-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 24px 0 20px;
+      align-items: center;
+    }
+
+    .tier-search {
+      flex: 1;
+      min-width: 240px;
+      position: relative;
+    }
+
+    .tier-search i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .tier-search input {
+      width: 100%;
+      padding: 12px 16px 12px 40px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      transition: all 0.25s ease;
+    }
+
+    .tier-search input:focus {
+      outline: none;
+      border-color: rgb(var(--page-color, 108, 99, 255));
+      box-shadow: 0 0 0 3px rgba(var(--page-color, 108, 99, 255), 0.1);
+    }
+
+    .tier-filters {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tier-filter-btn {
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tier-filter-btn:hover {
+      border-color: rgba(var(--page-color, 108, 99, 255), 0.4);
+    }
+
+    .tier-filter-btn.active {
+      background: rgb(var(--page-color, 108, 99, 255));
+      color: white;
+      border-color: rgb(var(--page-color, 108, 99, 255));
+    }
+
+    .tier-table-wrapper {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      overflow-x: auto;
+    }
+
+    .tier-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    .tier-table thead {
+      background: rgba(var(--page-color, 108, 99, 255), 0.06);
+      border-bottom: 2px solid rgba(var(--page-color, 108, 99, 255), 0.15);
+    }
+
+    .tier-table th {
+      padding: 14px 18px;
+      text-align: left;
+      font-weight: 700;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: rgb(var(--page-color, 108, 99, 255));
+    }
+
+    .tier-table tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s ease;
+    }
+
+    .tier-table tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    .tier-table tbody tr:hover {
+      background: rgba(var(--page-color, 108, 99, 255), 0.04);
+    }
+
+    .tier-table td {
+      padding: 12px 18px;
+      color: var(--text-primary);
+    }
+
+    .tier-conf-name {
+      font-weight: 600;
+    }
+
+    .tier-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      min-width: 48px;
+      text-align: center;
+    }
+
+    .tier-badge--a-star { background: #fbeae5; color: #c53030; }
+    .tier-badge--a      { background: #fff1cc; color: #b7791f; }
+    .tier-badge--a-b    { background: #e0e7ff; color: #4c51bf; }
+    .tier-badge--b      { background: #d4f1e3; color: #2f855a; }
+    .tier-badge--b-c    { background: #d4e4f7; color: #2b6cb0; }
+    .tier-badge--c      { background: #e5e7eb; color: #4b5563; }
+
+    .field-chip {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      background: rgba(var(--page-color, 108, 99, 255), 0.08);
+      color: rgb(var(--page-color, 108, 99, 255));
+    }
+
+    .tier-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin: 24px 0 12px;
+      padding: 14px 18px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+    }
+
+    .tier-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tier-empty {
+      padding: 40px;
+      text-align: center;
+      color: var(--text-secondary);
+    }
+
+    .tier-count {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      margin-top: 10px;
+      text-align: right;
+    }
+
+    .tier-note {
+      margin-top: 20px;
+      padding: 16px 20px;
+      border-left: 3px solid rgb(var(--page-color, 108, 99, 255));
+      background: rgba(var(--page-color, 108, 99, 255), 0.05);
+      border-radius: 0 10px 10px 0;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .tier-note strong {
+      color: var(--text-primary);
+    }
+
+    @media (max-width: 768px) {
+      .tier-table {
+        font-size: 0.82rem;
+      }
+      .tier-table th,
+      .tier-table td {
+        padding: 10px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+
+  <main class="page-content" data-theme="deadlines">
+    <div class="container">
+      <h1 class="page-title">
+        <span class="page-icon"><i class="fas fa-layer-group"></i></span>
+        Conference Tier
+      </h1>
+      <p class="page-subtitle">Computer Science conference rankings by tier, acceptance rate, and field.</p>
+
+      <div class="tier-legend">
+        <span class="tier-legend-item"><span class="tier-badge tier-badge--a-star">A*</span> Top-tier</span>
+        <span class="tier-legend-item"><span class="tier-badge tier-badge--a">A</span> Excellent</span>
+        <span class="tier-legend-item"><span class="tier-badge tier-badge--a-b">A-/B+</span> Between A and B</span>
+        <span class="tier-legend-item"><span class="tier-badge tier-badge--b">B</span> Good</span>
+        <span class="tier-legend-item"><span class="tier-badge tier-badge--b-c">B/C</span> Between B and C</span>
+        <span class="tier-legend-item"><span class="tier-badge tier-badge--c">C</span> Standard</span>
+      </div>
+
+      <div class="tier-controls">
+        <div class="tier-search">
+          <i class="fas fa-search"></i>
+          <input type="text" id="tierSearch" placeholder="Search by conference name or field...">
+        </div>
+        <div class="tier-filters" id="tierFilters">
+          <button class="tier-filter-btn active" data-tier="all">All</button>
+          <button class="tier-filter-btn" data-tier="A*">A*</button>
+          <button class="tier-filter-btn" data-tier="A">A</button>
+          <button class="tier-filter-btn" data-tier="A-/B+">A-/B+</button>
+          <button class="tier-filter-btn" data-tier="B">B</button>
+          <button class="tier-filter-btn" data-tier="B/C">B/C</button>
+          <button class="tier-filter-btn" data-tier="C">C</button>
+        </div>
+      </div>
+
+      <div class="tier-table-wrapper">
+        <table class="tier-table" id="tierTable">
+          <thead>
+            <tr>
+              <th>Conference</th>
+              <th>Acceptance</th>
+              <th>Field</th>
+              <th>Tier</th>
+            </tr>
+          </thead>
+          <tbody id="tierTableBody"></tbody>
+        </table>
+        <div class="tier-empty" id="tierEmpty" style="display:none;">
+          <i class="fas fa-inbox" style="font-size:2rem; opacity:0.3; margin-bottom:10px;"></i>
+          <p>No conferences match your filter.</p>
+        </div>
+      </div>
+
+      <div class="tier-count" id="tierCount"></div>
+
+      <div class="tier-note">
+        <strong>Note:</strong> Acceptance rates are approximate and may vary by year. Tier rankings are based on community consensus and resources like
+        <a href="https://gist.github.com/Pusnow/6eb933355b5cb8d31ef1abcb3c3e1206" target="_blank" style="color: inherit; text-decoration: underline;">Pusnow's conference list</a>,
+        CORE rankings, and CCF lists. This list is curated for my personal reference and may not be exhaustive.
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    const CONFERENCES = [
+      { name: "NeurIPS", acceptance: "24–26%", field: "ML", tier: "A*" },
+      { name: "ICML", acceptance: "25–30%", field: "ML", tier: "A*" },
+      { name: "ICLR", acceptance: "30–32%", field: "ML", tier: "A*" },
+      { name: "AAAI", acceptance: "20–25%", field: "AI", tier: "A" },
+      { name: "IJCAI", acceptance: "15–25%", field: "AI", tier: "A" },
+      { name: "ACL", acceptance: "20–25%", field: "NLP", tier: "A*" },
+      { name: "EMNLP", acceptance: "20–30%", field: "NLP", tier: "A*" },
+      { name: "NAACL", acceptance: "20–25%", field: "NLP", tier: "A" },
+      { name: "CVPR", acceptance: "22–26%", field: "CV", tier: "A*" },
+      { name: "ICCV", acceptance: "24–26%", field: "CV", tier: "A*" },
+      { name: "ECCV", acceptance: "27–30%", field: "CV", tier: "A*" },
+      { name: "KDD", acceptance: "18–22%", field: "Data", tier: "A" },
+      { name: "WWW", acceptance: "20–23%", field: "Web/Data", tier: "A" },
+      { name: "ICDM", acceptance: "13–25%", field: "Data", tier: "A" },
+      { name: "SIGCOMM", acceptance: "10–16%", field: "Network", tier: "A*" },
+      { name: "NSDI", acceptance: "12–15%", field: "Systems", tier: "A*" },
+      { name: "OSDI", acceptance: "~15%", field: "Systems", tier: "A*" },
+      { name: "SOSP", acceptance: "~15%", field: "Systems", tier: "A*" },
+      { name: "ASPLOS", acceptance: "15–20%", field: "Arch", tier: "A*" },
+      { name: "ISCA", acceptance: "20–25%", field: "Arch", tier: "A*" },
+      { name: "MICRO", acceptance: "~20%", field: "Arch", tier: "A*" },
+      { name: "HPCA", acceptance: "20–25%", field: "Arch", tier: "A" },
+      { name: "ICSE", acceptance: "~20%", field: "SE", tier: "A*" },
+      { name: "FSE", acceptance: "~20%", field: "SE", tier: "A*" },
+      { name: "IEEE S&P", acceptance: "12–15%", field: "Security", tier: "A*" },
+      { name: "USENIX Security", acceptance: "16–20%", field: "Security", tier: "A*" },
+      { name: "ACM CCS", acceptance: "14–25%", field: "Security", tier: "A*" },
+      { name: "NDSS", acceptance: "~16%", field: "Security", tier: "A*" },
+      { name: "ICRA", acceptance: "40–45%", field: "Robotics", tier: "A" },
+      { name: "IROS", acceptance: "35–45%", field: "Robotics", tier: "A" },
+      { name: "ICCAD", acceptance: "18–25%", field: "EDA", tier: "A" },
+      { name: "DAC", acceptance: "20–25%", field: "EDA", tier: "A" },
+      { name: "DATE", acceptance: "~25%", field: "EDA", tier: "A" },
+      { name: "ASP-DAC", acceptance: "28–31%", field: "EDA", tier: "A-/B+" },
+      { name: "ESWEEK", acceptance: "Varies", field: "Embedded", tier: "A-/B+" },
+      { name: "EMSOFT", acceptance: "~30%", field: "Embedded SW", tier: "A-/B+" },
+      { name: "CODES+ISSS", acceptance: "~27%", field: "HW-SW Co-design", tier: "A-/B+" },
+      { name: "CASES", acceptance: "N/A", field: "Embedded Arch", tier: "B" },
+      { name: "MEMOCODE", acceptance: "N/A", field: "Formal/EDA", tier: "B" },
+      { name: "ICPR", acceptance: "45–55%", field: "CV", tier: "B" },
+      { name: "ICONIP", acceptance: "30–60%", field: "ML", tier: "B/C" },
+      { name: "PRICAI", acceptance: "30–40%", field: "AI", tier: "B" },
+      { name: "IJCNN", acceptance: "40–50%", field: "DL", tier: "B" },
+      { name: "ICIP", acceptance: "40–45%", field: "CV", tier: "B" },
+      { name: "ICASSP", acceptance: "40–50%", field: "Signal", tier: "B" },
+      { name: "IEEE BigData", acceptance: "20–30%", field: "Data", tier: "B" },
+      { name: "CCGrid", acceptance: "25–35%", field: "Cloud", tier: "B" },
+      { name: "HPCC", acceptance: "30–40%", field: "HPC", tier: "B" },
+      { name: "ICMLA", acceptance: "35–50%", field: "ML", tier: "B/C" },
+      { name: "WCNC", acceptance: "30–40%", field: "Network", tier: "B/C" },
+      { name: "GLOBECOM", acceptance: "35–45%", field: "Network", tier: "B/C" },
+      { name: "INFOCOM", acceptance: "~20%", field: "Network", tier: "A" },
+      { name: "ICCS", acceptance: "30–40%", field: "Computing", tier: "B/C" },
+      { name: "ICCSA", acceptance: "30–50%", field: "Computing", tier: "B/C" },
+      { name: "ICUFN", acceptance: "30–50%", field: "Network", tier: "C" },
+      { name: "ICAIIC", acceptance: "40–60%", field: "AI", tier: "C" },
+      { name: "COINS", acceptance: "N/A", field: "AI/Systems", tier: "C" },
+      { name: "ICACT", acceptance: "50–70%", field: "Network", tier: "C" },
+      { name: "ICTC", acceptance: "50–70%", field: "ICT", tier: "C" },
+      { name: "ICEIC", acceptance: "50–70%", field: "Electronics", tier: "C" },
+      { name: "ICCE", acceptance: "40–50%", field: "Embedded", tier: "C" },
+      { name: "CIT", acceptance: "40–60%", field: "General CS", tier: "C" },
+      { name: "ICIT", acceptance: "40–60%", field: "Industry", tier: "C" },
+      { name: "ICIIT", acceptance: "50–70%", field: "IT", tier: "C" },
+    ];
+
+    const TIER_CLASS = {
+      "A*":    "tier-badge--a-star",
+      "A":     "tier-badge--a",
+      "A-/B+": "tier-badge--a-b",
+      "B":     "tier-badge--b",
+      "B/C":   "tier-badge--b-c",
+      "C":     "tier-badge--c",
+    };
+
+    const tbody = document.getElementById('tierTableBody');
+    const search = document.getElementById('tierSearch');
+    const empty = document.getElementById('tierEmpty');
+    const count = document.getElementById('tierCount');
+    const filters = document.getElementById('tierFilters');
+
+    let activeTier = 'all';
+    let query = '';
+
+    function render() {
+      const q = query.toLowerCase();
+      const filtered = CONFERENCES.filter(c => {
+        const matchTier = activeTier === 'all' || c.tier === activeTier;
+        const matchText = !q || c.name.toLowerCase().includes(q) || c.field.toLowerCase().includes(q);
+        return matchTier && matchText;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '';
+        empty.style.display = 'block';
+        count.textContent = '';
+        return;
+      }
+      empty.style.display = 'none';
+      tbody.innerHTML = filtered.map(c => `
+        <tr>
+          <td class="tier-conf-name">${c.name}</td>
+          <td>${c.acceptance}</td>
+          <td><span class="field-chip">${c.field}</span></td>
+          <td><span class="tier-badge ${TIER_CLASS[c.tier] || ''}">${c.tier}</span></td>
+        </tr>
+      `).join('');
+      count.textContent = `Showing ${filtered.length} of ${CONFERENCES.length} conferences`;
+    }
+
+    search.addEventListener('input', e => {
+      query = e.target.value;
+      render();
+    });
+
+    filters.addEventListener('click', e => {
+      const btn = e.target.closest('.tier-filter-btn');
+      if (!btn) return;
+      filters.querySelectorAll('.tier-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeTier = btn.dataset.tier;
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>
