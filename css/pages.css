@@ -704,19 +704,21 @@
   overflow: hidden;
 }
 
-.exp-icon--img {
+.exp-icon.exp-icon--img {
   background: #fff;
-  padding: 4px;
+  padding: 6px;
+  border: 1px solid rgba(var(--page-color, 108, 99, 255), 0.15);
 }
 
-.exp-icon--img.exp-icon--dark {
+.exp-icon.exp-icon--img.exp-icon--dark {
   background: #1a1a2e;
 }
 
-.exp-icon--img img {
+.exp-icon.exp-icon--img img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  display: block;
 }
 
 .exp-card h2 {
