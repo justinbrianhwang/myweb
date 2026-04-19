@@ -1609,3 +1609,112 @@
     columns: 1;
   }
 }
+
+/* Education "See more" expandable section */
+.edu-more-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: rgba(var(--page-color, 255, 107, 107), 0.08);
+  color: rgb(var(--page-color, 255, 107, 107));
+  border: 1px solid rgba(var(--page-color, 255, 107, 107), 0.2);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: inherit;
+}
+
+.edu-more-toggle:hover {
+  background: rgba(var(--page-color, 255, 107, 107), 0.15);
+}
+
+.edu-more-toggle i {
+  transition: transform 0.3s ease;
+  font-size: 0.72rem;
+}
+
+.edu-more-toggle.open i {
+  transform: rotate(180deg);
+}
+
+.edu-more-content {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              opacity 0.3s ease,
+              margin-top 0.3s ease;
+  margin-top: 0;
+}
+
+.edu-more-content.open {
+  max-height: 1500px;
+  opacity: 1;
+  margin-top: 18px;
+}
+
+.edu-more-section {
+  margin-bottom: 18px;
+  padding: 14px 16px;
+  background: var(--bg-secondary);
+  border-radius: 10px;
+  border-left: 3px solid rgb(var(--page-color, 255, 107, 107));
+}
+
+.edu-more-section:last-child {
+  margin-bottom: 0;
+}
+
+.edu-more-section h5 {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-primary);
+}
+
+.edu-more-section h5 i {
+  color: rgb(var(--page-color, 255, 107, 107));
+  font-size: 0.9rem;
+}
+
+.edu-more-section ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.edu-more-section li {
+  font-size: 0.86rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  padding-left: 16px;
+  position: relative;
+}
+
+.edu-more-section li::before {
+  content: '•';
+  position: absolute;
+  left: 4px;
+  color: rgb(var(--page-color, 255, 107, 107));
+  font-weight: bold;
+}
+
+.edu-more-section li strong {
+  color: var(--text-primary);
+}
+
+.edu-meta {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  opacity: 0.8;
+}
