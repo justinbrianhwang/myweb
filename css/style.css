@@ -1675,3 +1675,24 @@ a:hover {
     margin-bottom: 24px;
   }
 }
+
+/* Publication type badge (Conference / Journal) */
+.pub-type {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 10px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  margin-right: 8px;
+  vertical-align: middle;
+  text-transform: uppercase;
+}
+.pub-type--conf {
+  background: rgba(108, 99, 255, 0.15);
+  color: #4c51bf;
+}
+.pub-type--journal {
+  background: rgba(233, 69, 96, 0.15);
+  color: #c53030;
+}
