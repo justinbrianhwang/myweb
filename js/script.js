@@ -252,12 +252,56 @@ document.querySelectorAll('.research-card, .skill-category').forEach((card, i) =
 });
 
 // ===== Timeline Accordion =====
-document.querySelectorAll('.year-toggle').forEach(toggle => {
-  toggle.addEventListener('click', () => {
-    toggle.classList.toggle('active');
-    toggle.nextElementSibling.classList.toggle('active');
+// Auto-expand current year, collapse all others; auto-create section for current year if missing
+(function initYearAccordion() {
+  const currentYear = String(new Date().getFullYear());
+  const timeline = document.querySelector('.timeline');
+
+  if (timeline) {
+    // If current year doesn't already have a section, auto-generate an empty one at the top
+    const hasCurrentYear = Array.from(timeline.querySelectorAll('.year-toggle'))
+      .some(t => t.dataset.year === currentYear);
+
+    if (!hasCurrentYear) {
+      const wrap = document.createElement('div');
+      wrap.className = 'timeline-year';
+      wrap.innerHTML = `
+        <button class="year-toggle" data-year="${currentYear}">
+          <span>${currentYear}</span>
+          <i class="fas fa-chevron-down"></i>
+        </button>
+        <div class="year-content">
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-text">
+              <span class="timeline-date">${currentYear}</span>
+              <p><em>No news yet for ${currentYear}. Stay tuned!</em></p>
+            </div>
+          </div>
+        </div>
+      `;
+      timeline.prepend(wrap);
+    }
+  }
+
+  // Set active states: current year open, others collapsed
+  document.querySelectorAll('.timeline-year').forEach(yearEl => {
+    const toggle = yearEl.querySelector('.year-toggle');
+    const content = yearEl.querySelector('.year-content');
+    if (!toggle || !content) return;
+    const isCurrent = toggle.dataset.year === currentYear;
+    toggle.classList.toggle('active', isCurrent);
+    content.classList.toggle('active', isCurrent);
   });
-});
+
+  // Click handlers (bind after dynamic insertion so new toggle works)
+  document.querySelectorAll('.year-toggle').forEach(toggle => {
+    toggle.addEventListener('click', () => {
+      toggle.classList.toggle('active');
+      toggle.nextElementSibling.classList.toggle('active');
+    });
+  });
+})();
 
 // ===== Smooth Scroll for Navigation =====
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
