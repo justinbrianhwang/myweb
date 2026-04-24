@@ -204,6 +204,13 @@
       color: rgb(var(--page-color, 108, 99, 255));
     }
 
+    .field-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      max-width: 180px;
+    }
+
     .tier-legend {
       display: flex;
       flex-wrap: wrap;
@@ -510,7 +517,7 @@
       { name: "ACNS", acceptance: "N/A", field: "Crypto", tier: "B/C", format: "Hybrid" },
       { name: "ACSAC", acceptance: "N/A", field: "Security", tier: "A-/B+", format: "Hybrid" },
       { name: "AIED", acceptance: "N/A", field: "Education", tier: "B/C", format: "Hybrid" },
-      { name: "AISTATS", acceptance: "N/A", field: "ML", tier: "A", format: "Hybrid" },
+      { name: "AISTATS", acceptance: "N/A", field: "ML, Theory", tier: "A", format: "Hybrid" },
       { name: "ANCS", acceptance: "N/A", field: "Network", tier: "B", format: "Hybrid" },
       { name: "ARITH", acceptance: "N/A", field: "General CS", tier: "B/C", format: "Hybrid" },
       { name: "ASE", acceptance: "N/A", field: "SE", tier: "A*", format: "In-person" },
@@ -525,7 +532,7 @@
       { name: "BMVC", acceptance: "N/A", field: "CV", tier: "A-/B+", format: "Hybrid" },
       { name: "Blockchain", acceptance: "N/A", field: "Blockchain", tier: "B/C", format: "Hybrid" },
       { name: "CADE", acceptance: "N/A", field: "EDA/HW", tier: "B/C", format: "Hybrid" },
-      { name: "CAV", acceptance: "N/A", field: "SE", tier: "A*", format: "In-person" },
+      { name: "CAV", acceptance: "N/A", field: "SE, Theory", tier: "A*", format: "In-person" },
       { name: "CC", acceptance: "N/A", field: "PL", tier: "B", format: "Hybrid" },
       { name: "CCC", acceptance: "N/A", field: "General CS", tier: "B/C", format: "Hybrid" },
       { name: "CCS", acceptance: "N/A", field: "Security", tier: "A*", format: "In-person" },
@@ -538,7 +545,7 @@
       { name: "CLUSTER", acceptance: "N/A", field: "Cloud", tier: "B", format: "Hybrid" },
       { name: "CODASPY", acceptance: "N/A", field: "Security", tier: "B/C", format: "Hybrid" },
       { name: "COLING", acceptance: "N/A", field: "NLP", tier: "A-/B+", format: "Hybrid" },
-      { name: "COLT", acceptance: "N/A", field: "Theory", tier: "A-/B+", format: "In-person" },
+      { name: "COLT", acceptance: "N/A", field: "Theory, ML", tier: "A-/B+", format: "In-person" },
       { name: "CONCUR", acceptance: "N/A", field: "Theory", tier: "B", format: "Hybrid" },
       { name: "CONEXT", acceptance: "N/A", field: "Network", tier: "A", format: "Hybrid" },
       { name: "CPM", acceptance: "N/A", field: "General CS", tier: "B/C", format: "Hybrid" },
@@ -547,7 +554,7 @@
       { name: "CSEET", acceptance: "N/A", field: "SE", tier: "C", format: "Hybrid" },
       { name: "CSF", acceptance: "N/A", field: "Security", tier: "B", format: "Hybrid" },
       { name: "CoNLL", acceptance: "N/A", field: "NLP/Speech", tier: "B/C", format: "Hybrid" },
-      { name: "CoRL", acceptance: "N/A", field: "Robotics", tier: "B/C", format: "Hybrid" },
+      { name: "CoRL", acceptance: "N/A", field: "Robotics, ML", tier: "B/C", format: "Hybrid" },
       { name: "CogSci", acceptance: "N/A", field: "General CS", tier: "B/C", format: "Hybrid" },
       { name: "DASFAA", acceptance: "N/A", field: "Data", tier: "B/C", format: "Hybrid" },
       { name: "DISC", acceptance: "N/A", field: "Systems", tier: "B", format: "Hybrid" },
@@ -587,7 +594,7 @@
       { name: "I3D", acceptance: "N/A", field: "General CS", tier: "B", format: "Hybrid" },
       { name: "ICALP", acceptance: "N/A", field: "Theory", tier: "A-/B+", format: "Hybrid" },
       { name: "ICAPS", acceptance: "N/A", field: "AI", tier: "A-/B+", format: "Hybrid" },
-      { name: "ICBC", acceptance: "N/A", field: "Crypto", tier: "B/C", format: "Hybrid" },
+      { name: "ICBC", acceptance: "N/A", field: "Crypto, Blockchain", tier: "B/C", format: "Hybrid" },
       { name: "ICCD", acceptance: "N/A", field: "General CS", tier: "B", format: "Hybrid" },
       { name: "ICCPS", acceptance: "N/A", field: "General CS", tier: "B/C", format: "Hybrid" },
       { name: "ICDCS", acceptance: "N/A", field: "Systems", tier: "A-/B+", format: "Hybrid" },
@@ -612,12 +619,12 @@
       { name: "IMC", acceptance: "N/A", field: "Network", tier: "A", format: "In-person" },
       { name: "IPDPS", acceptance: "N/A", field: "HPC", tier: "A-/B+", format: "Hybrid" },
       { name: "IPMI", acceptance: "N/A", field: "Medical/Bio", tier: "B/C", format: "Hybrid" },
-      { name: "IPSN", acceptance: "N/A", field: "Network", tier: "A", format: "Hybrid" },
+      { name: "IPSN", acceptance: "N/A", field: "Network, Embedded", tier: "A", format: "Hybrid" },
       { name: "ISAAC", acceptance: "N/A", field: "Theory", tier: "B", format: "Hybrid" },
       { name: "ISBI", acceptance: "N/A", field: "Medical/Bio", tier: "B/C", format: "Hybrid" },
       { name: "ISIT", acceptance: "N/A", field: "Theory", tier: "B/C", format: "Hybrid" },
       { name: "ISLPED", acceptance: "N/A", field: "EDA/HW", tier: "B", format: "Hybrid" },
-      { name: "ISMAR", acceptance: "N/A", field: "VR/AR", tier: "B", format: "Hybrid" },
+      { name: "ISMAR", acceptance: "N/A", field: "VR/AR, HCI", tier: "B", format: "Hybrid" },
       { name: "ISMB", acceptance: "N/A", field: "Medical/Bio", tier: "A-/B+", format: "Hybrid" },
       { name: "ISPASS", acceptance: "N/A", field: "SE", tier: "B", format: "Hybrid" },
       { name: "ISSRE", acceptance: "N/A", field: "SE", tier: "B", format: "Hybrid" },
@@ -635,10 +642,10 @@
       { name: "MASS", acceptance: "N/A", field: "Network", tier: "B", format: "Hybrid" },
       { name: "MEMSYS", acceptance: "N/A", field: "General CS", tier: "B/C", format: "Hybrid" },
       { name: "MFCS", acceptance: "N/A", field: "General CS", tier: "B/C", format: "Hybrid" },
-      { name: "MICCAI", acceptance: "N/A", field: "Medical/Bio", tier: "A-/B+", format: "In-person" },
+      { name: "MICCAI", acceptance: "N/A", field: "Medical, CV", tier: "A-/B+", format: "In-person" },
       { name: "MIDDLEWARE", acceptance: "N/A", field: "Cloud", tier: "B", format: "Hybrid" },
       { name: "MLSys", acceptance: "N/A", field: "ML", tier: "B/C", format: "Hybrid" },
-      { name: "MM", acceptance: "N/A", field: "Multimedia", tier: "A*", format: "Hybrid" },
+      { name: "MM", acceptance: "N/A", field: "Multimedia, CV", tier: "A*", format: "Hybrid" },
       { name: "MMsys", acceptance: "N/A", field: "Multimedia", tier: "B/C", format: "Hybrid" },
       { name: "MODELS", acceptance: "N/A", field: "General CS", tier: "B", format: "Hybrid" },
       { name: "MSR", acceptance: "N/A", field: "SE", tier: "B/C", format: "Hybrid" },
@@ -672,8 +679,8 @@
       { name: "RE", acceptance: "N/A", field: "SE", tier: "B", format: "Hybrid" },
       { name: "RECOMB", acceptance: "N/A", field: "IR/Web", tier: "A-/B+", format: "Hybrid" },
       { name: "RSS", acceptance: "N/A", field: "Robotics", tier: "B", format: "Hybrid" },
-      { name: "RTAS", acceptance: "N/A", field: "RT", tier: "A", format: "Hybrid" },
-      { name: "RTSS", acceptance: "N/A", field: "RT", tier: "A*", format: "In-person" },
+      { name: "RTAS", acceptance: "N/A", field: "RT, Embedded", tier: "A", format: "Hybrid" },
+      { name: "RTSS", acceptance: "N/A", field: "RT, Embedded", tier: "A*", format: "In-person" },
       { name: "RecSys", acceptance: "N/A", field: "Data", tier: "B", format: "Hybrid" },
       { name: "S&P", acceptance: "N/A", field: "Security", tier: "A*", format: "In-person" },
       { name: "SAC", acceptance: "N/A", field: "General CS", tier: "C", format: "Hybrid" },
@@ -688,7 +695,7 @@
       { name: "SIGDIAL", acceptance: "N/A", field: "General CS", tier: "B/C", format: "Hybrid" },
       { name: "SIGGRAPH", acceptance: "N/A", field: "Graphics", tier: "A", format: "In-person" },
       { name: "SIGGRAPH ASIA", acceptance: "N/A", field: "Graphics", tier: "A-/B+", format: "In-person" },
-      { name: "SIGIR", acceptance: "N/A", field: "IR/Web", tier: "A*", format: "In-person" },
+      { name: "SIGIR", acceptance: "N/A", field: "IR/Web, Data", tier: "A*", format: "In-person" },
       { name: "SIGMETRICS", acceptance: "N/A", field: "General CS", tier: "A*", format: "In-person" },
       { name: "SIGMOD", acceptance: "N/A", field: "General CS", tier: "A*", format: "In-person" },
       { name: "SLT", acceptance: "N/A", field: "General CS", tier: "B/C", format: "Hybrid" },
@@ -702,8 +709,8 @@
       { name: "STOC", acceptance: "N/A", field: "Theory", tier: "A*", format: "In-person" },
       { name: "SWAT", acceptance: "N/A", field: "Theory", tier: "B/C", format: "Hybrid" },
       { name: "SYSTOR", acceptance: "N/A", field: "General CS", tier: "B/C", format: "Hybrid" },
-      { name: "SenSys", acceptance: "N/A", field: "Network", tier: "A", format: "In-person" },
-      { name: "TACAS", acceptance: "N/A", field: "Theory", tier: "A-/B+", format: "Hybrid" },
+      { name: "SenSys", acceptance: "N/A", field: "Network, Embedded", tier: "A", format: "In-person" },
+      { name: "TACAS", acceptance: "N/A", field: "Theory, SE", tier: "A-/B+", format: "Hybrid" },
       { name: "TCC", acceptance: "N/A", field: "Crypto", tier: "C", format: "Hybrid" },
       { name: "UAI", acceptance: "N/A", field: "ML", tier: "A", format: "Hybrid" },
       { name: "UBICOMP", acceptance: "N/A", field: "HCI", tier: "A*", format: "In-person" },
@@ -832,8 +839,15 @@
     const tierFilters = document.getElementById('tierFilters');
     const fieldFilters = document.getElementById('fieldFilters');
 
-    // Build Field filter buttons dynamically
-    const FIELDS = ['All', ...[...new Set(CONFERENCES.map(c => c.field))].sort()];
+    // Support multi-category fields separated by "/" or ","
+    function parseFields(fieldStr) {
+      return fieldStr.split(/\s*[,/]\s*/).map(s => s.trim()).filter(Boolean);
+    }
+
+    // Build Field filter buttons: extract all unique sub-fields across conferences
+    const allFieldSet = new Set();
+    CONFERENCES.forEach(c => parseFields(c.field).forEach(f => allFieldSet.add(f)));
+    const FIELDS = ['All', ...[...allFieldSet].sort()];
     fieldFilters.innerHTML = FIELDS.map((f, i) =>
       `<button class="tier-filter-btn${i === 0 ? ' active' : ''}" data-field="${f}">${f}</button>`
     ).join('');
@@ -846,7 +860,8 @@
       const q = query.toLowerCase();
       const filtered = CONFERENCES.filter(c => {
         const matchTier = activeTiers.has('all') || activeTiers.has(c.tier);
-        const matchField = activeFields.has('All') || activeFields.has(c.field);
+        const itemFields = parseFields(c.field);
+        const matchField = activeFields.has('All') || itemFields.some(f => activeFields.has(f));
         const matchText = !q || c.name.toLowerCase().includes(q) || c.field.toLowerCase().includes(q);
         return matchTier && matchField && matchText;
       });
@@ -862,11 +877,12 @@
         const fm = FORMAT_CLASS[c.format] || { cls: "format-badge--hybrid", icon: "fa-shuffle" };
         const searchName = c.name.replace(/\s*\([^)]*\)\s*/g, '').trim();
         const dblpUrl = `https://dblp.org/search?q=${encodeURIComponent(searchName)}`;
+        const fieldChips = parseFields(c.field).map(f => `<span class="field-chip">${f}</span>`).join('');
         return `
         <tr>
           <td class="tier-conf-name">${c.name}</td>
           <td>${c.acceptance}</td>
-          <td><span class="field-chip">${c.field}</span></td>
+          <td><div class="field-chips">${fieldChips}</div></td>
           <td><span class="tier-badge ${TIER_CLASS[c.tier] || ''}">${c.tier}</span></td>
           <td><span class="format-badge ${fm.cls}"><i class="fas ${fm.icon}"></i>${c.format}</span></td>
           <td><a href="${dblpUrl}" target="_blank" class="source-link" title="Look up on DBLP"><i class="fas fa-external-link-alt"></i> DBLP</a></td>

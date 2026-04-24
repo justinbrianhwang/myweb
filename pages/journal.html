@@ -200,6 +200,13 @@
       white-space: nowrap;
     }
 
+    .field-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      max-width: 160px;
+    }
+
     .if-cell {
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 600;
@@ -430,8 +437,8 @@
   <script>
     const JOURNALS = [
       // ── AI / ML / DL ──
-      { name: "Nature Machine Intelligence", abbr: "Nat. Mach. Intell.", publisher: "Nature Portfolio", host: "Springer Nature", field: "AI/ML", tier: "Q1", if: "25.9", strength: "High-impact AI research across ML, neuroscience, and cognition" },
-      { name: "IEEE Transactions on Pattern Analysis and Machine Intelligence", abbr: "TPAMI", publisher: "IEEE", host: "IEEE Computer Society", field: "AI/CV", tier: "Q1", if: "20.8", strength: "Computer vision, pattern recognition, ML foundations" },
+      { name: "Nature Machine Intelligence", abbr: "Nat. Mach. Intell.", publisher: "Nature Portfolio", host: "Springer Nature", field: "AI, ML", tier: "Q1", if: "25.9", strength: "High-impact AI research across ML, neuroscience, and cognition" },
+      { name: "IEEE Transactions on Pattern Analysis and Machine Intelligence", abbr: "TPAMI", publisher: "IEEE", host: "IEEE Computer Society", field: "AI, CV, ML", tier: "Q1", if: "20.8", strength: "Computer vision, pattern recognition, ML foundations" },
       { name: "Journal of Machine Learning Research", abbr: "JMLR", publisher: "JMLR.org / MIT Press", host: "Open Access", field: "AI/ML", tier: "Q1", if: "4.3", strength: "Theoretical and applied ML, open access" },
       { name: "IEEE Transactions on Neural Networks and Learning Systems", abbr: "TNNLS", publisher: "IEEE", host: "IEEE Comp. Intelligence Society", field: "AI/ML", tier: "Q1", if: "10.4", strength: "Neural networks, deep learning, learning theory" },
       { name: "Artificial Intelligence", abbr: "AIJ", publisher: "Elsevier", host: "—", field: "AI", tier: "Q1", if: "5.1", strength: "Foundational AI: planning, reasoning, knowledge representation" },
@@ -459,7 +466,7 @@
       { name: "International Journal of Computer Vision", abbr: "IJCV", publisher: "Springer", host: "—", field: "CV", tier: "Q1", if: "11.6", strength: "Vision theory, 3D reconstruction, object recognition" },
       { name: "Pattern Recognition", abbr: "PR", publisher: "Elsevier", host: "IAPR", field: "CV", tier: "Q1", if: "7.5", strength: "Pattern recognition, deep learning for vision" },
       { name: "Computer Vision and Image Understanding", abbr: "CVIU", publisher: "Elsevier", host: "—", field: "CV", tier: "Q2", if: "4.3", strength: "Image understanding, scene analysis" },
-      { name: "IEEE Transactions on Multimedia", abbr: "TMM", publisher: "IEEE", host: "IEEE Signal Processing Society", field: "CV/Multimedia", tier: "Q1", if: "8.4", strength: "Multimedia processing, video, audio-visual" },
+      { name: "IEEE Transactions on Multimedia", abbr: "TMM", publisher: "IEEE", host: "IEEE Signal Processing Society", field: "CV, Multimedia", tier: "Q1", if: "8.4", strength: "Multimedia processing, video, audio-visual" },
       { name: "Image and Vision Computing", abbr: "IVC", publisher: "Elsevier", host: "BMVA", field: "CV", tier: "Q2", if: "4.2", strength: "Applied vision, image computing" },
       { name: "Pattern Recognition Letters", abbr: "PRL", publisher: "Elsevier", host: "IAPR", field: "CV", tier: "Q2", if: "3.9", strength: "Short papers on pattern recognition" },
       { name: "Machine Vision and Applications", abbr: "MVA", publisher: "Springer", host: "—", field: "CV", tier: "Q3", if: "2.4", strength: "Industrial vision applications" },
@@ -514,11 +521,11 @@
       // ── Medical AI / Medical Informatics ──
       { name: "Nature Medicine", abbr: "Nat. Med.", publisher: "Nature Portfolio", host: "Springer Nature", field: "Medical", tier: "Q1", if: "82.9", strength: "Top clinical and translational medicine" },
       { name: "The Lancet Digital Health", abbr: "LDH", publisher: "Elsevier (The Lancet)", host: "—", field: "Medical", tier: "Q1", if: "23.8", strength: "Digital health, medical AI clinical studies" },
-      { name: "npj Digital Medicine", abbr: "npj DM", publisher: "Nature Portfolio", host: "Springer Nature", field: "Medical", tier: "Q1", if: "15.2", strength: "Digital medicine, open access" },
-      { name: "Medical Image Analysis", abbr: "MedIA", publisher: "Elsevier", host: "MICCAI Society", field: "Medical", tier: "Q1", if: "10.7", strength: "Medical image analysis, deep learning" },
-      { name: "IEEE Transactions on Medical Imaging", abbr: "TMI", publisher: "IEEE", host: "IEEE Signal Processing Soc. / EMBS", field: "Medical", tier: "Q1", if: "10.6", strength: "Medical imaging methods, MRI, CT, US" },
+      { name: "npj Digital Medicine", abbr: "npj DM", publisher: "Nature Portfolio", host: "Springer Nature", field: "Medical, AI", tier: "Q1", if: "15.2", strength: "Digital medicine, open access" },
+      { name: "Medical Image Analysis", abbr: "MedIA", publisher: "Elsevier", host: "MICCAI Society", field: "Medical, CV", tier: "Q1", if: "10.7", strength: "Medical image analysis, deep learning" },
+      { name: "IEEE Transactions on Medical Imaging", abbr: "TMI", publisher: "IEEE", host: "IEEE Signal Processing Soc. / EMBS", field: "Medical, CV, Signal", tier: "Q1", if: "10.6", strength: "Medical imaging methods, MRI, CT, US" },
       { name: "Journal of Biomedical Informatics", abbr: "JBI", publisher: "Elsevier", host: "—", field: "Medical", tier: "Q1", if: "4.5", strength: "Biomedical informatics, EHR, clinical NLP" },
-      { name: "Artificial Intelligence in Medicine", abbr: "AIIM", publisher: "Elsevier", host: "AIME Society", field: "Medical", tier: "Q1", if: "7.5", strength: "AI applications in clinical medicine" },
+      { name: "Artificial Intelligence in Medicine", abbr: "AIIM", publisher: "Elsevier", host: "AIME Society", field: "Medical, AI", tier: "Q1", if: "7.5", strength: "AI applications in clinical medicine" },
       { name: "IEEE Journal of Biomedical and Health Informatics", abbr: "JBHI", publisher: "IEEE", host: "IEEE EMBS", field: "Medical", tier: "Q1", if: "7.7", strength: "Biomedical informatics, health data, wearables" },
       { name: "Computer Methods and Programs in Biomedicine", abbr: "CMPB", publisher: "Elsevier", host: "—", field: "Medical", tier: "Q1", if: "4.9", strength: "Biomedical software, algorithms" },
       { name: "Journal of the American Medical Informatics Association", abbr: "JAMIA", publisher: "Oxford Univ. Press", host: "AMIA", field: "Medical", tier: "Q1", if: "6.4", strength: "Medical informatics, EHR, clinical decision" },
@@ -579,10 +586,10 @@
 
       // ── Graphics / Multimedia ──
       { name: "ACM Transactions on Graphics", abbr: "TOG", publisher: "ACM", host: "ACM SIGGRAPH", field: "Graphics", tier: "Q1", if: "7.8", strength: "Top graphics research (SIGGRAPH papers)" },
-      { name: "IEEE Transactions on Visualization and Computer Graphics", abbr: "TVCG", publisher: "IEEE", host: "IEEE Computer Society", field: "Graphics/Vis", tier: "Q1", if: "4.7", strength: "Visualization, graphics, VR/AR" },
+      { name: "IEEE Transactions on Visualization and Computer Graphics", abbr: "TVCG", publisher: "IEEE", host: "IEEE Computer Society", field: "Graphics, Vis, VR/AR", tier: "Q1", if: "4.7", strength: "Visualization, graphics, VR/AR" },
       { name: "Computer Graphics Forum", abbr: "CGF", publisher: "Wiley", host: "Eurographics Association", field: "Graphics", tier: "Q2", if: "2.5", strength: "Eurographics journal, broad graphics" },
       { name: "The Visual Computer", abbr: "TVC", publisher: "Springer", host: "—", field: "Graphics", tier: "Q2", if: "3.0", strength: "Visual computing, graphics applications" },
-      { name: "IEEE Transactions on Circuits and Systems for Video Technology", abbr: "TCSVT", publisher: "IEEE", host: "IEEE Circuits and Systems Society", field: "CV/Multimedia", tier: "Q1", if: "8.3", strength: "Video processing, circuits for multimedia" },
+      { name: "IEEE Transactions on Circuits and Systems for Video Technology", abbr: "TCSVT", publisher: "IEEE", host: "IEEE Circuits and Systems Society", field: "CV, Multimedia", tier: "Q1", if: "8.3", strength: "Video processing, circuits for multimedia" },
       { name: "Multimedia Systems", abbr: "MMSys", publisher: "Springer", host: "—", field: "Multimedia", tier: "Q3", if: "3.9", strength: "Multimedia systems, delivery" },
 
       // ── HCI ──
@@ -703,7 +710,7 @@
       { name: "Physical Review E", abbr: "PRE", publisher: "APS", host: "American Physical Society", field: "Physics", tier: "Q1", if: "2.4", strength: "Statistical, nonlinear, biological physics" },
       { name: "Physical Review Applied", abbr: "PRApplied", publisher: "APS", host: "American Physical Society", field: "Physics/Quantum", tier: "Q1", if: "4.6", strength: "Applied physics, quantum devices" },
       { name: "Advanced Quantum Technologies", abbr: "AdvQuantTech", publisher: "Wiley", host: "—", field: "Quantum", tier: "Q1", if: "4.6", strength: "Quantum technology, applications" },
-      { name: "Quantum Machine Intelligence", abbr: "QMI", publisher: "Springer", host: "—", field: "Quantum/AI", tier: "Q2", if: "5.6", strength: "Quantum machine learning, hybrid quantum-AI" },
+      { name: "Quantum Machine Intelligence", abbr: "QMI", publisher: "Springer", host: "—", field: "Quantum, AI", tier: "Q2", if: "5.6", strength: "Quantum machine learning, hybrid quantum-AI" },
       { name: "IEEE Transactions on Quantum Engineering", abbr: "TQE", publisher: "IEEE", host: "IEEE Quantum Initiative", field: "Quantum", tier: "Q2", if: "2.8", strength: "Quantum engineering, devices" },
       { name: "Reports on Progress in Physics", abbr: "RPP", publisher: "IOP Publishing", host: "IOP", field: "Physics", tier: "Q1", if: "19.0", strength: "Comprehensive physics reviews" },
       { name: "Physics Reports", abbr: "PR-Phys", publisher: "Elsevier", host: "—", field: "Physics", tier: "Q1", if: "30.4", strength: "Review articles in all physics areas" },
@@ -836,7 +843,7 @@
       { name: "Journal of Visual Languages & Computing", abbr: "JVLC", publisher: "Elsevier", host: "—", field: "CV/HCI", tier: "Q3", if: "1.3", strength: "Visual programming languages" },
 
       // ── NLP / Speech ──
-      { name: "IEEE Transactions on Affective Computing", abbr: "TAC", publisher: "IEEE", host: "IEEE Computer Society", field: "NLP/AI", tier: "Q1", if: "9.6", strength: "Emotion AI, affective speech" },
+      { name: "IEEE Transactions on Affective Computing", abbr: "TAC", publisher: "IEEE", host: "IEEE Computer Society", field: "NLP, AI, HCI", tier: "Q1", if: "9.6", strength: "Emotion AI, affective speech" },
       { name: "Knowledge-Based Systems (speech)", abbr: "KBS-speech", publisher: "Elsevier", host: "—", field: "NLP/Speech", tier: "Q1", if: "8.8", strength: "KB for NLP (special issues)" },
       { name: "Spoken Language Technology Letters", abbr: "SLTL", publisher: "IEEE", host: "IEEE SPS", field: "NLP/Speech", tier: "Q2", if: "3.1", strength: "Short speech/language papers" },
       { name: "Computer Speech & Language", abbr: "CSL", publisher: "Elsevier", host: "ISCA", field: "NLP/Speech", tier: "Q1", if: "4.3", strength: "Speech and language computing" },
@@ -1016,7 +1023,14 @@
       { name: "Annual Review of Physical Chemistry", abbr: "ARPC", publisher: "Annual Reviews", host: "—", field: "Physics", tier: "Q1", if: "12.3", strength: "Physical chemistry reviews" },
     ];
 
-    const FIELDS = ["All", ...[...new Set(JOURNALS.map(j => j.field))].sort()];
+    // Support multi-category fields separated by "/" or ","
+    function parseFields(fieldStr) {
+      return fieldStr.split(/\s*[,/]\s*/).map(s => s.trim()).filter(Boolean);
+    }
+
+    const allFieldSet = new Set();
+    JOURNALS.forEach(j => parseFields(j.field).forEach(f => allFieldSet.add(f)));
+    const FIELDS = ['All', ...[...allFieldSet].sort()];
     const fieldFilters = document.getElementById('fieldFilters');
     fieldFilters.innerHTML = FIELDS.map((f, i) =>
       `<button class="j-filter-btn${i === 0 ? ' active' : ''}" data-field="${f}">${f}</button>`
@@ -1037,7 +1051,8 @@
     function render() {
       const q = query.toLowerCase();
       const filtered = JOURNALS.filter(j => {
-        const matchField = activeFields.has('All') || activeFields.has(j.field);
+        const itemFields = parseFields(j.field);
+        const matchField = activeFields.has('All') || itemFields.some(f => activeFields.has(f));
         const matchTier = activeTiers.has('all') || activeTiers.has(j.tier);
         const matchText = !q
           || j.name.toLowerCase().includes(q)
@@ -1058,11 +1073,12 @@
       tbody.innerHTML = filtered.map(j => {
         const searchName = j.name.replace(/\s*\([^)]*\)\s*/g, '').trim();
         const scimagoUrl = `https://www.scimagojr.com/journalsearch.php?q=${encodeURIComponent(searchName)}`;
+        const fieldChips = parseFields(j.field).map(f => `<span class="field-chip">${f}</span>`).join('');
         return `
         <tr>
           <td class="j-name">${j.name}<span class="j-abbr">${j.abbr}</span></td>
           <td class="j-pub">${j.publisher}<span class="j-host">${j.host === '—' ? '' : j.host}</span></td>
-          <td><span class="field-chip">${j.field}</span></td>
+          <td><div class="field-chips">${fieldChips}</div></td>
           <td><span class="q-badge ${Q_CLASS[j.tier] || ''}">${j.tier}</span></td>
           <td class="if-cell">${j.if}</td>
           <td class="j-strength">${j.strength}</td>
