@@ -148,6 +148,7 @@
     .tier-badge--b      { background: #d4f1e3; color: #2f855a; }
     .tier-badge--b-c    { background: #d4e4f7; color: #2b6cb0; }
     .tier-badge--c      { background: #e5e7eb; color: #4b5563; }
+    .tier-badge--d      { background: #f3e8e8; color: #77554d; }
 
     .format-badge {
       display: inline-flex;
@@ -255,6 +256,7 @@
         <span class="tier-legend-item"><span class="tier-badge tier-badge--b">B</span> Good</span>
         <span class="tier-legend-item"><span class="tier-badge tier-badge--b-c">B/C</span> Between B and C</span>
         <span class="tier-legend-item"><span class="tier-badge tier-badge--c">C</span> Standard</span>
+        <span class="tier-legend-item"><span class="tier-badge tier-badge--d">D</span> Minor / Regional</span>
       </div>
 
       <div class="tier-controls">
@@ -271,6 +273,7 @@
           <button class="tier-filter-btn" data-tier="B">B</button>
           <button class="tier-filter-btn" data-tier="B/C">B/C</button>
           <button class="tier-filter-btn" data-tier="C">C</button>
+          <button class="tier-filter-btn" data-tier="D">D</button>
         </div>
       </div>
 
@@ -590,6 +593,48 @@
       { name: "WiOpt", acceptance: "N/A", field: "Network", tier: "B/C", format: "Hybrid" },
       { name: "WiSec", acceptance: "N/A", field: "Security", tier: "B/C", format: "Hybrid" },
       { name: "WoWMoM", acceptance: "N/A", field: "Network", tier: "B/C", format: "Hybrid" },
+
+      // ── D tier (Minor / Regional / Low peer-review bar) ──
+      { name: "ICMIC", acceptance: "~80%", field: "Control", tier: "D", format: "Hybrid" },
+      { name: "ADINTEC", acceptance: "~80%", field: "General CS", tier: "D", format: "Hybrid" },
+      { name: "ICEECC", acceptance: "~85%", field: "Electronics", tier: "D", format: "Hybrid" },
+      { name: "ICEEE", acceptance: "~80%", field: "Electronics", tier: "D", format: "Hybrid" },
+      { name: "ICCEA", acceptance: "~75%", field: "General CS", tier: "D", format: "Hybrid" },
+      { name: "ICCETW", acceptance: "~75%", field: "General CS", tier: "D", format: "Hybrid" },
+      { name: "ICCESW", acceptance: "~80%", field: "SE", tier: "D", format: "Hybrid" },
+      { name: "ICECE", acceptance: "~80%", field: "Electronics", tier: "D", format: "Hybrid" },
+      { name: "ICCCE", acceptance: "~80%", field: "Network", tier: "D", format: "Hybrid" },
+      { name: "ICEET", acceptance: "~85%", field: "Education", tier: "D", format: "Hybrid" },
+      { name: "ICAICE", acceptance: "~80%", field: "AI", tier: "D", format: "Hybrid" },
+      { name: "ICACI", acceptance: "~75%", field: "AI", tier: "D", format: "Hybrid" },
+      { name: "ICEIT", acceptance: "~80%", field: "IT", tier: "D", format: "Hybrid" },
+      { name: "ICEEI", acceptance: "~80%", field: "Electronics", tier: "D", format: "Hybrid" },
+      { name: "IMCEC", acceptance: "~75%", field: "General CS", tier: "D", format: "Hybrid" },
+      { name: "IEECS", acceptance: "~80%", field: "General CS", tier: "D", format: "Hybrid" },
+      { name: "IEECE", acceptance: "~80%", field: "Electronics", tier: "D", format: "Hybrid" },
+      { name: "ICCEIS", acceptance: "~80%", field: "General CS", tier: "D", format: "Hybrid" },
+      { name: "ICEECS", acceptance: "~80%", field: "General CS", tier: "D", format: "Hybrid" },
+      { name: "ICEIC (IEIE)", acceptance: "~75%", field: "Electronics", tier: "D", format: "Hybrid" },
+      { name: "ICCCS", acceptance: "~70%", field: "General CS", tier: "D", format: "Hybrid" },
+      { name: "ICMTMA", acceptance: "~75%", field: "Automation", tier: "D", format: "Hybrid" },
+      { name: "ICEMI", acceptance: "~75%", field: "Electronics", tier: "D", format: "Hybrid" },
+      { name: "ICACCE", acceptance: "~80%", field: "AI", tier: "D", format: "Hybrid" },
+      { name: "ICISE", acceptance: "~80%", field: "SE", tier: "D", format: "Hybrid" },
+      { name: "ICICT", acceptance: "~80%", field: "ICT", tier: "D", format: "Hybrid" },
+      { name: "ICMLC", acceptance: "~70%", field: "ML", tier: "D", format: "Hybrid" },
+      { name: "ICCASM", acceptance: "~80%", field: "Automation", tier: "D", format: "Hybrid" },
+      { name: "ICICTA", acceptance: "~80%", field: "Automation", tier: "D", format: "Hybrid" },
+      { name: "ICCEE", acceptance: "~80%", field: "Electronics", tier: "D", format: "Hybrid" },
+      { name: "ICCECE", acceptance: "~80%", field: "Electronics", tier: "D", format: "Hybrid" },
+      { name: "ICCIA", acceptance: "~80%", field: "AI", tier: "D", format: "Hybrid" },
+      { name: "ICAIE", acceptance: "~80%", field: "AI", tier: "D", format: "Hybrid" },
+      { name: "AIAI (subset)", acceptance: "~75%", field: "AI", tier: "D", format: "Hybrid" },
+      { name: "CCIS", acceptance: "~75%", field: "General CS", tier: "D", format: "Hybrid" },
+      { name: "IEIE Summer/Winter Workshop", acceptance: "~95%", field: "Electronics", tier: "D", format: "In-person" },
+      { name: "KIPS Winter/Summer Workshop", acceptance: "~95%", field: "General CS", tier: "D", format: "In-person" },
+      { name: "KICS Summer/Winter Workshop", acceptance: "~95%", field: "Network", tier: "D", format: "In-person" },
+      { name: "KIIT Summer Workshop", acceptance: "~95%", field: "General CS", tier: "D", format: "In-person" },
+      { name: "KIISE Summer/Winter Workshop", acceptance: "~95%", field: "General CS", tier: "D", format: "In-person" },
     ];
 
     const TIER_CLASS = {
@@ -600,6 +645,7 @@
       "B":     "tier-badge--b",
       "B/C":   "tier-badge--b-c",
       "C":     "tier-badge--c",
+      "D":     "tier-badge--d",
     };
 
     const FORMAT_CLASS = {
