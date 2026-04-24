@@ -251,6 +251,81 @@
       color: var(--text-primary);
     }
 
+    .source-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.73rem;
+      font-weight: 600;
+      background: rgba(var(--page-color, 108, 99, 255), 0.08);
+      color: rgb(var(--page-color, 108, 99, 255));
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .source-link:hover {
+      background: rgba(var(--page-color, 108, 99, 255), 0.18);
+      color: rgb(var(--page-color, 108, 99, 255));
+    }
+
+    .source-link i {
+      font-size: 0.68rem;
+    }
+
+    .method-note {
+      margin-top: 40px;
+      padding: 22px 26px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      border-left: 4px solid rgb(var(--page-color, 108, 99, 255));
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .method-note h3 {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .method-note h3 i {
+      color: rgb(var(--page-color, 108, 99, 255));
+    }
+
+    .method-note p {
+      margin-bottom: 10px;
+    }
+
+    .method-note ul {
+      padding-left: 22px;
+      margin-bottom: 12px;
+    }
+
+    .method-note li {
+      margin-bottom: 6px;
+    }
+
+    .method-note a {
+      color: rgb(var(--page-color, 108, 99, 255));
+      font-weight: 600;
+    }
+
+    .method-note__small {
+      font-size: 0.8rem;
+      opacity: 0.85;
+      font-style: italic;
+    }
+
     @media (max-width: 768px) {
       .tier-table {
         font-size: 0.82rem;
@@ -323,6 +398,7 @@
               <th>Field</th>
               <th>Tier</th>
               <th>Format</th>
+              <th>Source</th>
             </tr>
           </thead>
           <tbody id="tierTableBody"></tbody>
@@ -334,6 +410,26 @@
       </div>
 
       <div class="tier-count" id="tierCount"></div>
+
+      <!-- Methodology Note -->
+      <div class="method-note">
+        <h3><i class="fas fa-info-circle"></i> Methodology &amp; Disclaimer</h3>
+        <p>Tiers on this page are <strong>not based solely on acceptance rate</strong>. They combine multiple sources:</p>
+        <ul>
+          <li>User-curated list (63 conferences): community consensus (CORE/CCF-style judgment).</li>
+          <li>Bulk additions (~200 conferences): averaged rankings from Korea's top CS schools (KAIST, SNU, POSTECH), BK21+ IF, and Korean Information Science Society — aggregated in <a href="https://gist.github.com/Pusnow/6eb933355b5cb8d31ef1abcb3c3e1206" target="_blank">Pusnow's CS Conference Ranking</a>.</li>
+          <li>D-tier additions (~70 conferences): estimated from general community reputation. Acceptance rates marked with "~" are <em>approximations</em> and may not reflect official published numbers.</li>
+          <li>Format (In-person / Hybrid / Online) is inferred from recent editions and may change year to year.</li>
+        </ul>
+        <p><strong>Official ranking sources:</strong>
+          <a href="https://portal.core.edu.au/conf-ranks/" target="_blank">CORE</a> ·
+          <a href="https://www.ccf.org.cn/Academic_Evaluation/By_category/" target="_blank">CCF</a> ·
+          <a href="https://research.com/conference-rankings/computer-science" target="_blank">Research.com</a> ·
+          <a href="https://dblp.org/" target="_blank">DBLP</a> ·
+          <a href="https://gist.github.com/Pusnow/6eb933355b5cb8d31ef1abcb3c3e1206" target="_blank">Pusnow gist</a>
+        </p>
+        <p class="method-note__small">The "Source" column links to DBLP search for each conference — use it to verify existence, publication record, and recent editions.</p>
+      </div>
 
     </div>
   </main>
@@ -764,6 +860,8 @@
       empty.style.display = 'none';
       tbody.innerHTML = filtered.map(c => {
         const fm = FORMAT_CLASS[c.format] || { cls: "format-badge--hybrid", icon: "fa-shuffle" };
+        const searchName = c.name.replace(/\s*\([^)]*\)\s*/g, '').trim();
+        const dblpUrl = `https://dblp.org/search?q=${encodeURIComponent(searchName)}`;
         return `
         <tr>
           <td class="tier-conf-name">${c.name}</td>
@@ -771,6 +869,7 @@
           <td><span class="field-chip">${c.field}</span></td>
           <td><span class="tier-badge ${TIER_CLASS[c.tier] || ''}">${c.tier}</span></td>
           <td><span class="format-badge ${fm.cls}"><i class="fas ${fm.icon}"></i>${c.format}</span></td>
+          <td><a href="${dblpUrl}" target="_blank" class="source-link" title="Look up on DBLP"><i class="fas fa-external-link-alt"></i> DBLP</a></td>
         </tr>
       `;}).join('');
       count.textContent = `Showing ${filtered.length} of ${CONFERENCES.length} conferences`;

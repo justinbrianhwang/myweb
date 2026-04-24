@@ -246,6 +246,81 @@
       text-align: right;
     }
 
+    .source-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.73rem;
+      font-weight: 600;
+      background: rgba(var(--page-color, 0, 91, 93), 0.08);
+      color: rgb(var(--page-color, 0, 91, 93));
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .source-link:hover {
+      background: rgba(var(--page-color, 0, 91, 93), 0.18);
+      color: rgb(var(--page-color, 0, 91, 93));
+    }
+
+    .source-link i {
+      font-size: 0.68rem;
+    }
+
+    .method-note {
+      margin-top: 40px;
+      padding: 22px 26px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      border-left: 4px solid rgb(var(--page-color, 0, 91, 93));
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .method-note h3 {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .method-note h3 i {
+      color: rgb(var(--page-color, 0, 91, 93));
+    }
+
+    .method-note p {
+      margin-bottom: 10px;
+    }
+
+    .method-note ul {
+      padding-left: 22px;
+      margin-bottom: 12px;
+    }
+
+    .method-note li {
+      margin-bottom: 6px;
+    }
+
+    .method-note a {
+      color: rgb(var(--page-color, 0, 91, 93));
+      font-weight: 600;
+    }
+
+    .method-note__small {
+      font-size: 0.8rem;
+      opacity: 0.85;
+      font-style: italic;
+    }
+
     @media (max-width: 768px) {
       .j-table {
         font-size: 0.8rem;
@@ -314,6 +389,7 @@
               <th>Tier</th>
               <th>IF</th>
               <th>Strengths</th>
+              <th>Source</th>
             </tr>
           </thead>
           <tbody id="jTableBody"></tbody>
@@ -325,6 +401,25 @@
       </div>
 
       <div class="j-count" id="jCount"></div>
+
+      <!-- Methodology Note -->
+      <div class="method-note">
+        <h3><i class="fas fa-info-circle"></i> Methodology &amp; Disclaimer</h3>
+        <p>Journal tiers here refer to <strong>JCR Quartiles (Q1–Q4)</strong>, which rank journals by Impact Factor <em>within their Web of Science subject category</em>:</p>
+        <ul>
+          <li><strong>Q1</strong>: top 25% within its category · <strong>Q2</strong>: 25–50% · <strong>Q3</strong>: 50–75% · <strong>Q4</strong>: bottom 25%</li>
+          <li><strong>KCI</strong>: Korean Citation Index — Korean national indexing status, not a JCR tier.</li>
+          <li><strong>Tiers are NOT based on acceptance rate.</strong> Most journals do not publicly report acceptance rates.</li>
+          <li>Impact Factor values listed are from recent JCR editions (2023–2024). Some values may differ slightly from the latest JCR release or are estimates where the journal is newly indexed.</li>
+        </ul>
+        <p><strong>Official indexing sources:</strong>
+          <a href="https://jcr.clarivate.com/" target="_blank">JCR (Clarivate)</a> ·
+          <a href="https://www.scimagojr.com/" target="_blank">Scimago Journal &amp; Country Rank</a> ·
+          <a href="https://mjl.clarivate.com/home" target="_blank">Master Journal List</a> ·
+          <a href="https://www.kci.go.kr/" target="_blank">KCI (Korean)</a>
+        </p>
+        <p class="method-note__small">The "Source" column links to Scimago for each journal — a free public lookup for Impact Factor, quartile, and indexing history.</p>
+      </div>
     </div>
   </main>
 
@@ -960,7 +1055,10 @@
         return;
       }
       empty.style.display = 'none';
-      tbody.innerHTML = filtered.map(j => `
+      tbody.innerHTML = filtered.map(j => {
+        const searchName = j.name.replace(/\s*\([^)]*\)\s*/g, '').trim();
+        const scimagoUrl = `https://www.scimagojr.com/journalsearch.php?q=${encodeURIComponent(searchName)}`;
+        return `
         <tr>
           <td class="j-name">${j.name}<span class="j-abbr">${j.abbr}</span></td>
           <td class="j-pub">${j.publisher}<span class="j-host">${j.host === '—' ? '' : j.host}</span></td>
@@ -968,8 +1066,9 @@
           <td><span class="q-badge ${Q_CLASS[j.tier] || ''}">${j.tier}</span></td>
           <td class="if-cell">${j.if}</td>
           <td class="j-strength">${j.strength}</td>
+          <td><a href="${scimagoUrl}" target="_blank" class="source-link" title="Look up on Scimago"><i class="fas fa-external-link-alt"></i> Scimago</a></td>
         </tr>
-      `).join('');
+      `;}).join('');
       count.textContent = `Showing ${filtered.length} of ${JOURNALS.length} journals`;
     }
 
