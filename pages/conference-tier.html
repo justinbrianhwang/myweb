@@ -58,6 +58,32 @@
       flex-wrap: wrap;
     }
 
+    .filter-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .filter-row-label {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding-top: 10px;
+      min-width: 54px;
+      flex-shrink: 0;
+    }
+
+    .filter-hint {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      opacity: 0.7;
+      margin: 4px 0 20px;
+      font-style: italic;
+    }
+
     .tier-filter-btn {
       padding: 8px 16px;
       border-radius: 8px;
@@ -264,6 +290,10 @@
           <i class="fas fa-search"></i>
           <input type="text" id="tierSearch" placeholder="Search by conference name or field...">
         </div>
+      </div>
+
+      <div class="filter-row">
+        <span class="filter-row-label">Tier</span>
         <div class="tier-filters" id="tierFilters">
           <button class="tier-filter-btn active" data-tier="all">All</button>
           <button class="tier-filter-btn" data-tier="A*">A*</button>
@@ -276,6 +306,13 @@
           <button class="tier-filter-btn" data-tier="D">D</button>
         </div>
       </div>
+
+      <div class="filter-row">
+        <span class="filter-row-label">Field</span>
+        <div class="tier-filters" id="fieldFilters"></div>
+      </div>
+
+      <p class="filter-hint">Tip: Click multiple Tier or Field buttons to combine filters. Click again to deselect.</p>
 
       <div class="tier-table-wrapper">
         <table class="tier-table" id="tierTable">
@@ -696,17 +733,26 @@
     const search = document.getElementById('tierSearch');
     const empty = document.getElementById('tierEmpty');
     const count = document.getElementById('tierCount');
-    const filters = document.getElementById('tierFilters');
+    const tierFilters = document.getElementById('tierFilters');
+    const fieldFilters = document.getElementById('fieldFilters');
 
-    let activeTier = 'all';
+    // Build Field filter buttons dynamically
+    const FIELDS = ['All', ...[...new Set(CONFERENCES.map(c => c.field))].sort()];
+    fieldFilters.innerHTML = FIELDS.map((f, i) =>
+      `<button class="tier-filter-btn${i === 0 ? ' active' : ''}" data-field="${f}">${f}</button>`
+    ).join('');
+
+    const activeTiers = new Set(['all']);
+    const activeFields = new Set(['All']);
     let query = '';
 
     function render() {
       const q = query.toLowerCase();
       const filtered = CONFERENCES.filter(c => {
-        const matchTier = activeTier === 'all' || c.tier === activeTier;
+        const matchTier = activeTiers.has('all') || activeTiers.has(c.tier);
+        const matchField = activeFields.has('All') || activeFields.has(c.field);
         const matchText = !q || c.name.toLowerCase().includes(q) || c.field.toLowerCase().includes(q);
-        return matchTier && matchText;
+        return matchTier && matchField && matchText;
       });
 
       if (filtered.length === 0) {
@@ -730,19 +776,47 @@
       count.textContent = `Showing ${filtered.length} of ${CONFERENCES.length} conferences`;
     }
 
+    // Multi-select handler for a filter group
+    function makeMultiSelect(container, allKey, activeSet, attr) {
+      container.addEventListener('click', e => {
+        const btn = e.target.closest('.tier-filter-btn');
+        if (!btn) return;
+        const val = btn.dataset[attr];
+
+        if (val === allKey) {
+          // Clicking "All" clears everything and selects All only
+          activeSet.clear();
+          activeSet.add(allKey);
+          container.querySelectorAll('.tier-filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        } else {
+          // Toggle this button; remove "All" from active
+          if (activeSet.has(val)) {
+            activeSet.delete(val);
+            btn.classList.remove('active');
+          } else {
+            activeSet.delete(allKey);
+            container.querySelector(`[data-${attr}="${allKey}"]`)?.classList.remove('active');
+            activeSet.add(val);
+            btn.classList.add('active');
+          }
+          // If nothing selected, revert to All
+          if (activeSet.size === 0) {
+            activeSet.add(allKey);
+            container.querySelector(`[data-${attr}="${allKey}"]`)?.classList.add('active');
+          }
+        }
+        render();
+      });
+    }
+
     search.addEventListener('input', e => {
       query = e.target.value;
       render();
     });
 
-    filters.addEventListener('click', e => {
-      const btn = e.target.closest('.tier-filter-btn');
-      if (!btn) return;
-      filters.querySelectorAll('.tier-filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      activeTier = btn.dataset.tier;
-      render();
-    });
+    makeMultiSelect(tierFilters, 'all', activeTiers, 'tier');
+    makeMultiSelect(fieldFilters, 'All', activeFields, 'field');
 
     render();
   </script>

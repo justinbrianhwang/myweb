@@ -756,15 +756,15 @@
     const search = document.getElementById('jSearch');
     const tierFilters = document.getElementById('tierFilters');
 
-    let activeField = 'All';
-    let activeTier = 'all';
+    const activeFields = new Set(['All']);
+    const activeTiers = new Set(['all']);
     let query = '';
 
     function render() {
       const q = query.toLowerCase();
       const filtered = JOURNALS.filter(j => {
-        const matchField = activeField === 'All' || j.field === activeField;
-        const matchTier = activeTier === 'all' || j.tier === activeTier;
+        const matchField = activeFields.has('All') || activeFields.has(j.field);
+        const matchTier = activeTiers.has('all') || activeTiers.has(j.tier);
         const matchText = !q
           || j.name.toLowerCase().includes(q)
           || j.abbr.toLowerCase().includes(q)
@@ -799,23 +799,38 @@
       render();
     });
 
-    fieldFilters.addEventListener('click', e => {
-      const btn = e.target.closest('.j-filter-btn');
-      if (!btn) return;
-      fieldFilters.querySelectorAll('.j-filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      activeField = btn.dataset.field;
-      render();
-    });
+    function makeMultiSelect(container, allKey, activeSet, attr, btnClass) {
+      container.addEventListener('click', e => {
+        const btn = e.target.closest('.' + btnClass);
+        if (!btn) return;
+        const val = btn.dataset[attr];
 
-    tierFilters.addEventListener('click', e => {
-      const btn = e.target.closest('.j-filter-btn');
-      if (!btn) return;
-      tierFilters.querySelectorAll('.j-filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      activeTier = btn.dataset.q;
-      render();
-    });
+        if (val === allKey) {
+          activeSet.clear();
+          activeSet.add(allKey);
+          container.querySelectorAll('.' + btnClass).forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+        } else {
+          if (activeSet.has(val)) {
+            activeSet.delete(val);
+            btn.classList.remove('active');
+          } else {
+            activeSet.delete(allKey);
+            container.querySelector(`[data-${attr}="${allKey}"]`)?.classList.remove('active');
+            activeSet.add(val);
+            btn.classList.add('active');
+          }
+          if (activeSet.size === 0) {
+            activeSet.add(allKey);
+            container.querySelector(`[data-${attr}="${allKey}"]`)?.classList.add('active');
+          }
+        }
+        render();
+      });
+    }
+
+    makeMultiSelect(fieldFilters, 'All', activeFields, 'field', 'j-filter-btn');
+    makeMultiSelect(tierFilters, 'all', activeTiers, 'q', 'j-filter-btn');
 
     render();
   </script>
