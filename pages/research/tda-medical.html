@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TDA for Medical Data — Sunjun Hwang</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="../../css/pages.css">
+  <link rel="stylesheet" href="../../css/research-hero.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <a href="../../index.html#research" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Research</a>
+
+  <main class="page-content" data-theme="research">
+    <div class="container">
+      <h1 class="page-title">
+        <span class="page-icon page-icon--img"><img src="../../assets/research/tda-medical.png" alt="TDA for Medical Data"></span>
+        TDA for Medical Data
+      </h1>
+      <p class="page-subtitle">Topological Data Analysis for BRCA Breast Cancer Genomics</p>
+
+      <div class="research-detail">
+
+        <section class="detail-section">
+          <h2>Overview</h2>
+          <p>Modern medical datasets — particularly genomic data — are characterized by extremely high dimensionality, complex correlations, and subtle structural patterns that conventional statistical methods often fail to capture. Topological Data Analysis (TDA) offers a principled framework for extracting <strong>shape-based features</strong> from such data, revealing topological structures (connected components, loops, voids) that are invariant to noise and metric choice.</p>
+          <p>This research applies TDA to <strong>BRCA breast cancer datasets</strong> with the goal of discovering novel biomarkers and hidden topological structures that conventional univariate or correlation-based analyses cannot identify. By treating gene expression profiles as point clouds in high-dimensional space, we can uncover persistent features that correspond to biologically meaningful subtypes and progression patterns.</p>
+        </section>
+
+        <section class="detail-section">
+          <h2>Why TDA for Cancer Genomics?</h2>
+          <p>Traditional statistical pipelines (PCA, clustering, differential-expression tests) reduce data to first/second-order statistics and assume Euclidean structure. However, gene-expression manifolds are often curved and contain non-trivial topological features. TDA, through tools such as <strong>persistent homology</strong> and the <strong>Mapper algorithm</strong>, captures multiscale features that survive across resolutions — features which are robust to noise and reproducible across cohorts.</p>
+          <p>For breast cancer specifically, BRCA1/BRCA2 mutation carriers exhibit complex molecular subtypes with overlapping gene-expression signatures. We hypothesize that topological features may help distinguish these subtypes more reliably than purely linear methods, leading to more accurate prognosis and treatment-response predictions.</p>
+        </section>
+
+        <section class="detail-section">
+          <h2>Methodology</h2>
+          <ul>
+            <li><strong>Data:</strong> BRCA gene-expression and clinical data from TCGA (The Cancer Genome Atlas) and supplementary public repositories.</li>
+            <li><strong>Persistent Homology:</strong> Compute persistence diagrams across multiple filtration parameters to identify stable topological features (H0, H1, H2).</li>
+            <li><strong>Mapper Algorithm:</strong> Generate topological summaries (graph representations) of the data, revealing branching structures that may correspond to subtype evolution.</li>
+            <li><strong>Feature Engineering:</strong> Convert topological summaries into machine-learnable features (persistence images, persistence landscapes) for downstream classification.</li>
+            <li><strong>Validation:</strong> Cross-validate with known molecular subtypes (Luminal A/B, HER2-enriched, Basal-like) and compare against conventional baselines.</li>
+          </ul>
+        </section>
+
+        <section class="detail-section">
+          <h2>Goals &amp; Expected Impact</h2>
+          <p>The primary goal is to <strong>discover novel variables and biomarkers</strong> in breast cancer genomics that traditional statistical methods miss. By identifying topologically distinct patient clusters, we aim to contribute to <strong>more personalized treatment strategies</strong> and improved prognostic accuracy.</p>
+          <p>This work is conducted in collaboration with <strong>Permillion</strong>, a medical AI startup focused on data-driven oncology research. Findings will be evaluated for clinical relevance and potential integration into computational pipelines for early diagnosis.</p>
+        </section>
+
+        <section class="detail-section">
+          <h2>Tools &amp; Frameworks</h2>
+          <p>Persistent homology computation: <strong>GUDHI, Ripser, scikit-tda</strong> · Mapper analysis: <strong>KeplerMapper, Giotto-tda</strong> · Standard ML: <strong>PyTorch, scikit-learn</strong> · Genomics: <strong>Bioconductor, TCGA APIs</strong>.</p>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>
