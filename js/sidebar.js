@@ -55,6 +55,7 @@ function createSidebar() {
         </ul>
       </li>
       <li><a href="${basePath}pages/journal.html" class="menu-item"><span class="menu-color color-journal"></span>Journal</a></li>
+      <li><a href="https://sjhwangwiki.com" target="_blank" class="menu-item"><span class="menu-color color-wiki"></span>Wiki</a></li>
       <li class="has-submenu">
         <button class="menu-item submenu-toggle">
           <span><span class="menu-color color-contact"></span>Contact</span>
