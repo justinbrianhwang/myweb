@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Overleaf / LaTeX Learning — Sunjun Hwang</title>
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+          onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}, {left: '\\[', right: '\\]', display: true}, {left: '\\(', right: '\\)', display: false}]});"></script>
+  <style>
+    .ov-hero {
+      background: linear-gradient(135deg, rgba(13, 110, 80, 0.08), rgba(108, 99, 255, 0.06));
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px 36px;
+      margin-bottom: 36px;
+    }
+    .ov-hero h1 {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .ov-hero h1 .badge {
+      font-size: 0.65rem;
+      background: #0d6e50;
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 12px;
+      vertical-align: middle;
+      letter-spacing: 0.5px;
+    }
+    .ov-hero p {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 760px;
+    }
+
+    .ov-roadmap {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 14px;
+      margin: 28px 0 56px;
+    }
+    .ov-roadmap a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 18px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      color: var(--text-primary);
+      transition: all 0.25s ease;
+      text-decoration: none;
+    }
+    .ov-roadmap a:hover {
+      border-color: rgba(13, 110, 80, 0.5);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(13, 110, 80, 0.1);
+    }
+    .ov-roadmap a .ov-step-num {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: rgba(13, 110, 80, 0.12);
+      color: #0d6e50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+    .ov-roadmap a .ov-step-label {
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .ov-section {
+      margin-bottom: 72px;
+      scroll-margin-top: 100px;
+    }
+    .ov-section h2 {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+    }
+    .ov-section h2 .ov-num {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #0d6e50;
+      background: rgba(13, 110, 80, 0.12);
+      padding: 3px 10px;
+      border-radius: 8px;
+    }
+    .ov-section > .ov-section__sub {
+      color: var(--text-secondary);
+      margin-bottom: 22px;
+      line-height: 1.7;
+      max-width: 760px;
+    }
+    .ov-section h3 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin: 28px 0 10px;
+      color: var(--text-primary);
+    }
+    .ov-section p,
+    .ov-section li {
+      line-height: 1.75;
+      color: var(--text-primary);
+    }
+    .ov-section p {
+      margin-bottom: 12px;
+    }
+    .ov-section ul, .ov-section ol {
+      padding-left: 22px;
+      margin-bottom: 14px;
+    }
+    .ov-section li {
+      margin-bottom: 6px;
+    }
+
+    .ov-code {
+      background: #0f1419;
+      color: #e6e6e6;
+      padding: 16px 18px;
+      border-radius: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88rem;
+      line-height: 1.55;
+      overflow-x: auto;
+      position: relative;
+      margin-bottom: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .ov-code code { color: inherit; background: none; }
+    .ov-code .kw { color: #f97583; }
+    .ov-code .cmd { color: #79b8ff; }
+    .ov-code .arg { color: #ffab70; }
+    .ov-code .str { color: #9ecbff; }
+    .ov-code .cmt { color: #6a737d; font-style: italic; }
+    .ov-code-copy {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 0.72rem;
+      color: #c0c0c0;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .ov-code-copy:hover { background: rgba(255,255,255,0.16); color: #fff; }
+
+    .ov-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .ov-split > div {
+      display: flex;
+      flex-direction: column;
+    }
+    .ov-split__label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+    .ov-preview {
+      background: #fff;
+      color: #1a1a1a;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 20px;
+      font-family: 'Latin Modern Roman', 'Georgia', 'Times New Roman', serif;
+      min-height: 100px;
+      overflow-x: auto;
+    }
+    .ov-preview h4 {
+      font-family: inherit;
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #1a1a1a;
+    }
+    .ov-preview .author { font-size: 0.95rem; color: #444; margin-bottom: 4px; }
+    .ov-preview .date { font-size: 0.85rem; color: #666; }
+    .ov-preview .sec-num { font-weight: 700; margin-right: 6px; }
+    .ov-preview p { color: #1a1a1a; line-height: 1.6; }
+
+    .ov-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 16px;
+      background: var(--bg-card);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .ov-table th, .ov-table td {
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.92rem;
+    }
+    .ov-table th {
+      background: rgba(13, 110, 80, 0.08);
+      color: #0d6e50;
+      font-weight: 700;
+    }
+    .ov-table tr:last-child td { border-bottom: none; }
+
+    .ov-callout {
+      padding: 14px 18px;
+      background: rgba(13, 110, 80, 0.06);
+      border-left: 4px solid #0d6e50;
+      border-radius: 0 10px 10px 0;
+      margin-bottom: 16px;
+      font-size: 0.92rem;
+      line-height: 1.65;
+      color: var(--text-primary);
+    }
+    .ov-callout strong { color: #0d6e50; }
+    .ov-callout--warn {
+      background: rgba(245, 166, 35, 0.08);
+      border-left-color: #f5a623;
+    }
+    .ov-callout--warn strong { color: #f5a623; }
+
+    .ov-tree {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      background: var(--bg-card);
+      padding: 14px 18px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      white-space: pre;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .ov-tag-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .ov-tag {
+      padding: 5px 12px;
+      border-radius: 14px;
+      background: rgba(13, 110, 80, 0.1);
+      color: #0d6e50;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+      .ov-split { grid-template-columns: 1fr; }
+      .ov-section h2 { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+
+  <main class="page-content" data-theme="overleaf">
+    <div class="container">
+
+      <!-- Hero -->
+      <section class="ov-hero">
+        <h1><i class="fas fa-file-alt" style="color:#0d6e50"></i> Overleaf / LaTeX <span class="badge">Learning Guide</span></h1>
+        <p>논문 작성을 위한 가장 강력한 문서 시스템을 처음부터 실전까지. 단순 문법이 아니라 <strong>실제 논문 작성 흐름</strong>을 따라가며, 코드와 결과를 동시에 비교하면서 익히는 학습 가이드입니다.</p>
+      </section>
+
+      <!-- Roadmap -->
+      <div class="ov-roadmap">
+        <a href="#sec-intro"><span class="ov-step-num">1</span><span class="ov-step-label">Overleaf Intro</span></a>
+        <a href="#sec-docclass"><span class="ov-step-num">2</span><span class="ov-step-label">documentclass</span></a>
+        <a href="#sec-structure"><span class="ov-step-num">3</span><span class="ov-step-label">Document Skeleton</span></a>
+        <a href="#sec-title"><span class="ov-step-num">4</span><span class="ov-step-label">Title &amp; Authors</span></a>
+        <a href="#sec-abstract"><span class="ov-step-num">5</span><span class="ov-step-label">Abstract</span></a>
+        <a href="#sec-section"><span class="ov-step-num">6</span><span class="ov-step-label">Sections</span></a>
+        <a href="#sec-label"><span class="ov-step-num">7</span><span class="ov-step-label">Label &amp; Ref</span></a>
+        <a href="#sec-figure"><span class="ov-step-num">8</span><span class="ov-step-label">Figures</span></a>
+        <a href="#sec-table"><span class="ov-step-num">9</span><span class="ov-step-label">Tables</span></a>
+        <a href="#sec-equation"><span class="ov-step-num">10</span><span class="ov-step-label">Equations</span></a>
+        <a href="#sec-full"><span class="ov-step-num">11</span><span class="ov-step-label">Full Paper</span></a>
+        <a href="#sec-tips"><span class="ov-step-num">+</span><span class="ov-step-label">Tips &amp; Mistakes</span></a>
+      </div>
+
+      <!-- Section 1: Intro -->
+      <section class="ov-section" id="sec-intro">
+        <h2><span class="ov-num">01</span> Overleaf 소개</h2>
+        <p class="ov-section__sub">LaTeX와 Overleaf의 정체 — 그리고 왜 학계에서 이걸 쓰는지.</p>
+
+        <h3>LaTeX란?</h3>
+        <p><strong>LaTeX</strong>는 도널드 커누스의 TeX 시스템을 기반으로 한 <em>전문 조판 언어</em>입니다. Word 같은 WYSIWYG 에디터가 아니라, 마크업 언어로 문서 구조를 정의하면 컴파일러가 PDF를 생성합니다.</p>
+
+        <h3>Overleaf란?</h3>
+        <p><strong>Overleaf</strong>는 클라우드 기반 협업형 LaTeX 에디터입니다. 설치 없이 브라우저에서 바로 작성·컴파일·공동 편집이 가능합니다. <a href="https://www.overleaf.com" target="_blank" style="color:#0d6e50;font-weight:600;">overleaf.com</a></p>
+
+        <h3>컴파일 흐름</h3>
+        <div class="ov-tree">사용자 코드 (.tex)
+   │
+   ▼
+LaTeX Compiler (pdfLaTeX / XeLaTeX / LuaLaTeX)
+   │
+   ▼
+PDF Output</div>
+
+        <div class="ov-callout">
+          <strong>왜 LaTeX인가?</strong> 수식 품질이 압도적이고, 참조·번호 매김·서지가 자동화되며, 출력이 일관됩니다. 학회·저널 템플릿이 대부분 LaTeX 기반이므로 학계 표준입니다.
+        </div>
+      </section>
+
+      <!-- Section 2: documentclass -->
+      <section class="ov-section" id="sec-docclass">
+        <h2><span class="ov-num">02</span> documentclass</h2>
+        <p class="ov-section__sub">문서의 종류와 옵션을 결정하는 첫 줄.</p>
+
+        <div class="ov-split">
+          <div>
+            <span class="ov-split__label">Code</span>
+            <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\documentclass</span>[<span class="arg">12pt,a4paper</span>]{<span class="str">article</span>}</code></pre>
+          </div>
+          <div>
+            <span class="ov-split__label">의미</span>
+            <div class="ov-preview" style="font-family: var(--font-main); font-size: 0.92rem;">12pt 글자 크기 · A4 용지 · article 클래스 (기본 논문/리포트)</div>
+          </div>
+        </div>
+
+        <h3>주요 클래스</h3>
+        <table class="ov-table">
+          <thead><tr><th>클래스</th><th>용도</th></tr></thead>
+          <tbody>
+            <tr><td><code>article</code></td><td>논문, 과제, 짧은 보고서</td></tr>
+            <tr><td><code>report</code></td><td>챕터 기반 긴 문서 (석박사 논문)</td></tr>
+            <tr><td><code>book</code></td><td>책</td></tr>
+            <tr><td><code>beamer</code></td><td>발표 슬라이드</td></tr>
+            <tr><td><code>letter</code></td><td>편지</td></tr>
+            <tr><td><code>IEEEtran</code></td><td>IEEE 학회 (필수)</td></tr>
+          </tbody>
+        </table>
+
+        <h3>주요 옵션</h3>
+        <table class="ov-table">
+          <thead><tr><th>옵션</th><th>효과</th></tr></thead>
+          <tbody>
+            <tr><td><code>10pt / 11pt / 12pt</code></td><td>기본 글자 크기</td></tr>
+            <tr><td><code>a4paper / letterpaper</code></td><td>용지 크기</td></tr>
+            <tr><td><code>twocolumn</code></td><td>2단 편집</td></tr>
+            <tr><td><code>fleqn</code></td><td>수식 좌측 정렬</td></tr>
+            <tr><td><code>onecolumn</code></td><td>1단 편집 (기본값)</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Section 3: Document Structure -->
+      <section class="ov-section" id="sec-structure">
+        <h2><span class="ov-num">03</span> 문서의 시작과 끝</h2>
+        <p class="ov-section__sub">Preamble과 Document body — LaTeX 문서의 뼈대.</p>
+
+        <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmt">% --- Preamble (설정 영역) ---</span>
+<span class="cmd">\documentclass</span>{<span class="str">article</span>}
+<span class="cmd">\usepackage</span>{<span class="str">graphicx</span>}     <span class="cmt">% 그림 삽입</span>
+<span class="cmd">\usepackage</span>{<span class="str">amsmath</span>}      <span class="cmt">% 수식 환경</span>
+<span class="cmd">\usepackage</span>{<span class="str">hyperref</span>}     <span class="cmt">% 하이퍼링크 / 참조</span>
+
+<span class="cmt">% --- Document Body (실제 내용) ---</span>
+<span class="cmd">\begin</span>{<span class="str">document</span>}
+
+  <span class="cmt">% 여기에 본문 작성</span>
+
+<span class="cmd">\end</span>{<span class="str">document</span>}</code></pre>
+
+        <div class="ov-callout">
+          <strong>Preamble</strong>은 출력되지 않습니다. 클래스·패키지·매크로·메타데이터를 정의하는 곳입니다. 본문은 반드시 <code>\begin{document}</code>와 <code>\end{document}</code> 사이에 작성합니다.
+        </div>
+
+        <h3>문서 구조 시각화</h3>
+        <div class="ov-tree">Preamble (설정)
+   │  \documentclass{...}
+   │  \usepackage{...}
+   │  \title{...}
+   ▼
+\begin{document}
+   │  \maketitle
+   │  \begin{abstract}...\end{abstract}
+   │  \section{Introduction}
+   │     ...
+   ▼
+\end{document}</div>
+      </section>
+
+      <!-- Section 4: Title & Authors -->
+      <section class="ov-section" id="sec-title">
+        <h2><span class="ov-num">04</span> 제목 &amp; 저자 정보</h2>
+        <p class="ov-section__sub">논문 헤더 — Title, Author, Date.</p>
+
+        <div class="ov-split">
+          <div>
+            <span class="ov-split__label">Code</span>
+            <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\title</span>{<span class="str">TDA for Medical Data</span>}
+<span class="cmd">\author</span>{<span class="str">Sunjun Hwang \\</span>
+        <span class="str">Yonsei University</span>}
+<span class="cmd">\date</span>{<span class="str">May 2026</span>}
+
+<span class="cmd">\begin</span>{<span class="str">document</span>}
+<span class="cmd">\maketitle</span></code></pre>
+          </div>
+          <div>
+            <span class="ov-split__label">Preview</span>
+            <div class="ov-preview" style="text-align:center;">
+              <h4 style="margin-bottom:8px;">TDA for Medical Data</h4>
+              <div class="author">Sunjun Hwang<br>Yonsei University</div>
+              <div class="date" style="margin-top:6px;">May 2026</div>
+            </div>
+          </div>
+        </div>
+
+        <h3>다중 저자 (소속 표기)</h3>
+        <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\author</span>{
+  Sunjun Hwang$^{<span class="arg">1</span>}$
+  <span class="cmd">\and</span>
+  Co-Author$^{<span class="arg">2</span>}$ <span class="cmd">\\</span>
+  $^{<span class="arg">1</span>}$Yonsei University <span class="cmd">\\</span>
+  $^{<span class="arg">2</span>}$Permillion Inc.
+}</code></pre>
+
+        <div class="ov-callout ov-callout--warn">
+          <strong>주의:</strong> <code>\maketitle</code>을 호출하지 않으면 <code>\title</code>/<code>\author</code>를 선언해도 출력되지 않습니다.
+        </div>
+      </section>
+
+      <!-- Section 5: Abstract -->
+      <section class="ov-section" id="sec-abstract">
+        <h2><span class="ov-num">05</span> Abstract</h2>
+        <p class="ov-section__sub">논문 전체를 한 문단으로 요약하는 핵심.</p>
+
+        <div class="ov-split">
+          <div>
+            <span class="ov-split__label">Code</span>
+            <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\begin</span>{<span class="str">abstract</span>}
+We apply Topological Data Analysis (TDA)
+to BRCA breast cancer datasets to discover
+novel topological structures and biomarkers.
+Our results show that persistence-based
+features outperform conventional baselines
+in subtype classification.
+<span class="cmd">\end</span>{<span class="str">abstract</span>}</code></pre>
+          </div>
+          <div>
+            <span class="ov-split__label">Preview</span>
+            <div class="ov-preview">
+              <p style="font-weight:700; text-align:center; margin-bottom:8px;">Abstract</p>
+              <p style="font-size:0.88rem;">We apply Topological Data Analysis (TDA) to BRCA breast cancer datasets to discover novel topological structures and biomarkers. Our results show that persistence-based features outperform conventional baselines in subtype classification.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="ov-callout">
+          <strong>좋은 Abstract 구조 (CARS):</strong> Context → Aim → Result → Significance. 보통 150–250단어, 단일 문단.
+        </div>
+      </section>
+
+      <!-- Section 6: Section/Subsection -->
+      <section class="ov-section" id="sec-section">
+        <h2><span class="ov-num">06</span> Section / Subsection</h2>
+        <p class="ov-section__sub">문서의 계층 구조 — 자동 번호와 목차의 기반.</p>
+
+        <div class="ov-split">
+          <div>
+            <span class="ov-split__label">Code</span>
+            <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\section</span>{<span class="str">Introduction</span>}
+<span class="cmd">\subsection</span>{<span class="str">Background</span>}
+<span class="cmd">\subsubsection</span>{<span class="str">Prior Works</span>}
+
+<span class="cmd">\section</span>{<span class="str">Method</span>}
+<span class="cmd">\subsection</span>{<span class="str">Persistent Homology</span>}</code></pre>
+          </div>
+          <div>
+            <span class="ov-split__label">Preview</span>
+            <div class="ov-preview">
+              <p><span class="sec-num">1</span><strong>Introduction</strong></p>
+              <p style="padding-left:14px;"><span class="sec-num">1.1</span><strong>Background</strong></p>
+              <p style="padding-left:28px;"><span class="sec-num">1.1.1</span><strong>Prior Works</strong></p>
+              <p style="margin-top:8px;"><span class="sec-num">2</span><strong>Method</strong></p>
+              <p style="padding-left:14px;"><span class="sec-num">2.1</span><strong>Persistent Homology</strong></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="ov-callout">
+          <strong>번호 없는 섹션:</strong> <code>\section*{Acknowledgments}</code>처럼 <code>*</code>를 붙이면 번호가 매겨지지 않고 목차에도 표시되지 않습니다.
+        </div>
+      </section>
+
+      <!-- Section 7: Label & Reference -->
+      <section class="ov-section" id="sec-label">
+        <h2><span class="ov-num">07</span> Label &amp; Reference</h2>
+        <p class="ov-section__sub">문서 내부 자동 참조 — 가장 강력한 LaTeX의 강점.</p>
+
+        <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\section</span>{<span class="str">Introduction</span>}<span class="cmd">\label</span>{<span class="arg">sec:intro</span>}
+
+As shown in Section <span class="cmd">\ref</span>{<span class="arg">sec:method</span>}, ...
+
+See Figure <span class="cmd">\ref</span>{<span class="arg">fig:overview</span>} and Equation <span class="cmd">\eqref</span>{<span class="arg">eq:main</span>}.</code></pre>
+
+        <h3>Label Prefix Convention</h3>
+        <table class="ov-table">
+          <thead><tr><th>타입</th><th>Prefix</th><th>예시</th></tr></thead>
+          <tbody>
+            <tr><td>Section</td><td><code>sec:</code></td><td><code>sec:introduction</code></td></tr>
+            <tr><td>Figure</td><td><code>fig:</code></td><td><code>fig:overview</code></td></tr>
+            <tr><td>Table</td><td><code>tab:</code></td><td><code>tab:results</code></td></tr>
+            <tr><td>Equation</td><td><code>eq:</code></td><td><code>eq:loss</code></td></tr>
+            <tr><td>Algorithm</td><td><code>alg:</code></td><td><code>alg:training</code></td></tr>
+          </tbody>
+        </table>
+
+        <div class="ov-callout">
+          <strong>왜 Prefix가 중요한가?</strong> 큰 논문에서 label이 수십 개 생기면 <code>\ref{x}</code>만 보고는 무엇인지 알 수 없습니다. Prefix를 두면 가독성과 유지보수성이 비약적으로 향상됩니다.
+        </div>
+
+        <div class="ov-callout ov-callout--warn">
+          <strong>흔한 실수:</strong> <code>\caption</code> <em>다음에</em> <code>\label</code>을 놓아야 번호가 정확히 잡힙니다. <code>\label</code>이 caption보다 위에 있으면 잘못된 번호를 참조합니다.
+        </div>
+      </section>
+
+      <!-- Section 8: Figure -->
+      <section class="ov-section" id="sec-figure">
+        <h2><span class="ov-num">08</span> Figure</h2>
+        <p class="ov-section__sub">논문 그림 삽입 — Float 환경.</p>
+
+        <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\begin</span>{<span class="str">figure</span>}[<span class="arg">t</span>]
+  <span class="cmd">\centering</span>
+  <span class="cmd">\includegraphics</span>[<span class="arg">width=0.8\linewidth</span>]{<span class="str">figures/overview.pdf</span>}
+  <span class="cmd">\caption</span>{Overview of our TDA pipeline.}
+  <span class="cmd">\label</span>{<span class="arg">fig:overview</span>}
+<span class="cmd">\end</span>{<span class="str">figure</span>}</code></pre>
+
+        <h3>Position Options</h3>
+        <table class="ov-table">
+          <thead><tr><th>옵션</th><th>의미</th></tr></thead>
+          <tbody>
+            <tr><td><code>h</code></td><td>here — 가능하면 여기에</td></tr>
+            <tr><td><code>t</code></td><td>top — 페이지 상단</td></tr>
+            <tr><td><code>b</code></td><td>bottom — 페이지 하단</td></tr>
+            <tr><td><code>p</code></td><td>page — 별도 페이지</td></tr>
+            <tr><td><code>H</code></td><td>absolutely here (float 패키지 필요)</td></tr>
+            <tr><td><code>!</code></td><td>제약 강제 무시</td></tr>
+          </tbody>
+        </table>
+
+        <h3>2단 편집 시 한 줄 가로지르는 Figure</h3>
+        <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\begin</span>{<span class="str">figure*</span>}[<span class="arg">t</span>]    <span class="cmt">% figure 대신 figure*</span>
+  <span class="cmd">\centering</span>
+  <span class="cmd">\includegraphics</span>[<span class="arg">width=\textwidth</span>]{<span class="str">wide.pdf</span>}
+  <span class="cmd">\caption</span>{Two-column-spanning figure.}
+  <span class="cmd">\label</span>{<span class="arg">fig:wide</span>}
+<span class="cmd">\end</span>{<span class="str">figure*</span>}</code></pre>
+      </section>
+
+      <!-- Section 9: Table -->
+      <section class="ov-section" id="sec-table">
+        <h2><span class="ov-num">09</span> Table</h2>
+        <p class="ov-section__sub">표 작성 — <code>table</code>(float) + <code>tabular</code>(내용) 조합.</p>
+
+        <div class="ov-split">
+          <div>
+            <span class="ov-split__label">Code</span>
+            <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\begin</span>{<span class="str">table</span>}[<span class="arg">t</span>]
+  <span class="cmd">\centering</span>
+  <span class="cmd">\caption</span>{Comparison.}
+  <span class="cmd">\label</span>{<span class="arg">tab:result</span>}
+  <span class="cmd">\begin</span>{<span class="str">tabular</span>}{<span class="arg">lcc</span>}
+    <span class="cmd">\hline</span>
+    Method &amp; Acc. &amp; F1 <span class="cmd">\\</span>
+    <span class="cmd">\hline</span>
+    Baseline &amp; 82.1 &amp; 0.79 <span class="cmd">\\</span>
+    Ours     &amp; <span class="kw">89.4</span> &amp; <span class="kw">0.87</span> <span class="cmd">\\</span>
+    <span class="cmd">\hline</span>
+  <span class="cmd">\end</span>{<span class="str">tabular</span>}
+<span class="cmd">\end</span>{<span class="str">table</span>}</code></pre>
+          </div>
+          <div>
+            <span class="ov-split__label">Preview</span>
+            <div class="ov-preview">
+              <p style="text-align:center; font-size:0.88rem; margin-bottom:8px;"><em>Table 1.</em> Comparison.</p>
+              <table style="margin:0 auto; border-collapse:collapse; font-size:0.88rem;">
+                <thead><tr style="border-top:2px solid #000; border-bottom:1px solid #000;"><th style="padding:5px 14px;">Method</th><th style="padding:5px 14px;">Acc.</th><th style="padding:5px 14px;">F1</th></tr></thead>
+                <tbody>
+                  <tr><td style="padding:5px 14px;">Baseline</td><td style="padding:5px 14px; text-align:center;">82.1</td><td style="padding:5px 14px; text-align:center;">0.79</td></tr>
+                  <tr style="border-bottom:2px solid #000;"><td style="padding:5px 14px;"><strong>Ours</strong></td><td style="padding:5px 14px; text-align:center;"><strong>89.4</strong></td><td style="padding:5px 14px; text-align:center;"><strong>0.87</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <h3>Column Alignment 인자</h3>
+        <table class="ov-table">
+          <thead><tr><th>인자</th><th>정렬</th></tr></thead>
+          <tbody>
+            <tr><td><code>l</code></td><td>왼쪽 정렬</td></tr>
+            <tr><td><code>c</code></td><td>가운데 정렬</td></tr>
+            <tr><td><code>r</code></td><td>오른쪽 정렬</td></tr>
+            <tr><td><code>p{3cm}</code></td><td>고정 너비 (자동 줄바꿈)</td></tr>
+          </tbody>
+        </table>
+
+        <div class="ov-callout">
+          <strong>더 예쁜 표</strong>를 원하면 <code>booktabs</code> 패키지의 <code>\toprule, \midrule, \bottomrule</code>을 사용하세요. <code>\hline</code>보다 훨씬 깔끔합니다.
+        </div>
+      </section>
+
+      <!-- Section 10: Equation -->
+      <section class="ov-section" id="sec-equation">
+        <h2><span class="ov-num">10</span> Equation</h2>
+        <p class="ov-section__sub">수식 — LaTeX가 가장 빛나는 영역.</p>
+
+        <h3>Inline 수식</h3>
+        <div class="ov-split">
+          <div>
+            <span class="ov-split__label">Code</span>
+            <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code>Einstein: $E = mc^2$.</code></pre>
+          </div>
+          <div>
+            <span class="ov-split__label">Preview</span>
+            <div class="ov-preview">Einstein: $E = mc^2$.</div>
+          </div>
+        </div>
+
+        <h3>Display 수식</h3>
+        <div class="ov-split">
+          <div>
+            <span class="ov-split__label">Code</span>
+            <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\begin</span>{<span class="str">equation</span>}
+<span class="cmd">\label</span>{<span class="arg">eq:loss</span>}
+  L = - <span class="cmd">\sum</span>_{i=1}^{N} y_i <span class="cmd">\log</span> p_i
+<span class="cmd">\end</span>{<span class="str">equation</span>}</code></pre>
+          </div>
+          <div>
+            <span class="ov-split__label">Preview</span>
+            <div class="ov-preview" style="text-align:center;">$$L = -\sum_{i=1}^{N} y_i \log p_i$$</div>
+          </div>
+        </div>
+
+        <h3>Align Environment (다중 줄 정렬)</h3>
+        <div class="ov-split">
+          <div>
+            <span class="ov-split__label">Code</span>
+            <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\begin</span>{<span class="str">align</span>}
+  a &amp;= b + c <span class="cmd">\\</span>
+    &amp;= d + e + f
+<span class="cmd">\end</span>{<span class="str">align</span>}</code></pre>
+          </div>
+          <div>
+            <span class="ov-split__label">Preview</span>
+            <div class="ov-preview">$$\begin{aligned} a &= b + c \\ &= d + e + f \end{aligned}$$</div>
+          </div>
+        </div>
+
+        <div class="ov-callout">
+          <strong>필수 패키지:</strong> <code>\usepackage{amsmath}</code> — <code>align</code>, <code>gather</code>, <code>cases</code> 등 고급 수식 환경 사용에 필수.
+        </div>
+      </section>
+
+      <!-- Section 11: Full Paper -->
+      <section class="ov-section" id="sec-full">
+        <h2><span class="ov-num">11</span> Full Paper Skeleton</h2>
+        <p class="ov-section__sub">지금까지 배운 것을 한 파일로.</p>
+
+        <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\documentclass</span>[<span class="arg">11pt,a4paper</span>]{<span class="str">article</span>}
+<span class="cmd">\usepackage</span>{<span class="str">graphicx, amsmath, hyperref, booktabs</span>}
+
+<span class="cmd">\title</span>{<span class="str">TDA for Medical Data</span>}
+<span class="cmd">\author</span>{<span class="str">Sunjun Hwang</span>}
+<span class="cmd">\date</span>{<span class="str">May 2026</span>}
+
+<span class="cmd">\begin</span>{<span class="str">document</span>}
+<span class="cmd">\maketitle</span>
+
+<span class="cmd">\begin</span>{<span class="str">abstract</span>}
+We apply TDA to BRCA datasets to discover novel biomarkers.
+<span class="cmd">\end</span>{<span class="str">abstract</span>}
+
+<span class="cmd">\section</span>{<span class="str">Introduction</span>}<span class="cmd">\label</span>{<span class="arg">sec:intro</span>}
+Recent advances in topology-driven ML ...
+
+<span class="cmd">\section</span>{<span class="str">Method</span>}<span class="cmd">\label</span>{<span class="arg">sec:method</span>}
+We use persistent homology defined by:
+<span class="cmd">\begin</span>{<span class="str">equation</span>}<span class="cmd">\label</span>{<span class="arg">eq:ph</span>}
+  H_k(X_\epsilon) = <span class="cmd">\ker</span>(\partial_k) / <span class="cmd">\mathrm</span>{im}(\partial_{k+1})
+<span class="cmd">\end</span>{<span class="str">equation</span>}
+
+<span class="cmd">\section</span>{<span class="str">Results</span>}<span class="cmd">\label</span>{<span class="arg">sec:results</span>}
+As shown in Figure <span class="cmd">\ref</span>{<span class="arg">fig:result</span>}, ...
+
+<span class="cmd">\begin</span>{<span class="str">figure</span>}[<span class="arg">t</span>]
+  <span class="cmd">\centering</span>
+  <span class="cmd">\includegraphics</span>[<span class="arg">width=0.8\linewidth</span>]{<span class="str">result.pdf</span>}
+  <span class="cmd">\caption</span>{Main result.}
+  <span class="cmd">\label</span>{<span class="arg">fig:result</span>}
+<span class="cmd">\end</span>{<span class="str">figure</span>}
+
+<span class="cmd">\bibliographystyle</span>{<span class="str">plain</span>}
+<span class="cmd">\bibliography</span>{<span class="str">refs</span>}
+<span class="cmd">\end</span>{<span class="str">document</span>}</code></pre>
+      </section>
+
+      <!-- Tips -->
+      <section class="ov-section" id="sec-tips">
+        <h2><span class="ov-num">+</span> Tips · Mistakes · Templates</h2>
+
+        <h3>📑 추천 논문 템플릿</h3>
+        <div class="ov-tag-grid">
+          <span class="ov-tag">IEEE</span>
+          <span class="ov-tag">ACM</span>
+          <span class="ov-tag">CVPR</span>
+          <span class="ov-tag">NeurIPS</span>
+          <span class="ov-tag">ICML</span>
+          <span class="ov-tag">ICLR</span>
+          <span class="ov-tag">Springer LNCS</span>
+        </div>
+
+        <h3>🚨 초보자가 자주 하는 실수</h3>
+        <ul>
+          <li><strong>label 위치 오류</strong> — caption 위에 label을 두면 잘못된 번호 참조</li>
+          <li><strong>begin/end 누락</strong> — 환경 짝이 맞지 않으면 컴파일 실패</li>
+          <li><strong>package 누락</strong> — <code>amsmath</code>, <code>graphicx</code>, <code>hyperref</code>는 기본 추가 권장</li>
+          <li><strong>math mode 오류</strong> — 수식 밖에서 <code>_</code> 또는 <code>^</code> 사용 금지</li>
+          <li><strong>figure path 오류</strong> — <code>\graphicspath{ {./figures/} }</code>로 디렉토리 지정 권장</li>
+          <li><strong>한글 깨짐</strong> — <code>kotex</code>(pdfLaTeX) 또는 XeLaTeX + <code>kotex</code> 사용</li>
+        </ul>
+
+        <h3>✅ 논문 작성 Best Practice</h3>
+        <ul>
+          <li><strong>Figure first principle</strong>: 본문보다 figure를 먼저 그려보고, 그것에 맞춰 글을 쓴다</li>
+          <li><strong>Caption은 self-contained</strong>: 캡션만 보고도 그림을 이해할 수 있게 작성</li>
+          <li><strong>Label naming</strong>: <code>fig:tda-pipeline</code>처럼 의미가 드러나게 — 절대 <code>fig:1</code> 같은 임의 이름 금지</li>
+          <li><strong>버전 관리</strong>: <code>main.tex</code> 외에 <code>sections/*.tex</code>로 분리하고 git 관리</li>
+          <li><strong>참고문헌</strong>: <code>.bib</code> 파일로 분리 — Google Scholar의 BibTeX 인용 활용</li>
+          <li><strong>Overleaf 협업</strong>: track changes, comments 적극 활용</li>
+        </ul>
+
+        <h3>🔧 자주 쓰는 패키지</h3>
+        <table class="ov-table">
+          <thead><tr><th>패키지</th><th>용도</th></tr></thead>
+          <tbody>
+            <tr><td><code>amsmath, amssymb</code></td><td>수식 환경 / 기호</td></tr>
+            <tr><td><code>graphicx</code></td><td>그림 삽입</td></tr>
+            <tr><td><code>hyperref</code></td><td>하이퍼링크 / 자동 참조</td></tr>
+            <tr><td><code>booktabs</code></td><td>예쁜 표 (toprule 등)</td></tr>
+            <tr><td><code>cleveref</code></td><td>스마트 참조 (<code>\cref</code>)</td></tr>
+            <tr><td><code>algorithm, algpseudocode</code></td><td>의사 코드</td></tr>
+            <tr><td><code>listings</code></td><td>소스 코드 하이라이팅</td></tr>
+            <tr><td><code>tikz, pgfplots</code></td><td>다이어그램 / 플롯</td></tr>
+          </tbody>
+        </table>
+
+        <div class="ov-callout">
+          <strong>다음 단계:</strong> BibTeX로 참고문헌 자동화 → TikZ로 다이어그램 → 학회별 템플릿 사용 → 공동 편집 (Overleaf Pro / Git 동기화).
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    function copyCode(btn) {
+      const code = btn.parentElement.querySelector('code').innerText;
+      navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
+      });
+    }
+  </script>
+</body>
+</html>
