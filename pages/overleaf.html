@@ -280,6 +280,76 @@
       font-weight: 600;
     }
 
+    .ov-shots {
+      margin: 22px 0 8px;
+    }
+    .ov-shots__title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .ov-shots__title::before {
+      content: '';
+      width: 18px;
+      height: 2px;
+      background: #0d6e50;
+      display: inline-block;
+    }
+    .ov-shots__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 14px;
+    }
+    .ov-shot {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px;
+      overflow: hidden;
+      transition: all 0.25s ease;
+    }
+    .ov-shot:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(13, 110, 80, 0.15);
+    }
+    .ov-shot img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 6px;
+      cursor: zoom-in;
+    }
+    .ov-shot__caption {
+      font-size: 0.78rem;
+      color: #444;
+      padding: 8px 6px 4px;
+      text-align: center;
+      font-style: italic;
+    }
+    .ov-lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.92);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      padding: 20px;
+      cursor: zoom-out;
+    }
+    .ov-lightbox.active { display: flex; }
+    .ov-lightbox img {
+      max-width: 95vw;
+      max-height: 95vh;
+      border-radius: 8px;
+    }
+
     @media (max-width: 768px) {
       .ov-split { grid-template-columns: 1fr; }
       .ov-section h2 { font-size: 1.4rem; }
@@ -337,6 +407,13 @@ PDF Output</div>
 
         <div class="ov-callout">
           <strong>왜 LaTeX인가?</strong> 수식 품질이 압도적이고, 참조·번호 매김·서지가 자동화되며, 출력이 일관됩니다. 학회·저널 템플릿이 대부분 LaTeX 기반이므로 학계 표준입니다.
+        </div>
+
+        <div class="ov-shots">
+          <div class="ov-shots__title">Reference Screenshots</div>
+          <div class="ov-shots__grid">
+            <div class="ov-shot"><img src="../assets/overleaf/image.png" alt="Overleaf intro"><div class="ov-shot__caption">Overleaf 에디터 화면</div></div>
+          </div>
         </div>
       </section>
 
@@ -417,6 +494,13 @@ PDF Output</div>
    │     ...
    ▼
 \end{document}</div>
+
+        <div class="ov-shots">
+          <div class="ov-shots__title">Reference Screenshots</div>
+          <div class="ov-shots__grid">
+            <div class="ov-shot"><img src="../assets/overleaf/image 1.png" alt="Document begin/end"><div class="ov-shot__caption">begin/end document 예시</div></div>
+          </div>
+        </div>
       </section>
 
       <!-- Section 4: Title & Authors -->
@@ -456,6 +540,13 @@ PDF Output</div>
 
         <div class="ov-callout ov-callout--warn">
           <strong>주의:</strong> <code>\maketitle</code>을 호출하지 않으면 <code>\title</code>/<code>\author</code>를 선언해도 출력되지 않습니다.
+        </div>
+
+        <div class="ov-shots">
+          <div class="ov-shots__title">Reference Screenshots</div>
+          <div class="ov-shots__grid">
+            <div class="ov-shot"><img src="../assets/overleaf/image 2.png" alt="Title and Author"><div class="ov-shot__caption">제목·저자 출력 예시</div></div>
+          </div>
         </div>
       </section>
 
@@ -520,6 +611,19 @@ in subtype classification.
         <div class="ov-callout">
           <strong>번호 없는 섹션:</strong> <code>\section*{Acknowledgments}</code>처럼 <code>*</code>를 붙이면 번호가 매겨지지 않고 목차에도 표시되지 않습니다.
         </div>
+
+        <div class="ov-shots">
+          <div class="ov-shots__title">Reference Screenshots — Sections</div>
+          <div class="ov-shots__grid">
+            <div class="ov-shot"><img src="../assets/overleaf/image 3.png" alt="section example 1"><div class="ov-shot__caption">section 출력 예시 1</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 4.png" alt="section example 2"><div class="ov-shot__caption">section 출력 예시 2</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 5.png" alt="section example 3"><div class="ov-shot__caption">section 출력 예시 3</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 6.png" alt="section example 4"><div class="ov-shot__caption">section 출력 예시 4</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 7.png" alt="section example 5"><div class="ov-shot__caption">section 출력 예시 5</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 8.png" alt="subsection example 1"><div class="ov-shot__caption">subsection 예시 1</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 9.png" alt="subsection example 2"><div class="ov-shot__caption">subsection 예시 2</div></div>
+          </div>
+        </div>
       </section>
 
       <!-- Section 7: Label & Reference -->
@@ -551,6 +655,16 @@ See Figure <span class="cmd">\ref</span>{<span class="arg">fig:overview</span>} 
 
         <div class="ov-callout ov-callout--warn">
           <strong>흔한 실수:</strong> <code>\caption</code> <em>다음에</em> <code>\label</code>을 놓아야 번호가 정확히 잡힙니다. <code>\label</code>이 caption보다 위에 있으면 잘못된 번호를 참조합니다.
+        </div>
+
+        <div class="ov-shots">
+          <div class="ov-shots__title">Reference Screenshots — Cross-Referencing</div>
+          <div class="ov-shots__grid">
+            <div class="ov-shot"><img src="../assets/overleaf/image 21.png" alt="Cross reference 1"><div class="ov-shot__caption">\ref 자동 참조</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 22.png" alt="Cross reference 2"><div class="ov-shot__caption">sub-document import</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 23.png" alt="Cross reference 3"><div class="ov-shot__caption">section 가져오기</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 24.png" alt="Cross reference 4"><div class="ov-shot__caption">참조 결과</div></div>
+          </div>
         </div>
       </section>
 
@@ -586,6 +700,17 @@ See Figure <span class="cmd">\ref</span>{<span class="arg">fig:overview</span>} 
   <span class="cmd">\caption</span>{Two-column-spanning figure.}
   <span class="cmd">\label</span>{<span class="arg">fig:wide</span>}
 <span class="cmd">\end</span>{<span class="str">figure*</span>}</code></pre>
+
+        <div class="ov-shots">
+          <div class="ov-shots__title">Reference Screenshots — Figures</div>
+          <div class="ov-shots__grid">
+            <div class="ov-shot"><img src="../assets/overleaf/image 10.png" alt="Figure example 1"><div class="ov-shot__caption">Figure 기본 삽입</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 11.png" alt="Figure example 2"><div class="ov-shot__caption">Figure with caption</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 12.png" alt="Figure example 3"><div class="ov-shot__caption">Figure scaling</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 13.png" alt="Figure example 4"><div class="ov-shot__caption">Figure alignment</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 14.png" alt="Figure options"><div class="ov-shot__caption">Figure 옵션 비교</div></div>
+          </div>
+        </div>
       </section>
 
       <!-- Section 9: Table -->
@@ -638,6 +763,18 @@ See Figure <span class="cmd">\ref</span>{<span class="arg">fig:overview</span>} 
 
         <div class="ov-callout">
           <strong>더 예쁜 표</strong>를 원하면 <code>booktabs</code> 패키지의 <code>\toprule, \midrule, \bottomrule</code>을 사용하세요. <code>\hline</code>보다 훨씬 깔끔합니다.
+        </div>
+
+        <div class="ov-shots">
+          <div class="ov-shots__title">Reference Screenshots — Tables</div>
+          <div class="ov-shots__grid">
+            <div class="ov-shot"><img src="../assets/overleaf/image 15.png" alt="Table example 1"><div class="ov-shot__caption">기본 표 (tabular)</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 16.png" alt="Table example 2"><div class="ov-shot__caption">열 정렬 / hline</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 17.png" alt="Table example 3"><div class="ov-shot__caption">multirow / multicolumn</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 18.png" alt="Table example 4"><div class="ov-shot__caption">caption 위치</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 19.png" alt="Table example 5"><div class="ov-shot__caption">booktabs 스타일</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 20.png" alt="Table example 6"><div class="ov-shot__caption">고급 표 예시</div></div>
+          </div>
         </div>
       </section>
 
@@ -789,7 +926,30 @@ As shown in Figure <span class="cmd">\ref</span>{<span class="arg">fig:result</s
         <div class="ov-callout">
           <strong>다음 단계:</strong> BibTeX로 참고문헌 자동화 → TikZ로 다이어그램 → 학회별 템플릿 사용 → 공동 편집 (Overleaf Pro / Git 동기화).
         </div>
+
+        <div class="ov-shots">
+          <div class="ov-shots__title">Reference Screenshots — Lists, Emphasis, Equations &amp; More</div>
+          <div class="ov-shots__grid">
+            <div class="ov-shot"><img src="../assets/overleaf/image 25.png" alt="lists 1"><div class="ov-shot__caption">리스트 환경</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 26.png" alt="lists 2"><div class="ov-shot__caption">숫자 리스트</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 27.png" alt="bullet list"><div class="ov-shot__caption">불릿 리스트</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 28.png" alt="emphasis"><div class="ov-shot__caption">강조 (bold/italic)</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 29.png" alt="inline code"><div class="ov-shot__caption">한 줄 코드 / verbatim</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 30.png" alt="equation 1"><div class="ov-shot__caption">Equation 환경</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 31.png" alt="equation 2"><div class="ov-shot__caption">Align 환경</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 32.png" alt="equation 3"><div class="ov-shot__caption">수식 정렬 예시</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 33.png" alt="algorithm"><div class="ov-shot__caption">Algorithm 환경</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 34.png" alt="code listing"><div class="ov-shot__caption">listings 패키지</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 35.png" alt="appendix"><div class="ov-shot__caption">Appendix</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 36.png" alt="bibliography"><div class="ov-shot__caption">참고문헌 출력</div></div>
+          </div>
+        </div>
       </section>
+
+      <!-- Lightbox -->
+      <div class="ov-lightbox" id="ovLightbox" onclick="this.classList.remove('active')">
+        <img id="ovLightboxImg" src="" alt="">
+      </div>
 
     </div>
   </main>
@@ -806,6 +966,16 @@ As shown in Figure <span class="cmd">\ref</span>{<span class="arg">fig:result</s
         setTimeout(() => { btn.textContent = 'Copy'; }, 1500);
       });
     }
+
+    // Lightbox for screenshot images
+    document.querySelectorAll('.ov-shot img').forEach(img => {
+      img.addEventListener('click', () => {
+        const lb = document.getElementById('ovLightbox');
+        const lbImg = document.getElementById('ovLightboxImg');
+        lbImg.src = img.src;
+        lb.classList.add('active');
+      });
+    });
   </script>
 </body>
 </html>
