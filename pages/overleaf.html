@@ -366,7 +366,7 @@
       <!-- Hero -->
       <section class="ov-hero">
         <h1><i class="fas fa-file-alt" style="color:#0d6e50"></i> Overleaf / LaTeX <span class="badge">Learning Guide</span></h1>
-        <p>논문 작성을 위한 가장 강력한 문서 시스템을 처음부터 실전까지. 단순 문법이 아니라 <strong>실제 논문 작성 흐름</strong>을 따라가며, 코드와 결과를 동시에 비교하면서 익히는 학습 가이드입니다.</p>
+        <p>The most powerful document system for academic writing — from first steps to real papers. Not just syntax: this guide follows the <strong>actual flow of paper writing</strong>, comparing code with rendered output side by side.</p>
       </section>
 
       <!-- Roadmap -->
@@ -387,17 +387,17 @@
 
       <!-- Section 1: Intro -->
       <section class="ov-section" id="sec-intro">
-        <h2><span class="ov-num">01</span> Overleaf 소개</h2>
-        <p class="ov-section__sub">LaTeX와 Overleaf의 정체 — 그리고 왜 학계에서 이걸 쓰는지.</p>
+        <h2><span class="ov-num">01</span> Introduction to Overleaf</h2>
+        <p class="ov-section__sub">What LaTeX and Overleaf are — and why academia depends on them.</p>
 
-        <h3>LaTeX란?</h3>
-        <p><strong>LaTeX</strong>는 도널드 커누스의 TeX 시스템을 기반으로 한 <em>전문 조판 언어</em>입니다. Word 같은 WYSIWYG 에디터가 아니라, 마크업 언어로 문서 구조를 정의하면 컴파일러가 PDF를 생성합니다.</p>
+        <h3>What is LaTeX?</h3>
+        <p><strong>LaTeX</strong> is a <em>professional typesetting language</em> built on top of Donald Knuth's TeX system. Unlike WYSIWYG editors such as Word, you describe your document's structure with a markup language and a compiler produces a polished PDF.</p>
 
-        <h3>Overleaf란?</h3>
-        <p><strong>Overleaf</strong>는 클라우드 기반 협업형 LaTeX 에디터입니다. 설치 없이 브라우저에서 바로 작성·컴파일·공동 편집이 가능합니다. <a href="https://www.overleaf.com" target="_blank" style="color:#0d6e50;font-weight:600;">overleaf.com</a></p>
+        <h3>What is Overleaf?</h3>
+        <p><strong>Overleaf</strong> is a cloud-based collaborative LaTeX editor. No installation required — write, compile, and collaborate directly in your browser. <a href="https://www.overleaf.com" target="_blank" style="color:#0d6e50;font-weight:600;">overleaf.com</a></p>
 
-        <h3>컴파일 흐름</h3>
-        <div class="ov-tree">사용자 코드 (.tex)
+        <h3>Compilation Flow</h3>
+        <div class="ov-tree">User source (.tex)
    │
    ▼
 LaTeX Compiler (pdfLaTeX / XeLaTeX / LuaLaTeX)
@@ -406,13 +406,13 @@ LaTeX Compiler (pdfLaTeX / XeLaTeX / LuaLaTeX)
 PDF Output</div>
 
         <div class="ov-callout">
-          <strong>왜 LaTeX인가?</strong> 수식 품질이 압도적이고, 참조·번호 매김·서지가 자동화되며, 출력이 일관됩니다. 학회·저널 템플릿이 대부분 LaTeX 기반이므로 학계 표준입니다.
+          <strong>Why LaTeX?</strong> Unmatched equation quality, automated cross-references / numbering / bibliography, and consistent output. Most conference and journal templates are LaTeX-based, making it the academic standard.
         </div>
 
         <div class="ov-shots">
           <div class="ov-shots__title">Reference Screenshots</div>
           <div class="ov-shots__grid">
-            <div class="ov-shot"><img src="../assets/overleaf/image.png" alt="Overleaf intro"><div class="ov-shot__caption">Overleaf 에디터 화면</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image.png" alt="Overleaf intro"><div class="ov-shot__caption">Overleaf editor</div></div>
           </div>
         </div>
       </section>
@@ -420,7 +420,7 @@ PDF Output</div>
       <!-- Section 2: documentclass -->
       <section class="ov-section" id="sec-docclass">
         <h2><span class="ov-num">02</span> documentclass</h2>
-        <p class="ov-section__sub">문서의 종류와 옵션을 결정하는 첫 줄.</p>
+        <p class="ov-section__sub">The first line — defines the document type and global options.</p>
 
         <div class="ov-split">
           <div>
@@ -428,61 +428,61 @@ PDF Output</div>
             <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\documentclass</span>[<span class="arg">12pt,a4paper</span>]{<span class="str">article</span>}</code></pre>
           </div>
           <div>
-            <span class="ov-split__label">의미</span>
-            <div class="ov-preview" style="font-family: var(--font-main); font-size: 0.92rem;">12pt 글자 크기 · A4 용지 · article 클래스 (기본 논문/리포트)</div>
+            <span class="ov-split__label">Meaning</span>
+            <div class="ov-preview" style="font-family: var(--font-main); font-size: 0.92rem;">12pt font size · A4 paper · article class (standard paper / report)</div>
           </div>
         </div>
 
-        <h3>주요 클래스</h3>
+        <h3>Common Classes</h3>
         <table class="ov-table">
-          <thead><tr><th>클래스</th><th>용도</th></tr></thead>
+          <thead><tr><th>Class</th><th>Purpose</th></tr></thead>
           <tbody>
-            <tr><td><code>article</code></td><td>논문, 과제, 짧은 보고서</td></tr>
-            <tr><td><code>report</code></td><td>챕터 기반 긴 문서 (석박사 논문)</td></tr>
-            <tr><td><code>book</code></td><td>책</td></tr>
-            <tr><td><code>beamer</code></td><td>발표 슬라이드</td></tr>
-            <tr><td><code>letter</code></td><td>편지</td></tr>
-            <tr><td><code>IEEEtran</code></td><td>IEEE 학회 (필수)</td></tr>
+            <tr><td><code>article</code></td><td>Papers, assignments, short reports</td></tr>
+            <tr><td><code>report</code></td><td>Longer chapter-based documents (theses)</td></tr>
+            <tr><td><code>book</code></td><td>Books</td></tr>
+            <tr><td><code>beamer</code></td><td>Presentation slides</td></tr>
+            <tr><td><code>letter</code></td><td>Letters</td></tr>
+            <tr><td><code>IEEEtran</code></td><td>IEEE conferences (required)</td></tr>
           </tbody>
         </table>
 
-        <h3>주요 옵션</h3>
+        <h3>Common Options</h3>
         <table class="ov-table">
-          <thead><tr><th>옵션</th><th>효과</th></tr></thead>
+          <thead><tr><th>Option</th><th>Effect</th></tr></thead>
           <tbody>
-            <tr><td><code>10pt / 11pt / 12pt</code></td><td>기본 글자 크기</td></tr>
-            <tr><td><code>a4paper / letterpaper</code></td><td>용지 크기</td></tr>
-            <tr><td><code>twocolumn</code></td><td>2단 편집</td></tr>
-            <tr><td><code>fleqn</code></td><td>수식 좌측 정렬</td></tr>
-            <tr><td><code>onecolumn</code></td><td>1단 편집 (기본값)</td></tr>
+            <tr><td><code>10pt / 11pt / 12pt</code></td><td>Base font size</td></tr>
+            <tr><td><code>a4paper / letterpaper</code></td><td>Paper size</td></tr>
+            <tr><td><code>twocolumn</code></td><td>Two-column layout</td></tr>
+            <tr><td><code>fleqn</code></td><td>Flush-left equations</td></tr>
+            <tr><td><code>onecolumn</code></td><td>One-column layout (default)</td></tr>
           </tbody>
         </table>
       </section>
 
       <!-- Section 3: Document Structure -->
       <section class="ov-section" id="sec-structure">
-        <h2><span class="ov-num">03</span> 문서의 시작과 끝</h2>
-        <p class="ov-section__sub">Preamble과 Document body — LaTeX 문서의 뼈대.</p>
+        <h2><span class="ov-num">03</span> Document Skeleton</h2>
+        <p class="ov-section__sub">Preamble vs. Document body — the bones of every LaTeX document.</p>
 
-        <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmt">% --- Preamble (설정 영역) ---</span>
+        <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmt">% --- Preamble (configuration area) ---</span>
 <span class="cmd">\documentclass</span>{<span class="str">article</span>}
-<span class="cmd">\usepackage</span>{<span class="str">graphicx</span>}     <span class="cmt">% 그림 삽입</span>
-<span class="cmd">\usepackage</span>{<span class="str">amsmath</span>}      <span class="cmt">% 수식 환경</span>
-<span class="cmd">\usepackage</span>{<span class="str">hyperref</span>}     <span class="cmt">% 하이퍼링크 / 참조</span>
+<span class="cmd">\usepackage</span>{<span class="str">graphicx</span>}     <span class="cmt">% figure inclusion</span>
+<span class="cmd">\usepackage</span>{<span class="str">amsmath</span>}      <span class="cmt">% math environments</span>
+<span class="cmd">\usepackage</span>{<span class="str">hyperref</span>}     <span class="cmt">% hyperlinks / cross-references</span>
 
-<span class="cmt">% --- Document Body (실제 내용) ---</span>
+<span class="cmt">% --- Document Body (actual content) ---</span>
 <span class="cmd">\begin</span>{<span class="str">document</span>}
 
-  <span class="cmt">% 여기에 본문 작성</span>
+  <span class="cmt">% write your content here</span>
 
 <span class="cmd">\end</span>{<span class="str">document</span>}</code></pre>
 
         <div class="ov-callout">
-          <strong>Preamble</strong>은 출력되지 않습니다. 클래스·패키지·매크로·메타데이터를 정의하는 곳입니다. 본문은 반드시 <code>\begin{document}</code>와 <code>\end{document}</code> 사이에 작성합니다.
+          The <strong>Preamble</strong> is not printed. It is where you declare the class, load packages, define macros, and set metadata. All visible content must live between <code>\begin{document}</code> and <code>\end{document}</code>.
         </div>
 
-        <h3>문서 구조 시각화</h3>
-        <div class="ov-tree">Preamble (설정)
+        <h3>Document Structure Visualization</h3>
+        <div class="ov-tree">Preamble (configuration)
    │  \documentclass{...}
    │  \usepackage{...}
    │  \title{...}
@@ -498,15 +498,15 @@ PDF Output</div>
         <div class="ov-shots">
           <div class="ov-shots__title">Reference Screenshots</div>
           <div class="ov-shots__grid">
-            <div class="ov-shot"><img src="../assets/overleaf/image 1.png" alt="Document begin/end"><div class="ov-shot__caption">begin/end document 예시</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 1.png" alt="Document begin/end"><div class="ov-shot__caption">begin/end document example</div></div>
           </div>
         </div>
       </section>
 
       <!-- Section 4: Title & Authors -->
       <section class="ov-section" id="sec-title">
-        <h2><span class="ov-num">04</span> 제목 &amp; 저자 정보</h2>
-        <p class="ov-section__sub">논문 헤더 — Title, Author, Date.</p>
+        <h2><span class="ov-num">04</span> Title &amp; Authors</h2>
+        <p class="ov-section__sub">The paper header — Title, Author, Date.</p>
 
         <div class="ov-split">
           <div>
@@ -529,7 +529,7 @@ PDF Output</div>
           </div>
         </div>
 
-        <h3>다중 저자 (소속 표기)</h3>
+        <h3>Multiple Authors with Affiliations</h3>
         <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\author</span>{
   Sunjun Hwang$^{<span class="arg">1</span>}$
   <span class="cmd">\and</span>
@@ -539,13 +539,13 @@ PDF Output</div>
 }</code></pre>
 
         <div class="ov-callout ov-callout--warn">
-          <strong>주의:</strong> <code>\maketitle</code>을 호출하지 않으면 <code>\title</code>/<code>\author</code>를 선언해도 출력되지 않습니다.
+          <strong>Note:</strong> If you forget <code>\maketitle</code>, nothing will be printed even if you declared <code>\title</code> / <code>\author</code>.
         </div>
 
         <div class="ov-shots">
           <div class="ov-shots__title">Reference Screenshots</div>
           <div class="ov-shots__grid">
-            <div class="ov-shot"><img src="../assets/overleaf/image 2.png" alt="Title and Author"><div class="ov-shot__caption">제목·저자 출력 예시</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 2.png" alt="Title and Author"><div class="ov-shot__caption">Title and author output</div></div>
           </div>
         </div>
       </section>
@@ -553,7 +553,7 @@ PDF Output</div>
       <!-- Section 5: Abstract -->
       <section class="ov-section" id="sec-abstract">
         <h2><span class="ov-num">05</span> Abstract</h2>
-        <p class="ov-section__sub">논문 전체를 한 문단으로 요약하는 핵심.</p>
+        <p class="ov-section__sub">A single paragraph that summarizes the entire paper.</p>
 
         <div class="ov-split">
           <div>
@@ -577,14 +577,14 @@ in subtype classification.
         </div>
 
         <div class="ov-callout">
-          <strong>좋은 Abstract 구조 (CARS):</strong> Context → Aim → Result → Significance. 보통 150–250단어, 단일 문단.
+          <strong>A good abstract structure (CARS):</strong> Context → Aim → Result → Significance. Usually 150–250 words, single paragraph.
         </div>
       </section>
 
       <!-- Section 6: Section/Subsection -->
       <section class="ov-section" id="sec-section">
         <h2><span class="ov-num">06</span> Section / Subsection</h2>
-        <p class="ov-section__sub">문서의 계층 구조 — 자동 번호와 목차의 기반.</p>
+        <p class="ov-section__sub">Document hierarchy — the foundation of automatic numbering and the table of contents.</p>
 
         <div class="ov-split">
           <div>
@@ -609,19 +609,19 @@ in subtype classification.
         </div>
 
         <div class="ov-callout">
-          <strong>번호 없는 섹션:</strong> <code>\section*{Acknowledgments}</code>처럼 <code>*</code>를 붙이면 번호가 매겨지지 않고 목차에도 표시되지 않습니다.
+          <strong>Unnumbered sections:</strong> Append <code>*</code> like <code>\section*{Acknowledgments}</code> to suppress both numbering and TOC inclusion.
         </div>
 
         <div class="ov-shots">
           <div class="ov-shots__title">Reference Screenshots — Sections</div>
           <div class="ov-shots__grid">
-            <div class="ov-shot"><img src="../assets/overleaf/image 3.png" alt="section example 1"><div class="ov-shot__caption">section 출력 예시 1</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 4.png" alt="section example 2"><div class="ov-shot__caption">section 출력 예시 2</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 5.png" alt="section example 3"><div class="ov-shot__caption">section 출력 예시 3</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 6.png" alt="section example 4"><div class="ov-shot__caption">section 출력 예시 4</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 7.png" alt="section example 5"><div class="ov-shot__caption">section 출력 예시 5</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 8.png" alt="subsection example 1"><div class="ov-shot__caption">subsection 예시 1</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 9.png" alt="subsection example 2"><div class="ov-shot__caption">subsection 예시 2</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 3.png" alt="section example 1"><div class="ov-shot__caption">Section output 1</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 4.png" alt="section example 2"><div class="ov-shot__caption">Section output 2</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 5.png" alt="section example 3"><div class="ov-shot__caption">Section output 3</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 6.png" alt="section example 4"><div class="ov-shot__caption">Section output 4</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 7.png" alt="section example 5"><div class="ov-shot__caption">Section output 5</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 8.png" alt="subsection example 1"><div class="ov-shot__caption">Subsection example 1</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 9.png" alt="subsection example 2"><div class="ov-shot__caption">Subsection example 2</div></div>
           </div>
         </div>
       </section>
@@ -629,7 +629,7 @@ in subtype classification.
       <!-- Section 7: Label & Reference -->
       <section class="ov-section" id="sec-label">
         <h2><span class="ov-num">07</span> Label &amp; Reference</h2>
-        <p class="ov-section__sub">문서 내부 자동 참조 — 가장 강력한 LaTeX의 강점.</p>
+        <p class="ov-section__sub">Automatic in-document cross-referencing — one of LaTeX's greatest strengths.</p>
 
         <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\section</span>{<span class="str">Introduction</span>}<span class="cmd">\label</span>{<span class="arg">sec:intro</span>}
 
@@ -639,7 +639,7 @@ See Figure <span class="cmd">\ref</span>{<span class="arg">fig:overview</span>} 
 
         <h3>Label Prefix Convention</h3>
         <table class="ov-table">
-          <thead><tr><th>타입</th><th>Prefix</th><th>예시</th></tr></thead>
+          <thead><tr><th>Type</th><th>Prefix</th><th>Example</th></tr></thead>
           <tbody>
             <tr><td>Section</td><td><code>sec:</code></td><td><code>sec:introduction</code></td></tr>
             <tr><td>Figure</td><td><code>fig:</code></td><td><code>fig:overview</code></td></tr>
@@ -650,20 +650,20 @@ See Figure <span class="cmd">\ref</span>{<span class="arg">fig:overview</span>} 
         </table>
 
         <div class="ov-callout">
-          <strong>왜 Prefix가 중요한가?</strong> 큰 논문에서 label이 수십 개 생기면 <code>\ref{x}</code>만 보고는 무엇인지 알 수 없습니다. Prefix를 두면 가독성과 유지보수성이 비약적으로 향상됩니다.
+          <strong>Why do prefixes matter?</strong> In a large paper with dozens of labels, <code>\ref{x}</code> alone tells you nothing about what is being referenced. Prefixes drastically improve readability and maintainability.
         </div>
 
         <div class="ov-callout ov-callout--warn">
-          <strong>흔한 실수:</strong> <code>\caption</code> <em>다음에</em> <code>\label</code>을 놓아야 번호가 정확히 잡힙니다. <code>\label</code>이 caption보다 위에 있으면 잘못된 번호를 참조합니다.
+          <strong>Common mistake:</strong> <code>\label</code> must come <em>after</em> <code>\caption</code> to capture the right number. If <code>\label</code> is placed before <code>\caption</code>, the reference will resolve to the wrong number.
         </div>
 
         <div class="ov-shots">
           <div class="ov-shots__title">Reference Screenshots — Cross-Referencing</div>
           <div class="ov-shots__grid">
-            <div class="ov-shot"><img src="../assets/overleaf/image 21.png" alt="Cross reference 1"><div class="ov-shot__caption">\ref 자동 참조</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 22.png" alt="Cross reference 2"><div class="ov-shot__caption">sub-document import</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 23.png" alt="Cross reference 3"><div class="ov-shot__caption">section 가져오기</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 24.png" alt="Cross reference 4"><div class="ov-shot__caption">참조 결과</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 21.png" alt="Cross reference 1"><div class="ov-shot__caption">\ref auto cross-reference</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 22.png" alt="Cross reference 2"><div class="ov-shot__caption">Sub-document import</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 23.png" alt="Cross reference 3"><div class="ov-shot__caption">Importing a section</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 24.png" alt="Cross reference 4"><div class="ov-shot__caption">Reference result</div></div>
           </div>
         </div>
       </section>
@@ -671,7 +671,7 @@ See Figure <span class="cmd">\ref</span>{<span class="arg">fig:overview</span>} 
       <!-- Section 8: Figure -->
       <section class="ov-section" id="sec-figure">
         <h2><span class="ov-num">08</span> Figure</h2>
-        <p class="ov-section__sub">논문 그림 삽입 — Float 환경.</p>
+        <p class="ov-section__sub">Inserting figures in papers — the float environment.</p>
 
         <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\begin</span>{<span class="str">figure</span>}[<span class="arg">t</span>]
   <span class="cmd">\centering</span>
@@ -682,19 +682,19 @@ See Figure <span class="cmd">\ref</span>{<span class="arg">fig:overview</span>} 
 
         <h3>Position Options</h3>
         <table class="ov-table">
-          <thead><tr><th>옵션</th><th>의미</th></tr></thead>
+          <thead><tr><th>Option</th><th>Meaning</th></tr></thead>
           <tbody>
-            <tr><td><code>h</code></td><td>here — 가능하면 여기에</td></tr>
-            <tr><td><code>t</code></td><td>top — 페이지 상단</td></tr>
-            <tr><td><code>b</code></td><td>bottom — 페이지 하단</td></tr>
-            <tr><td><code>p</code></td><td>page — 별도 페이지</td></tr>
-            <tr><td><code>H</code></td><td>absolutely here (float 패키지 필요)</td></tr>
-            <tr><td><code>!</code></td><td>제약 강제 무시</td></tr>
+            <tr><td><code>h</code></td><td>here — if possible, place at this point</td></tr>
+            <tr><td><code>t</code></td><td>top — top of the page</td></tr>
+            <tr><td><code>b</code></td><td>bottom — bottom of the page</td></tr>
+            <tr><td><code>p</code></td><td>page — on a dedicated float page</td></tr>
+            <tr><td><code>H</code></td><td>absolutely here (requires the float package)</td></tr>
+            <tr><td><code>!</code></td><td>override LaTeX's placement constraints</td></tr>
           </tbody>
         </table>
 
-        <h3>2단 편집 시 한 줄 가로지르는 Figure</h3>
-        <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\begin</span>{<span class="str">figure*</span>}[<span class="arg">t</span>]    <span class="cmt">% figure 대신 figure*</span>
+        <h3>Two-Column-Spanning Figures (two-column layout)</h3>
+        <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\begin</span>{<span class="str">figure*</span>}[<span class="arg">t</span>]    <span class="cmt">% use figure* instead of figure</span>
   <span class="cmd">\centering</span>
   <span class="cmd">\includegraphics</span>[<span class="arg">width=\textwidth</span>]{<span class="str">wide.pdf</span>}
   <span class="cmd">\caption</span>{Two-column-spanning figure.}
@@ -704,11 +704,11 @@ See Figure <span class="cmd">\ref</span>{<span class="arg">fig:overview</span>} 
         <div class="ov-shots">
           <div class="ov-shots__title">Reference Screenshots — Figures</div>
           <div class="ov-shots__grid">
-            <div class="ov-shot"><img src="../assets/overleaf/image 10.png" alt="Figure example 1"><div class="ov-shot__caption">Figure 기본 삽입</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 10.png" alt="Figure example 1"><div class="ov-shot__caption">Basic figure insertion</div></div>
             <div class="ov-shot"><img src="../assets/overleaf/image 11.png" alt="Figure example 2"><div class="ov-shot__caption">Figure with caption</div></div>
             <div class="ov-shot"><img src="../assets/overleaf/image 12.png" alt="Figure example 3"><div class="ov-shot__caption">Figure scaling</div></div>
             <div class="ov-shot"><img src="../assets/overleaf/image 13.png" alt="Figure example 4"><div class="ov-shot__caption">Figure alignment</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 14.png" alt="Figure options"><div class="ov-shot__caption">Figure 옵션 비교</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 14.png" alt="Figure options"><div class="ov-shot__caption">Figure option comparison</div></div>
           </div>
         </div>
       </section>
@@ -716,7 +716,7 @@ See Figure <span class="cmd">\ref</span>{<span class="arg">fig:overview</span>} 
       <!-- Section 9: Table -->
       <section class="ov-section" id="sec-table">
         <h2><span class="ov-num">09</span> Table</h2>
-        <p class="ov-section__sub">표 작성 — <code>table</code>(float) + <code>tabular</code>(내용) 조합.</p>
+        <p class="ov-section__sub">Building tables — the <code>table</code> (float) plus <code>tabular</code> (content) combination.</p>
 
         <div class="ov-split">
           <div>
@@ -750,30 +750,30 @@ See Figure <span class="cmd">\ref</span>{<span class="arg">fig:overview</span>} 
           </div>
         </div>
 
-        <h3>Column Alignment 인자</h3>
+        <h3>Column Alignment Specifiers</h3>
         <table class="ov-table">
-          <thead><tr><th>인자</th><th>정렬</th></tr></thead>
+          <thead><tr><th>Specifier</th><th>Alignment</th></tr></thead>
           <tbody>
-            <tr><td><code>l</code></td><td>왼쪽 정렬</td></tr>
-            <tr><td><code>c</code></td><td>가운데 정렬</td></tr>
-            <tr><td><code>r</code></td><td>오른쪽 정렬</td></tr>
-            <tr><td><code>p{3cm}</code></td><td>고정 너비 (자동 줄바꿈)</td></tr>
+            <tr><td><code>l</code></td><td>Left-aligned</td></tr>
+            <tr><td><code>c</code></td><td>Centered</td></tr>
+            <tr><td><code>r</code></td><td>Right-aligned</td></tr>
+            <tr><td><code>p{3cm}</code></td><td>Fixed width (auto line break)</td></tr>
           </tbody>
         </table>
 
         <div class="ov-callout">
-          <strong>더 예쁜 표</strong>를 원하면 <code>booktabs</code> 패키지의 <code>\toprule, \midrule, \bottomrule</code>을 사용하세요. <code>\hline</code>보다 훨씬 깔끔합니다.
+          For <strong>prettier tables</strong>, use the <code>booktabs</code> package and its <code>\toprule, \midrule, \bottomrule</code> macros — far cleaner than <code>\hline</code>.
         </div>
 
         <div class="ov-shots">
           <div class="ov-shots__title">Reference Screenshots — Tables</div>
           <div class="ov-shots__grid">
-            <div class="ov-shot"><img src="../assets/overleaf/image 15.png" alt="Table example 1"><div class="ov-shot__caption">기본 표 (tabular)</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 16.png" alt="Table example 2"><div class="ov-shot__caption">열 정렬 / hline</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 15.png" alt="Table example 1"><div class="ov-shot__caption">Basic tabular</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 16.png" alt="Table example 2"><div class="ov-shot__caption">Column alignment / hline</div></div>
             <div class="ov-shot"><img src="../assets/overleaf/image 17.png" alt="Table example 3"><div class="ov-shot__caption">multirow / multicolumn</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 18.png" alt="Table example 4"><div class="ov-shot__caption">caption 위치</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 19.png" alt="Table example 5"><div class="ov-shot__caption">booktabs 스타일</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 20.png" alt="Table example 6"><div class="ov-shot__caption">고급 표 예시</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 18.png" alt="Table example 4"><div class="ov-shot__caption">Caption placement</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 19.png" alt="Table example 5"><div class="ov-shot__caption">booktabs style</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 20.png" alt="Table example 6"><div class="ov-shot__caption">Advanced table example</div></div>
           </div>
         </div>
       </section>
@@ -781,9 +781,9 @@ See Figure <span class="cmd">\ref</span>{<span class="arg">fig:overview</span>} 
       <!-- Section 10: Equation -->
       <section class="ov-section" id="sec-equation">
         <h2><span class="ov-num">10</span> Equation</h2>
-        <p class="ov-section__sub">수식 — LaTeX가 가장 빛나는 영역.</p>
+        <p class="ov-section__sub">Mathematics — the area where LaTeX shines brightest.</p>
 
-        <h3>Inline 수식</h3>
+        <h3>Inline Math</h3>
         <div class="ov-split">
           <div>
             <span class="ov-split__label">Code</span>
@@ -795,7 +795,7 @@ See Figure <span class="cmd">\ref</span>{<span class="arg">fig:overview</span>} 
           </div>
         </div>
 
-        <h3>Display 수식</h3>
+        <h3>Display Math</h3>
         <div class="ov-split">
           <div>
             <span class="ov-split__label">Code</span>
@@ -810,7 +810,7 @@ See Figure <span class="cmd">\ref</span>{<span class="arg">fig:overview</span>} 
           </div>
         </div>
 
-        <h3>Align Environment (다중 줄 정렬)</h3>
+        <h3>Align Environment (Multi-line Alignment)</h3>
         <div class="ov-split">
           <div>
             <span class="ov-split__label">Code</span>
@@ -826,14 +826,14 @@ See Figure <span class="cmd">\ref</span>{<span class="arg">fig:overview</span>} 
         </div>
 
         <div class="ov-callout">
-          <strong>필수 패키지:</strong> <code>\usepackage{amsmath}</code> — <code>align</code>, <code>gather</code>, <code>cases</code> 등 고급 수식 환경 사용에 필수.
+          <strong>Required package:</strong> <code>\usepackage{amsmath}</code> — essential for advanced math environments such as <code>align</code>, <code>gather</code>, and <code>cases</code>.
         </div>
       </section>
 
       <!-- Section 11: Full Paper -->
       <section class="ov-section" id="sec-full">
         <h2><span class="ov-num">11</span> Full Paper Skeleton</h2>
-        <p class="ov-section__sub">지금까지 배운 것을 한 파일로.</p>
+        <p class="ov-section__sub">Everything you've learned, in one file.</p>
 
         <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\documentclass</span>[<span class="arg">11pt,a4paper</span>]{<span class="str">article</span>}
 <span class="cmd">\usepackage</span>{<span class="str">graphicx, amsmath, hyperref, booktabs</span>}
@@ -877,7 +877,7 @@ As shown in Figure <span class="cmd">\ref</span>{<span class="arg">fig:result</s
       <section class="ov-section" id="sec-tips">
         <h2><span class="ov-num">+</span> Tips · Mistakes · Templates</h2>
 
-        <h3>📑 추천 논문 템플릿</h3>
+        <h3>📑 Recommended Paper Templates</h3>
         <div class="ov-tag-grid">
           <span class="ov-tag">IEEE</span>
           <span class="ov-tag">ACM</span>
@@ -888,60 +888,60 @@ As shown in Figure <span class="cmd">\ref</span>{<span class="arg">fig:result</s
           <span class="ov-tag">Springer LNCS</span>
         </div>
 
-        <h3>🚨 초보자가 자주 하는 실수</h3>
+        <h3>🚨 Common Beginner Mistakes</h3>
         <ul>
-          <li><strong>label 위치 오류</strong> — caption 위에 label을 두면 잘못된 번호 참조</li>
-          <li><strong>begin/end 누락</strong> — 환경 짝이 맞지 않으면 컴파일 실패</li>
-          <li><strong>package 누락</strong> — <code>amsmath</code>, <code>graphicx</code>, <code>hyperref</code>는 기본 추가 권장</li>
-          <li><strong>math mode 오류</strong> — 수식 밖에서 <code>_</code> 또는 <code>^</code> 사용 금지</li>
-          <li><strong>figure path 오류</strong> — <code>\graphicspath{ {./figures/} }</code>로 디렉토리 지정 권장</li>
-          <li><strong>한글 깨짐</strong> — <code>kotex</code>(pdfLaTeX) 또는 XeLaTeX + <code>kotex</code> 사용</li>
+          <li><strong>Incorrect label position</strong> — placing <code>\label</code> before <code>\caption</code> causes the wrong number to be referenced.</li>
+          <li><strong>Missing begin/end pairs</strong> — mismatched environments cause compilation failures.</li>
+          <li><strong>Missing packages</strong> — always include <code>amsmath</code>, <code>graphicx</code>, and <code>hyperref</code> by default.</li>
+          <li><strong>Math-mode errors</strong> — do not use <code>_</code> or <code>^</code> outside of math mode.</li>
+          <li><strong>Figure path errors</strong> — set the directory once with <code>\graphicspath{ {./figures/} }</code>.</li>
+          <li><strong>Korean character issues</strong> — use the <code>kotex</code> package (pdfLaTeX) or XeLaTeX with <code>kotex</code>.</li>
         </ul>
 
-        <h3>✅ 논문 작성 Best Practice</h3>
+        <h3>✅ Paper-Writing Best Practices</h3>
         <ul>
-          <li><strong>Figure first principle</strong>: 본문보다 figure를 먼저 그려보고, 그것에 맞춰 글을 쓴다</li>
-          <li><strong>Caption은 self-contained</strong>: 캡션만 보고도 그림을 이해할 수 있게 작성</li>
-          <li><strong>Label naming</strong>: <code>fig:tda-pipeline</code>처럼 의미가 드러나게 — 절대 <code>fig:1</code> 같은 임의 이름 금지</li>
-          <li><strong>버전 관리</strong>: <code>main.tex</code> 외에 <code>sections/*.tex</code>로 분리하고 git 관리</li>
-          <li><strong>참고문헌</strong>: <code>.bib</code> 파일로 분리 — Google Scholar의 BibTeX 인용 활용</li>
-          <li><strong>Overleaf 협업</strong>: track changes, comments 적극 활용</li>
+          <li><strong>Figure-first principle:</strong> sketch your figures before writing prose, then write to support them.</li>
+          <li><strong>Self-contained captions:</strong> the caption alone should explain the figure.</li>
+          <li><strong>Meaningful label naming:</strong> use semantic names like <code>fig:tda-pipeline</code> — never <code>fig:1</code>.</li>
+          <li><strong>Version control:</strong> split content across <code>main.tex</code> and <code>sections/*.tex</code>, and track everything with git.</li>
+          <li><strong>Bibliography:</strong> keep references in a separate <code>.bib</code> file — use Google Scholar's BibTeX export.</li>
+          <li><strong>Overleaf collaboration:</strong> use track changes and inline comments aggressively.</li>
         </ul>
 
-        <h3>🔧 자주 쓰는 패키지</h3>
+        <h3>🔧 Frequently Used Packages</h3>
         <table class="ov-table">
-          <thead><tr><th>패키지</th><th>용도</th></tr></thead>
+          <thead><tr><th>Package</th><th>Purpose</th></tr></thead>
           <tbody>
-            <tr><td><code>amsmath, amssymb</code></td><td>수식 환경 / 기호</td></tr>
-            <tr><td><code>graphicx</code></td><td>그림 삽입</td></tr>
-            <tr><td><code>hyperref</code></td><td>하이퍼링크 / 자동 참조</td></tr>
-            <tr><td><code>booktabs</code></td><td>예쁜 표 (toprule 등)</td></tr>
-            <tr><td><code>cleveref</code></td><td>스마트 참조 (<code>\cref</code>)</td></tr>
-            <tr><td><code>algorithm, algpseudocode</code></td><td>의사 코드</td></tr>
-            <tr><td><code>listings</code></td><td>소스 코드 하이라이팅</td></tr>
-            <tr><td><code>tikz, pgfplots</code></td><td>다이어그램 / 플롯</td></tr>
+            <tr><td><code>amsmath, amssymb</code></td><td>Math environments and symbols</td></tr>
+            <tr><td><code>graphicx</code></td><td>Figure insertion</td></tr>
+            <tr><td><code>hyperref</code></td><td>Hyperlinks and automatic cross-references</td></tr>
+            <tr><td><code>booktabs</code></td><td>Beautiful tables (<code>\toprule</code> etc.)</td></tr>
+            <tr><td><code>cleveref</code></td><td>Smart references (<code>\cref</code>)</td></tr>
+            <tr><td><code>algorithm, algpseudocode</code></td><td>Pseudocode</td></tr>
+            <tr><td><code>listings</code></td><td>Source-code highlighting</td></tr>
+            <tr><td><code>tikz, pgfplots</code></td><td>Diagrams and plots</td></tr>
           </tbody>
         </table>
 
         <div class="ov-callout">
-          <strong>다음 단계:</strong> BibTeX로 참고문헌 자동화 → TikZ로 다이어그램 → 학회별 템플릿 사용 → 공동 편집 (Overleaf Pro / Git 동기화).
+          <strong>Next steps:</strong> automate references with BibTeX → draw diagrams with TikZ → adopt conference templates → collaborate with co-authors (Overleaf Pro / Git sync).
         </div>
 
         <div class="ov-shots">
           <div class="ov-shots__title">Reference Screenshots — Lists, Emphasis, Equations &amp; More</div>
           <div class="ov-shots__grid">
-            <div class="ov-shot"><img src="../assets/overleaf/image 25.png" alt="lists 1"><div class="ov-shot__caption">리스트 환경</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 26.png" alt="lists 2"><div class="ov-shot__caption">숫자 리스트</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 27.png" alt="bullet list"><div class="ov-shot__caption">불릿 리스트</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 28.png" alt="emphasis"><div class="ov-shot__caption">강조 (bold/italic)</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 29.png" alt="inline code"><div class="ov-shot__caption">한 줄 코드 / verbatim</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 30.png" alt="equation 1"><div class="ov-shot__caption">Equation 환경</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 31.png" alt="equation 2"><div class="ov-shot__caption">Align 환경</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 32.png" alt="equation 3"><div class="ov-shot__caption">수식 정렬 예시</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 33.png" alt="algorithm"><div class="ov-shot__caption">Algorithm 환경</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 34.png" alt="code listing"><div class="ov-shot__caption">listings 패키지</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 25.png" alt="lists 1"><div class="ov-shot__caption">List environments</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 26.png" alt="lists 2"><div class="ov-shot__caption">Numbered lists</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 27.png" alt="bullet list"><div class="ov-shot__caption">Bullet lists</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 28.png" alt="emphasis"><div class="ov-shot__caption">Emphasis (bold / italic)</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 29.png" alt="inline code"><div class="ov-shot__caption">Inline code / verbatim</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 30.png" alt="equation 1"><div class="ov-shot__caption">Equation environment</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 31.png" alt="equation 2"><div class="ov-shot__caption">Align environment</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 32.png" alt="equation 3"><div class="ov-shot__caption">Equation alignment example</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 33.png" alt="algorithm"><div class="ov-shot__caption">Algorithm environment</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 34.png" alt="code listing"><div class="ov-shot__caption">listings package</div></div>
             <div class="ov-shot"><img src="../assets/overleaf/image 35.png" alt="appendix"><div class="ov-shot__caption">Appendix</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 36.png" alt="bibliography"><div class="ov-shot__caption">참고문헌 출력</div></div>
+            <div class="ov-shot"><img src="../assets/overleaf/image 36.png" alt="bibliography"><div class="ov-shot__caption">Bibliography output</div></div>
           </div>
         </div>
       </section>
