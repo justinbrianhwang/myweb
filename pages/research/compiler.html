@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compilers — Sunjun Hwang</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="../../css/pages.css">
+  <link rel="stylesheet" href="../../css/research-hero.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <script src="../../js/theme.js"></script>
+  <script src="../../js/sidebar.js"></script>
+
+  <a href="../../index.html#research" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Research</a>
+
+  <main class="page-content" data-theme="research">
+    <div class="container">
+      <div class="research-hero hero-compiler">
+        <div class="cc-rain">{ } ( ) ; / / &lt; &gt; = =</div>
+        <div class="cc-rain">if else while for return</div>
+        <div class="cc-rain">load store add mov jmp</div>
+        <div class="cc-rain">%rax %rbx %rcx %rdx</div>
+        <div class="cc-rain">@.LBB0_1 @.LCPI</div>
+        <div class="cc-rain">.text .data .bss</div>
+        <div class="cc-pipeline">
+          <span class="cc-stage">src</span>
+          <span class="cc-arrow">→</span>
+          <span class="cc-stage cc-stage--lex">lex</span>
+          <span class="cc-arrow">→</span>
+          <span class="cc-stage cc-stage--parse">parse</span>
+          <span class="cc-arrow">→</span>
+          <span class="cc-stage cc-stage--ir">IR</span>
+          <span class="cc-arrow">→</span>
+          <span class="cc-stage cc-stage--opt">opt</span>
+          <span class="cc-arrow">→</span>
+          <span class="cc-stage cc-stage--bin">bin</span>
+        </div>
+      </div>
+      <h1 class="page-title">
+        <span class="page-icon page-icon--img"><img src="../../assets/research/compiler.png" alt="Compilers"></span>
+        Compilers
+      </h1>
+      <p class="page-subtitle">AI/ML · Hardware-aware · Quantum · Classical Compiler &amp; Programming-Language Theory</p>
+
+      <div class="research-detail">
+
+        <section class="detail-section">
+          <h2>Overview</h2>
+          <p>Compiler research is the <strong>connective tissue</strong> between high-level program intent and the physical hardware that executes it. Whether the target is a deep learning accelerator, an FPGA inference engine, a noisy quantum processor, or a conventional CPU, the same questions resurface: <em>what does the program mean, what does the hardware allow, and how do we close the gap with provably correct transformations?</em></p>
+          <p>My work spans four complementary directions of compiler technology, intentionally chosen so that ideas in one direction inform the others — graph-level rewrites in ML compilers borrow from classical dataflow analysis, qubit routing borrows from register allocation, and FPGA scheduling borrows from polyhedral loop optimization.</p>
+        </section>
+
+        <section class="detail-section">
+          <h2>1. AI / ML Compilers</h2>
+          <p>Modern deep learning models are compiled, not just executed. Frameworks such as <strong>TVM</strong>, <strong>XLA</strong>, and <strong>MLIR</strong> lower high-level model graphs through a series of intermediate representations, applying graph-level rewrites and operator-level optimizations before generating code for a specific accelerator.</p>
+          <ul>
+            <li><strong>Graph-level optimization passes</strong> — operator fusion, constant folding, layout transformation, common subexpression elimination on computation graphs.</li>
+            <li><strong>Operator scheduling and tiling</strong> — choosing loop orders, tile sizes, and parallelization strategies that match the target's memory hierarchy.</li>
+            <li><strong>Autotuning</strong> — search over the space of valid schedules (XGBoost-based cost models, evolutionary search) to find configurations that maximize throughput.</li>
+            <li><strong>Quantization-aware compilation</strong> — folding INT8/FP16 conversion into operator fusion to deliver low-precision inference without accuracy loss.</li>
+          </ul>
+        </section>
+
+        <section class="detail-section">
+          <h2>2. Hardware-aware Compilation</h2>
+          <p>Compiling neural networks for edge accelerators is fundamentally different from compiling C for an x86 server. The compiler must reason explicitly about memory hierarchies, dataflow patterns, and backend-specific resource constraints to deliver low-latency inference at minimum power.</p>
+          <ul>
+            <li><strong>FPGA backends</strong> — high-level synthesis (HLS) from operator graphs to RTL, with systolic-array and dataflow templates for matrix multiplication, convolution, and attention layers.</li>
+            <li><strong>GPU backends</strong> — CUDA / HIP kernel generation, warp-level scheduling, shared-memory tiling, and tensor-core specialization.</li>
+            <li><strong>NPU backends</strong> — mapping graphs onto vendor-specific accelerators (NVDLA-style, mobile NPUs) with explicit DMA and double-buffering schedules.</li>
+            <li><strong>Polyhedral optimization</strong> — affine transformations of perfectly nested loops to expose parallelism, tile for cache, and eliminate redundant memory traffic.</li>
+          </ul>
+        </section>
+
+        <section class="detail-section">
+          <h2>3. Quantum Compilers</h2>
+          <p>Quantum programs written against an idealized gate set cannot run directly on real NISQ (noisy intermediate-scale quantum) hardware. A <strong>quantum compiler</strong> must rewrite logical circuits so that they respect the connectivity, native gate set, and noise profile of the target device — all while preserving the program's semantics.</p>
+          <ul>
+            <li><strong>Circuit optimization</strong> — gate cancellation, commutation rewrites, and template matching to reduce depth and gate count.</li>
+            <li><strong>Gate synthesis and decomposition</strong> — lowering arbitrary unitaries into hardware-native gates (CX, RZ, SX on IBM hardware; CZ, U3 on others).</li>
+            <li><strong>Qubit routing and SWAP insertion</strong> — mapping logical qubits to physical ones and inserting minimal SWAP gates to satisfy the coupling graph.</li>
+            <li><strong>Noise-aware transpilation</strong> — selecting routes and gate sequences that minimize accumulated error using device calibration data.</li>
+          </ul>
+        </section>
+
+        <section class="detail-section">
+          <h2>4. Classical Compiler &amp; Programming-Language Theory</h2>
+          <p>Underpinning all of the above is the long tradition of compiler infrastructure and programming-language semantics, built on production tooling such as <strong>LLVM</strong> and on decades of work on formal methods. The directions of research that interest me most are those that make optimizations <em>provably correct</em>.</p>
+          <ul>
+            <li><strong>LLVM-based static analysis</strong> — building dataflow and alias analyses on top of LLVM IR, then exposing them as optimization passes.</li>
+            <li><strong>Program transformations</strong> — loop optimization, SSA-based rewrites, escape analysis, devirtualization.</li>
+            <li><strong>Formal semantics for optimizations</strong> — defining operational or denotational semantics for IR fragments so that transformations can be machine-checked.</li>
+            <li><strong>Type-driven program reasoning</strong> — using dependent and refinement types to express invariants that the compiler can verify and exploit.</li>
+          </ul>
+        </section>
+
+        <section class="detail-section">
+          <h2>Why this thread matters</h2>
+          <p>Every other research area I work on — AI semiconductors, quantum computing, autonomous driving, edge medical AI — ultimately runs on a compiler. The performance, correctness, and even the energy budget of those systems are largely determined by decisions that a compiler makes silently between the user's model and the executing hardware. Treating compilers as a first-class research thread lets the rest of the stack be designed coherently rather than in isolation.</p>
+        </section>
+
+        <section class="detail-section">
+          <h2>Tools &amp; Frameworks</h2>
+          <div class="detail-tags">
+            <span class="tag">LLVM</span>
+            <span class="tag">MLIR</span>
+            <span class="tag">TVM</span>
+            <span class="tag">XLA</span>
+            <span class="tag">TensorRT</span>
+            <span class="tag">ONNX Runtime</span>
+            <span class="tag">CUDA</span>
+            <span class="tag">HIP</span>
+            <span class="tag">Vitis HLS</span>
+            <span class="tag">Qiskit</span>
+            <span class="tag">PennyLane</span>
+            <span class="tag">Coq / Lean (verification)</span>
+          </div>
+        </section>
+
+        <section class="detail-section">
+          <h2>Reading List</h2>
+          <ul class="detail-list reading-list">
+            <li><a href="https://www.aosabook.org/en/llvm.html" target="_blank">The Architecture of Open Source Applications — LLVM (Chris Lattner)</a></li>
+            <li><a href="https://www.usenix.org/conference/osdi18/presentation/chen" target="_blank">TVM: An Automated End-to-End Optimizing Compiler for Deep Learning — Chen et al., OSDI 2018</a></li>
+            <li><a href="https://arxiv.org/abs/2002.11054" target="_blank">MLIR: A Compiler Infrastructure for the End of Moore's Law — Lattner et al., 2020</a></li>
+            <li><a href="https://www.tensorflow.org/xla" target="_blank">XLA: Accelerated Linear Algebra (Google)</a></li>
+            <li><a href="https://arxiv.org/abs/1810.00352" target="_blank">Glow: Graph Lowering Compiler Techniques for Neural Networks — Rotem et al., 2018</a></li>
+            <li><a href="https://dl.acm.org/doi/10.1145/3140587.3062354" target="_blank">Polly: Performing Polyhedral Optimizations on a Low-Level Intermediate Representation — Grosser et al., 2012</a></li>
+            <li><a href="https://arxiv.org/abs/2004.09222" target="_blank">A Survey of Quantum Circuit Compilation — Maslov, Shi, et al., 2020</a></li>
+            <li><a href="https://arxiv.org/abs/1809.02573" target="_blank">Tackling the Qubit Mapping Problem for NISQ-Era Quantum Devices — Li, Ding, Xie, ASPLOS 2019</a></li>
+            <li><a href="https://qiskit.org/documentation/apidoc/transpiler.html" target="_blank">Qiskit Transpiler — Documentation and Pass Manager</a></li>
+            <li><a href="https://dl.acm.org/doi/10.1145/1133981.1133987" target="_blank">CompCert: A Formally Verified Optimizing C Compiler — Xavier Leroy, CACM 2009</a></li>
+            <li><a href="https://www.cl.cam.ac.uk/~pes20/cerberus/" target="_blank">Cerberus: An Executable Formal Semantics for C — Memarian et al.</a></li>
+            <li><a href="https://www.cs.cornell.edu/~asampson/blog/llvm.html" target="_blank">LLVM for Grad Students — Adrian Sampson (introductory blog series)</a></li>
+            <li><a href="https://leanprover.github.io/" target="_blank">Lean Theorem Prover — for machine-checked compiler proofs</a></li>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>
