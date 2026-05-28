@@ -358,6 +358,84 @@
   .shield-icon { font-size: 2.5rem; }
 }
 
+/* ===== Computer Systems — Stack Layers + Bit Stream ===== */
+.hero-systems {
+  background: radial-gradient(ellipse at center, rgba(0, 201, 167, 0.10) 0%, var(--bg-card) 70%);
+  position: relative;
+  overflow: hidden;
+}
+
+.sys-stack {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.sys-layer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 18px;
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  background: rgba(0, 201, 167, 0.12);
+  color: #00c9a7;
+  border: 1px solid rgba(0, 201, 167, 0.25);
+  min-width: 200px;
+  justify-content: center;
+  animation: sysLayerPulse 3s ease-in-out infinite;
+}
+
+.sys-layer i { font-size: 0.85rem; }
+
+.sys-layer--app   { animation-delay: 0s;    }
+.sys-layer--cc    { animation-delay: 0.4s;  background: rgba(13, 110, 80, 0.14);  color: #0d8060;  border-color: rgba(13, 110, 80, 0.3); }
+.sys-layer--db    { animation-delay: 0.8s;  background: rgba(108, 99, 255, 0.12); color: #6c63ff;  border-color: rgba(108, 99, 255, 0.3); }
+.sys-layer--os    { animation-delay: 1.2s;  background: rgba(245, 166, 35, 0.12); color: #c08300;  border-color: rgba(245, 166, 35, 0.3); }
+.sys-layer--arch  { animation-delay: 1.6s;  background: rgba(233, 69, 96, 0.10);  color: #e94560;  border-color: rgba(233, 69, 96, 0.3); }
+
+@keyframes sysLayerPulse {
+  0%, 100% { transform: translateY(0); box-shadow: 0 0 0 rgba(0, 201, 167, 0); }
+  50%      { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0, 201, 167, 0.18); }
+}
+
+.sys-bits {
+  position: absolute;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: rgba(0, 201, 167, 0.18);
+  letter-spacing: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 1;
+  animation: sysBitsFlow 12s linear infinite;
+}
+
+.sys-bits:nth-of-type(2) { top: 18px;  left: -100%; animation-delay: 0s; }
+.sys-bits:nth-of-type(3) { bottom: 18px; left: -100%; animation-delay: 6s; }
+
+@keyframes sysBitsFlow {
+  0%   { transform: translateX(0);     opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { transform: translateX(220%);  opacity: 0; }
+}
+
+@media (max-width: 768px) {
+  .sys-layer { min-width: 150px; font-size: 0.7rem; padding: 4px 12px; gap: 6px; }
+  .sys-stack { gap: 4px; }
+}
+
+@media (max-width: 480px) {
+  .sys-layer { min-width: 120px; font-size: 0.62rem; }
+}
+
 /* ===== TDA for Medical Data — Persistent Homology / Mapper Graph ===== */
 .hero-tda {
   background: radial-gradient(ellipse at center, rgba(233, 69, 96, 0.08) 0%, var(--bg-card) 70%);

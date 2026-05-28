@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Computer Systems — Sunjun Hwang</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="../../css/pages.css">
+  <link rel="stylesheet" href="../../css/research-hero.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <script src="../../js/theme.js"></script>
+  <script src="../../js/sidebar.js"></script>
+
+  <a href="../../index.html#research" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Research</a>
+
+  <main class="page-content" data-theme="research">
+    <div class="container">
+      <div class="research-hero hero-systems">
+        <!-- Stack layers: APP -> DB -> OS -> ARCH -> HW -->
+        <div class="sys-stack">
+          <div class="sys-layer sys-layer--app"><i class="fas fa-code"></i><span>APP</span></div>
+          <div class="sys-layer sys-layer--cc"><i class="fas fa-cogs"></i><span>COMPILER</span></div>
+          <div class="sys-layer sys-layer--db"><i class="fas fa-database"></i><span>DATABASE</span></div>
+          <div class="sys-layer sys-layer--os"><i class="fas fa-microchip"></i><span>OS</span></div>
+          <div class="sys-layer sys-layer--arch"><i class="fas fa-server"></i><span>ARCHITECTURE</span></div>
+        </div>
+        <!-- Bit stream background -->
+        <div class="sys-bits">10110100 01001010 11001100 10101011 01110010 11100001 00110110 10010101</div>
+        <div class="sys-bits">11010011 01101010 10010111 11110010 01000110 10110011 01010101 11101001</div>
+      </div>
+      <h1 class="page-title">
+        <span class="page-icon"><i class="fas fa-server"></i></span>
+        Computer Systems
+      </h1>
+      <p class="page-subtitle">Compilers · Computer Architecture · Operating Systems · Databases</p>
+
+      <div class="research-detail">
+
+        <section class="detail-section">
+          <h2>Overview</h2>
+          <p>Computer systems research investigates how the layers between a user's program and the physical machine — <strong>compilers, architecture, operating systems, and databases</strong> — fit together to determine performance, correctness, and energy. These four pillars are usually taught separately, but in practice they constantly interact: a compiler optimization that ignores the memory hierarchy is wasted; a database engine that ignores OS-level I/O scheduling cannot meet its latency targets; a CPU pipeline that does not anticipate the kind of code modern compilers emit will idle under real workloads.</p>
+          <p>My interest in this thread comes from one observation — every other research area I work on (AI security, federated learning, quantum, medical AI, autonomous driving) ultimately runs on a stack of systems software. Understanding that stack deeply is what turns a model on paper into a system that actually works in the world.</p>
+        </section>
+
+        <section class="detail-section">
+          <h2><i class="fas fa-cogs" style="color: var(--accent); margin-right: 8px;"></i>1. Compilers</h2>
+          <p>Compilers are the bridge between high-level program intent and the physical hardware that executes it. My work spans four complementary directions of compiler technology:</p>
+          <ul>
+            <li><strong>AI / ML Compilers</strong> — graph-level optimization passes for deep learning models (TVM, XLA, MLIR), operator fusion, layout transformation, kernel scheduling, and autotuning to extract maximum throughput from accelerators.</li>
+            <li><strong>Hardware-aware Compilation</strong> — lowering computational graphs onto FPGAs, GPUs, and emerging NPUs, with explicit modeling of memory hierarchies, dataflow patterns, and polyhedral loop transformations.</li>
+            <li><strong>Quantum Compilers</strong> — circuit optimization, gate decomposition, qubit routing, and noise-aware transpilation that adapts logical quantum circuits to real NISQ devices.</li>
+            <li><strong>Classical Compiler &amp; PL Theory</strong> — LLVM-based static analysis, SSA transformations, and formal semantics that make optimizations provably correct.</li>
+          </ul>
+        </section>
+
+        <section class="detail-section">
+          <h2><i class="fas fa-microchip" style="color: var(--accent); margin-right: 8px;"></i>2. Computer Architecture</h2>
+          <p>Computer architecture studies the design and behavior of the processor itself — pipelines, caches, memory systems, and the parallelism available across cores and accelerators. Even modest workload optimizations only pay off if the underlying machine actually delivers what its instruction set advertises.</p>
+          <ul>
+            <li><strong>Memory hierarchy and cache behavior</strong> — cache-aware data structures, blocking, and prefetching strategies that exploit temporal and spatial locality.</li>
+            <li><strong>Instruction-level and thread-level parallelism</strong> — out-of-order execution, branch prediction, SIMD vector units, and multi-core / multi-socket scaling.</li>
+            <li><strong>Accelerator architectures</strong> — GPUs (warps, tensor cores), TPUs (systolic arrays), NPUs, and how their execution models shape software design.</li>
+            <li><strong>Energy- and reliability-aware architecture</strong> — DVFS, approximate computing, and resilience to soft errors / bit-flips — directly relevant to AI security research on fault injection.</li>
+          </ul>
+        </section>
+
+        <section class="detail-section">
+          <h2><i class="fas fa-cube" style="color: var(--accent); margin-right: 8px;"></i>3. Operating Systems</h2>
+          <p>The operating system is the layer that turns a piece of physical hardware into a programmable platform — managing processes, memory, files, and network I/O, and providing the isolation guarantees that everything above it depends on.</p>
+          <ul>
+            <li><strong>Process and thread scheduling</strong> — CFS, real-time schedulers, and how scheduling decisions show up as latency variance in user-space workloads.</li>
+            <li><strong>Virtual memory and address translation</strong> — page tables, TLBs, huge pages, and the cost of memory mapping for large model weights.</li>
+            <li><strong>File systems and I/O</strong> — block layer, page cache, I/O schedulers, and modern storage stacks (NVMe, io_uring) that matter when reading TB-scale datasets.</li>
+            <li><strong>Virtualization and containers</strong> — KVM, namespaces, cgroups, and the OS primitives behind every modern ML training cluster.</li>
+            <li><strong>Kernel security</strong> — privilege separation, SMAP / SMEP, and side-channel mitigations — overlapping with my AI security work on adversarial robustness.</li>
+          </ul>
+        </section>
+
+        <section class="detail-section">
+          <h2><i class="fas fa-database" style="color: var(--accent); margin-right: 8px;"></i>4. Databases</h2>
+          <p>Database research sits at the intersection of algorithms, systems, and storage. Modern AI workloads have made databases doubly important: training data pipelines, vector search, and online inference all increasingly look like database problems.</p>
+          <ul>
+            <li><strong>Query processing and optimization</strong> — relational algebra, cost-based optimizers, join algorithms, and adaptive query execution.</li>
+            <li><strong>Transactions and consistency</strong> — ACID, MVCC, isolation levels, and distributed consensus (Paxos / Raft).</li>
+            <li><strong>Storage engines</strong> — B+ trees, LSM-trees, columnar storage, compression, and how storage layout determines query performance.</li>
+            <li><strong>Vector and ML-native databases</strong> — approximate nearest-neighbor indexes (HNSW, IVF-PQ), hybrid SQL + vector workloads, and serving infrastructure for retrieval-augmented generation (RAG).</li>
+            <li><strong>Distributed databases</strong> — sharding, replication, and the CAP-PACELC trade-offs that decide whether a multi-region system can stay responsive under failure.</li>
+          </ul>
+        </section>
+
+        <section class="detail-section">
+          <h2>Why study these four together?</h2>
+          <p>Modern ML systems already <em>are</em> systems projects: a training pipeline touches every one of these layers at once. A compiler decision about operator fusion changes what the CPU pipeline sees; an OS scheduling policy changes how data loaders compete for I/O; a database choice between a row store and a vector store changes which optimizations the compiler can even apply. Treating these four threads as one research area is what makes it possible to reason about end-to-end performance honestly rather than locally.</p>
+        </section>
+
+        <section class="detail-section">
+          <h2>Tools &amp; Frameworks</h2>
+          <div class="detail-tags">
+            <span class="tag">LLVM / MLIR</span>
+            <span class="tag">TVM</span>
+            <span class="tag">XLA</span>
+            <span class="tag">gem5</span>
+            <span class="tag">Intel VTune</span>
+            <span class="tag">perf / eBPF</span>
+            <span class="tag">Linux kernel</span>
+            <span class="tag">QEMU / KVM</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">RocksDB</span>
+            <span class="tag">DuckDB</span>
+            <span class="tag">FAISS</span>
+            <span class="tag">Milvus</span>
+          </div>
+        </section>
+
+        <section class="detail-section">
+          <h2>Reading List</h2>
+
+          <h3 style="margin-top: 24px;">Compilers</h3>
+          <ul class="detail-list reading-list">
+            <li><a href="https://www.aosabook.org/en/llvm.html" target="_blank">The Architecture of LLVM — Chris Lattner</a></li>
+            <li><a href="https://www.usenix.org/conference/osdi18/presentation/chen" target="_blank">TVM: An Automated End-to-End Optimizing Compiler for Deep Learning — Chen et al., OSDI 2018</a></li>
+            <li><a href="https://arxiv.org/abs/2002.11054" target="_blank">MLIR: A Compiler Infrastructure for the End of Moore's Law — Lattner et al., 2020</a></li>
+            <li><a href="https://dl.acm.org/doi/10.1145/1133981.1133987" target="_blank">CompCert: A Formally Verified Optimizing C Compiler — Xavier Leroy, CACM 2009</a></li>
+          </ul>
+
+          <h3 style="margin-top: 24px;">Computer Architecture</h3>
+          <ul class="detail-list reading-list">
+            <li><a href="https://www.elsevier.com/books/computer-architecture/hennessy/978-0-12-811905-1" target="_blank">Computer Architecture: A Quantitative Approach — Hennessy &amp; Patterson (6th ed.)</a></li>
+            <li><a href="https://research.google/pubs/pub44830/" target="_blank">In-Datacenter Performance Analysis of a Tensor Processing Unit — Jouppi et al., ISCA 2017</a></li>
+            <li><a href="https://meltdownattack.com/" target="_blank">Meltdown &amp; Spectre — Lipp et al., USENIX Security / S&amp;P 2018</a></li>
+            <li><a href="https://dl.acm.org/doi/10.1145/3007787.3001177" target="_blank">A Modern Primer on Processing in Memory — Mutlu et al.</a></li>
+          </ul>
+
+          <h3 style="margin-top: 24px;">Operating Systems</h3>
+          <ul class="detail-list reading-list">
+            <li><a href="https://pages.cs.wisc.edu/~remzi/OSTEP/" target="_blank">Operating Systems: Three Easy Pieces — Remzi &amp; Andrea Arpaci-Dusseau (free online)</a></li>
+            <li><a href="https://www.kernel.org/doc/html/latest/" target="_blank">The Linux Kernel Documentation</a></li>
+            <li><a href="https://www.usenix.org/conference/atc19/presentation/li-jingyuan" target="_blank">io_uring: A New Linux I/O Interface — Axboe, 2019</a></li>
+            <li><a href="https://lwn.net/Articles/740157/" target="_blank">KPTI: Kernel Page-Table Isolation — LWN, 2017</a></li>
+          </ul>
+
+          <h3 style="margin-top: 24px;">Databases</h3>
+          <ul class="detail-list reading-list">
+            <li><a href="https://www.databass.dev/" target="_blank">Database Internals — Alex Petrov, O'Reilly 2019</a></li>
+            <li><a href="https://www.amazon.com/Designing-Data-Intensive-Applications-Reliable-Maintainable/dp/1449373321" target="_blank">Designing Data-Intensive Applications — Martin Kleppmann</a></li>
+            <li><a href="https://www.vldb.org/pvldb/vol13/p3461-bailis.pdf" target="_blank">The Seattle Report on Database Research — Bailis et al., 2019</a></li>
+            <li><a href="https://arxiv.org/abs/1603.09320" target="_blank">Efficient and Robust Approximate Nearest Neighbor Search Using HNSW Graphs — Malkov &amp; Yashunin, 2016</a></li>
+            <li><a href="https://15721.courses.cs.cmu.edu/spring2020/" target="_blank">CMU 15-721 Advanced Database Systems (Andy Pavlo's lectures)</a></li>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>
