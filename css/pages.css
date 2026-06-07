@@ -53,6 +53,7 @@
 .page-content[data-theme="deadlines"]  { --page-color: 225, 48, 48; }
 .page-content[data-theme="journal"]    { --page-color: 0, 91, 93; }
 .page-content[data-theme="overleaf"]   { --page-color: 13, 110, 80; }
+.page-content[data-theme="awards"]     { --page-color: 162, 155, 254; }
 
 .page-icon {
   display: inline-flex;

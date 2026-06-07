@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Awards & Certificates — Sunjun Hwang</title>
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .ac-hero {
+      background: linear-gradient(135deg, rgba(162, 155, 254, 0.10), rgba(108, 99, 255, 0.06));
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 32px;
+      margin-bottom: 32px;
+    }
+    .ac-hero h1 { font-family: var(--font-display); font-size: 2rem; font-weight: 800; margin-bottom: 8px; display: flex; align-items: center; gap: 14px; }
+    .ac-hero h1 .badge { font-size: 0.62rem; background: #a29bfe; color: #fff; padding: 4px 10px; border-radius: 12px; letter-spacing: 0.5px; }
+    .ac-hero p { color: var(--text-secondary); font-size: 1rem; max-width: 760px; line-height: 1.7; }
+    .ac-stats { display: flex; gap: 24px; margin-top: 18px; flex-wrap: wrap; }
+    .ac-stat { font-size: 0.9rem; color: var(--text-secondary); }
+    .ac-stat strong { font-family: var(--font-display); color: #a29bfe; font-size: 1.3rem; font-weight: 800; margin-right: 6px; }
+
+    .ac-section { margin-bottom: 56px; }
+    .ac-section h2 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .ac-section h2 i { color: #a29bfe; }
+    .ac-section h3.ac-subhead {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 28px 0 14px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .ac-card {
+      display: grid;
+      grid-template-columns: 76px 1fr auto;
+      gap: 18px;
+      align-items: center;
+      padding: 18px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-bottom: 12px;
+      transition: all 0.25s ease;
+    }
+    .ac-card:hover {
+      border-color: rgba(162, 155, 254, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(162, 155, 254, 0.10);
+    }
+
+    .ac-logo {
+      width: 64px;
+      height: 64px;
+      border-radius: 12px;
+      background: #fff;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .ac-logo img { width: 100%; height: 100%; object-fit: contain; padding: 6px; }
+    .ac-logo .ac-fallback {
+      display: flex; align-items: center; justify-content: center;
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, rgba(162, 155, 254, 0.2), rgba(108, 99, 255, 0.12));
+      color: #6c63ff;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.4rem;
+      letter-spacing: -0.5px;
+    }
+
+    .ac-body { min-width: 0; }
+    .ac-title { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; margin-bottom: 4px; color: var(--text-primary); }
+    .ac-inst { color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 4px; }
+    .ac-desc { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.55; }
+    .ac-desc .ac-pill {
+      display: inline-block; padding: 2px 8px; margin: 2px 4px 2px 0;
+      background: rgba(162, 155, 254, 0.12); color: #6c63ff;
+      border-radius: 8px; font-size: 0.72rem; font-weight: 600;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .ac-date { color: #a29bfe; font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; white-space: nowrap; }
+
+    .ac-note {
+      padding: 14px 18px;
+      background: rgba(162, 155, 254, 0.06);
+      border-left: 4px solid #a29bfe;
+      border-radius: 0 10px 10px 0;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .ac-note strong { color: #6c63ff; }
+    .ac-note code { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; background: rgba(162, 155, 254, 0.12); padding: 1px 6px; border-radius: 4px; color: #6c63ff; }
+
+    @media (max-width: 700px) {
+      .ac-card { grid-template-columns: 56px 1fr; gap: 14px; padding: 14px 16px; }
+      .ac-logo { width: 56px; height: 56px; }
+      .ac-date { grid-column: 2; font-size: 0.78rem; }
+    }
+  </style>
+</head>
+<body>
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+
+  <main class="page-content" data-theme="awards">
+    <div class="container">
+
+      <!-- Hero -->
+      <section class="ac-hero">
+        <h1><i class="fas fa-trophy" style="color:#a29bfe"></i> Awards &amp; Certificates <span class="badge">2024 — 2026</span></h1>
+        <p>Academic and paper awards, plus professional certifications earned through Coursera, Udemy, and other accredited programs. Specializations are bundled by their umbrella name and list every component course's credential ID.</p>
+        <div class="ac-stats">
+          <div class="ac-stat"><strong>7</strong>Awards &amp; Honors</div>
+          <div class="ac-stat"><strong>7</strong>Specialization Bundles</div>
+          <div class="ac-stat"><strong>34+</strong>Individual Courses</div>
+        </div>
+      </section>
+
+      <div class="ac-note">
+        <strong>Logo Tip:</strong> drop institution logo files into <code>assets/certificates/</code> using these slugs: <code>duke.png</code>, <code>vanderbilt.png</code>, <code>umich.png</code>, <code>google.png</code>, <code>ibm.png</code>, <code>skillup.png</code>, <code>siemens.png</code>, <code>stanford.png</code>, <code>udemy.png</code>, <code>colorado.png</code>, <code>london.png</code>, <code>citi.png</code>, <code>schumpeter.png</code>, <code>kaicts.png</code>, <code>kicsp.png</code>, <code>yonsei.png</code>, <code>kiit.png</code>. The page already shows initials as a styled fallback for any missing logo.
+      </div>
+
+      <!-- Awards & Honors -->
+      <section class="ac-section">
+        <h2><i class="fas fa-award"></i>Awards &amp; Honors</h2>
+
+        <h3 class="ac-subhead">Academic &amp; Paper Awards</h3>
+
+        <div class="ac-card">
+          <div class="ac-logo"><img src="../assets/certificates/lg-aimers.png" alt="LG AI Research" onerror="this.outerHTML='<div class=\'ac-fallback\'>LG</div>';"></div>
+          <div class="ac-body">
+            <div class="ac-title">LG Aimers 8th Cohort — EXAONE Lightweight LLM Compression</div>
+            <div class="ac-inst">LG AI Research Institute · Ministry of Employment and Labor</div>
+            <div class="ac-desc">Hackathon: EXAONE model lightweight LLM compression. Jan–Feb 2026.</div>
+          </div>
+          <div class="ac-date">Feb 2026</div>
+        </div>
+
+        <div class="ac-card">
+          <div class="ac-logo"><img src="../assets/certificates/kiit.png" alt="KIIT" onerror="this.outerHTML='<div class=\'ac-fallback\'>KIIT</div>';"></div>
+          <div class="ac-body">
+            <div class="ac-title">Outstanding Paper Award (2nd time)</div>
+            <div class="ac-inst">Korea Institute of Information Technology Society (KIIT)</div>
+          </div>
+          <div class="ac-date">Dec 2025</div>
+        </div>
+
+        <div class="ac-card">
+          <div class="ac-logo"><img src="../assets/certificates/kiit.png" alt="KIIT" onerror="this.outerHTML='<div class=\'ac-fallback\'>KIIT</div>';"></div>
+          <div class="ac-body">
+            <div class="ac-title">Outstanding Paper Award (1st time)</div>
+            <div class="ac-inst">Korea Institute of Information Technology Society (KIIT)</div>
+          </div>
+          <div class="ac-date">Jul 2025</div>
+        </div>
+
+        <div class="ac-card">
+          <div class="ac-logo"><img src="../assets/certificates/lg-aimers.png" alt="LG AI Research" onerror="this.outerHTML='<div class=\'ac-fallback\'>LG</div>';"></div>
+          <div class="ac-body">
+            <div class="ac-title">LG Aimers 6th Cohort — Data Intelligence (Pregnancy Success Prediction)</div>
+            <div class="ac-inst">LG AI Research Institute · Ministry of Employment and Labor</div>
+          </div>
+          <div class="ac-date">2024</div>
+        </div>
+
+        <div class="ac-card">
+          <div class="ac-logo"><img src="../assets/certificates/yonsei.png" alt="Yonsei University" onerror="this.outerHTML='<div class=\'ac-fallback\'>Y</div>';"></div>
+          <div class="ac-body">
+            <div class="ac-title">Academic Excellence Award</div>
+            <div class="ac-inst">Yonsei University</div>
+          </div>
+          <div class="ac-date">Spring 2024</div>
+        </div>
+
+        <div class="ac-card">
+          <div class="ac-logo"><img src="../assets/certificates/yonsei.png" alt="Yonsei University" onerror="this.outerHTML='<div class=\'ac-fallback\'>Y</div>';"></div>
+          <div class="ac-body">
+            <div class="ac-title">Academic Excellence Award</div>
+            <div class="ac-inst">Yonsei University</div>
+          </div>
+          <div class="ac-date">Fall 2023</div>
+        </div>
+
+        <div class="ac-card">
+          <div class="ac-logo"><div class="ac-fallback"><i class="fas fa-heart" style="color:#e94560"></i></div></div>
+          <div class="ac-body">
+            <div class="ac-title">Volunteering &amp; Social Contributions</div>
+            <div class="ac-inst">The Korean Red Cross</div>
+            <div class="ac-desc">Ongoing volunteer activities.</div>
+          </div>
+          <div class="ac-date">Ongoing</div>
+        </div>
+      </section>
+
+      <!-- Specialization Certificates -->
+      <section class="ac-section">
+        <h2><i class="fas fa-layer-group"></i>Specialization Bundles</h2>
+
+        <h3 class="ac-subhead">June 2026</h3>
+
+        <div class="ac-card">
+          <div class="ac-logo"><img src="../assets/certificates/london.png" alt="University of London" onerror="this.outerHTML='<div class=\'ac-fallback\'>UoL</div>';"></div>
+          <div class="ac-body">
+            <div class="ac-title">Introduction to Computer Science and Programming — Specialization (4 Courses)</div>
+            <div class="ac-inst">University of London · Coursera</div>
+            <div class="ac-desc">
+              <span class="ac-pill">2HKOW7NS9UMS</span>Intro to CS &amp; Programming ·
+              <span class="ac-pill">WHO5F6MGDGKK</span>Intro to Computer Programming ·
+              <span class="ac-pill">Q1Y756648XDW</span>Mathematics for CS ·
+              <span class="ac-pill">YPWXYYYD91VZ</span>How Computers Work
+            </div>
+          </div>
+          <div class="ac-date">Jun 2026</div>
+        </div>
+
+        <div class="ac-card">
+          <div class="ac-logo"><img src="../assets/certificates/duke.png" alt="Duke University" onerror="this.outerHTML='<div class=\'ac-fallback\'>Duke</div>';"></div>
+          <div class="ac-body">
+            <div class="ac-title">AI Product Management — Specialization (4 Courses)</div>
+            <div class="ac-inst">Duke University · Coursera</div>
+            <div class="ac-desc">
+              <span class="ac-pill">MM4XD5OIVDDB</span>AI Product Management ·
+              <span class="ac-pill">FUF0P4WOQZRM</span>ML Foundations for PMs ·
+              <span class="ac-pill">ZNK1HXY9TJMS</span>Managing ML Projects ·
+              <span class="ac-pill">EYAHDPNLNAMS</span>Human Factors in AI
+            </div>
+          </div>
+          <div class="ac-date">Jun 2026</div>
+        </div>
+
+        <div class="ac-card">
+          <div class="ac-logo"><img src="../assets/certificates/duke.png" alt="Duke University" onerror="this.outerHTML='<div class=\'ac-fallback\'>Duke</div>';"></div>
+          <div class="ac-body">
+            <div class="ac-title">Data Analysis with R — Specialization (4 Courses)</div>
+            <div class="ac-inst">Duke University · Coursera</div>
+            <div class="ac-desc">
+              <span class="ac-pill">KX414Z6Z6ZGD</span>Data Analysis with R ·
+              <span class="ac-pill">Z5UQN1JZMWZW</span>Intro to Probability &amp; Data with R ·
+              <span class="ac-pill">XEX4N02NBNRX</span>Inferential Statistics ·
+              <span class="ac-pill">A31CF5SSW9Y9</span>Linear Regression &amp; Modeling
+            </div>
+          </div>
+          <div class="ac-date">Jun 2026</div>
+        </div>
+
+        <h3 class="ac-subhead">May 2026</h3>
+
+        <div class="ac-card">
+          <div class="ac-logo"><img src="../assets/certificates/vanderbilt.png" alt="Vanderbilt University" onerror="this.outerHTML='<div class=\'ac-fallback\'>VU</div>';"></div>
+          <div class="ac-body">
+            <div class="ac-title">Generative AI Software Engineering — Professional Certificate (5 Courses)</div>
+            <div class="ac-inst">Vanderbilt University · Coursera</div>
+            <div class="ac-desc">
+              <span class="ac-pill">S5SYX15G2E35</span>Generative AI SE ·
+              <span class="ac-pill">JVT1A8H6D2JW</span>Prompt Engineering for ChatGPT ·
+              <span class="ac-pill">TH6UTWS7C56J</span>OpenAI GPTs ·
+              <span class="ac-pill">UPNM6GHOJMQ5</span>AI Agents &amp; Agentic AI ·
+              <span class="ac-pill">UAD5A9S009CD</span>Claude Code: SE with Gen AI Agents
+            </div>
+          </div>
+          <div class="ac-date">May 2026</div>
+        </div>
+
+        <div class="ac-card">
+          <div class="ac-logo"><img src="../assets/certificates/umich.png" alt="University of Michigan" onerror="this.outerHTML='<div class=\'ac-fallback\'>UM</div>';"></div>
+          <div class="ac-body">
+            <div class="ac-title">AI for Engineering — Specialization (4 Courses)</div>
+            <div class="ac-inst">University of Michigan · Coursera</div>
+            <div class="ac-desc">
+              <span class="ac-pill">9RYS9SNOEH2O</span>AI for Energy &amp; Biomedical ·
+              <span class="ac-pill">KXSQWHLC5A9G</span>AI for Mech Engineers ·
+              <span class="ac-pill">TIV67CDV6L6B</span>AI for Autonomous Vehicles &amp; Robotics ·
+              <span class="ac-pill">XG9H8N3OLF2P+</span>AI for Design &amp; Optimization
+            </div>
+          </div>
+          <div class="ac-date">May 2026</div>
+        </div>
+
+        <div class="ac-card">
+          <div class="ac-logo"><img src="../assets/certificates/google.png" alt="Google" onerror="this.outerHTML='<div class=\'ac-fallback\'>G</div>';"></div>
+          <div class="ac-body">
+            <div class="ac-title">Google AI Essentials — Specialization (7 Courses)</div>
+            <div class="ac-inst">Google · Coursera</div>
+            <div class="ac-desc">
+              <span class="ac-pill">79O2B9AKZPJ3</span>Google AI ·
+              <span class="ac-pill">QKSDXFQBGT0M</span>AI Fundamentals ·
+              <span class="ac-pill">5K24TEZKJNQ5</span>Brainstorming &amp; Planning ·
+              <span class="ac-pill">XRUKDRY4D2MQ</span>Research &amp; Insights ·
+              <span class="ac-pill">GVV71D80EU0A</span>Writing &amp; Communicating ·
+              <span class="ac-pill">XPNYNW9X5SJH</span>Content Creation ·
+              <span class="ac-pill">VQB0Z0J8DPD1</span>Data Analysis
+            </div>
+          </div>
+          <div class="ac-date">May 2026</div>
+        </div>
+
+        <div class="ac-card">
+          <div class="ac-logo"><img src="../assets/certificates/ibm.png" alt="IBM" onerror="this.outerHTML='<div class=\'ac-fallback\'>IBM</div>';"></div>
+          <div class="ac-body">
+            <div class="ac-title">IBM Project Manager — Professional Certificate (9 Courses)</div>
+            <div class="ac-inst">IBM &amp; SkillUp Online · Coursera</div>
+            <div class="ac-desc">
+              <span class="ac-pill">KGSYA8BK84S3</span>IBM Project Manager ·
+              <span class="ac-pill">7JJTWPVYNT55</span>Intro to Project Mgmt ·
+              <span class="ac-pill">IQT3YQO1XEOU</span>PM Foundations ·
+              <span class="ac-pill">0CIB0KW5Y3J7</span>Lifecycle &amp; Risk ·
+              <span class="ac-pill">GRNWJS9UNV5W</span>Communication &amp; Leadership ·
+              <span class="ac-pill">OS07DRK0HAKW</span>Agile &amp; Scrum ·
+              <span class="ac-pill">FKLQCASMPY4P</span>Capstone ·
+              <span class="ac-pill">7COCN8VH6THD</span>CAPM Practice Exam ·
+              <span class="ac-pill">L42OQRS5Q8C0</span>Job Search &amp; Interview Prep
+            </div>
+          </div>
+          <div class="ac-date">May 2026</div>
+        </div>
+      </section>
+
+      <!-- Standalone Certificates -->
+      <section class="ac-section">
+        <h2><i class="fas fa-certificate"></i>Standalone Certificates</h2>
+
+        <h3 class="ac-subhead">May 2026</h3>
+
+        <div class="ac-card">
+          <div class="ac-logo"><img src="../assets/certificates/colorado.png" alt="University of Colorado Boulder" onerror="this.outerHTML='<div class=\'ac-fallback\'>CU</div>';"></div>
+          <div class="ac-body">
+            <div class="ac-title">Control Systems Analysis: Modeling of Dynamic Systems</div>
+            <div class="ac-inst">University of Colorado Boulder · Coursera · <span class="ac-pill">VDD3IF51U1MI</span></div>
+          </div>
+          <div class="ac-date">May 2026</div>
+        </div>
+
+        <div class="ac-card">
+          <div class="ac-logo"><img src="../assets/certificates/siemens.png" alt="Siemens" onerror="this.outerHTML='<div class=\'ac-fallback\'>S</div>';"></div>
+          <div class="ac-body">
+            <div class="ac-title">Basics of Robotics</div>
+            <div class="ac-inst">Siemens · Coursera · <span class="ac-pill">75ACEQV1CMC3</span></div>
+          </div>
+          <div class="ac-date">May 2026</div>
+        </div>
+
+        <h3 class="ac-subhead">April 2026</h3>
+
+        <div class="ac-card">
+          <div class="ac-logo"><img src="../assets/certificates/stanford.png" alt="Stanford" onerror="this.outerHTML='<div class=\'ac-fallback\'>SU</div>';"></div>
+          <div class="ac-body">
+            <div class="ac-title">Introduction to Clinical Data</div>
+            <div class="ac-inst">Stanford University School of Medicine · Coursera · <span class="ac-pill">ANI3R4EV9HA1</span></div>
+          </div>
+          <div class="ac-date">Apr 2026</div>
+        </div>
+
+        <div class="ac-card">
+          <div class="ac-logo"><img src="../assets/certificates/udemy.png" alt="Udemy" onerror="this.outerHTML='<div class=\'ac-fallback\'>U</div>';"></div>
+          <div class="ac-body">
+            <div class="ac-title">Machine Learning: Modern Computer Vision &amp; Generative AI</div>
+            <div class="ac-inst">Udemy · <span class="ac-pill">UC-526266be-...718</span></div>
+          </div>
+          <div class="ac-date">Apr 2026</div>
+        </div>
+
+        <div class="ac-card">
+          <div class="ac-logo"><img src="../assets/certificates/udemy.png" alt="Udemy" onerror="this.outerHTML='<div class=\'ac-fallback\'>U</div>';"></div>
+          <div class="ac-body">
+            <div class="ac-title">Intro to OpenAI Codex: Fully Agentic Coding</div>
+            <div class="ac-inst">Udemy · <span class="ac-pill">UC-f04496a0-...c77e</span></div>
+          </div>
+          <div class="ac-date">Apr 2026</div>
+        </div>
+
+        <h3 class="ac-subhead">March 2026</h3>
+
+        <div class="ac-card">
+          <div class="ac-logo"><img src="../assets/certificates/citi.png" alt="CITI" onerror="this.outerHTML='<div class=\'ac-fallback\'>CITI</div>';"></div>
+          <div class="ac-body">
+            <div class="ac-title">SBR – Investigator / Researcher</div>
+            <div class="ac-inst">CITI Program · <span class="ac-pill">75784444</span> · Expires Mar 2028</div>
+          </div>
+          <div class="ac-date">Mar 2026</div>
+        </div>
+
+        <div class="ac-card">
+          <div class="ac-logo"><img src="../assets/certificates/udemy.png" alt="Udemy" onerror="this.outerHTML='<div class=\'ac-fallback\'>U</div>';"></div>
+          <div class="ac-body">
+            <div class="ac-title">Claude Code: Agentic Coding for Developers</div>
+            <div class="ac-inst">Udemy · <span class="ac-pill">UC-0003bd4d-...f663f9</span></div>
+          </div>
+          <div class="ac-date">Mar 2026</div>
+        </div>
+
+        <h3 class="ac-subhead">January 2026</h3>
+
+        <div class="ac-card">
+          <div class="ac-logo"><img src="../assets/certificates/udemy.png" alt="Udemy" onerror="this.outerHTML='<div class=\'ac-fallback\'>U</div>';"></div>
+          <div class="ac-body">
+            <div class="ac-title">Certificate of Completion — LaTeX for Everyone and Everything</div>
+            <div class="ac-inst">Udemy · <span class="ac-pill">UC-629e53fd-...9128ebb</span></div>
+          </div>
+          <div class="ac-date">Jan 2026</div>
+        </div>
+
+        <h3 class="ac-subhead">2025 &amp; earlier</h3>
+
+        <div class="ac-card">
+          <div class="ac-logo"><img src="../assets/certificates/schumpeter.png" alt="Schumpeter" onerror="this.outerHTML='<div class=\'ac-fallback\'>S</div>';"></div>
+          <div class="ac-body">
+            <div class="ac-title">Certificate of Completion — Graduate Student</div>
+            <div class="ac-inst">Schumpeter</div>
+          </div>
+          <div class="ac-date">Sep 2025</div>
+        </div>
+
+        <div class="ac-card">
+          <div class="ac-logo"><img src="../assets/certificates/kaicts.png" alt="Korea AI Convergence Tech Society" onerror="this.outerHTML='<div class=\'ac-fallback\'>K</div>';"></div>
+          <div class="ac-body">
+            <div class="ac-title">Certificate of Completion of the Artificial Intelligence Convergence Technology Expert Training Program</div>
+            <div class="ac-inst">Korea Artificial-Intelligence Convergence Technology Society</div>
+          </div>
+          <div class="ac-date">May 2025</div>
+        </div>
+
+        <div class="ac-card">
+          <div class="ac-logo"><img src="../assets/certificates/kicsp.png" alt="KICSP" onerror="this.outerHTML='<div class=\'ac-fallback\'>K</div>';"></div>
+          <div class="ac-body">
+            <div class="ac-title">Software Engineer Literacy Seminar</div>
+            <div class="ac-inst">The Korean Institute of Convergence Signal Processing</div>
+          </div>
+          <div class="ac-date">2024</div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

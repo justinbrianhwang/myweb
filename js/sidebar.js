@@ -45,6 +45,7 @@ function createSidebar() {
       <li><a href="https://hwangresearch.com/" target="_blank" class="menu-item"><span class="menu-color color-hwangs"></span>Hwangs</a></li>
       <li><a href="${basePath}pages/skills.html" class="menu-item"><span class="menu-color color-skills"></span>Skills & Tools & Education</a></li>
       <li><a href="${basePath}pages/experience.html" class="menu-item"><span class="menu-color color-exp"></span>Experience</a></li>
+      <li><a href="${basePath}pages/awards.html" class="menu-item"><span class="menu-color color-award"></span>Awards &amp; Certificates</a></li>
       <li class="has-submenu">
         <button class="menu-item submenu-toggle">
           <span><span class="menu-color color-deadlines"></span>CS Conference</span>
