@@ -14,11 +14,11 @@
   <style>
     .about-hero {
       display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 36px;
+      grid-template-columns: 420px 1fr;
+      gap: 44px;
       align-items: center;
       margin-bottom: 44px;
-      padding: 32px;
+      padding: 36px;
       background: linear-gradient(135deg, rgba(245, 166, 35, 0.08), rgba(108, 99, 255, 0.05));
       border: 1px solid var(--border);
       border-radius: 20px;
@@ -29,7 +29,7 @@
       border-radius: 18px;
       overflow: hidden;
       border: 1px solid var(--border);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 14px 38px rgba(0, 0, 0, 0.18);
     }
     .about-hero__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .about-hero h1 {
@@ -101,9 +101,9 @@
     }
     .about-quote cite { display: block; margin-top: 8px; font-style: normal; font-weight: 600; color: rgb(var(--page-color)); font-size: 0.85rem; }
 
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
       .about-hero { grid-template-columns: 1fr; padding: 24px; gap: 20px; }
-      .about-hero__img { max-width: 220px; margin: 0 auto; }
+      .about-hero__img { max-width: 320px; margin: 0 auto; }
       .about-story-grid { grid-template-columns: 1fr; }
       .about-hero h1 { font-size: 1.7rem; }
     }
@@ -125,7 +125,7 @@
           <img src="../assets/Intro.jpg" alt="Sunjun Hwang">
         </div>
         <div>
-          <h1>Sunjun Hwang</h1>
+          <h1>Sunjun Brian Hwang</h1>
           <p class="lead">
             I'm an undergraduate researcher at Yonsei University. What pulls me across so many fields — <strong>quantum computing, AI security, federated learning, autonomous driving</strong> — is the same gap each time: how a system is <em>supposed</em> to behave, and how it actually behaves under noise, adversarial pressure, hardware faults, or real-world constraints. That gap is where my research lives.
           </p>
