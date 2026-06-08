@@ -35,6 +35,7 @@ function createSidebar() {
           <i class="fas fa-chevron-down"></i>
         </button>
         <ul class="submenu">
+          <li><a href="${basePath}pages/about.html">Introduce</a></li>
           <li><a href="${basePath}pages/people.html">The people who made me</a></li>
           <li><a href="${basePath}pages/photos.html">Photos</a></li>
           <li><a href="${basePath}pages/schedule.html">Schedule</a></li>
