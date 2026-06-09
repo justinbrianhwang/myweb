@@ -32,6 +32,28 @@
       box-shadow: 0 14px 38px rgba(0, 0, 0, 0.18);
     }
     .about-hero__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .about-hero__greeting {
+      font-family: 'JetBrains Mono', 'Space Grotesk', monospace;
+      font-size: 0.92rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      color: rgb(var(--page-color));
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .about-hero__greeting .wave {
+      display: inline-block;
+      animation: ab-wave 2.4s ease-in-out infinite;
+      transform-origin: 70% 70%;
+    }
+    @keyframes ab-wave {
+      0%, 60%, 100% { transform: rotate(0deg); }
+      10% { transform: rotate(14deg); }
+      20% { transform: rotate(-8deg); }
+      30% { transform: rotate(14deg); }
+      40% { transform: rotate(-4deg); }
+      50% { transform: rotate(10deg); }
+    }
     .about-hero h1 {
       font-family: var(--font-display);
       font-size: 2.2rem;
@@ -47,12 +69,47 @@
     .about-hero .lead strong { color: var(--text-primary); }
     .about-hero .lead em { color: rgb(var(--page-color)); font-style: italic; }
 
+    .ab-section-title {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin: 8px 0 18px;
+      letter-spacing: -0.3px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .ab-section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
     .about-story-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 18px;
       margin-bottom: 44px;
     }
+
+    .about-person-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-bottom: 44px;
+    }
+
+    .about-quote__why {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed rgba(var(--page-color), 0.25);
+      font-style: normal;
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: var(--text-secondary);
+    }
+    .about-quote__why strong { color: rgb(var(--page-color)); }
     .ab-story {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -101,10 +158,15 @@
     }
     .about-quote cite { display: block; margin-top: 8px; font-style: normal; font-weight: 600; color: rgb(var(--page-color)); font-size: 0.85rem; }
 
+    @media (max-width: 1024px) {
+      .about-person-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
     @media (max-width: 900px) {
       .about-hero { grid-template-columns: 1fr; padding: 24px; gap: 20px; }
       .about-hero__img { max-width: 320px; margin: 0 auto; }
       .about-story-grid { grid-template-columns: 1fr; }
+      .about-person-grid { grid-template-columns: 1fr; }
       .about-hero h1 { font-size: 1.7rem; }
     }
   </style>
@@ -125,13 +187,15 @@
           <img src="../assets/Intro.jpg" alt="Sunjun Hwang">
         </div>
         <div>
+          <div class="about-hero__greeting"><span class="wave">👋</span> Hi, I'm</div>
           <h1>Sunjun Brian Hwang</h1>
           <p class="lead">
-            I'm an undergraduate researcher at Yonsei University. What pulls me across so many fields — <strong>quantum computing, AI security, federated learning, autonomous driving</strong> — is the same gap each time: how a system is <em>supposed</em> to behave, and how it actually behaves under noise, adversarial pressure, hardware faults, or real-world constraints. That gap is where my research lives.
+            an undergraduate researcher at Yonsei University. What pulls me across so many fields — <strong>quantum computing, AI security, federated learning, autonomous driving</strong> — is the same gap each time: how a system is <em>supposed</em> to behave, and how it actually behaves under noise, adversarial pressure, hardware faults, or real-world constraints. That gap is where my research lives.
           </p>
         </div>
       </section>
 
+      <h2 class="ab-section-title">The Researcher</h2>
       <div class="about-story-grid">
         <div class="ab-story">
           <div class="ab-story__icon"><i class="fas fa-atom"></i></div>
@@ -158,9 +222,51 @@
         </div>
       </div>
 
+      <h2 class="ab-section-title">The Person</h2>
+      <div class="about-person-grid">
+        <div class="ab-story">
+          <div class="ab-story__icon"><i class="fas fa-flask"></i></div>
+          <h3>Why I Chose Research</h3>
+          <p>Honestly, no million-dollar business idea has ever come to me. But I'm fortunate to have a financial setup that gives me room to think — and when you have that room, research is the most interesting thing I can imagine doing with it. I get to chase <em>questions</em> instead of revenue.</p>
+        </div>
+
+        <div class="ab-story">
+          <div class="ab-story__icon"><i class="fas fa-cat"></i></div>
+          <h3>The Cat in the Favicon</h3>
+          <p>Why a cat? Because <strong>Schrödinger</strong>. Quantum mechanics was the first time I felt physics could be both rigorous and beautifully strange, and Schrödinger's thought experiment is the cleanest expression of that — a system that is neither <em>this</em> nor <em>that</em> until you look. The cat sits at the top of every tab as a quiet daily reminder of what got me here.</p>
+        </div>
+
+        <div class="ab-story">
+          <div class="ab-story__icon"><i class="fas fa-heart"></i></div>
+          <h3>Small Joys</h3>
+          <p>Watching a younger sibling or junior happily eat a meal I bought. Seeing a junior finally crack a problem they asked me about a week earlier. Plugging in the electric guitar for band practice and locking into a groove. The small wins are the real ones.</p>
+        </div>
+
+        <div class="ab-story">
+          <div class="ab-story__icon"><i class="fas fa-comments"></i></div>
+          <h3>Let's Talk</h3>
+          <p>I genuinely enjoy helping people figure things out, and I'm the older-brother type with younger juniors. Equally happy to talk about <strong>Bell inequalities</strong>, your latest paper draft, or just how your week has been. Research conversations are great — casual ones are equally welcome.</p>
+        </div>
+
+        <div class="ab-story">
+          <div class="ab-story__icon"><i class="fas fa-language"></i></div>
+          <h3>Languages I Speak</h3>
+          <p><strong>Korean</strong> (native) and <strong>English</strong> (fluent). Currently learning <strong>Japanese</strong> and <strong>Spanish</strong> — slowly, mostly so I can read papers from more communities and travel with a little more confidence.</p>
+        </div>
+
+        <div class="ab-story">
+          <div class="ab-story__icon"><i class="fas fa-plane"></i></div>
+          <h3>My Roots &amp; Travel</h3>
+          <p>I've lived in <strong>Seoul</strong> my whole life. To balance that rootedness, I try to travel abroad <strong>at least twice a year</strong> — different cities, different languages, different food. The contrast keeps me curious and reminds me how much I still don't know.</p>
+        </div>
+      </div>
+
       <blockquote class="about-quote">
         "When something is important enough, you do it even if the odds are not in your favor."
         <cite>— Elon Musk</cite>
+        <div class="about-quote__why">
+          <strong>Why this line stuck with me:</strong> I first ran into it when I was deciding whether to push a research direction that nobody around me believed in. It reminded me that most meaningful work looks irrational from the outside — and that the only honest way to find out whether it's worth doing is to <em>do</em> it. I come back to it every time the odds for a paper, a project, or just an idea start looking thin.
+        </div>
       </blockquote>
 
     </div>
