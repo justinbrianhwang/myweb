@@ -13,8 +13,54 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
     /* Co-researcher cards are display-only (no expand interaction) */
+    .co-researcher-page .pupil-grid { align-items: start; }
     .co-researcher-page .pupil-card { cursor: default; }
     .co-researcher-page .pupil-card:hover { transform: none; }
+
+    .cr-edu {
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .cr-edu-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(var(--sec), 0.9);
+      margin-bottom: 2px;
+    }
+    .cr-edu-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .cr-school {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      display: flex;
+      align-items: baseline;
+      gap: 7px;
+    }
+    .cr-school i {
+      font-size: 0.78rem;
+      color: rgba(var(--sec), 0.8);
+      flex-shrink: 0;
+    }
+    .cr-degree {
+      font-size: 0.83rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+    .cr-years {
+      font-size: 0.76rem;
+      color: var(--text-muted, var(--text-secondary));
+      opacity: 0.75;
+    }
   </style>
 </head>
 <body>
@@ -47,6 +93,13 @@
                 <p class="pupil-interest"><i class="fas fa-users"></i> Co-Researcher</p>
               </div>
             </div>
+            <div class="cr-edu">
+              <span class="cr-edu-label">Education</span>
+              <div class="cr-edu-item">
+                <span class="cr-school"><i class="fas fa-graduation-cap"></i> Yonsei University</span>
+                <span class="cr-degree">Bachelor's degree, Computer Software Engineering</span>
+              </div>
+            </div>
           </div>
 
           <div class="pupil-card">
@@ -60,6 +113,18 @@
                 <p class="pupil-interest"><i class="fas fa-users"></i> Co-Researcher</p>
               </div>
             </div>
+            <div class="cr-edu">
+              <span class="cr-edu-label">Education</span>
+              <div class="cr-edu-item">
+                <span class="cr-school"><i class="fas fa-graduation-cap"></i> Università di Bologna</span>
+                <span class="cr-degree">Bachelor's degree, Computer Engineering</span>
+                <span class="cr-years">2022 – 2026</span>
+              </div>
+              <div class="cr-edu-item">
+                <span class="cr-school"><i class="fas fa-graduation-cap"></i> Scuola Militare Teulié</span>
+                <span class="cr-degree">High School Diploma, Liceo</span>
+              </div>
+            </div>
           </div>
 
           <div class="pupil-card">
@@ -71,6 +136,34 @@
               <div class="pupil-info">
                 <h3>Pablo Lipa</h3>
                 <p class="pupil-interest"><i class="fas fa-users"></i> Co-Researcher</p>
+              </div>
+            </div>
+            <div class="cr-edu">
+              <span class="cr-edu-label">Education</span>
+              <div class="cr-edu-item">
+                <span class="cr-school"><i class="fas fa-graduation-cap"></i> Universidade de São Paulo (USP)</span>
+                <span class="cr-degree">MBA, Inteligência Artificial &amp; Big Data</span>
+                <span class="cr-years">2025 – 2026</span>
+              </div>
+              <div class="cr-edu-item">
+                <span class="cr-school"><i class="fas fa-graduation-cap"></i> Federal University of Rio Grande do Sul</span>
+                <span class="cr-degree">Master's degree (Mestrado), Inteligência Artificial</span>
+                <span class="cr-years">2023 – 2025</span>
+              </div>
+              <div class="cr-edu-item">
+                <span class="cr-school"><i class="fas fa-graduation-cap"></i> Universidade Estadual do Centro-Oeste</span>
+                <span class="cr-degree">Ensino Secundário Profissional, Língua Polonesa e Literaturas de Língua Polonesa</span>
+                <span class="cr-years">2022 – 2025</span>
+              </div>
+              <div class="cr-edu-item">
+                <span class="cr-school"><i class="fas fa-graduation-cap"></i> UNESPAR — Universidade Estadual do Paraná</span>
+                <span class="cr-degree">Bacharelado, Ciência da Computação</span>
+                <span class="cr-years">2022</span>
+              </div>
+              <div class="cr-edu-item">
+                <span class="cr-school"><i class="fas fa-graduation-cap"></i> IFMS — Instituto Federal de Mato Grosso do Sul</span>
+                <span class="cr-degree">BTech, Programação de Jogos Digitais</span>
+                <span class="cr-years">2018 – 2022</span>
               </div>
             </div>
           </div>
