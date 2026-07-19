@@ -319,6 +319,83 @@
       </div>
     </section>
 
+    <!-- Where I Am Section -->
+    <section class="section location" id="location">
+      <div class="container">
+        <h2 class="section-title reveal">
+          <span class="section-number">05.</span> Where I Am
+        </h2>
+        <div class="location-card reveal">
+          <div class="location-visual">
+            <span class="hud-corner tl"></span>
+            <span class="hud-corner tr"></span>
+            <span class="hud-corner bl"></span>
+            <span class="hud-corner br"></span>
+            <span class="hud-tag"><span class="lock-dot">◉</span> LOCATION LOCKED</span>
+            <svg class="location-globe" viewBox="0 0 280 280" role="img" aria-label="Globe locating ILSC Vancouver">
+              <defs>
+                <radialGradient id="sweepGrad" cx="140" cy="140" r="120" gradientUnits="userSpaceOnUse">
+                  <stop offset="0" stop-color="rgba(108,99,255,0.35)"/>
+                  <stop offset="1" stop-color="rgba(108,99,255,0)"/>
+                </radialGradient>
+              </defs>
+
+              <!-- sphere -->
+              <circle class="globe-sphere" cx="140" cy="140" r="120"/>
+
+              <!-- meridians -->
+              <ellipse class="globe-line" cx="140" cy="140" rx="120" ry="120"/>
+              <ellipse class="globe-line" cx="140" cy="140" rx="82" ry="120"/>
+              <ellipse class="globe-line" cx="140" cy="140" rx="42" ry="120"/>
+              <line class="globe-line" x1="140" y1="20" x2="140" y2="260"/>
+
+              <!-- latitudes -->
+              <ellipse class="globe-line" cx="140" cy="140" rx="120" ry="7"/>
+              <ellipse class="globe-line" cx="140" cy="92"  rx="110" ry="5"/>
+              <ellipse class="globe-line" cx="140" cy="188" rx="110" ry="5"/>
+              <ellipse class="globe-line" cx="140" cy="58"  rx="87"  ry="4"/>
+              <ellipse class="globe-line" cx="140" cy="222" rx="87"  ry="4"/>
+
+              <!-- rotating orbit -->
+              <ellipse class="globe-orbit" cx="140" cy="140" rx="134" ry="48"/>
+
+              <!-- radar sweep -->
+              <path class="globe-sweep-wedge" d="M140,140 L140,20 A120,120 0 0 1 200,36 Z"/>
+              <line class="globe-sweep" x1="140" y1="140" x2="140" y2="20"/>
+
+              <!-- Vancouver pin -->
+              <circle class="globe-ping p1" cx="100" cy="96" r="7"/>
+              <circle class="globe-ping p2" cx="100" cy="96" r="7"/>
+              <circle class="globe-ping p3" cx="100" cy="96" r="7"/>
+              <line class="globe-tick" x1="86" y1="96" x2="114" y2="96"/>
+              <line class="globe-tick" x1="100" y1="82" x2="100" y2="110"/>
+              <circle class="globe-pin-core" cx="100" cy="96" r="4.5"/>
+              <text class="globe-label" x="100" y="128" text-anchor="middle">YVR</text>
+              <text class="globe-label globe-label-sub" x="100" y="142" text-anchor="middle">49.28°N 123.11°W</text>
+            </svg>
+          </div>
+
+          <div class="location-info">
+            <span class="location-status"><span class="live-dot"></span> Incoming · Fall 2026</span>
+            <h3 class="location-place">Vancouver, Canada</h3>
+            <div class="location-lab"><i class="fas fa-school"></i> ILSC Vancouver — Language Campus</div>
+            <p class="location-desc">
+              From September 2026, I'll be based in downtown Vancouver, studying at ILSC Vancouver
+              while continuing my research collaborations remotely. New city, same trajectory —
+              building robust AI systems, now from the Pacific Northwest.
+            </p>
+            <div class="location-meta">
+              <div class="location-chip"><span class="chip-key"><i class="fas fa-satellite-dish"></i> Status</span><span class="chip-mono">INCOMING</span></div>
+              <div class="location-chip"><span class="chip-key"><i class="fas fa-plane-arrival"></i> Arrival</span><span class="chip-mono">SEP 2026</span></div>
+              <div class="location-chip"><span class="chip-key"><i class="fas fa-location-crosshairs"></i> Coordinates</span><span class="chip-mono">49.28°N · 123.11°W</span></div>
+              <div class="location-chip"><span class="chip-key"><i class="fas fa-clock"></i> Timezone</span><span class="chip-mono">PST · UTC−8</span></div>
+              <div class="location-chip"><span class="chip-key"><i class="fas fa-map-pin"></i> Campus</span><span class="chip-mono">555 RICHARDS ST</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <footer class="footer">
       <div class="social-links">
         <a href="https://scholar.google.com/citations?user=6X2EVE0AAAAJ" target="_blank" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
