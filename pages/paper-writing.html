@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Engineering Paper Writing — Sunjun Hwang</title>
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root { --pw: #6c63ff; --pw-rgb: 108, 99, 255; }
+
+    .pw-hero {
+      background: linear-gradient(135deg, rgba(var(--pw-rgb), 0.10), rgba(233, 69, 96, 0.05));
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px 36px;
+      margin-bottom: 30px;
+    }
+    .pw-hero h1 {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .pw-hero h1 .badge {
+      font-size: 0.65rem;
+      background: var(--pw);
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 12px;
+      letter-spacing: 0.5px;
+    }
+    .pw-hero p {
+      font-size: 1.05rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      max-width: 780px;
+    }
+    .pw-credit {
+      margin-top: 16px;
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+
+    .pw-roadmap {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 14px;
+      margin: 24px 0 56px;
+    }
+    .pw-roadmap a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 18px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      color: var(--text-primary);
+      transition: all 0.25s ease;
+      text-decoration: none;
+    }
+    .pw-roadmap a:hover {
+      border-color: rgba(var(--pw-rgb), 0.5);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(var(--pw-rgb), 0.12);
+    }
+    .pw-roadmap a .pw-step-num {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      background: rgba(var(--pw-rgb), 0.12);
+      color: var(--pw);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.85rem; flex-shrink: 0;
+    }
+    .pw-roadmap a .pw-step-label { font-size: 0.92rem; font-weight: 600; }
+
+    .pw-section { margin-bottom: 68px; scroll-margin-top: 100px; }
+    .pw-section h2 {
+      font-family: var(--font-display);
+      font-size: 1.7rem; font-weight: 700;
+      margin-bottom: 8px;
+      display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+    }
+    .pw-section h2 .pw-num {
+      font-size: 0.9rem; font-weight: 600;
+      color: var(--pw);
+      background: rgba(var(--pw-rgb), 0.12);
+      padding: 3px 10px; border-radius: 8px;
+    }
+    .pw-section > .pw-sub {
+      color: var(--text-secondary);
+      margin-bottom: 22px; line-height: 1.7; max-width: 780px;
+    }
+    .pw-section h3 {
+      font-family: var(--font-display);
+      font-size: 1.15rem; font-weight: 700;
+      margin: 28px 0 10px; color: var(--text-primary);
+    }
+    .pw-section p, .pw-section li { line-height: 1.75; color: var(--text-primary); }
+    .pw-section p { margin-bottom: 12px; }
+    .pw-section ul, .pw-section ol { padding-left: 22px; margin-bottom: 14px; }
+    .pw-section li { margin-bottom: 7px; }
+
+    .pw-callout {
+      padding: 14px 18px;
+      background: rgba(var(--pw-rgb), 0.06);
+      border-left: 4px solid var(--pw);
+      border-radius: 0 10px 10px 0;
+      margin-bottom: 16px;
+      font-size: 0.94rem; line-height: 1.7; color: var(--text-primary);
+    }
+    .pw-callout strong { color: var(--pw); }
+    .pw-callout--warn { background: rgba(245, 166, 35, 0.08); border-left-color: #f5a623; }
+    .pw-callout--warn strong { color: #f5a623; }
+    .pw-callout--good { background: rgba(46, 204, 113, 0.08); border-left-color: #2ecc71; }
+    .pw-callout--good strong { color: #27ae60; }
+
+    .pw-flow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem; color: var(--text-secondary);
+      background: var(--bg-card);
+      padding: 16px 18px; border-radius: 10px;
+      border: 1px solid var(--border);
+      white-space: pre; overflow-x: auto; line-height: 1.7;
+      margin-bottom: 18px;
+    }
+
+    .pw-table {
+      width: 100%; border-collapse: collapse; margin-bottom: 16px;
+      background: var(--bg-card); border-radius: 10px; overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .pw-table th, .pw-table td {
+      padding: 10px 14px; text-align: left;
+      border-bottom: 1px solid var(--border); font-size: 0.92rem;
+      vertical-align: top;
+    }
+    .pw-table th { background: rgba(var(--pw-rgb), 0.08); color: var(--pw); font-weight: 700; }
+    .pw-table tr:last-child td { border-bottom: none; }
+
+    .pw-tag-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .pw-tag {
+      padding: 5px 12px; border-radius: 14px;
+      background: rgba(var(--pw-rgb), 0.1); color: var(--pw);
+      font-size: 0.82rem; font-weight: 600;
+    }
+
+    .pw-links { list-style: none; padding-left: 0; }
+    .pw-links li {
+      padding: 10px 0; border-bottom: 1px dashed var(--border);
+      display: flex; gap: 10px; align-items: baseline;
+    }
+    .pw-links li:last-child { border-bottom: none; }
+    .pw-links a { color: var(--pw); font-weight: 600; word-break: break-word; }
+    .pw-links .pw-link-desc { color: var(--text-secondary); font-size: 0.88rem; }
+
+    @media (max-width: 768px) {
+      .pw-section h2 { font-size: 1.4rem; }
+      .pw-hero h1 { font-size: 1.75rem; }
+    }
+  </style>
+</head>
+<body>
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+
+  <main class="page-content" data-theme="paper">
+    <div class="container">
+
+      <!-- Hero -->
+      <section class="pw-hero">
+        <h1><i class="fas fa-pen-nib" style="color:var(--pw)"></i> Engineering Paper Writing <span class="badge">Method Guide</span></h1>
+        <p>A section-by-section field guide to writing engineering research papers — not about ideas, but about the <strong>act of writing the paper itself</strong>. However strong your method is, if the paper is poorly written it will not be accepted. This guide follows the real flow: understand the structure, outline first, then draft each section on purpose.</p>
+        <p class="pw-credit">Distilled and translated into English from a graduate-level paper-writing special lecture (소휘수 교수님 논문 특강). The lecture used the paper <em>“CHITIN: A Comprehensive In-thread Instruction Replication Technique Against Transient Faults”</em> as its running example.</p>
+      </section>
+
+      <!-- Roadmap -->
+      <div class="pw-roadmap">
+        <a href="#sec-overview"><span class="pw-step-num">1</span><span class="pw-step-label">The Big Picture</span></a>
+        <a href="#sec-outline"><span class="pw-step-num">2</span><span class="pw-step-label">Outlining → Drafting</span></a>
+        <a href="#sec-intro"><span class="pw-step-num">3</span><span class="pw-step-label">Introduction</span></a>
+        <a href="#sec-related"><span class="pw-step-num">4</span><span class="pw-step-label">Related Work &amp; Citations</span></a>
+        <a href="#sec-method"><span class="pw-step-num">5</span><span class="pw-step-label">Method</span></a>
+        <a href="#sec-experiments"><span class="pw-step-num">6</span><span class="pw-step-label">Experiments</span></a>
+        <a href="#sec-conclusion"><span class="pw-step-num">7</span><span class="pw-step-label">Conclusion</span></a>
+        <a href="#sec-llm"><span class="pw-step-num">8</span><span class="pw-step-label">Using LLMs</span></a>
+        <a href="#sec-venue"><span class="pw-step-num">9</span><span class="pw-step-label">Conference vs Journal</span></a>
+        <a href="#sec-resources"><span class="pw-step-num">+</span><span class="pw-step-label">Resources</span></a>
+      </div>
+
+      <!-- 01 The Big Picture -->
+      <section class="pw-section" id="sec-overview">
+        <h2><span class="pw-num">01</span> The Big Picture</h2>
+        <p class="pw-sub">What a paper actually is, where it starts, and how the pieces fit together.</p>
+
+        <h3>A paper is a shared record of research</h3>
+        <p>A paper is the process of sharing your research so that other people can see and build on it. Concretely, it is an <strong>experimental argument</strong>: you take an existing technique and the technique you built, compare them, and openly show which is better and why. Being able to <em>find</em> a worthwhile problem in the first place is itself the mark of a mature researcher — the whole of a master's or PhD is the practice of finding and solving problems.</p>
+
+        <div class="pw-callout">
+          <strong>The goal of this guide is narrow but critical:</strong> how to <em>write</em> the paper. Acceptance depends on it. No matter how good the method is, a paper that is written badly does not get accepted.
+        </div>
+
+        <h3>Don't start by writing — start by outlining</h3>
+        <p>Never write a paper by diving straight into full prose. First outline: lay out, in bullets, <em>why</em> each piece belongs and <em>how</em> the argument flows. Only once the structure holds up do you expand bullets into paragraphs. A useful classroom exercise is to work <strong>in reverse</strong> — take a finished paper and write out the phrase/bullet behind each sentence — because seeing the skeleton teaches you the shape.</p>
+
+        <h3>The anatomy of a paper</h3>
+        <p>The content you truly write lives in <strong>Sections 1–5</strong>. In LaTeX the reference list is generated automatically, so learn that tooling well and spend your energy on the sections. The classic flow of the argument is:</p>
+        <div class="pw-flow">A problem to solve
+   ▼
+Prior techniques that addressed it
+   ▼
+The limitation those techniques share
+   ▼
+Therefore, we propose this new technique</div>
+
+        <div class="pw-callout">
+          <strong>Two summaries, nested:</strong> the <em>Introduction is a summary of the whole paper</em>, and the <em>Abstract is a summary of the Introduction</em>. Everything except Abstract and Introduction maps roughly one-to-one onto the work you did.
+        </div>
+
+        <h3>After writing: the review process</h3>
+        <p>Submitting is not the end. Understand the difference between a conference and a journal (see <a href="#sec-venue" style="color:var(--pw);font-weight:600;">Section 9</a>), and when reviews come back, revise and write a response letter explaining <em>how</em> you addressed each comment. For a conference, an accepted paper also means you present it.</p>
+      </section>
+
+      <!-- 02 Outlining -->
+      <section class="pw-section" id="sec-outline">
+        <h2><span class="pw-num">02</span> Outlining → Drafting</h2>
+        <p class="pw-sub">The single most leveraged habit in paper writing.</p>
+
+        <div class="pw-callout">
+          <em>“Outlining is the phase when you write in bullets. You do not need complete sentences — just phrases. Fix the structure of the paper, the sections and subsections, but inside them only bullets. Your arguments, and the flow of the arguments, are the main thing you are trying to fix. Once you have an outline, you iterate on it until the story is set. It is much easier to iterate on an outline than on writing, because (i) it is smaller, so you can see and think about all of it at once, and (ii) fixing it is much easier than fixing prose.”</em>
+        </div>
+
+        <h3>The expansion ladder</h3>
+        <div class="pw-flow">Main bullet   →   Sub-bullet   →   Paragraph</div>
+        <p>Write each section as a main bullet, break it into sub-bullets for detail, then expand each into prose. When outlining is done, drafting follows almost mechanically — the hard thinking is already finished. Fixing a small outline is cheap; fixing 8 pages of prose is not.</p>
+
+        <div class="pw-callout pw-callout--good">
+          <strong>Lead with the point.</strong> Writing top-down — state the key claim first, then add support — reads well and keeps reviewers oriented. If a paper deliberately breaks the standard structure, there is usually a reason; learning to spot that reason is itself valuable.
+        </div>
+      </section>
+
+      <!-- 03 Introduction -->
+      <section class="pw-section" id="sec-intro">
+        <h2><span class="pw-num">03</span> Introduction</h2>
+        <p class="pw-sub">The most important — and the hardest — section to write.</p>
+
+        <p>Every paper's Introduction looks broadly similar (other sections vary more from paper to paper). Its real job is to <strong>convince reviewers</strong> of how important the work is and how significant a contribution it makes. Reviewers judge from the Abstract and Introduction first; if there is nothing compelling there, they may not read further. First impressions decide.</p>
+
+        <h3>Write for non-experts</h3>
+        <p>A good paper can be read by an undergraduate, not only a specialist. Provide the background knowledge a reader without deep domain expertise needs. A rough recipe for the opening:</p>
+        <ul>
+          <li><strong>(A) General background</strong> — the broad context of the area.</li>
+          <li><strong>(C) Field-specific terms</strong> — define the vocabulary the paper relies on. If a term is now common (e.g. "data mining" today), you can skip the definition and simply cite prior work; in 1996 it needed explaining.</li>
+          <li><strong>(B) The problem with existing / general approaches</strong> — what is missing or broken.</li>
+        </ul>
+
+        <h3>From existing methods to your contribution</h3>
+        <p>If existing solutions have no problem, there is no reason to propose a new one. So: briefly mention and summarize prior techniques (briefly — this is the Intro), classify them, then <strong>critique their common limitation</strong>. The pattern is: <em>a shared limitation → we solved that shared limitation → and performance improved.</em> Stating "this capability did not exist before, so we built it" is another good framing. Bold the sentences that name each limitation and you will see the skeleton of the argument.</p>
+
+        <div class="pw-callout pw-callout--warn">
+          <strong>Anticipate the reviewer.</strong> Writing these limitation/contribution sentences carefully — precisely and fairly — is what reduces reviewer pushback later.
+        </div>
+
+        <h3>What the Introduction should contain</h3>
+        <ol>
+          <li>Background and field terms for a general reader.</li>
+          <li>Existing approaches and their shared limitation.</li>
+          <li>A short, high-level statement of your proposed method (what it is, in one or two sentences).</li>
+          <li>Your contributions and their effect.</li>
+          <li>A brief mention of results / conclusions.</li>
+          <li>(Optional) a paper-structure paragraph — include only if space allows.</li>
+        </ol>
+        <p>Build the skeleton first, then flesh it out during outlining: each of A–F becomes a sub-bullet, then a paragraph. The Introduction is genuinely the hardest section — expect to iterate.</p>
+      </section>
+
+      <!-- 04 Related Work -->
+      <section class="pw-section" id="sec-related">
+        <h2><span class="pw-num">04</span> Related Work &amp; Citations</h2>
+        <p class="pw-sub">Establishing credibility — and where your work sits in the literature.</p>
+
+        <h3>What Related Work does</h3>
+        <p>Related Work summarizes prior research on the same problem, then organizes and states its limitations. Think of it as expanding into full paragraphs what the Introduction covered in a sentence or two. Do not attack prior work too aggressively; where useful, explain the context your paper emerged from. Showing the limitations clearly is what makes it obvious <em>why</em> your work was needed, and it can indirectly emphasize the necessity of your contribution. This section may also cover background a reader needs to follow the paper.</p>
+
+        <div class="pw-callout pw-callout--warn">
+          <strong>A weak survey can be an outright reject reason.</strong> Reviewers use Related Work to judge whether you actually know the field. A common structure: a table classifying prior methods, then subsections that explain each category briefly and pivot to its limitation (often with a "However, …"). To state a limitation you must first describe the approach at least roughly.
+        </div>
+
+        <h3>Practical structure</h3>
+        <ul>
+          <li>Introduce a category, then use <strong>However</strong> to turn to its limitation.</li>
+          <li>Lead with the key concept, then elaborate (top-down).</li>
+          <li>Write your <em>own</em> research category in more detail than the others.</li>
+          <li>Figures comparing an existing method vs. your method can cut length while improving clarity — a strict page budget (e.g. a 6-page conference paper) forces this. Adding a figure is often easier than rewriting text.</li>
+          <li>If you deliberately omit something, you can say why.</li>
+        </ul>
+
+        <h3>When there is no Related Work section</h3>
+        <p>Sometimes Related Work is merged into the Introduction (keeping only a Preliminaries paragraph), usually because of page limits — e.g. the DATE conference caps papers at 6 pages. Some venues also push Related Work to the <em>end</em> of the paper. Each choice has trade-offs; when you are new, follow the standard structure, and deviate only with a clear purpose.</p>
+
+        <h3>References &amp; citation</h3>
+        <p>A reference is an idea taken from prior work — cite as much as you legitimately can. Citing meaningful papers gives credit, and citation counts are a rough measure of impact (a landmark paper may be cited hundreds of thousands of times). Journals track an impact factor derived from references; conferences use other metrics. In computer science, top conferences are often treated at journal level.</p>
+
+        <div class="pw-callout">
+          <strong>Paraphrase — never copy-paste.</strong> Restate prior work in your own words and cite it. Do not reproduce sentences verbatim; summarize or rephrase — but <em>keep technical terms unchanged</em>. Careless referencing invites plagiarism concerns. Use citations to sharpen the contrast with prior work and to underline that the problem you tackle is serious.
+        </div>
+
+        <h3>Finding and organizing the literature</h3>
+        <ul>
+          <li><strong>Citation chaining</strong> — follow a paper's references backward and its citing papers forward. Especially useful at the start of a project.</li>
+          <li><strong>Survey papers</strong> — an authoritative survey is a map of a field. They are long (70–80 pages is normal) and heavily cited, so paraphrasing is mandatory.</li>
+          <li>Google Scholar shows which papers cite a given work — a fast way to move forward in time.</li>
+          <li>Collect candidate papers into a list first, then organize; some papers even publish their search strategy, which is worth studying.</li>
+          <li>Manage citation position carefully (e.g. when <code>[2]</code> and <code>[3]</code> would otherwise be ambiguous). In LaTeX, citation formatting is automatic; Korean-language venues written in HWP require manual formatting per style.</li>
+        </ul>
+      </section>
+
+      <!-- 05 Method -->
+      <section class="pw-section" id="sec-method">
+        <h2><span class="pw-num">05</span> Method</h2>
+        <p class="pw-sub">Comparatively the easiest section — if you can explain what you built.</p>
+
+        <p>The Method section is the record of "found a problem → built a solution." If you can clearly explain your technique, you can write it. Depending on the technique, describe how it was designed and how it works.</p>
+
+        <h3>Structure</h3>
+        <ul>
+          <li>Give an <strong>overview</strong> first, then break the details into subsections (a per-subsection figure helps a lot).</li>
+          <li>Explain, overall, <em>how</em> you solve the problem, <em>what differs</em> from prior methods, and <em>by how much</em> you improve on them.</li>
+          <li>The sentence just before a subsection should signal what that subsection will do (top-down). Keeping a consistent order makes the reader's job easier.</li>
+        </ul>
+
+        <div class="pw-callout pw-callout--good">
+          <strong>Figure-first.</strong> If you're stuck on the outline, draw the figure first. Once you have a clear overview diagram of how the system works, the explanation — and then the text — follows naturally. A single well-drawn overview figure can be reused throughout the paper. A common device: show the flaw in the prior approach and how your system fixes it, then write the paragraph that explains the figure.
+        </div>
+
+        <p>Before writing, read a few papers close to yours and study how they are organized — prefer <em>published</em> papers over arXiv preprints, since preprints may not have passed review. In the end, the only job is to explain your technique effectively.</p>
+      </section>
+
+      <!-- 06 Experiments -->
+      <section class="pw-section" id="sec-experiments">
+        <h2><span class="pw-num">06</span> Experiments</h2>
+        <p class="pw-sub">Setup, results, analysis, contribution — and reproducibility above all.</p>
+
+        <p>The Experiments section states the environment and method, the results, and the analysis: How was the experiment set up? What results came out? How were they analyzed? How much did the work contribute? Describe the setup so precisely that someone else could reproduce it, and explain the <strong>performance metrics</strong> standard in your field.</p>
+
+        <div class="pw-callout">
+          <strong>More experiments is better.</strong> Thin evaluation draws "insufficient experiments" from reviewers; some venues (e.g. DAC) accept more readily when experiments are extensive — provided you have the compute. Additional and controlled experiments back up your claims and leave reviewers little to push on.
+        </div>
+
+        <h3>Reproducibility</h3>
+        <ul>
+          <li>Report the experimental environment, release code and results, disclose the models used, epochs, and how training was done.</li>
+          <li>If a baseline's code is not public, you may have to re-implement it from the paper. Match the environment as closely as possible — if the original ran on an RTX 3060 and you use an RTX 5090, hardware differences must be accounted for.</li>
+          <li>Many papers now open-source everything; if not, everything must be reconstructed faithfully from the text.</li>
+        </ul>
+
+        <h3>Presenting results</h3>
+        <ul>
+          <li>Present results mostly as <strong>graphs and tables</strong>, emphasizing your result clearly.</li>
+          <li>Defend the cases where you do well <em>and</em> where you do not — remember the term <strong>ablation study</strong> (systematically removing components to show each one's effect).</li>
+          <li>For a genuinely new problem there may be no existing baseline; explain more, or construct a reasonable baseline yourself.</li>
+          <li>If you want to make a difference more visible, present it from another angle — e.g. two paths that look identical in 2D may differ greatly in 3D.</li>
+        </ul>
+
+        <div class="pw-callout pw-callout--warn">
+          <strong>Avoid default charts.</strong> Effort shows. Make series distinguishable even when printed in black &amp; white; plain red-vs-blue can be indistinguishable to some readers and in grayscale. Draw clearly.
+        </div>
+      </section>
+
+      <!-- 07 Conclusion -->
+      <section class="pw-section" id="sec-conclusion">
+        <h2><span class="pw-num">07</span> Conclusion</h2>
+        <p class="pw-sub">The most formulaic section — which makes it the easiest.</p>
+
+        <p>Conclusions are highly standardized; you can follow the usual template safely. The core is three things:</p>
+        <ol>
+          <li>An overall <strong>summary</strong> of the work.</li>
+          <li>The <strong>limitations</strong> of your approach.</li>
+          <li><strong>Future work</strong> — e.g. "it would be worth trying this in another domain."</li>
+        </ol>
+
+        <div class="pw-callout">
+          Some venues are explicit about this — <strong>NeurIPS</strong>, for instance, asks authors to state limitations. Cover summary, limitations, and future directions and reviewers rarely push back on the Conclusion.
+        </div>
+      </section>
+
+      <!-- 08 LLM -->
+      <section class="pw-section" id="sec-llm">
+        <h2><span class="pw-num">08</span> Using LLMs Responsibly</h2>
+        <p class="pw-sub">Powerful help — under rules that vary by venue and change every year.</p>
+
+        <p>LLMs can turn bullets into paragraphs and help you brainstorm, but they carry real risks: <strong>hallucination</strong>, and potential <strong>plagiarism / copyright</strong> issues. There have already been retractions over AI-generated, nonsensical figures, and publishers have warned that AI is enabling "paper mills." Do not over-trust the output.</p>
+
+        <div class="pw-callout pw-callout--warn">
+          <strong>Rules differ per venue and change over time.</strong> What was disallowed two years ago may be allowed now (and vice-versa). Always check the current Call for Papers. Some venues require you to <em>declare</em> that no LLM was used; others require you to <em>disclose exactly where</em> AI was used (drafting, coding, brainstorming). Staying within the allowed range is your responsibility.
+        </div>
+
+        <h3>Recommended practice</h3>
+        <ul>
+          <li>Use LLMs <strong>minimally</strong> and as a supplement — write your own draft, ask the model to check or refine, then take it to your advisor.</li>
+          <li>Take responsibility for and verify everything the model produces.</li>
+          <li>Writing the method yourself matters: the act of writing can change how you think about the work.</li>
+          <li>Disclose usage when the venue requires it, and keep it honest and complete.</li>
+        </ul>
+
+        <div class="pw-callout">
+          <strong>Peer review is stricter.</strong> Many venues forbid LLM use in reviewing entirely — an unpublished manuscript you were asked to review is confidential, so pasting it into a model can be a copyright violation. IEEE allows LLMs for writing but not for peer review; NeurIPS also restricts reviewer use.
+        </div>
+      </section>
+
+      <!-- 09 Conference vs Journal -->
+      <section class="pw-section" id="sec-venue">
+        <h2><span class="pw-num">09</span> Conference vs Journal</h2>
+        <p class="pw-sub">Two publication venues with very different rhythms.</p>
+
+        <table class="pw-table">
+          <thead><tr><th>Aspect</th><th>Conference</th><th>Journal</th></tr></thead>
+          <tbody>
+            <tr><td>Archiving</td><td>Papers are collected in the <strong>proceedings</strong></td><td>Published in journal issues</td></tr>
+            <tr><td>Deadlines</td><td>Hard deadlines (a fixed presentation schedule)</td><td>Usually no deadline</td></tr>
+            <tr><td>Review</td><td>Rounds tied to the schedule</td><td>Iterative <strong>peer review</strong>; accepted once sufficiently revised</td></tr>
+            <tr><td>Maturity</td><td>Often a "checkpoint" of ongoing work</td><td>Usually a <strong>complete</strong> piece of work</td></tr>
+            <tr><td>Timeline</td><td>Weeks to months</td><td>Can take years (sometimes ~5)</td></tr>
+            <tr><td>Presentation</td><td>You present if accepted</td><td>No presentation</td></tr>
+          </tbody>
+        </table>
+
+        <p>A journal paper is typically the finished story — technique A had a weakness, so we built technique B, and here is exactly how it was evaluated. A conference paper is often an intermediate checkpoint.</p>
+
+        <div class="pw-callout">
+          <strong>Field matters.</strong> In computer science, conferences count as real publications and career credit — sometimes scored <em>higher</em> than journals, essentially at journal level. In many other fields, conference papers are seen as intermediate and may not count as publications.
+        </div>
+
+        <h3>Cover letter</h3>
+        <p>When submitting (especially to journals), a cover letter states <em>why</em> the paper matters and why it belongs in this venue. After revisions, a response letter explains how each reviewer comment was addressed.</p>
+      </section>
+
+      <!-- Resources -->
+      <section class="pw-section" id="sec-resources">
+        <h2><span class="pw-num">+</span> Resources</h2>
+
+        <h3>Guides &amp; tools</h3>
+        <ul class="pw-links">
+          <li><a href="https://labs.engineering.asu.edu/mps-lab/resources/how-to-write-a-paper/" target="_blank">MPS Lab — How to Write a Paper</a><span class="pw-link-desc">the outlining-first methodology this guide follows</span></li>
+          <li><a href="https://libguides.hkust.edu.hk/citation-chaining" target="_blank">HKUST — Citation Chaining</a><span class="pw-link-desc">forward/backward literature search</span></li>
+          <li><a href="https://gist.github.com/Pusnow/6eb933355b5cb8d31ef1abcb3c3e1206" target="_blank">CS Conference / Journal Rankings (Pusnow)</a><span class="pw-link-desc">venue tiers for computer science</span></li>
+          <li><a href="https://www.tablesgenerator.com/" target="_blank">Tables Generator</a><span class="pw-link-desc">build LaTeX tables visually (also imports from Excel)</span></li>
+          <li><a href="https://www.grammarly.com/" target="_blank">Grammarly</a><span class="pw-link-desc">grammar checking for papers</span></li>
+        </ul>
+
+        <h3>LLM policies (check the current year)</h3>
+        <ul class="pw-links">
+          <li><a href="https://neurips.cc/Conferences/2025/CallForPapers" target="_blank">NeurIPS — Call for Papers</a><span class="pw-link-desc">authorship &amp; disclosure rules</span></li>
+          <li><a href="https://neurips.cc/Conferences/2025/LLM" target="_blank">NeurIPS — LLM Policy</a><span class="pw-link-desc">responsibility &amp; disclosure of AI use</span></li>
+        </ul>
+
+        <div class="pw-callout">
+          <strong>Related on this site:</strong> for the LaTeX / Overleaf mechanics referenced throughout — document class, figures, tables, equations, BibTeX — see the <a href="overleaf.html" style="color:var(--pw);font-weight:600;">Overleaf / LaTeX guide</a>.
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>
