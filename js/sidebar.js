@@ -61,6 +61,7 @@ function createSidebar() {
       <li><a href="${basePath}pages/overleaf.html" class="menu-item"><span class="menu-color color-overleaf"></span>Overleaf / LaTeX</a></li>
       <li><a href="${basePath}pages/paper-writing.html" class="menu-item"><span class="menu-color color-paper"></span>Engineering Paper Writing</a></li>
       <li><a href="https://sjhwangwiki.com" target="_blank" class="menu-item"><span class="menu-color color-wiki"></span>Wiki</a></li>
+      <li><a href="https://medium.com/@sunjun7559" target="_blank" class="menu-item"><span class="menu-color color-medium"></span>Medium</a></li>
       <li class="has-submenu">
         <button class="menu-item submenu-toggle">
           <span><span class="menu-color color-contact"></span>Contact</span>
