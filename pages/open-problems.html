@@ -49,6 +49,14 @@
     .op-card__tags { display: flex; flex-wrap: wrap; gap: 7px; }
     .op-card__tag { font-size: 0.76rem; padding: 4px 11px; border-radius: 12px; background: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-primary); }
 
+    .op-category { display: flex; align-items: center; gap: 13px; margin: 46px 0 18px; }
+    .op-category:first-of-type { margin-top: 10px; }
+    .op-category .op-cat-num {
+      width: 32px; height: 32px; border-radius: 9px;
+      background: rgba(var(--op-rgb), 0.14); color: var(--op);
+      display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.95rem; flex-shrink: 0;
+    }
+    .op-category h2 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; margin: 0; }
     .op-empty {
       border: 1px dashed var(--border); border-radius: 16px; padding: 48px 28px;
       text-align: center; color: var(--text-secondary);
@@ -70,26 +78,118 @@
         <a href="mailto:sunjun7559@gmail.com?subject=Open%20Problem%20Collaboration" class="op-cta"><i class="fas fa-handshake"></i> Reach out to collaborate</a>
       </section>
 
+      <!-- ===== PROBLEM CARD TEMPLATE (duplicate per problem) =====
+      <div class="op-card">
+        <span class="op-card__num">OP-00</span>
+        <h3 class="op-card__title">Problem title</h3>
+        <span class="op-card__status">Open</span>
+        <p class="op-card__desc">What the problem is, why it matters, and what a solution would unlock.</p>
+        <div class="op-card__tags"><span class="op-card__tag">Tag</span></div>
+      </div>
+      ============================================================== -->
+
+      <!-- 1. Robust & Trustworthy AI -->
+      <div class="op-category"><span class="op-cat-num">1</span><h2>Robust &amp; Trustworthy AI</h2></div>
       <div class="op-grid">
-
-        <!-- ===== PROBLEM CARD TEMPLATE (duplicate this block per problem) =====
         <div class="op-card">
-          <span class="op-card__num">P01</span>
-          <h3 class="op-card__title">Problem title here</h3>
+          <span class="op-card__num">OP-01</span>
+          <h3 class="op-card__title">Can we detect model failure before it happens?</h3>
           <span class="op-card__status">Open</span>
-          <p class="op-card__desc">One short paragraph: what the problem is, why it matters, and what a solution would unlock.</p>
-          <div class="op-card__tags">
-            <span class="op-card__tag">Tag</span>
-            <span class="op-card__tag">Tag</span>
-          </div>
+          <p class="op-card__desc">Instead of evaluating robustness after a model is already wrong, can we detect the likelihood that a prediction will fail <em>in advance</em>? Use representation geometry, uncertainty, or topology to find failure precursors under distribution shift and adversarial conditions.</p>
+          <div class="op-card__tags"><span class="op-card__tag">Failure Detection</span><span class="op-card__tag">Uncertainty</span><span class="op-card__tag">Distribution Shift</span></div>
         </div>
-        ============================================================== -->
-
-        <div class="op-empty">
-          <i class="fas fa-lightbulb"></i>
-          <p>Problems are being curated and will appear here soon. Have one you'd like to tackle together in the meantime? <a href="mailto:sunjun7559@gmail.com?subject=Open%20Problem" style="color:var(--op);font-weight:600;">Send it over.</a></p>
+        <div class="op-card">
+          <span class="op-card__num">OP-02</span>
+          <h3 class="op-card__title">What makes a representation inherently robust?</h3>
+          <span class="op-card__status">Open</span>
+          <p class="op-card__desc">Why are some representations resistant to perturbation while others collapse easily? Beyond accuracy / robust accuracy, is there a property in a representation's geometry or topology that explains robustness itself?</p>
+          <div class="op-card__tags"><span class="op-card__tag">Representation</span><span class="op-card__tag">Geometry</span><span class="op-card__tag">Robustness</span></div>
         </div>
+        <div class="op-card">
+          <span class="op-card__num">OP-03</span>
+          <h3 class="op-card__title">Can robustness generalize to unseen attacks?</h3>
+          <span class="op-card__status">Open</span>
+          <p class="op-card__desc">Rather than defending against one specific adversarial attack, can we build robustness that generalizes to attacks and corruptions never seen during training?</p>
+          <div class="op-card__tags"><span class="op-card__tag">Adversarial</span><span class="op-card__tag">Generalization</span><span class="op-card__tag">Corruption</span></div>
+        </div>
+      </div>
 
+      <!-- 2. Topology x Machine Learning -->
+      <div class="op-category"><span class="op-cat-num">2</span><h2>Topology &times; Machine Learning</h2></div>
+      <div class="op-grid">
+        <div class="op-card">
+          <span class="op-card__num">OP-04</span>
+          <h3 class="op-card__title">Can topology predict neural network failure?</h3>
+          <span class="op-card__status">Open</span>
+          <p class="op-card__desc">Can topological descriptors such as persistent homology catch representation collapse <em>before</em> accuracy drops? If so, it extends beyond robustness to OOD detection, continual learning, and federated learning.</p>
+          <div class="op-card__tags"><span class="op-card__tag">TDA</span><span class="op-card__tag">Persistent Homology</span><span class="op-card__tag">OOD</span></div>
+        </div>
+        <div class="op-card">
+          <span class="op-card__num">OP-05</span>
+          <h3 class="op-card__title">What does the topology of a learned representation actually mean?</h3>
+          <span class="op-card__status">Open</span>
+          <p class="op-card__desc">Computing a persistence diagram is not the end. How does that topological structure relate to the <em>semantic</em> structure a model has learned? A more fundamental question about meaning, not just measurement.</p>
+          <div class="op-card__tags"><span class="op-card__tag">TDA</span><span class="op-card__tag">Representation</span><span class="op-card__tag">Interpretability</span></div>
+        </div>
+        <div class="op-card">
+          <span class="op-card__num">OP-06</span>
+          <h3 class="op-card__title">Can we train neural networks to preserve useful topology?</h3>
+          <span class="op-card__status">Open</span>
+          <p class="op-card__desc">Instead of using topology only as an analysis tool, can we embed it in the loss or regularization to directly learn a desired representation topology?</p>
+          <div class="op-card__tags"><span class="op-card__tag">TDA</span><span class="op-card__tag">Training</span><span class="op-card__tag">Regularization</span></div>
+        </div>
+      </div>
+
+      <!-- 3. Quantum x AI -->
+      <div class="op-category"><span class="op-cat-num">3</span><h2>Quantum &times; AI</h2></div>
+      <div class="op-grid">
+        <div class="op-card">
+          <span class="op-card__num">OP-07</span>
+          <h3 class="op-card__title">Does quantum ML offer robustness classical models cannot?</h3>
+          <span class="op-card__status">Open</span>
+          <p class="op-card__desc">Is the robustness of quantum machine learning merely an artifact of a different model structure, or does it arise from the quantum representation itself?</p>
+          <div class="op-card__tags"><span class="op-card__tag">Quantum ML</span><span class="op-card__tag">Robustness</span></div>
+        </div>
+        <div class="op-card">
+          <span class="op-card__num">OP-08</span>
+          <h3 class="op-card__title">What does an adversarial example mean in quantum state space?</h3>
+          <span class="op-card__status">Open</span>
+          <p class="op-card__desc">Classical ML perturbs <code>x + δ</code>; quantum models also involve state preparation, measurement, and noise. So what threat model should define quantum adversarial robustness? A genuinely fundamental question.</p>
+          <div class="op-card__tags"><span class="op-card__tag">Quantum</span><span class="op-card__tag">Adversarial</span><span class="op-card__tag">Threat Model</span></div>
+        </div>
+        <div class="op-card">
+          <span class="op-card__num">OP-09</span>
+          <h3 class="op-card__title">Can quantum and classical models fail differently on the same data?</h3>
+          <span class="op-card__status">Open</span>
+          <p class="op-card__desc">On identical data, do quantum and classical models exhibit different failure modes — and can that difference be characterized, or even exploited?</p>
+          <div class="op-card__tags"><span class="op-card__tag">Quantum</span><span class="op-card__tag">Classical</span><span class="op-card__tag">Failure Modes</span></div>
+        </div>
+      </div>
+
+      <!-- 4. Distributed / Real-World AI -->
+      <div class="op-category"><span class="op-cat-num">4</span><h2>Distributed / Real-World AI</h2></div>
+      <div class="op-grid">
+        <div class="op-card">
+          <span class="op-card__num">OP-10</span>
+          <h3 class="op-card__title">How do we build robust federated learning under heterogeneous clients?</h3>
+          <span class="op-card__status">Open</span>
+          <p class="op-card__desc">Beyond Non-IID: how do we guarantee global-model reliability when device, sensor, environment, and compute capability all differ across clients?</p>
+          <div class="op-card__tags"><span class="op-card__tag">Federated Learning</span><span class="op-card__tag">Heterogeneity</span><span class="op-card__tag">Reliability</span></div>
+        </div>
+        <div class="op-card">
+          <span class="op-card__num">OP-11</span>
+          <h3 class="op-card__title">Can we identify unreliable clients without seeing their data?</h3>
+          <span class="op-card__status">Open</span>
+          <p class="op-card__desc">In privacy-preserving FL where raw data is invisible, can we distinguish corrupted, shifted, or adversarial clients from representations, updates, and statistics alone? A natural bridge between AI security and FL.</p>
+          <div class="op-card__tags"><span class="op-card__tag">Federated Learning</span><span class="op-card__tag">AI Security</span><span class="op-card__tag">Privacy</span></div>
+        </div>
+        <div class="op-card">
+          <span class="op-card__num">OP-12</span>
+          <h3 class="op-card__title">How should autonomous systems know when not to trust themselves?</h3>
+          <span class="op-card__status">Open</span>
+          <p class="op-card__desc">Beyond emitting an uncertainty score, can an autonomous-driving / robotics model decide "I should not trust my prediction right now" — and change its action strategy accordingly?</p>
+          <div class="op-card__tags"><span class="op-card__tag">Autonomous</span><span class="op-card__tag">Uncertainty</span><span class="op-card__tag">Trust</span></div>
+        </div>
       </div>
 
     </div>
