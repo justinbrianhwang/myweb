@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/d3-geo@3/dist/d3-geo.min.js"></script>
 </head>
 <body>
 
@@ -378,94 +379,71 @@
   <script src="js/sidebar.js"></script>
   <script src="js/script.js"></script>
   <script>
-  /* Interactive drag-to-spin globe — canvas orthographic projection, no libraries */
+  /* Interactive drag-to-spin globe — real coastlines via d3-geo orthographic projection */
   (function () {
     const canvas = document.getElementById('globeCanvas');
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const DPR = Math.min(window.devicePixelRatio || 1, 2);
-    const SIZE = 260, cx = SIZE / 2, cy = SIZE / 2, R = SIZE / 2 - 6;
-    canvas.width = SIZE * DPR; canvas.height = SIZE * DPR;
-    ctx.scale(DPR, DPR);
+    function start() {
+      if (!window.d3 || !d3.geoOrthographic) { return setTimeout(start, 120); }
+      const ctx = canvas.getContext('2d');
+      const DPR = Math.min(window.devicePixelRatio || 1, 2);
+      const SIZE = 260, cx = SIZE / 2, cy = SIZE / 2, R = SIZE / 2 - 6;
+      canvas.width = SIZE * DPR; canvas.height = SIZE * DPR;
+      ctx.scale(DPR, DPR);
 
-    // Coarse land mask: [latMin, latMax, lonMin, lonMax]
-    const boxes = [
-      [48,72,-168,-52],[30,49,-125,-70],[14,30,-110,-83],[8,18,-92,-77],
-      [60,83,-55,-18],
-      [-5,12,-80,-50],[-35,-5,-75,-38],[-55,-35,-75,-62],
-      [36,60,-10,40],[60,71,5,45],[50,59,-8,2],
-      [18,37,-16,34],[-10,18,-16,48],[-35,-10,12,40],
-      [40,75,40,180],[20,40,45,122],[8,30,68,90],[5,22,95,125],[30,45,128,146],
-      [15,40,34,60],
-      [-38,-12,113,154],[-10,5,95,140],[-47,-34,166,179],
-      [-90,-66,-180,180]
-    ];
-    const isLand = (la, lo) => boxes.some(b => la >= b[0] && la <= b[1] && lo >= b[2] && lo <= b[3]);
+      const projection = d3.geoOrthographic().scale(R).translate([cx, cy]).clipAngle(90);
+      const path = d3.geoPath(projection, ctx);
+      const graticule = d3.geoGraticule10();
+      const VAN = [-123.113, 49.282];           // ILSC Vancouver campus
+      let land = null, lambda = 123.113, phi = -32, dragging = false, lastX = 0, lastY = 0, idle = 0;
 
-    const D = Math.PI / 180, dots = [];
-    for (let la = -86; la <= 86; la += 4)
-      for (let lo = -180; lo < 180; lo += 4)
-        if (isLand(la, lo)) dots.push({ cphi: Math.cos(la * D), sphi: Math.sin(la * D), lam: lo * D });
+      fetch('assets/land-110m.json').then(r => r.json()).then(d => { land = d; }).catch(() => {});
 
-    const VAN = { phi: 49.2820 * D, lam: -123.1130 * D };  // ILSC Vancouver campus, 555 Richards St
-    let yaw = -VAN.lam, pitch = 32 * D;          // start with Vancouver facing front
-    let dragging = false, lastX = 0, lastY = 0, idle = 0;
+      const visible = pt => { const c = projection.rotate(); return d3.geoDistance(pt, [-c[0], -c[1]]) < Math.PI / 2; };
 
-    function project(cphi, sphi, lam) {
-      const l = lam + yaw, cp = Math.cos(pitch), sp = Math.sin(pitch);
-      const x = cphi * Math.sin(l), y0 = sphi, z0 = cphi * Math.cos(l);
-      return { x, y: y0 * cp - z0 * sp, z: y0 * sp + z0 * cp };
-    }
-
-    function draw(t) {
-      ctx.clearRect(0, 0, SIZE, SIZE);
-      // sphere body
-      const bg = ctx.createRadialGradient(cx - R * 0.3, cy - R * 0.35, R * 0.2, cx, cy, R);
-      bg.addColorStop(0, '#191934'); bg.addColorStop(1, '#0a0a14');
-      ctx.beginPath(); ctx.arc(cx, cy, R, 0, 6.2832); ctx.fillStyle = bg; ctx.fill();
-
-      if (!dragging && ++idle > 40) yaw += 0.0016;   // gentle auto-spin when idle
-
-      for (const d of dots) {
-        const p = project(d.cphi, d.sphi, d.lam);
-        if (p.z <= 0) continue;
-        ctx.globalAlpha = 0.22 + p.z * 0.6;
-        ctx.beginPath(); ctx.arc(cx + p.x * R, cy - p.y * R, 0.7 + p.z * 1.1, 0, 6.2832);
-        ctx.fillStyle = '#6c63ff'; ctx.fill();
+      function draw(t) {
+        projection.rotate([lambda, phi]);
+        ctx.clearRect(0, 0, SIZE, SIZE);
+        // ocean
+        const og = ctx.createRadialGradient(cx - R * 0.3, cy - R * 0.35, R * 0.2, cx, cy, R);
+        og.addColorStop(0, '#17172f'); og.addColorStop(1, '#0a0a14');
+        ctx.beginPath(); path({ type: 'Sphere' }); ctx.fillStyle = og; ctx.fill();
+        // graticule
+        ctx.beginPath(); path(graticule); ctx.lineWidth = 0.5; ctx.strokeStyle = 'rgba(124,116,255,0.13)'; ctx.stroke();
+        // land
+        if (land) {
+          ctx.beginPath(); path(land);
+          ctx.fillStyle = 'rgba(124,116,255,0.32)'; ctx.fill();
+          ctx.lineWidth = 0.6; ctx.strokeStyle = 'rgba(155,147,255,0.6)'; ctx.stroke();
+        }
+        // limb darkening
+        const eg = ctx.createRadialGradient(cx, cy, R * 0.62, cx, cy, R);
+        eg.addColorStop(0, 'rgba(0,0,0,0)'); eg.addColorStop(1, 'rgba(4,4,10,0.5)');
+        ctx.beginPath(); path({ type: 'Sphere' }); ctx.fillStyle = eg; ctx.fill();
+        // Vancouver marker
+        if (visible(VAN)) {
+          const p = projection(VAN), pulse = (Math.sin(t / 400) + 1) / 2;
+          ctx.beginPath(); ctx.arc(p[0], p[1], 4 + pulse * 7, 0, 6.2832);
+          ctx.strokeStyle = 'rgba(233,69,96,' + (0.55 - pulse * 0.45) + ')'; ctx.lineWidth = 1.5; ctx.stroke();
+          ctx.beginPath(); ctx.arc(p[0], p[1], 3.2, 0, 6.2832); ctx.fillStyle = '#e94560'; ctx.fill();
+        }
+        if (!dragging && ++idle > 40) lambda += 0.12;   // gentle auto-spin when idle
+        requestAnimationFrame(draw);
       }
-      ctx.globalAlpha = 1;
-
-      // Vancouver marker
-      const pv = project(Math.cos(VAN.phi), Math.sin(VAN.phi), VAN.lam);
-      if (pv.z > 0) {
-        const sx = cx + pv.x * R, sy = cy - pv.y * R, pulse = (Math.sin(t / 400) + 1) / 2;
-        ctx.beginPath(); ctx.arc(sx, sy, 4 + pulse * 7, 0, 6.2832);
-        ctx.strokeStyle = 'rgba(233,69,96,' + (0.55 - pulse * 0.45) + ')'; ctx.lineWidth = 1.5; ctx.stroke();
-        ctx.beginPath(); ctx.arc(sx, sy, 3.2, 0, 6.2832); ctx.fillStyle = '#e94560'; ctx.fill();
-      }
-
-      // limb darkening
-      const eg = ctx.createRadialGradient(cx, cy, R * 0.6, cx, cy, R);
-      eg.addColorStop(0, 'rgba(0,0,0,0)'); eg.addColorStop(1, 'rgba(4,4,10,0.55)');
-      ctx.beginPath(); ctx.arc(cx, cy, R, 0, 6.2832); ctx.fillStyle = eg; ctx.fill();
-
       requestAnimationFrame(draw);
-    }
-    requestAnimationFrame(draw);
 
-    canvas.addEventListener('pointerdown', e => {
-      dragging = true; idle = 0; lastX = e.clientX; lastY = e.clientY;
-      canvas.setPointerCapture(e.pointerId);
-    });
-    canvas.addEventListener('pointermove', e => {
-      if (!dragging) return;
-      yaw += (e.clientX - lastX) * 0.006;
-      pitch = Math.max(-1.2, Math.min(1.2, pitch + (e.clientY - lastY) * 0.006));
-      lastX = e.clientX; lastY = e.clientY;
-    });
-    const stop = () => { dragging = false; idle = 0; };
-    canvas.addEventListener('pointerup', stop);
-    canvas.addEventListener('pointercancel', stop);
+      canvas.addEventListener('pointerdown', e => { dragging = true; idle = 0; lastX = e.clientX; lastY = e.clientY; canvas.setPointerCapture(e.pointerId); });
+      canvas.addEventListener('pointermove', e => {
+        if (!dragging) return;
+        lambda += (e.clientX - lastX) * 0.35;
+        phi = Math.max(-90, Math.min(90, phi - (e.clientY - lastY) * 0.35));
+        lastX = e.clientX; lastY = e.clientY;
+      });
+      const stop = () => { dragging = false; idle = 0; };
+      canvas.addEventListener('pointerup', stop);
+      canvas.addEventListener('pointercancel', stop);
+    }
+    start();
   })();
   </script>
 </body>
