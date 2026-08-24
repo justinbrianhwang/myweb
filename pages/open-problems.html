@@ -206,18 +206,6 @@
           <h3 class="op-card__title">Can autonomous vehicles recognize situations they have never seen before?</h3>
           <span class="op-card__status op-card__status--seeking">Looking for Collaborators</span>
           <p class="op-card__desc">Autonomous models work well in environments resembling their training data, but real roads constantly present the unseen — unusual construction zones, rare objects, abnormal driver behavior, extreme weather. The real question goes beyond "can we detect OOD?" to: <em>can an autonomous system recognize that it does not understand the current situation — and react safely?</em></p>
-          <div class="op-card__block">
-            <span class="op-card__block-label">Key questions</span>
-            <ul>
-              <li>How does the system decide a situation is genuinely novel?</li>
-              <li>At which stage — perception, representation, or planning — should novelty be detected?</li>
-              <li>Once OOD is found, how does it become action: slow down, stop, or human takeover?</li>
-            </ul>
-          </div>
-          <div class="op-card__block">
-            <span class="op-card__block-label">Looking for</span>
-            <p>Autonomous driving, OOD detection, uncertainty estimation, world models, safe planning.</p>
-          </div>
           <div class="op-card__tags"><span class="op-card__tag">Autonomous Driving</span><span class="op-card__tag">OOD Detection</span><span class="op-card__tag">Trustworthy AI</span></div>
         </div>
         <div class="op-card">
@@ -225,18 +213,6 @@
           <h3 class="op-card__title">Can we predict dangerous driving scenarios before they happen?</h3>
           <span class="op-card__status op-card__status--seeking">Looking for Collaborators</span>
           <p class="op-card__desc">Beyond what perception currently sees, can we foresee a dangerous situation seconds ahead? For example, judging a pedestrian's crossing intent from posture, gaze, and heading before they step onto the road, or predicting a sudden lane change from subtle vehicle motion. The core: <em>can an autonomous vehicle detect the early signatures of an accident before the dangerous event actually occurs?</em></p>
-          <div class="op-card__block">
-            <span class="op-card__block-label">Key questions</span>
-            <ul>
-              <li>Do latent precursors appear just before an accident?</li>
-              <li>How early can risk be predicted from multi-agent trajectories?</li>
-              <li>Can we build a risk representation that captures uncertainty, not just collision probability?</li>
-            </ul>
-          </div>
-          <div class="op-card__block">
-            <span class="op-card__block-label">Looking for</span>
-            <p>Autonomous driving, trajectory prediction, video understanding, multi-agent systems, risk-aware planning.</p>
-          </div>
           <div class="op-card__tags"><span class="op-card__tag">Autonomous Driving</span><span class="op-card__tag">Trajectory Prediction</span><span class="op-card__tag">Risk Modeling</span></div>
         </div>
         <div class="op-card">
@@ -244,20 +220,33 @@
           <h3 class="op-card__title">How can autonomous driving systems remain reliable when sensors fail?</h3>
           <span class="op-card__status op-card__status--seeking">Looking for Collaborators</span>
           <p class="op-card__desc">In real vehicles, sensors are not guaranteed healthy — cameras get occluded, LiDAR degrades in bad weather, GPS drifts. Yet typical sensor fusion largely assumes every modality arrives intact. The question: <em>can an autonomous system understand which sensors are trustworthy — and keep driving safely when some are not?</em></p>
-          <div class="op-card__block">
-            <span class="op-card__block-label">Key questions</span>
-            <ul>
-              <li>Can sensor degradation be detected without labels?</li>
-              <li>Can each modality's reliability be estimated in real time?</li>
-              <li>Can the representation hold up when a modality drops out?</li>
-              <li>Can the model tell sensor failure apart from a genuinely novel environment?</li>
-            </ul>
-          </div>
-          <div class="op-card__block">
-            <span class="op-card__block-label">Looking for</span>
-            <p>Sensor fusion, multimodal learning, autonomous driving, robust perception, uncertainty estimation.</p>
-          </div>
           <div class="op-card__tags"><span class="op-card__tag">Autonomous Driving</span><span class="op-card__tag">Sensor Fusion</span><span class="op-card__tag">Robustness</span></div>
+        </div>
+      </div>
+
+      <!-- 6. Quantum Communication (BB84) -->
+      <div class="op-category"><span class="op-cat-num">6</span><h2>Quantum Communication (BB84)</h2></div>
+      <div class="op-grid">
+        <div class="op-card">
+          <span class="op-card__num">OP-16</span>
+          <h3 class="op-card__title">How robust is BB84 under realistic noise and imperfect hardware?</h3>
+          <span class="op-card__status op-card__status--seeking">Looking for Collaborators</span>
+          <p class="op-card__desc">BB84 offers strong security under ideal conditions, but real systems carry non-idealities — photon loss, detector noise, imperfect state preparation, channel fluctuation. The core: <em>how far can practical BB84 deviate from its ideal assumptions before security or key-generation performance becomes unreliable?</em> And can we tell real noise from adversarial disturbance — is a rising QBER hardware imperfection, or an attack?</p>
+          <div class="op-card__tags"><span class="op-card__tag">BB84</span><span class="op-card__tag">QKD</span><span class="op-card__tag">Security</span></div>
+        </div>
+        <div class="op-card">
+          <span class="op-card__num">OP-17</span>
+          <h3 class="op-card__title">Can BB84 dynamically adapt to changing channel conditions?</h3>
+          <span class="op-card__status op-card__status--seeking">Looking for Collaborators</span>
+          <p class="op-card__desc">A real quantum channel isn't fixed — loss and noise vary over time, so static settings are either too conservative or unstable. <em>Can a BB84 system adapt its operating parameters — error correction, privacy amplification, transmission rate — in real time without weakening its security guarantees?</em> If ML is involved, it is cleaner to use it for channel estimation and parameter optimization rather than letting it make security decisions directly.</p>
+          <div class="op-card__tags"><span class="op-card__tag">BB84</span><span class="op-card__tag">Adaptive Systems</span><span class="op-card__tag">Quantum Networks</span></div>
+        </div>
+        <div class="op-card">
+          <span class="op-card__num">OP-18</span>
+          <h3 class="op-card__title">How should BB84 coexist with classical communication in hybrid networks?</h3>
+          <span class="op-card__status op-card__status--seeking">Looking for Collaborators</span>
+          <p class="op-card__desc">BB84 usually handles only key distribution while the actual data travels on a classical channel. From a systems view: <em>how should quantum key distribution and classical communication be jointly designed as one reliable system?</em> How do we match key-generation rate to classical traffic demand, degrade gracefully when the QKD link falters, allocate quantum-key resources across many users and links, and optimize end-to-end latency and security together?</p>
+          <div class="op-card__tags"><span class="op-card__tag">BB84</span><span class="op-card__tag">Hybrid Communication</span><span class="op-card__tag">Network Systems</span></div>
         </div>
       </div>
 
