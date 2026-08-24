@@ -336,7 +336,7 @@
             <span class="hud-corner tr"></span>
             <span class="hud-corner bl"></span>
             <span class="hud-corner br"></span>
-            <span class="hud-tag"><span class="lock-dot">◉</span> LOCATION LOCKED · DRAG TO SPIN</span>
+            <span class="hud-tag"><span class="lock-dot">◉</span> LOCATION LOCKED · DRAG · ZOOM</span>
             <canvas id="globeCanvas" class="location-canvas" role="img" aria-label="Interactive globe — drag to rotate; marker pinned on ILSC Vancouver"></canvas>
           </div>
 
@@ -396,14 +396,20 @@
       const path = d3.geoPath(projection, ctx);
       const graticule = d3.geoGraticule10();
       const VAN = [-123.113, 49.282];           // ILSC Vancouver campus
-      let land = null, lambda = 123.113, phi = -32, dragging = false, lastX = 0, lastY = 0, idle = 0;
+      const MINZ = 1, MAXZ = 5;
+      let land = null, lambda = 123.113, phi = -32, zoom = 1;
+      let dragging = false, lastX = 0, lastY = 0, idle = 0, pinchDist = 0;
+      const pts = new Map();
+      const clampPhi = p => Math.max(-90, Math.min(90, p));
+      const clampZoom = z => Math.max(MINZ, Math.min(MAXZ, z));
+      const twoDist = () => { const a = [...pts.values()]; return Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y); };
 
       fetch('assets/land-110m.json').then(r => r.json()).then(d => { land = d; }).catch(() => {});
 
       const visible = pt => { const c = projection.rotate(); return d3.geoDistance(pt, [-c[0], -c[1]]) < Math.PI / 2; };
 
       function draw(t) {
-        projection.rotate([lambda, phi]);
+        projection.scale(R * zoom).rotate([lambda, phi]);
         ctx.clearRect(0, 0, SIZE, SIZE);
         // ocean
         const og = ctx.createRadialGradient(cx - R * 0.3, cy - R * 0.35, R * 0.2, cx, cy, R);
@@ -433,16 +439,41 @@
       }
       requestAnimationFrame(draw);
 
-      canvas.addEventListener('pointerdown', e => { dragging = true; idle = 0; lastX = e.clientX; lastY = e.clientY; canvas.setPointerCapture(e.pointerId); });
-      canvas.addEventListener('pointermove', e => {
-        if (!dragging) return;
-        lambda += (e.clientX - lastX) * 0.35;
-        phi = Math.max(-90, Math.min(90, phi - (e.clientY - lastY) * 0.35));
-        lastX = e.clientX; lastY = e.clientY;
+      canvas.addEventListener('wheel', e => {
+        e.preventDefault();
+        zoom = clampZoom(zoom * (e.deltaY < 0 ? 1.12 : 0.89)); idle = 0;
+      }, { passive: false });
+
+      canvas.addEventListener('pointerdown', e => {
+        pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+        canvas.setPointerCapture(e.pointerId); idle = 0;
+        if (pts.size === 1) { dragging = true; lastX = e.clientX; lastY = e.clientY; }
+        else if (pts.size === 2) { dragging = false; pinchDist = twoDist(); }
       });
-      const stop = () => { dragging = false; idle = 0; };
-      canvas.addEventListener('pointerup', stop);
-      canvas.addEventListener('pointercancel', stop);
+      canvas.addEventListener('pointermove', e => {
+        if (!pts.has(e.pointerId)) return;
+        pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+        idle = 0;
+        if (pts.size >= 2) {                       // pinch-zoom
+          const d = twoDist();
+          if (pinchDist) zoom = clampZoom(zoom * d / pinchDist);
+          pinchDist = d; return;
+        }
+        if (dragging) {                            // drag-rotate
+          lambda += (e.clientX - lastX) * 0.35 / zoom;
+          phi = clampPhi(phi - (e.clientY - lastY) * 0.35 / zoom);
+          lastX = e.clientX; lastY = e.clientY;
+        }
+      });
+      const up = e => {
+        pts.delete(e.pointerId);
+        if (pts.size < 2) pinchDist = 0;
+        if (pts.size === 0) dragging = false;
+        else if (pts.size === 1) { const p = [...pts.values()][0]; dragging = true; lastX = p.x; lastY = p.y; }
+        idle = 0;
+      };
+      canvas.addEventListener('pointerup', up);
+      canvas.addEventListener('pointercancel', up);
     }
     start();
   })();
