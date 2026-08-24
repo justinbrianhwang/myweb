@@ -396,7 +396,7 @@
       const path = d3.geoPath(projection, ctx);
       const graticule = d3.geoGraticule10();
       const VAN = [-123.113, 49.282];           // ILSC Vancouver campus
-      const MINZ = 1, MAXZ = 5;
+      const MINZ = 1, MAXZ = 12;
       let land = null, lambda = 123.113, phi = -32, zoom = 1;
       let dragging = false, lastX = 0, lastY = 0, idle = 0, pinchDist = 0;
       const pts = new Map();
