@@ -61,7 +61,7 @@ function createSidebar() {
       <li><a href="${basePath}pages/overleaf.html" class="menu-item"><span class="menu-color color-overleaf"></span>Overleaf / LaTeX</a></li>
       <li><a href="${basePath}pages/paper-writing.html" class="menu-item"><span class="menu-color color-paper"></span>Engineering Paper Writing</a></li>
       <li><a href="https://sjhwangwiki.com" target="_blank" class="menu-item"><span class="menu-color color-wiki"></span>Wiki</a></li>
-      <li><a href="https://medium.com/@sunjun7559" target="_blank" class="menu-item"><span class="menu-color color-medium"></span>Medium</a></li>
+      <li><a href="${basePath}pages/open-problems.html" class="menu-item"><span class="menu-color color-openproblems"></span>Open Problems</a></li>
       <li class="has-submenu">
         <button class="menu-item submenu-toggle">
           <span><span class="menu-color color-contact"></span>Contact</span>
@@ -73,6 +73,7 @@ function createSidebar() {
           <li><a href="https://www.linkedin.com/in/sunjunhwang/" target="_blank">LinkedIn</a></li>
           <li><a href="https://www.youtube.com/@sjquantumprof" target="_blank">YouTube</a></li>
           <li><a href="https://www.instagram.com/jun_bri0123/" target="_blank">Instagram</a></li>
+          <li><a href="https://medium.com/@sunjun7559" target="_blank">Medium</a></li>
           <li><a href="https://orcid.org/0009-0007-5173-2876" target="_blank">ORCID</a></li>
           <li><a href="https://blog.naver.com/sjhwang__" target="_blank">Naver Blog</a></li>
         </ul>

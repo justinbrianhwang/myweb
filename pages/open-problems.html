@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open Problems — Sunjun Hwang</title>
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root { --op: #ff8c42; --op-rgb: 255, 140, 66; }
+    .op-hero {
+      background: linear-gradient(135deg, rgba(var(--op-rgb), 0.10), rgba(108, 99, 255, 0.05));
+      border: 1px solid var(--border); border-radius: 20px;
+      padding: 38px 34px; margin-bottom: 30px;
+    }
+    .op-hero h1 {
+      font-family: var(--font-display); font-size: 2.1rem; font-weight: 800;
+      margin-bottom: 10px; display: flex; align-items: center; gap: 15px; flex-wrap: wrap;
+    }
+    .op-hero p { font-size: 1.05rem; color: var(--text-secondary); line-height: 1.7; max-width: 760px; }
+    .op-hero .op-cta {
+      display: inline-flex; align-items: center; gap: 9px; margin-top: 20px;
+      padding: 11px 20px; border-radius: 12px; background: var(--op); color: #fff;
+      font-weight: 600; font-size: 0.92rem; text-decoration: none; transition: transform 0.2s ease, filter 0.2s ease;
+    }
+    .op-hero .op-cta:hover { transform: translateY(-2px); filter: brightness(1.05); }
+
+    .op-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; }
+    .op-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 24px 24px 20px; position: relative; overflow: hidden;
+      transition: border-color 0.25s ease, transform 0.25s ease;
+    }
+    .op-card:hover { border-color: rgba(var(--op-rgb), 0.5); transform: translateY(-3px); }
+    .op-card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--op); }
+    .op-card__num { font-family: 'Space Grotesk', monospace; font-size: 0.8rem; font-weight: 700; color: var(--op); letter-spacing: 0.08em; }
+    .op-card__title { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; margin: 6px 0 10px; line-height: 1.3; }
+    .op-card__status {
+      display: inline-block; font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.06em; padding: 3px 10px; border-radius: 999px;
+      background: rgba(var(--op-rgb), 0.14); color: var(--op); margin-bottom: 12px;
+    }
+    .op-card__desc { color: var(--text-secondary); line-height: 1.7; font-size: 0.94rem; margin-bottom: 14px; }
+    .op-card__tags { display: flex; flex-wrap: wrap; gap: 7px; }
+    .op-card__tag { font-size: 0.76rem; padding: 4px 11px; border-radius: 12px; background: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-primary); }
+
+    .op-empty {
+      border: 1px dashed var(--border); border-radius: 16px; padding: 48px 28px;
+      text-align: center; color: var(--text-secondary);
+    }
+    .op-empty i { font-size: 2rem; color: var(--op); opacity: 0.7; margin-bottom: 14px; }
+    .op-empty p { line-height: 1.7; max-width: 440px; margin: 0 auto; }
+  </style>
+</head>
+<body>
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+
+  <main class="page-content" data-theme="openproblems">
+    <div class="container">
+
+      <section class="op-hero">
+        <h1><i class="fas fa-puzzle-piece" style="color:var(--op)"></i> Open Problems</h1>
+        <p>A living list of research problems I find genuinely interesting and would love to solve <strong>together with other researchers</strong>. These are open invitations — if any of them resonates with your work, or you see an angle I've missed, let's talk. Collaboration beats working alone.</p>
+        <a href="mailto:sunjun7559@gmail.com?subject=Open%20Problem%20Collaboration" class="op-cta"><i class="fas fa-handshake"></i> Reach out to collaborate</a>
+      </section>
+
+      <div class="op-grid">
+
+        <!-- ===== PROBLEM CARD TEMPLATE (duplicate this block per problem) =====
+        <div class="op-card">
+          <span class="op-card__num">P01</span>
+          <h3 class="op-card__title">Problem title here</h3>
+          <span class="op-card__status">Open</span>
+          <p class="op-card__desc">One short paragraph: what the problem is, why it matters, and what a solution would unlock.</p>
+          <div class="op-card__tags">
+            <span class="op-card__tag">Tag</span>
+            <span class="op-card__tag">Tag</span>
+          </div>
+        </div>
+        ============================================================== -->
+
+        <div class="op-empty">
+          <i class="fas fa-lightbulb"></i>
+          <p>Problems are being curated and will appear here soon. Have one you'd like to tackle together in the meantime? <a href="mailto:sunjun7559@gmail.com?subject=Open%20Problem" style="color:var(--op);font-weight:600;">Send it over.</a></p>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>
