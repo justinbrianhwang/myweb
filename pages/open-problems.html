@@ -48,6 +48,12 @@
     .op-card__desc { color: var(--text-secondary); line-height: 1.7; font-size: 0.94rem; margin-bottom: 14px; }
     .op-card__tags { display: flex; flex-wrap: wrap; gap: 7px; }
     .op-card__tag { font-size: 0.76rem; padding: 4px 11px; border-radius: 12px; background: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-primary); }
+    .op-card__status--seeking { background: rgba(245, 166, 35, 0.16); color: #e6902a; }
+    .op-card__block { margin: 2px 0 14px; }
+    .op-card__block-label { display: block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--op); margin-bottom: 6px; }
+    .op-card__block ul { margin: 0; padding-left: 18px; }
+    .op-card__block li { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; margin-bottom: 4px; }
+    .op-card__block p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; margin: 0; }
 
     .op-category { display: flex; align-items: center; gap: 13px; margin: 46px 0 18px; }
     .op-category:first-of-type { margin-top: 10px; }
@@ -189,6 +195,69 @@
           <span class="op-card__status">Open</span>
           <p class="op-card__desc">Beyond emitting an uncertainty score, can an autonomous-driving / robotics model decide "I should not trust my prediction right now" — and change its action strategy accordingly?</p>
           <div class="op-card__tags"><span class="op-card__tag">Autonomous</span><span class="op-card__tag">Uncertainty</span><span class="op-card__tag">Trust</span></div>
+        </div>
+      </div>
+
+      <!-- 5. Autonomous Driving -->
+      <div class="op-category"><span class="op-cat-num">5</span><h2>Autonomous Driving</h2></div>
+      <div class="op-grid">
+        <div class="op-card">
+          <span class="op-card__num">OP-13</span>
+          <h3 class="op-card__title">Can autonomous vehicles recognize situations they have never seen before?</h3>
+          <span class="op-card__status op-card__status--seeking">Looking for Collaborators</span>
+          <p class="op-card__desc">Autonomous models work well in environments resembling their training data, but real roads constantly present the unseen — unusual construction zones, rare objects, abnormal driver behavior, extreme weather. The real question goes beyond "can we detect OOD?" to: <em>can an autonomous system recognize that it does not understand the current situation — and react safely?</em></p>
+          <div class="op-card__block">
+            <span class="op-card__block-label">Key questions</span>
+            <ul>
+              <li>How does the system decide a situation is genuinely novel?</li>
+              <li>At which stage — perception, representation, or planning — should novelty be detected?</li>
+              <li>Once OOD is found, how does it become action: slow down, stop, or human takeover?</li>
+            </ul>
+          </div>
+          <div class="op-card__block">
+            <span class="op-card__block-label">Looking for</span>
+            <p>Autonomous driving, OOD detection, uncertainty estimation, world models, safe planning.</p>
+          </div>
+          <div class="op-card__tags"><span class="op-card__tag">Autonomous Driving</span><span class="op-card__tag">OOD Detection</span><span class="op-card__tag">Trustworthy AI</span></div>
+        </div>
+        <div class="op-card">
+          <span class="op-card__num">OP-14</span>
+          <h3 class="op-card__title">Can we predict dangerous driving scenarios before they happen?</h3>
+          <span class="op-card__status op-card__status--seeking">Looking for Collaborators</span>
+          <p class="op-card__desc">Beyond what perception currently sees, can we foresee a dangerous situation seconds ahead? For example, judging a pedestrian's crossing intent from posture, gaze, and heading before they step onto the road, or predicting a sudden lane change from subtle vehicle motion. The core: <em>can an autonomous vehicle detect the early signatures of an accident before the dangerous event actually occurs?</em></p>
+          <div class="op-card__block">
+            <span class="op-card__block-label">Key questions</span>
+            <ul>
+              <li>Do latent precursors appear just before an accident?</li>
+              <li>How early can risk be predicted from multi-agent trajectories?</li>
+              <li>Can we build a risk representation that captures uncertainty, not just collision probability?</li>
+            </ul>
+          </div>
+          <div class="op-card__block">
+            <span class="op-card__block-label">Looking for</span>
+            <p>Autonomous driving, trajectory prediction, video understanding, multi-agent systems, risk-aware planning.</p>
+          </div>
+          <div class="op-card__tags"><span class="op-card__tag">Autonomous Driving</span><span class="op-card__tag">Trajectory Prediction</span><span class="op-card__tag">Risk Modeling</span></div>
+        </div>
+        <div class="op-card">
+          <span class="op-card__num">OP-15</span>
+          <h3 class="op-card__title">How can autonomous driving systems remain reliable when sensors fail?</h3>
+          <span class="op-card__status op-card__status--seeking">Looking for Collaborators</span>
+          <p class="op-card__desc">In real vehicles, sensors are not guaranteed healthy — cameras get occluded, LiDAR degrades in bad weather, GPS drifts. Yet typical sensor fusion largely assumes every modality arrives intact. The question: <em>can an autonomous system understand which sensors are trustworthy — and keep driving safely when some are not?</em></p>
+          <div class="op-card__block">
+            <span class="op-card__block-label">Key questions</span>
+            <ul>
+              <li>Can sensor degradation be detected without labels?</li>
+              <li>Can each modality's reliability be estimated in real time?</li>
+              <li>Can the representation hold up when a modality drops out?</li>
+              <li>Can the model tell sensor failure apart from a genuinely novel environment?</li>
+            </ul>
+          </div>
+          <div class="op-card__block">
+            <span class="op-card__block-label">Looking for</span>
+            <p>Sensor fusion, multimodal learning, autonomous driving, robust perception, uncertainty estimation.</p>
+          </div>
+          <div class="op-card__tags"><span class="op-card__tag">Autonomous Driving</span><span class="op-card__tag">Sensor Fusion</span><span class="op-card__tag">Robustness</span></div>
         </div>
       </div>
 
