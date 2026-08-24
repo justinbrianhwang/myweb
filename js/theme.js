@@ -57,3 +57,25 @@
     }
   }
 })();
+
+// ===== Shared footer social bar (injected on any footer that lacks one) =====
+(function initFooterSocial() {
+  const links = `
+    <div class="social-links">
+      <a href="https://scholar.google.com/citations?user=6X2EVE0AAAAJ" target="_blank" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+      <a href="https://github.com/justinbrianhwang" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      <a href="https://www.linkedin.com/in/sunjunhwang/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://www.instagram.com/jun_bri0123/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="mailto:sunjun7559@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      <a href="https://www.youtube.com/@sjquantumprof" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+      <a href="https://medium.com/@sunjun7559" target="_blank" aria-label="Medium"><i class="fab fa-medium"></i></a>
+      <a href="https://orcid.org/0009-0007-5173-2876" target="_blank" aria-label="ORCID"><i class="fab fa-orcid"></i></a>
+    </div>`;
+  const inject = () => {
+    document.querySelectorAll('.footer').forEach(f => {
+      if (!f.querySelector('.social-links')) f.insertAdjacentHTML('afterbegin', links);
+    });
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', inject);
+  else inject();
+})();
