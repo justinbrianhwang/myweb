@@ -42,7 +42,7 @@ function createSidebar() {
         </ul>
       </li>
       <li><a href="https://www.sjhwangcv.com" target="_blank" class="menu-item"><span class="menu-color color-cv"></span>CV</a></li>
-      <li><a href="https://www.sjhwangresearch.com" target="_blank" class="menu-item"><span class="menu-color color-research"></span>Research</a></li>
+      <li><a href="https://sjhwangresearch.com" target="_blank" class="menu-item"><span class="menu-color color-research"></span>Research</a></li>
       <li><a href="https://hwangresearch.com/" target="_blank" class="menu-item"><span class="menu-color color-hwangs"></span>Hwangs</a></li>
       <li><a href="${basePath}pages/skills.html" class="menu-item"><span class="menu-color color-skills"></span>Skills & Tools & Education</a></li>
       <li><a href="${basePath}pages/experience.html" class="menu-item"><span class="menu-color color-exp"></span>Experience</a></li>
