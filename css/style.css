@@ -372,18 +372,8 @@ img { max-width: 100%; }
 
 /* --- Masthead: who, what, where, in one screen --- */
 .masthead {
-  padding: 76px 0 var(--space-6);
+  padding: 120px 0 var(--space-6);
   border-bottom: 1px solid var(--border);
-}
-/* The banner is a finished graphic: show it whole, at full strength, at its own 10:3 ratio. */
-.masthead-banner { margin: 0 0 var(--space-6); }
-.masthead-banner img {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 10 / 3;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
 }
 .masthead-grid {
   display: grid;
@@ -682,8 +672,7 @@ img { max-width: 100%; }
 @media (max-width: 760px) {
   :root { --space-7: 72px; }
   .container { padding: 0 20px; }
-  .masthead { padding-top: 68px; }
-  .masthead-banner { margin-bottom: var(--space-5); }
+  .masthead { padding-top: 88px; }
   .masthead-grid { grid-template-columns: 1fr; }
   .masthead-photo { order: -1; max-width: 220px; }
   .rail { grid-template-columns: 1fr; gap: var(--space-4); }
