@@ -13,30 +13,29 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
     .ac-hero {
-      background: linear-gradient(135deg, rgba(162, 155, 254, 0.10), rgba(108, 99, 255, 0.06));
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 36px 32px;
-      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding: 0 0 28px;
+      margin-bottom: 48px;
     }
-    .ac-hero h1 { font-family: var(--font-display); font-size: 2rem; font-weight: 800; margin-bottom: 8px; display: flex; align-items: center; gap: 14px; }
-    .ac-hero h1 .badge { font-size: 0.62rem; background: #a29bfe; color: #fff; padding: 4px 10px; border-radius: 12px; letter-spacing: 0.5px; }
+    .ac-hero h1 { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 2.9rem); font-weight: 400; letter-spacing: -0.015em; line-height: 1.1; margin-bottom: 8px; display: flex; align-items: center; gap: 14px; }
+    .ac-hero h1 .badge { font-family: var(--font-mono); font-size: 0.8rem; font-weight: 400; color: var(--text-secondary); letter-spacing: 0.02em; }
+    .ac-hero h1 > i { display: none; }
     .ac-hero p { color: var(--text-secondary); font-size: 1rem; max-width: 760px; line-height: 1.7; }
     .ac-stats { display: flex; gap: 24px; margin-top: 18px; flex-wrap: wrap; }
     .ac-stat { font-size: 0.9rem; color: var(--text-secondary); }
-    .ac-stat strong { font-family: var(--font-display); color: #a29bfe; font-size: 1.3rem; font-weight: 800; margin-right: 6px; }
+    .ac-stat strong { font-family: var(--font-display); color: var(--text-primary); font-size: 1.5rem; font-weight: 400; margin-right: 6px; }
 
     .ac-section { margin-bottom: 56px; }
     .ac-section h2 {
       font-family: var(--font-display);
       font-size: 1.5rem;
-      font-weight: 700;
+      font-weight: 400;
       margin-bottom: 18px;
       display: flex;
       align-items: center;
       gap: 12px;
     }
-    .ac-section h2 i { color: #a29bfe; }
+    .ac-section h2 i { display: none; }
     .ac-section h3.ac-subhead {
       font-family: var(--font-display);
       font-size: 1.05rem;
@@ -65,9 +64,9 @@
       grid-template-columns: 1fr auto;
     }
     .ac-card:hover {
-      border-color: rgba(162, 155, 254, 0.4);
+      border-color: rgba(var(--accent-rgb), 0.4);
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(162, 155, 254, 0.10);
+      box-shadow: 0 8px 24px rgba(var(--accent-rgb), 0.10);
     }
 
     .ac-logo {
@@ -90,24 +89,24 @@
     .ac-desc { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.55; }
     .ac-desc .ac-pill {
       display: inline-block; padding: 2px 8px; margin: 2px 4px 2px 0;
-      background: rgba(162, 155, 254, 0.12); color: #6c63ff;
+      background: rgba(var(--accent-rgb), 0.12); color: var(--accent);
       border-radius: 8px; font-size: 0.72rem; font-weight: 600;
       font-family: 'JetBrains Mono', monospace;
     }
-    .ac-date { color: #a29bfe; font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; white-space: nowrap; }
+    .ac-date { color: var(--accent); font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; white-space: nowrap; }
 
     .ac-note {
       padding: 14px 18px;
-      background: rgba(162, 155, 254, 0.06);
-      border-left: 4px solid #a29bfe;
+      background: rgba(var(--accent-rgb), 0.06);
+      border-left: 4px solid var(--accent);
       border-radius: 0 10px 10px 0;
       font-size: 0.88rem;
       color: var(--text-secondary);
       line-height: 1.6;
       margin-bottom: 24px;
     }
-    .ac-note strong { color: #6c63ff; }
-    .ac-note code { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; background: rgba(162, 155, 254, 0.12); padding: 1px 6px; border-radius: 4px; color: #6c63ff; }
+    .ac-note strong { color: var(--accent); }
+    .ac-note code { font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; background: rgba(var(--accent-rgb), 0.12); padding: 1px 6px; border-radius: 4px; color: var(--accent); }
 
     @media (max-width: 700px) {
       .ac-card { grid-template-columns: 56px 1fr; gap: 14px; padding: 14px 16px; }
@@ -125,7 +124,7 @@
 
       <!-- Hero -->
       <section class="ac-hero">
-        <h1><i class="fas fa-trophy" style="color:#a29bfe"></i> Awards &amp; Certificates <span class="badge">2024 — 2026</span></h1>
+        <h1><i class="fas fa-trophy" style="color:var(--accent)"></i> Awards &amp; Certificates <span class="badge">2024 — 2026</span></h1>
         <p>Academic and paper awards, plus professional certifications earned through Coursera, Udemy, and other accredited programs. Specializations are bundled by their umbrella name and list every component course's credential ID.</p>
         <div class="ac-stats">
           <div class="ac-stat"><strong>8</strong>Awards &amp; Honors</div>

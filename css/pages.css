@@ -23,7 +23,7 @@
 .back-btn:hover {
   border-color: var(--accent);
   color: var(--accent-light);
-  background: rgba(108, 99, 255, 0.1);
+  background: rgba(var(--accent-rgb), 0.1);
 }
 
 /* Page Content */
@@ -48,12 +48,12 @@
 .page-content[data-theme="about"]      { --page-color: 245, 166, 35; }
 .page-content[data-theme="research"]   { --page-color: 0, 201, 167; }
 .page-content[data-theme="home"]       { --page-color: 233, 69, 96; }
-.page-content[data-theme="cv"]         { --page-color: 108, 99, 255; }
+.page-content[data-theme="cv"]         { --page-color: var(--accent-rgb); }
 .page-content[data-theme="contact"]    { --page-color: 247, 215, 148; }
 .page-content[data-theme="deadlines"]  { --page-color: 225, 48, 48; }
 .page-content[data-theme="journal"]    { --page-color: 0, 91, 93; }
 .page-content[data-theme="overleaf"]   { --page-color: 13, 110, 80; }
-.page-content[data-theme="awards"]     { --page-color: 162, 155, 254; }
+.page-content[data-theme="awards"]     { --page-color: var(--accent-rgb); }
 
 .page-icon {
   display: inline-flex;
@@ -62,8 +62,8 @@
   width: 56px;
   height: 56px;
   border-radius: 16px;
-  background: rgba(var(--page-color, 108, 99, 255), 0.1);
-  color: rgb(var(--page-color, 108, 99, 255));
+  background: rgba(var(--page-color, var(--accent-rgb)), 0.1);
+  color: rgb(var(--page-color, var(--accent-rgb)));
   font-size: 1.4rem;
   flex-shrink: 0;
 }
@@ -223,7 +223,7 @@
 }
 
 .photo-placeholder code {
-  background: rgba(108, 99, 255, 0.1);
+  background: rgba(var(--accent-rgb), 0.1);
   padding: 2px 8px;
   border-radius: 4px;
   font-size: 0.85rem;
@@ -324,8 +324,8 @@
 
 .video-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(108, 99, 255, 0.3);
-  box-shadow: 0 12px 32px rgba(108, 99, 255, 0.1);
+  border-color: rgba(var(--accent-rgb), 0.3);
+  box-shadow: 0 12px 32px rgba(var(--accent-rgb), 0.1);
 }
 
 .video-thumb {
@@ -381,7 +381,7 @@
 }
 
 .github-tag:hover {
-  background: rgba(108, 99, 255, 0.2) !important;
+  background: rgba(var(--accent-rgb), 0.2) !important;
 }
 
 .github-tag i {
@@ -428,8 +428,8 @@
 
 .travel-link-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(108, 99, 255, 0.3);
-  box-shadow: 0 12px 32px rgba(108, 99, 255, 0.1);
+  border-color: rgba(var(--accent-rgb), 0.3);
+  box-shadow: 0 12px 32px rgba(var(--accent-rgb), 0.1);
   color: var(--text-primary);
 }
 
@@ -470,12 +470,12 @@
   width: 56px;
   height: 56px;
   border-radius: 14px;
-  background: rgba(var(--page-color, 108, 99, 255), 0.1);
+  background: rgba(var(--page-color, var(--accent-rgb)), 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.4rem;
-  color: rgb(var(--page-color, 108, 99, 255));
+  color: rgb(var(--page-color, var(--accent-rgb)));
   flex-shrink: 0;
 }
 
@@ -504,7 +504,7 @@
 
 .edu-date {
   font-size: 0.85rem;
-  color: rgb(var(--page-color, 108, 99, 255));
+  color: rgb(var(--page-color, var(--accent-rgb)));
   opacity: 0.8;
   margin-top: 4px;
 }
@@ -533,7 +533,7 @@
 }
 
 .coursework-item:hover {
-  border-color: rgba(var(--page-color, 108, 99, 255), 0.3);
+  border-color: rgba(var(--page-color, var(--accent-rgb)), 0.3);
 }
 
 .coursework-item strong {
@@ -560,7 +560,7 @@
 }
 
 .skills-section-title i {
-  color: rgb(var(--page-color, 108, 99, 255));
+  color: rgb(var(--page-color, var(--accent-rgb)));
 }
 
 .skills-detail-grid {
@@ -579,7 +579,7 @@
 }
 
 .skill-detail-card:hover {
-  border-color: rgba(var(--page-color, 108, 99, 255), 0.3);
+  border-color: rgba(var(--page-color, var(--accent-rgb)), 0.3);
   transform: translateY(-4px);
 }
 
@@ -587,12 +587,12 @@
   width: 48px;
   height: 48px;
   border-radius: 12px;
-  background: rgba(var(--page-color, 108, 99, 255), 0.1);
+  background: rgba(var(--page-color, var(--accent-rgb)), 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.2rem;
-  color: rgb(var(--page-color, 108, 99, 255));
+  color: rgb(var(--page-color, var(--accent-rgb)));
   margin-bottom: 16px;
 }
 
@@ -633,7 +633,7 @@
 }
 
 .spec-card h4 i {
-  color: rgb(var(--page-color, 108, 99, 255));
+  color: rgb(var(--page-color, var(--accent-rgb)));
 }
 
 .spec-card ul {
@@ -655,27 +655,27 @@
 /* Page-themed buttons */
 /* Page-themed skill category overrides */
 .page-content[data-theme] .skill-category h3 i {
-  color: rgb(var(--page-color, 108, 99, 255));
+  color: rgb(var(--page-color, var(--accent-rgb)));
 }
 
 .page-content[data-theme] .skill-item {
-  background: rgba(var(--page-color, 108, 99, 255), 0.08);
-  border-color: rgba(var(--page-color, 108, 99, 255), 0.15);
+  background: rgba(var(--page-color, var(--accent-rgb)), 0.08);
+  border-color: rgba(var(--page-color, var(--accent-rgb)), 0.15);
 }
 
 .page-content[data-theme] .skill-item:hover {
-  background: rgba(var(--page-color, 108, 99, 255), 0.2);
-  border-color: rgb(var(--page-color, 108, 99, 255));
+  background: rgba(var(--page-color, var(--accent-rgb)), 0.2);
+  border-color: rgb(var(--page-color, var(--accent-rgb)));
 }
 
 /* Page-themed buttons */
 .page-content[data-theme] .btn-outline {
-  color: rgb(var(--page-color, 108, 99, 255));
-  border-color: rgb(var(--page-color, 108, 99, 255));
+  color: rgb(var(--page-color, var(--accent-rgb)));
+  border-color: rgb(var(--page-color, var(--accent-rgb)));
 }
 
 .page-content[data-theme] .btn-outline:hover {
-  background: rgb(var(--page-color, 108, 99, 255));
+  background: rgb(var(--page-color, var(--accent-rgb)));
   color: white;
 }
 
@@ -695,7 +695,7 @@
 }
 
 .exp-card:hover {
-  border-color: rgba(var(--page-color, 108, 99, 255), 0.2);
+  border-color: rgba(var(--page-color, var(--accent-rgb)), 0.2);
 }
 
 .exp-card-header {
@@ -709,12 +709,12 @@
   width: 52px;
   height: 52px;
   border-radius: 14px;
-  background: rgba(var(--page-color, 108, 99, 255), 0.1);
+  background: rgba(var(--page-color, var(--accent-rgb)), 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.3rem;
-  color: rgb(var(--page-color, 108, 99, 255));
+  color: rgb(var(--page-color, var(--accent-rgb)));
   flex-shrink: 0;
   overflow: hidden;
 }
@@ -722,7 +722,7 @@
 .exp-icon.exp-icon--img {
   background: #fff;
   padding: 6px;
-  border: 1px solid rgba(var(--page-color, 108, 99, 255), 0.15);
+  border: 1px solid rgba(var(--page-color, var(--accent-rgb)), 0.15);
 }
 
 .exp-icon.exp-icon--img.exp-icon--dark {
@@ -745,7 +745,7 @@
 
 .exp-duration {
   font-size: 0.85rem;
-  color: rgb(var(--page-color, 108, 99, 255));
+  color: rgb(var(--page-color, var(--accent-rgb)));
   opacity: 0.8;
   margin-bottom: 4px;
 }
@@ -767,11 +767,11 @@
 
 .exp-role-tag {
   padding: 6px 16px;
-  background: rgba(var(--page-color, 108, 99, 255), 0.08);
-  border: 1px solid rgba(var(--page-color, 108, 99, 255), 0.15);
+  background: rgba(var(--page-color, var(--accent-rgb)), 0.08);
+  border: 1px solid rgba(var(--page-color, var(--accent-rgb)), 0.15);
   border-radius: 50px;
   font-size: 0.85rem;
-  color: rgb(var(--page-color, 108, 99, 255));
+  color: rgb(var(--page-color, var(--accent-rgb)));
 }
 
 .exp-list {
@@ -799,7 +799,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: rgb(var(--page-color, 108, 99, 255));
+  background: rgb(var(--page-color, var(--accent-rgb)));
 }
 
 .exp-description {
@@ -854,7 +854,7 @@
 }
 
 /* Section color themes */
-.pupil-section[data-color="purple"]  { --sec: 108, 99, 255; }
+.pupil-section[data-color="purple"]  { --sec: var(--accent-rgb); }
 .pupil-section[data-color="red"]     { --sec: 233, 69, 96; }
 .pupil-section[data-color="teal"]    { --sec: 0, 201, 167; }
 .pupil-section[data-color="orange"]  { --sec: 245, 166, 35; }
@@ -1906,4 +1906,76 @@
   background: rgba(var(--page-color, 255, 107, 107), 0.15);
   transform: translateX(2px);
   color: rgb(var(--page-color, 255, 107, 107));
+}
+
+/* =====================================================================
+   Restraint layer (2026 redesign)
+   One accent instead of a color per page, square-ish corners, no hover
+   lifts or glows. Placed last so it also wins over page-level <style>.
+   ===================================================================== */
+.page-content[data-theme] { --page-color: var(--accent-rgb); }
+.pupil-section[data-color] { --sec: var(--accent-rgb); }
+.category-dot { background: var(--accent) !important; }
+
+.page-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(2rem, 5vw, 2.9rem);
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+}
+.page-icon:not(.page-icon--img) { display: none; }
+.page-icon--img { width: 44px; height: 44px; border-radius: var(--radius); }
+.page-subtitle {
+  padding-left: 0;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border);
+}
+.page-content h2, .page-content h3 { letter-spacing: -0.005em; }
+
+.back-btn {
+  left: 72px;
+  top: 20px;
+  padding: 0 14px;
+  height: 40px;
+  border-radius: var(--radius);
+  backdrop-filter: none;
+  background: var(--hamburger-bg);
+  font-size: 0.85rem;
+}
+.back-btn:hover { background: var(--hamburger-bg); border-color: var(--border-strong); color: var(--text-primary); }
+
+.page-content [class*="card"],
+.page-content [class*="-block"],
+.page-content [class*="icon"],
+.page-content [class*="tag"],
+.page-content [class*="-btn"],
+.page-content .photo-grid img,
+.page-content .photo-placeholder,
+.page-content .calendar-iframe,
+.research-hero,
+.research-banner {
+  border-radius: var(--radius);
+}
+.page-content [class*="card"],
+.page-content [class*="card"]:hover,
+.page-content .photo-grid img:hover,
+.page-content [class*="-btn"]:hover {
+  box-shadow: none;
+  transform: none;
+}
+.research-hero * { box-shadow: none !important; }
+
+/* Experience bullets: a plain list, not a stack of grey boxes */
+.exp-list { gap: 8px; }
+.exp-list li { background: none; border-radius: 0; padding: 0 0 0 18px; color: var(--text-primary); font-size: 0.95rem; }
+.exp-list li::before { left: 2px; top: 0.72em; width: 5px; height: 5px; background: var(--text-secondary); }
+.light-adjust .page-content [class*="card"] { box-shadow: none; }
+
+@media (max-width: 768px) {
+  .back-btn { left: 62px; top: 14px; }
 }

@@ -3,20 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sunjun Hwang | Profile</title>
+  <title>Sunjun Hwang</title>
+  <meta name="description" content="Sunjun Hwang, undergraduate researcher at Yonsei University's RAISE Lab, working on adversarial robustness, federated learning, and quantum machine learning.">
   <link rel="icon" type="image/png" href="assets/favicon.png">
-  <link rel="stylesheet" href="css/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <script defer src="https://cdn.jsdelivr.net/npm/d3-array@3/dist/d3-array.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/d3-geo@3/dist/d3-geo.min.js"></script>
 </head>
 <body>
 
-  <!-- ===== INTRO SPLASH ===== -->
-  <div class="intro" id="intro">
+  <!-- Intro splash: once per session, skipped for reduced motion -->
+  <div class="intro" id="intro" aria-hidden="true">
     <div class="intro-content">
       <svg class="intro-svg" viewBox="0 0 600 320">
         <text class="intro-line line-1" x="300" y="70">Sunjun</text>
@@ -27,290 +28,248 @@
     </div>
   </div>
 
-  <!-- ===== MAIN CONTENT ===== -->
   <main class="main-content" id="mainContent">
 
-    <!-- Hero Section -->
-    <section class="hero" id="hero">
-      <div class="hero-banner">
-        <img src="assets/Background.png" alt="" class="hero-banner-img">
-      </div>
-      <canvas id="particleCanvas"></canvas>
-      <div class="hero-content">
-        <div class="hero-greeting animate-in">Hello, I'm</div>
-        <h1 class="hero-name animate-in delay-1">
-          <span class="gradient-text">Sunjun Hwang</span>
-        </h1>
-        <p class="hero-tagline animate-in delay-2">AI & Quantum Computing Researcher</p>
-        <p class="hero-identity animate-in delay-2">Building Robust AI Systems that Work in the Real World</p>
-        <div class="hero-keywords animate-in delay-3">
-          <span class="hero-keyword">Quantum ML</span>
-          <span class="hero-keyword-sep">/</span>
-          <span class="hero-keyword">Trustworthy AI</span>
-          <span class="hero-keyword-sep">/</span>
-          <span class="hero-keyword">AI for Autonomy</span>
-        </div>
-        <div class="hero-stats animate-in delay-3">
-          <div class="stat">
-            <span class="stat-number" data-target="12">0</span><span class="stat-plus">+</span>
-            <span class="stat-label">Publications</span>
-          </div>
-          <div class="stat">
-            <span class="stat-number" data-target="9">0</span><span class="stat-plus">+</span>
-            <span class="stat-label">Active Projects</span>
-          </div>
-          <div class="stat">
-            <span class="stat-number" data-target="10">0</span><span class="stat-plus">+</span>
-            <span class="stat-label">Presentations</span>
-          </div>
-          <div class="stat">
-            <span class="stat-number" data-target="7">0</span><span class="stat-plus">+</span>
-            <span class="stat-label">Awards</span>
-          </div>
-        </div>
-        <div class="hero-cta animate-in delay-4">
-          <a href="#about" class="btn btn-primary">Explore My Work</a>
-          <a href="#contact" class="btn btn-outline">Get in Touch</a>
-        </div>
-      </div>
-      <div class="scroll-indicator animate-in delay-5">
-        <div class="mouse">
-          <div class="wheel"></div>
-        </div>
-        <span>Scroll Down</span>
-      </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="section about" id="about">
+    <!-- Masthead -->
+    <header class="masthead" id="hero">
       <div class="container">
-        <h2 class="section-title reveal">
-          <span class="section-number">01.</span> About Me
-        </h2>
-        <div class="about-grid">
-          <div class="about-image reveal reveal-left">
-            <div class="image-frame">
-              <img src="assets/Profile.jpg" alt="Sunjun Hwang" class="profile-photo">
-              <div class="image-decoration"></div>
-            </div>
-            <div class="about-links">
-              <a href="mailto:sunjun7559@gmail.com" class="about-link"><i class="fas fa-envelope"></i> sunjun7559@gmail.com</a>
-              <a href="https://www.yonsei.ac.kr/sites/en_sc/index.do" target="_blank" class="about-link"><i class="fas fa-graduation-cap"></i> BS Yonsei University</a>
-              <a href="https://www.sjhwangcv.com" target="_blank" class="about-link"><i class="fas fa-file-alt"></i> CV</a>
-              <a href="https://sjhwangresearch.com" target="_blank" class="about-link"><i class="fas fa-flask"></i> Current Research</a>
-              <a href="https://sjhwangpaper.com/" target="_blank" class="about-link"><i class="fas fa-book-open"></i> Paper Review</a>
-              <a href="pages/pupil.html" class="about-link"><i class="fas fa-user-graduate"></i> Pupil</a>
-              <a href="pages/co-researcher.html" class="about-link"><i class="fas fa-users"></i> Co-Researcher</a>
-            </div>
-          </div>
-          <div class="about-text reveal reveal-right">
-            <p class="about-intro">
-              I'm a researcher passionate about pushing the boundaries of
-              <strong>Artificial Intelligence</strong> and <strong>Quantum Computing</strong>
-              at Yonsei University's RAISE Lab.
+        <figure class="masthead-banner">
+          <img src="assets/Background.png" alt="Banner: Sunjun Hwang, AI &amp; Quantum Computing" width="2000" height="600">
+        </figure>
+      </div>
+      <div class="container masthead-grid">
+        <div class="masthead-text">
+          <p class="eyebrow">Yonsei University · RAISE Lab &nbsp;/&nbsp; Vancouver, 2026–27</p>
+          <h1 class="masthead-name">Sunjun Hwang</h1>
+          <p class="masthead-role">AI &amp; quantum computing researcher</p>
+          <p class="masthead-lede">
+            I work on making machine learning hold up outside the lab: adversarial robustness,
+            federated learning across heterogeneous clients, and quantum machine learning,
+            with applications in autonomous driving, wireless communication, and medical data.
+          </p>
+
+          <dl class="facts">
+            <div><dt>Publications</dt><dd>12+</dd></div>
+            <div><dt>Active projects</dt><dd>9+</dd></div>
+            <div><dt>Presentations</dt><dd>10+</dd></div>
+            <div><dt>Awards</dt><dd>7+</dd></div>
+          </dl>
+
+          <ul class="link-row">
+            <li><a href="https://www.sjhwangcv.com" target="_blank" rel="noopener">CV</a></li>
+            <li><a href="https://sjhwangresearch.com" target="_blank" rel="noopener">Research portal</a></li>
+            <li><a href="https://sjhwangpaper.com/" target="_blank" rel="noopener">Paper reviews</a></li>
+            <li><a href="https://scholar.google.com/citations?user=6X2EVE0AAAAJ" target="_blank" rel="noopener">Google Scholar</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+
+        <figure class="masthead-photo">
+          <img src="assets/Profile-portrait.jpg" alt="Portrait of Sunjun Hwang" width="560" height="700">
+        </figure>
+      </div>
+    </header>
+
+    <!-- About -->
+    <section class="section" id="about">
+      <div class="container rail">
+        <h2 class="rail-label">About</h2>
+        <div class="rail-body reveal">
+          <div class="prose">
+            <p>
+              I am an undergraduate researcher at Yonsei University's RAISE Lab, working on
+              artificial intelligence and quantum computing.
             </p>
-
-            <div class="about-story">
-              <div class="story-block">
-                <h3><i class="fas fa-compass"></i> Research Direction</h3>
-                <p>I focus on making AI systems more <strong>robust and reliable</strong> — from quantum-enhanced machine learning to safety-critical applications in autonomous driving and semiconductor design.</p>
-              </div>
-              <div class="story-block">
-                <h3><i class="fas fa-crosshairs"></i> Problems I Care About</h3>
-                <p>How do we build AI that doesn't break under uncertainty? How can quantum computing accelerate what classical methods can't? These are the questions that drive my work every day.</p>
-              </div>
-              <div class="story-block">
-                <h3><i class="fas fa-rocket"></i> What's Next</h3>
-                <p>Pursuing graduate research at the intersection of <strong>quantum computing and trustworthy AI</strong>, aiming to bridge theory and real-world deployment.</p>
-              </div>
-            </div>
-
-            <div class="research-areas">
-              <div class="area-tags">
-                <span class="tag"><span class="tag-hash">#</span>Quantum_Computing</span>
-                <span class="tag"><span class="tag-hash">#</span>Artificial_Intelligence</span>
-                <span class="tag"><span class="tag-hash">#</span>AI_Semiconductor</span>
-                <span class="tag"><span class="tag-hash">#</span>Autonomous_Driving</span>
-                <span class="tag"><span class="tag-hash">#</span>AI_Security</span>
-                <span class="tag"><span class="tag-hash">#</span>Medical_AI</span>
-              </div>
-            </div>
+            <p>
+              <span class="run-in">Research direction.</span>
+              Making AI systems robust and reliable, from quantum-enhanced machine learning to
+              safety-critical applications in autonomous driving and semiconductor design.
+            </p>
+            <p>
+              <span class="run-in">Questions I care about.</span>
+              How do we build AI that doesn't break under uncertainty? Where can quantum computing
+              do what classical methods can't?
+            </p>
+            <p>
+              <span class="run-in">Next.</span>
+              Graduate research at the intersection of quantum computing and trustworthy AI,
+              connecting theory with real-world deployment.
+            </p>
           </div>
-        </div>
-        <blockquote class="quote reveal">
-          <p>"When something is important enough, you do it even if the odds are not in your favor."</p>
-          <cite>— Elon Musk</cite>
-        </blockquote>
-      </div>
-    </section>
 
-    <!-- Research Section -->
-    <section class="section research" id="research">
-      <div class="container">
-        <h2 class="section-title reveal">
-          <span class="section-number">02.</span> Research Areas
-        </h2>
-        <div class="research-grid">
-          <a href="pages/research/quantum.html" class="research-card reveal">
-            <div class="card-icon card-icon--img"><img src="assets/research/quantum.png" alt="Quantum Computer"></div>
-            <h3>Quantum Computer</h3>
-            <p>Exploring quantum algorithms and hybrid quantum-classical systems for real-world applications.</p>
-            <div class="card-hover-line"></div>
-          </a>
-          <a href="pages/research/ai.html" class="research-card reveal">
-            <div class="card-icon card-icon--img"><img src="assets/research/ai.png" alt="Artificial Intelligence"></div>
-            <h3>Artificial Intelligence</h3>
-            <p>Deep learning, federated learning, and adversarial robustness in neural networks.</p>
-            <div class="card-hover-line"></div>
-          </a>
-          <a href="pages/research/autonomous.html" class="research-card reveal">
-            <div class="card-icon card-icon--img"><img src="assets/research/autonomous.png" alt="Autonomous Vehicle"></div>
-            <h3>Autonomous Vehicle</h3>
-            <p>Simulation and development of autonomous driving systems using CARLA and reinforcement learning.</p>
-            <div class="card-hover-line"></div>
-          </a>
-          <a href="pages/research/security.html" class="research-card reveal">
-            <div class="card-icon card-icon--img"><img src="assets/research/security.png" alt="AI Security"></div>
-            <h3>AI Security</h3>
-            <p>Adversarial attacks, defense mechanisms, and robustness analysis for AI systems.</p>
-            <div class="card-hover-line"></div>
-          </a>
-          <a href="pages/research/tda-medical.html" class="research-card reveal">
-            <div class="card-icon card-icon--img"><img src="assets/research/tda-medical.png" alt="TDA for Medical Data"></div>
-            <h3>TDA for Medical Data</h3>
-            <p>Topological Data Analysis applied to BRCA breast cancer genomic data to discover novel biomarkers and hidden topological structures.</p>
-            <div class="card-hover-line"></div>
-          </a>
-          <a href="pages/research/computer-systems.html" class="research-card reveal">
-            <div class="card-icon card-icon--img"><img src="assets/research/computer-systems.png" alt="Computer Systems"></div>
-            <h3>Computer Systems</h3>
-            <p>The four classical pillars of computer systems — compilers, computer architecture, operating systems, and databases — and how they interact in modern AI workloads.</p>
-            <div class="card-hover-line"></div>
-          </a>
+          <dl class="meta-list">
+            <div><dt>Education</dt><dd><a href="https://www.yonsei.ac.kr/sites/en_sc/index.do" target="_blank" rel="noopener">BS, Yonsei University</a></dd></div>
+            <div><dt>Areas</dt><dd>Quantum computing · Artificial intelligence · AI semiconductors · Autonomous driving · AI security · Medical AI</dd></div>
+            <div><dt>People</dt><dd><a href="pages/pupil.html">Pupils I mentor</a> &nbsp;·&nbsp; <a href="pages/co-researcher.html">Co-researchers</a></dd></div>
+          </dl>
+
+          <blockquote class="quote epigraph">
+            <p>"When something is important enough, you do it even if the odds are not in your favor."</p>
+            <cite>Elon Musk</cite>
+          </blockquote>
         </div>
       </div>
     </section>
 
-    <!-- News Section continues below -->
+    <!-- Research -->
+    <section class="section" id="research">
+      <div class="container rail">
+        <h2 class="rail-label">Research</h2>
+        <div class="rail-body reveal">
+          <ul class="index-list">
+            <li><a href="pages/research/quantum.html">
+              <span class="index-title">Quantum computing</span>
+              <span class="index-desc">Quantum algorithms and hybrid quantum-classical systems for real-world applications.</span>
+              <span class="index-arrow" aria-hidden="true">&rarr;</span>
+            </a></li>
+            <li><a href="pages/research/ai.html">
+              <span class="index-title">Artificial intelligence</span>
+              <span class="index-desc">Deep learning, federated learning, and adversarial robustness in neural networks.</span>
+              <span class="index-arrow" aria-hidden="true">&rarr;</span>
+            </a></li>
+            <li><a href="pages/research/autonomous.html">
+              <span class="index-title">Autonomous vehicles</span>
+              <span class="index-desc">Simulation and development of autonomous driving systems using CARLA and reinforcement learning.</span>
+              <span class="index-arrow" aria-hidden="true">&rarr;</span>
+            </a></li>
+            <li><a href="pages/research/security.html">
+              <span class="index-title">AI security</span>
+              <span class="index-desc">Adversarial attacks, defense mechanisms, and robustness analysis for AI systems.</span>
+              <span class="index-arrow" aria-hidden="true">&rarr;</span>
+            </a></li>
+            <li><a href="pages/research/tda-medical.html">
+              <span class="index-title">TDA for medical data</span>
+              <span class="index-desc">Topological data analysis of BRCA breast cancer genomic data to find biomarkers and hidden topological structure.</span>
+              <span class="index-arrow" aria-hidden="true">&rarr;</span>
+            </a></li>
+            <li><a href="pages/research/computer-systems.html">
+              <span class="index-title">Computer systems</span>
+              <span class="index-desc">Compilers, computer architecture, operating systems, and databases, and how they interact in modern AI workloads.</span>
+              <span class="index-arrow" aria-hidden="true">&rarr;</span>
+            </a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
 
-    <!-- News Section -->
-    <section class="section news" id="news">
-      <div class="container">
-        <h2 class="section-title reveal">
-          <span class="section-number">03.</span> News
-        </h2>
-        <div class="timeline reveal">
-          <div class="timeline-year">
-            <button class="year-toggle" data-year="2026">
-              <span>2026</span>
-              <i class="fas fa-chevron-down"></i>
-            </button>
-            <div class="year-content">
+    <!-- News -->
+    <section class="section" id="news">
+      <div class="container rail">
+        <h2 class="rail-label">News</h2>
+        <div class="rail-body reveal">
+          <div class="timeline">
+            <div class="timeline-year">
+              <button class="year-toggle" data-year="2026" aria-expanded="false">
+                <span>2026</span>
+                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+              </button>
+              <div class="year-content">
               <div class="timeline-item">
-                <div class="timeline-dot"></div>
+                <div class="timeline-meta"><time class="timeline-date">Sep 2026</time><span class="pub-type pub-type--conf">Conference</span></div>
                 <div class="timeline-text">
-                  <span class="timeline-date">September 2026</span>
-                  <p><span class="pub-type pub-type--conf">Conference</span>Our Paper, "CI-FL: Cache-Inspired Federated Learning — Communication Reduction via Selective Update Forwarding" has been accepted to TrustFL-SIS 2026, co-located with IEEE ICDM 2026</p>
+                  <p class="news-title">CI-FL: Cache-Inspired Federated Learning — Communication Reduction via Selective Update Forwarding</p>
+                  <p class="news-venue">Accepted to TrustFL-SIS 2026, co-located with IEEE ICDM 2026</p>
                 </div>
               </div>
               <div class="timeline-item">
-                <div class="timeline-dot"></div>
+                <div class="timeline-meta"><time class="timeline-date">Jul 2026</time><span class="pub-type pub-type--conf">Conference</span></div>
                 <div class="timeline-text">
-                  <span class="timeline-date">July 2026</span>
-                  <p><span class="pub-type pub-type--conf">Conference</span>Our Paper, "Simple Pseudobulk Outperforms Topological and Quantum-Geometric Readouts of Single-Nucleus Chromatin and Transcriptomes for Donor-Level Alzheimer's Classification: A Rigorous Benchmark in a Powered Multiome Cohort" has been accepted to CKAIA 2026 (poster)</p>
+                  <p class="news-title">Simple Pseudobulk Outperforms Topological and Quantum-Geometric Readouts of Single-Nucleus Chromatin and Transcriptomes for Donor-Level Alzheimer's Classification: A Rigorous Benchmark in a Powered Multiome Cohort</p>
+                  <p class="news-venue">Accepted to CKAIA 2026 · Poster</p>
                 </div>
               </div>
               <div class="timeline-item">
-                <div class="timeline-dot"></div>
+                <div class="timeline-meta"><time class="timeline-date">Jun 2026</time><span class="pub-type pub-type--conf">Conference</span></div>
                 <div class="timeline-text">
-                  <span class="timeline-date">June 2026</span>
-                  <p><span class="pub-type pub-type--conf">Conference</span>Our Paper, "H2C: A Pan-Cancer Gene Panel Discovered via Persistent Homology in Topological Autoencoder Latent Space" has been accepted to IEEE COINS 2026</p>
+                  <p class="news-title">H2C: A Pan-Cancer Gene Panel Discovered via Persistent Homology in Topological Autoencoder Latent Space</p>
+                  <p class="news-venue">Accepted to IEEE COINS 2026</p>
                 </div>
               </div>
               <div class="timeline-item">
-                <div class="timeline-dot"></div>
+                <div class="timeline-meta"><time class="timeline-date">May 2026</time><span class="pub-type pub-type--conf">Conference</span></div>
                 <div class="timeline-text">
-                  <span class="timeline-date">May 2026</span>
-                  <p><span class="pub-type pub-type--conf">Conference</span>Our Paper, "<a href="https://ieeexplore.ieee.org/abstract/document/11628794/" target="_blank">AdaFed: Adaptive Selective Aggregation for Heterogeneous Federated Learning in Autonomous Driving</a>" has been accepted to ICUFN 2026 — now available on IEEE Xplore</p>
+                  <p class="news-title"><a href="https://ieeexplore.ieee.org/abstract/document/11628794/" target="_blank">AdaFed: Adaptive Selective Aggregation for Heterogeneous Federated Learning in Autonomous Driving</a></p>
+                  <p class="news-venue">Accepted to ICUFN 2026 · Published in IEEE Xplore</p>
                 </div>
               </div>
               <div class="timeline-item">
-                <div class="timeline-dot"></div>
+                <div class="timeline-meta"><time class="timeline-date">Jan 2026</time><span class="pub-type pub-type--conf">Conference</span></div>
                 <div class="timeline-text">
-                  <span class="timeline-date">January 2026</span>
-                  <p><span class="pub-type pub-type--conf">Conference</span>Our Paper, "<a href="https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE12738597" target="_blank" rel="noopener">Functional Recovery of Deep Neural Networks via Logit-Based External Calibration</a>" has been accepted to KICS</p>
+                  <p class="news-title"><a href="https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE12738597" target="_blank" rel="noopener">Functional Recovery of Deep Neural Networks via Logit-Based External Calibration</a></p>
+                  <p class="news-venue">Accepted to KICS</p>
                 </div>
+              </div>
               </div>
             </div>
-          </div>
-          <div class="timeline-year">
-            <button class="year-toggle" data-year="2025">
-              <span>2025</span>
-              <i class="fas fa-chevron-down"></i>
-            </button>
-            <div class="year-content">
+            <div class="timeline-year">
+              <button class="year-toggle" data-year="2025" aria-expanded="false">
+                <span>2025</span>
+                <i class="fas fa-chevron-down" aria-hidden="true"></i>
+              </button>
+              <div class="year-content">
               <div class="timeline-item">
-                <div class="timeline-dot"></div>
+                <div class="timeline-meta"><time class="timeline-date">Dec 2025</time><span class="pub-type pub-type--conf">Conference</span></div>
                 <div class="timeline-text">
-                  <span class="timeline-date">December 2025</span>
-                  <p><span class="pub-type pub-type--conf">Conference</span>Our Paper, "<a href="https://ieeexplore.ieee.org/document/11454198/" target="_blank" rel="noopener">Adversarial Robustness Analysis of Deep Learning-Based Automatic Modulation Classification in Wireless Communication</a>" has been accepted to ICAIIC IEEE 2026</p>
+                  <p class="news-title"><a href="https://ieeexplore.ieee.org/document/11454198/" target="_blank" rel="noopener">Adversarial Robustness Analysis of Deep Learning-Based Automatic Modulation Classification in Wireless Communication</a></p>
+                  <p class="news-venue">Accepted to ICAIIC IEEE 2026</p>
                 </div>
               </div>
               <div class="timeline-item">
-                <div class="timeline-dot"></div>
+                <div class="timeline-meta"><time class="timeline-date">Dec 2025</time><span class="pub-type pub-type--conf">Conference</span></div>
                 <div class="timeline-text">
-                  <span class="timeline-date">December 2025</span>
-                  <p><span class="pub-type pub-type--conf">Conference</span>Our Paper, "Design and Implementation of an FPGA-Based Real-Time Voice Risk Detection System" has been accepted to KCS 2026</p>
+                  <p class="news-title">Design and Implementation of an FPGA-Based Real-Time Voice Risk Detection System</p>
+                  <p class="news-venue">Accepted to KCS 2026</p>
                 </div>
               </div>
               <div class="timeline-item">
-                <div class="timeline-dot"></div>
+                <div class="timeline-meta"><time class="timeline-date">Dec 2025</time><span class="pub-type pub-type--journal">Journal</span></div>
                 <div class="timeline-text">
-                  <span class="timeline-date">December 2025</span>
-                  <p><span class="pub-type pub-type--journal">Journal</span>Our Paper, "<a href="https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003304358" target="_blank" rel="noopener">Quantum-Secured Hybrid Communication System for Tactical Military Networks: Implementation and Performance Analysis of BB84 Protocol Based on Penny Lane</a>" has been accepted to JKICS 2026</p>
+                  <p class="news-title"><a href="https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART003304358" target="_blank" rel="noopener">Quantum-Secured Hybrid Communication System for Tactical Military Networks: Implementation and Performance Analysis of BB84 Protocol Based on Penny Lane</a></p>
+                  <p class="news-venue">Accepted to JKICS 2026</p>
                 </div>
               </div>
               <div class="timeline-item">
-                <div class="timeline-dot"></div>
+                <div class="timeline-meta"><time class="timeline-date">Nov 2025</time><span class="pub-type pub-type--journal">Journal</span></div>
                 <div class="timeline-text">
-                  <span class="timeline-date">November 2025</span>
-                  <p><span class="pub-type pub-type--journal">Journal</span>Our Paper, "<a href="https://doi.org/10.7472/jksii.2026.27.1.201" target="_blank" rel="noopener">Quantum Noise-based Adversarial Attack on Diffusion Models and Analysis of Defense Mechanisms</a>" has been accepted to KIIT-JICS 2026</p>
+                  <p class="news-title"><a href="https://doi.org/10.7472/jksii.2026.27.1.201" target="_blank" rel="noopener">Quantum Noise-based Adversarial Attack on Diffusion Models and Analysis of Defense Mechanisms</a></p>
+                  <p class="news-venue">Accepted to KIIT-JICS 2026</p>
                 </div>
               </div>
               <div class="timeline-item">
-                <div class="timeline-dot"></div>
+                <div class="timeline-meta"><time class="timeline-date">Nov 2025</time><span class="pub-type pub-type--conf">Conference</span></div>
                 <div class="timeline-text">
-                  <span class="timeline-date">November 2025</span>
-                  <p><span class="pub-type pub-type--conf">Conference</span>Our Paper, "<a href="https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE12545655" target="_blank" rel="noopener">Logit-based Knowledge Distillation for Heterogeneous Medical Image Federated Learning</a>" has been accepted to KIIT Conference</p>
+                  <p class="news-title"><a href="https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE12545655" target="_blank" rel="noopener">Logit-based Knowledge Distillation for Heterogeneous Medical Image Federated Learning</a></p>
+                  <p class="news-venue">Accepted to KIIT Conference</p>
                 </div>
               </div>
               <div class="timeline-item">
-                <div class="timeline-dot"></div>
+                <div class="timeline-meta"><time class="timeline-date">Oct 2025</time><span class="pub-type pub-type--conf">Conference</span></div>
                 <div class="timeline-text">
-                  <span class="timeline-date">October 2025</span>
-                  <p><span class="pub-type pub-type--conf">Conference</span>Our Paper, "<a href="https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE12567223" target="_blank" rel="noopener">Post-hoc Defense with Knowledge Distillation in Federated Learning: An Empirical Study against FGSM and PGD Attacks</a>" has been accepted to KICS Conference</p>
+                  <p class="news-title"><a href="https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE12567223" target="_blank" rel="noopener">Post-hoc Defense with Knowledge Distillation in Federated Learning: An Empirical Study against FGSM and PGD Attacks</a></p>
+                  <p class="news-venue">Accepted to KICS Conference</p>
                 </div>
               </div>
               <div class="timeline-item">
-                <div class="timeline-dot"></div>
+                <div class="timeline-meta"><time class="timeline-date">Sep 2025</time><span class="pub-type pub-type--conf">Conference</span></div>
                 <div class="timeline-text">
-                  <span class="timeline-date">September 2025</span>
-                  <p><span class="pub-type pub-type--conf">Conference</span>Our Paper, "Classification of Pneumonia in Chest X-rays Using a Hybrid Neural Network Based on a 3-Qubit Quantum Circuit" has been accepted to KSLI Conference</p>
+                  <p class="news-title">Classification of Pneumonia in Chest X-rays Using a Hybrid Neural Network Based on a 3-Qubit Quantum Circuit</p>
+                  <p class="news-venue">Accepted to KSLI Conference</p>
                 </div>
               </div>
               <div class="timeline-item">
-                <div class="timeline-dot"></div>
+                <div class="timeline-meta"><time class="timeline-date">Sep 2025</time><span class="pub-type pub-type--conf">Conference</span></div>
                 <div class="timeline-text">
-                  <span class="timeline-date">September 2025</span>
-                  <p><span class="pub-type pub-type--conf">Conference</span>Our Paper, "<a href="https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE12416201" target="_blank" rel="noopener">Performance Comparison of Deep Learning Models for Seismic Signal Denoising</a>" has been accepted to KIIT Conference</p>
+                  <p class="news-title"><a href="https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE12416201" target="_blank" rel="noopener">Performance Comparison of Deep Learning Models for Seismic Signal Denoising</a></p>
+                  <p class="news-venue">Accepted to KIIT Conference</p>
                 </div>
               </div>
               <div class="timeline-item">
-                <div class="timeline-dot"></div>
+                <div class="timeline-meta"><time class="timeline-date">May 2025</time><span class="pub-type pub-type--conf">Conference</span></div>
                 <div class="timeline-text">
-                  <span class="timeline-date">May 2025</span>
-                  <p><span class="pub-type pub-type--conf">Conference</span>Our Paper, "<a href="https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE12288796" target="_blank" rel="noopener">A Study on Robustness Enhancement and Multi-Adversarial Attacks in Vision Transformer-based Image Classification Models</a>" has been accepted to KIIT Conference</p>
+                  <p class="news-title"><a href="https://www.dbpia.co.kr/Journal/articleDetail?nodeId=NODE12288796" target="_blank" rel="noopener">A Study on Robustness Enhancement and Multi-Adversarial Attacks in Vision Transformer-based Image Classification Models</a></p>
+                  <p class="news-venue">Accepted to KIIT Conference</p>
                 </div>
+              </div>
               </div>
             </div>
           </div>
@@ -318,58 +277,44 @@
       </div>
     </section>
 
-    <!-- Contact / Footer -->
-    <section class="section contact" id="contact">
-      <div class="container">
-        <h2 class="section-title reveal">
-          <span class="section-number">04.</span> Get in Touch
-        </h2>
-        <p class="contact-text reveal">
-          If you are interested in quantum computing technology, computer vision technology,
-          deep learning technology, or web programming, please feel free to contact me.
-        </p>
-        <div class="contact-methods reveal">
-          <a href="mailto:sunjun7559@gmail.com" class="contact-method" aria-label="Email (Gmail)"><i class="fas fa-envelope"></i>Gmail</a>
-          <a href="mailto:sunjun7559012@yonsei.ac.kr" class="contact-method" aria-label="Yonsei University email"><i class="fas fa-graduation-cap"></i>Yonsei</a>
-          <a href="mailto:ve163096@ilsceducation.com" class="contact-method" aria-label="ILSC email"><i class="fas fa-school"></i>ILSC</a>
-          <a href="https://wa.me/821082407559" target="_blank" class="contact-method" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i>WhatsApp</a>
+    <!-- Contact -->
+    <section class="section" id="contact">
+      <div class="container rail">
+        <h2 class="rail-label">Contact</h2>
+        <div class="rail-body reveal">
+          <p class="section-lead">Get in touch about quantum computing, computer vision, deep learning, or web programming.</p>
+          <ul class="contact-list">
+            <li><a href="mailto:sunjun7559@gmail.com">Gmail <span>Personal</span></a></li>
+            <li><a href="mailto:sunjun7559012@yonsei.ac.kr">Yonsei <span>University</span></a></li>
+            <li><a href="mailto:ve163096@ilsceducation.com">ILSC <span>Vancouver</span></a></li>
+            <li><a href="https://wa.me/821082407559" target="_blank" rel="noopener">WhatsApp <span>Message</span></a></li>
+          </ul>
+          <p class="contact-note">Supported by Yonsei University, RAISE Lab<br>Supported by ILSC Language Schools, Vancouver</p>
         </div>
-        <p class="contact-lab reveal">Supported by Yonsei University, RAISE Lab<br>Supported by ILSC Language Schools, Vancouver</p>
       </div>
     </section>
 
-    <!-- Where I Am Section -->
-    <section class="section location" id="location">
-      <div class="container">
-        <h2 class="section-title reveal">
-          <span class="section-number">05.</span> Where I Am
-        </h2>
-        <div class="location-card reveal">
+    <!-- Location -->
+    <section class="section" id="location">
+      <div class="container rail">
+        <h2 class="rail-label">Where I am</h2>
+        <div class="rail-body reveal location-grid">
           <div class="location-visual">
-            <span class="hud-corner tl"></span>
-            <span class="hud-corner tr"></span>
-            <span class="hud-corner bl"></span>
-            <span class="hud-corner br"></span>
-            <span class="hud-tag"><span class="lock-dot">◉</span> LOCATION LOCKED · DRAG · ZOOM</span>
-            <canvas id="globeCanvas" class="location-canvas" role="img" aria-label="Interactive globe — drag to rotate; marker pinned on ILSC Vancouver"></canvas>
+            <canvas id="globeCanvas" class="location-canvas" role="img" aria-label="Globe with a marker on Vancouver. Drag to rotate, scroll or pinch to zoom."></canvas>
+            <p class="location-hint">Drag to rotate · scroll to zoom</p>
           </div>
-
-          <div class="location-info">
-            <span class="location-status"><span class="live-dot"></span> Incoming · Fall 2026</span>
+          <div>
             <h3 class="location-place">Vancouver, Canada</h3>
-            <div class="location-lab"><i class="fas fa-school"></i> ILSC Vancouver — Language Campus</div>
             <p class="location-desc">
-              From September 2026, I'll be based in downtown Vancouver, studying at ILSC Vancouver
-              while continuing my research collaborations remotely. New city, same trajectory —
-              building robust AI systems, now from the Pacific Northwest.
+              Since September 2026 I have been based in downtown Vancouver, studying at
+              ILSC Vancouver while continuing my research collaborations remotely.
             </p>
-            <div class="location-meta">
-              <div class="location-chip"><span class="chip-key"><i class="fas fa-satellite-dish"></i> Status</span><span class="chip-mono">INCOMING</span></div>
-              <div class="location-chip"><span class="chip-key"><i class="fas fa-plane-arrival"></i> Arrival</span><span class="chip-mono">SEP 2026</span></div>
-              <div class="location-chip"><span class="chip-key"><i class="fas fa-location-crosshairs"></i> Coordinates</span><span class="chip-mono">49.28°N · 123.11°W</span></div>
-              <div class="location-chip"><span class="chip-key"><i class="fas fa-clock"></i> Timezone</span><span class="chip-mono">PST · UTC−8</span></div>
-              <div class="location-chip"><span class="chip-key"><i class="fas fa-map-pin"></i> Campus</span><span class="chip-mono">555 RICHARDS ST</span></div>
-            </div>
+            <dl class="meta-list">
+              <div><dt>Campus</dt><dd>ILSC Vancouver, 555 Richards St</dd></div>
+              <div><dt>Since</dt><dd>September 2026</dd></div>
+              <div><dt>Coordinates</dt><dd>49.28°N, 123.11°W</dd></div>
+              <div><dt>Time zone</dt><dd>Pacific (UTC−8)</dd></div>
+            </dl>
           </div>
         </div>
       </div>
@@ -377,15 +322,16 @@
 
     <footer class="footer">
       <div class="social-links">
-        <a href="https://scholar.google.com/citations?user=6X2EVE0AAAAJ" target="_blank" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
-        <a href="https://github.com/justinbrianhwang" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-        <a href="https://www.linkedin.com/in/sunjunhwang/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-        <a href="https://www.instagram.com/jun_bri0123/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://scholar.google.com/citations?user=6X2EVE0AAAAJ" target="_blank" rel="noopener" aria-label="Google Scholar"><i class="fas fa-graduation-cap"></i></a>
+        <a href="https://github.com/justinbrianhwang" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://www.linkedin.com/in/sunjunhwang/" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        <a href="https://www.instagram.com/jun_bri0123/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
         <a href="mailto:sunjun7559@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
-        <a href="https://www.youtube.com/@sjquantumprof" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-        <a href="https://orcid.org/0009-0007-5173-2876" target="_blank" aria-label="ORCID"><i class="fab fa-orcid"></i></a>
+        <a href="https://www.youtube.com/@sjquantumprof" target="_blank" rel="noopener" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+        <a href="https://medium.com/@sunjun7559" target="_blank" rel="noopener" aria-label="Medium"><i class="fab fa-medium"></i></a>
+        <a href="https://orcid.org/0009-0007-5173-2876" target="_blank" rel="noopener" aria-label="ORCID"><i class="fab fa-orcid"></i></a>
       </div>
-      <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+      <p>&copy; 2026 Sunjun Hwang</p>
     </footer>
 
   </main>
@@ -394,15 +340,16 @@
   <script src="js/sidebar.js"></script>
   <script src="js/script.js"></script>
   <script>
-  /* Interactive drag-to-spin globe — real coastlines via d3-geo orthographic projection */
+  /* Drag-to-spin globe: real coastlines via d3-geo, colors from the page's design tokens */
   (function () {
     const canvas = document.getElementById('globeCanvas');
     if (!canvas) return;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     function start() {
       if (!window.d3 || !d3.geoOrthographic) { return setTimeout(start, 120); }
       const ctx = canvas.getContext('2d');
       const DPR = Math.min(window.devicePixelRatio || 1, 2);
-      const SIZE = 260, cx = SIZE / 2, cy = SIZE / 2, R = SIZE / 2 - 6;
+      const SIZE = 260, cx = SIZE / 2, cy = SIZE / 2, R = SIZE / 2 - 2;
       canvas.width = SIZE * DPR; canvas.height = SIZE * DPR;
       ctx.scale(DPR, DPR);
 
@@ -418,6 +365,21 @@
       const clampZoom = z => Math.max(MINZ, Math.min(MAXZ, z));
       const twoDist = () => { const a = [...pts.values()]; return Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y); };
 
+      let C = {};
+      const readColors = () => {
+        const s = getComputedStyle(document.documentElement);
+        C = {
+          ocean: s.getPropertyValue('--bg-secondary').trim(),
+          line: s.getPropertyValue('--border').trim(),
+          rim: s.getPropertyValue('--border-strong').trim(),
+          land: s.getPropertyValue('--text-secondary').trim(),
+          accent: s.getPropertyValue('--accent').trim(),
+          accentRgb: s.getPropertyValue('--accent-rgb').trim()
+        };
+      };
+      readColors();
+      new MutationObserver(readColors).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
       fetch('assets/land-110m.json').then(r => r.json()).then(d => { land = d; }).catch(() => {});
 
       const visible = pt => { const c = projection.rotate(); return d3.geoDistance(pt, [-c[0], -c[1]]) < Math.PI / 2; };
@@ -425,30 +387,24 @@
       function draw(t) {
         projection.scale(R * zoom).rotate([lambda, phi]);
         ctx.clearRect(0, 0, SIZE, SIZE);
-        // ocean
-        const og = ctx.createRadialGradient(cx - R * 0.3, cy - R * 0.35, R * 0.2, cx, cy, R);
-        og.addColorStop(0, '#17172f'); og.addColorStop(1, '#0a0a14');
-        ctx.beginPath(); path({ type: 'Sphere' }); ctx.fillStyle = og; ctx.fill();
-        // graticule
-        ctx.beginPath(); path(graticule); ctx.lineWidth = 0.5; ctx.strokeStyle = 'rgba(124,116,255,0.13)'; ctx.stroke();
-        // land
+        ctx.beginPath(); path({ type: 'Sphere' }); ctx.fillStyle = C.ocean; ctx.fill();
+        ctx.beginPath(); path(graticule); ctx.lineWidth = 0.5; ctx.strokeStyle = C.line; ctx.stroke();
         if (land) {
           ctx.beginPath(); path(land);
-          ctx.fillStyle = 'rgba(124,116,255,0.32)'; ctx.fill();
-          ctx.lineWidth = 0.6; ctx.strokeStyle = 'rgba(155,147,255,0.6)'; ctx.stroke();
+          ctx.globalAlpha = 0.35; ctx.fillStyle = C.land; ctx.fill(); ctx.globalAlpha = 1;
+          ctx.lineWidth = 0.5; ctx.strokeStyle = C.rim; ctx.stroke();
         }
-        // limb darkening
-        const eg = ctx.createRadialGradient(cx, cy, R * 0.62, cx, cy, R);
-        eg.addColorStop(0, 'rgba(0,0,0,0)'); eg.addColorStop(1, 'rgba(4,4,10,0.5)');
-        ctx.beginPath(); path({ type: 'Sphere' }); ctx.fillStyle = eg; ctx.fill();
-        // Vancouver marker
+        ctx.beginPath(); path({ type: 'Sphere' }); ctx.lineWidth = 1; ctx.strokeStyle = C.rim; ctx.stroke();
         if (visible(VAN)) {
-          const p = projection(VAN), pulse = (Math.sin(t / 400) + 1) / 2;
-          ctx.beginPath(); ctx.arc(p[0], p[1], 4 + pulse * 7, 0, 6.2832);
-          ctx.strokeStyle = 'rgba(233,69,96,' + (0.55 - pulse * 0.45) + ')'; ctx.lineWidth = 1.5; ctx.stroke();
-          ctx.beginPath(); ctx.arc(p[0], p[1], 3.2, 0, 6.2832); ctx.fillStyle = '#e94560'; ctx.fill();
+          const p = projection(VAN);
+          if (!reduceMotion) {
+            const pulse = (Math.sin(t / 500) + 1) / 2;
+            ctx.beginPath(); ctx.arc(p[0], p[1], 4 + pulse * 6, 0, 6.2832);
+            ctx.strokeStyle = 'rgba(' + C.accentRgb + ',' + (0.5 - pulse * 0.45) + ')'; ctx.lineWidth = 1; ctx.stroke();
+          }
+          ctx.beginPath(); ctx.arc(p[0], p[1], 3, 0, 6.2832); ctx.fillStyle = C.accent; ctx.fill();
         }
-        if (!dragging && ++idle > 40) lambda += 0.12;   // gentle auto-spin when idle
+        if (!reduceMotion && !dragging && ++idle > 40) lambda += 0.08;   // slow drift when idle
         requestAnimationFrame(draw);
       }
       requestAnimationFrame(draw);
@@ -468,12 +424,12 @@
         if (!pts.has(e.pointerId)) return;
         pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
         idle = 0;
-        if (pts.size >= 2) {                       // pinch-zoom
+        if (pts.size >= 2) {
           const d = twoDist();
           if (pinchDist) zoom = clampZoom(zoom * d / pinchDist);
           pinchDist = d; return;
         }
-        if (dragging) {                            // drag-rotate
+        if (dragging) {
           lambda += (e.clientX - lastX) * 0.35 / zoom;
           phi = clampPhi(phi - (e.clientY - lastY) * 0.35 / zoom);
           lastX = e.clientX; lastY = e.clientY;
