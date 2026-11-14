@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Robotics — Sunjun Hwang</title>
+  <link rel="icon" type="image/png" href="../../assets/favicon.png">
+  <link rel="stylesheet" href="../../css/style.css">
+  <link rel="stylesheet" href="../../css/pages.css">
+  <link rel="stylesheet" href="../../css/research-hero.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <script src="../../js/theme.js"></script>
+  <script src="../../js/sidebar.js"></script>
+
+  <a href="../../index.html#research" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Research</a>
+
+  <main class="page-content" data-theme="research">
+    <div class="container">
+      <div class="research-hero hero-systems">
+        <!-- The robot loop: sense -> perceive -> plan -> control -> act -->
+        <div class="sys-stack">
+          <div class="sys-layer sys-layer--app"><i class="fas fa-satellite-dish"></i><span>SENSE</span></div>
+          <div class="sys-layer sys-layer--cc"><i class="fas fa-eye"></i><span>PERCEIVE</span></div>
+          <div class="sys-layer sys-layer--db"><i class="fas fa-route"></i><span>PLAN</span></div>
+          <div class="sys-layer sys-layer--os"><i class="fas fa-sliders-h"></i><span>CONTROL</span></div>
+          <div class="sys-layer sys-layer--arch"><i class="fas fa-robot"></i><span>ACT</span></div>
+        </div>
+        <div class="sys-bits">q = [0.12, -0.84, 1.57, 0.00, 0.31, -1.05]  τ = J(q)ᵀ F</div>
+        <div class="sys-bits">x_{t+1} = f(x_t, u_t)  ·  u_t = π(o_t)  ·  sim → real</div>
+      </div>
+      <h1 class="page-title">
+        <span class="page-icon page-icon--img"><img src="../../assets/research/robotics.png" alt="Robotics"></span>
+        Robotics
+      </h1>
+      <p class="page-subtitle">Motion Planning · Manipulation · Sim-to-Real · Multi-Robot Systems</p>
+
+      <figure class="research-banner">
+        <img src="../../assets/research/banners/robotics.png" alt="Robotics" onerror="this.parentNode.remove()">
+      </figure>
+
+      <div class="research-detail">
+
+        <section class="detail-section">
+          <h2>Overview</h2>
+          <p>Robotics research is about building systems that <strong>perceive, reason, and act</strong> in the physical world. Unlike a model that only has to be right on a test set, a robot has to be right in real time, under sensor noise, with hardware that drifts, and around people who do not behave like a simulator. That gap between the clean model and the messy world is what makes the field interesting.</p>
+          <p>Robotics is also where my other research threads meet. Computer vision supplies perception, reinforcement learning from my autonomous driving work supplies control policies, AI security asks what happens when a robot's inputs are attacked, and computer systems decides whether all of it can run on the onboard compute in time.</p>
+        </section>
+
+        <section class="detail-section">
+          <h2><i class="fas fa-route" style="color: var(--accent); margin-right: 8px;"></i>1. Motion Planning</h2>
+          <p>Motion planning answers how a robot gets from where it is to where it needs to be without hitting anything, and ideally in a way that is smooth, fast, and energy-efficient.</p>
+          <ul>
+            <li><strong>Sampling-based planners</strong> — RRT, RRT*, and PRM for high-dimensional configuration spaces such as 6- and 7-DoF arms.</li>
+            <li><strong>Trajectory optimization</strong> — CHOMP, TrajOpt, and model predictive control (MPC) that refine a path under dynamics and joint limits.</li>
+            <li><strong>Planning in dynamic environments</strong> — re-planning around moving obstacles and people, with safety margins that hold under uncertainty.</li>
+          </ul>
+        </section>
+
+        <section class="detail-section">
+          <h2><i class="fas fa-hand-paper" style="color: var(--accent); margin-right: 8px;"></i>2. Manipulation</h2>
+          <p>Manipulation is the hard part of making robots useful: grasping and moving objects that vary in shape, weight, and friction.</p>
+          <ul>
+            <li><strong>Grasp planning</strong> — analytic and learned grasp synthesis from point clouds and RGB-D images.</li>
+            <li><strong>Contact-rich control</strong> — force/torque feedback, impedance control, and tactile sensing for tasks like insertion and assembly.</li>
+            <li><strong>Learning from demonstration</strong> — imitation learning and diffusion policies that turn a handful of human demonstrations into a reusable skill.</li>
+            <li><strong>Vision-language-action models</strong> — robot policies that take a camera image and a natural-language instruction and output actions.</li>
+          </ul>
+        </section>
+
+        <section class="detail-section">
+          <h2><i class="fas fa-cubes" style="color: var(--accent); margin-right: 8px;"></i>3. Sim-to-Real Transfer</h2>
+          <p>Training in simulation is fast, cheap, and safe; deploying the result on a physical robot usually is not. Closing this gap is one of the central problems in robot learning.</p>
+          <ul>
+            <li><strong>Domain randomization</strong> — varying textures, lighting, masses, and friction in simulation so a policy treats the real world as one more variation.</li>
+            <li><strong>System identification and adaptation</strong> — estimating real physical parameters and adapting the policy online.</li>
+            <li><strong>Physics simulators</strong> — MuJoCo, Isaac Sim, and PyBullet, and where their contact models differ from reality.</li>
+          </ul>
+        </section>
+
+        <section class="detail-section">
+          <h2><i class="fas fa-network-wired" style="color: var(--accent); margin-right: 8px;"></i>4. Multi-Robot Systems</h2>
+          <p>Many real tasks — warehouse logistics, search and rescue, inspection — need several robots working together rather than one robot doing everything.</p>
+          <ul>
+            <li><strong>Task allocation</strong> — deciding which robot does what, with auction- and optimization-based methods.</li>
+            <li><strong>Multi-agent reinforcement learning</strong> — learning coordinated behaviour under partial observability.</li>
+            <li><strong>Communication and robustness</strong> — keeping coordination working when links drop or a teammate fails or misbehaves.</li>
+          </ul>
+        </section>
+
+        <section class="detail-section">
+          <h2>Tools &amp; Frameworks</h2>
+          <div class="detail-tags">
+            <span class="tag">ROS 2</span>
+            <span class="tag">MoveIt</span>
+            <span class="tag">Gazebo</span>
+            <span class="tag">MuJoCo</span>
+            <span class="tag">Isaac Sim</span>
+            <span class="tag">PyBullet</span>
+            <span class="tag">OMPL</span>
+            <span class="tag">OpenCV</span>
+            <span class="tag">PyTorch</span>
+            <span class="tag">LeRobot</span>
+          </div>
+        </section>
+
+        <section class="detail-section">
+          <h2>Reading List</h2>
+
+          <h3 style="margin-top: 24px;">Foundations</h3>
+          <ul class="detail-list reading-list">
+            <li><a href="http://hades.mech.northwestern.edu/index.php/Modern_Robotics" target="_blank">Modern Robotics: Mechanics, Planning, and Control — Lynch &amp; Park (free online)</a></li>
+            <li><a href="http://www.probabilistic-robotics.org/" target="_blank">Probabilistic Robotics — Thrun, Burgard &amp; Fox</a></li>
+            <li><a href="http://lavalle.pl/planning/" target="_blank">Planning Algorithms — Steven M. LaValle (free online)</a></li>
+            <li><a href="https://manipulation.csail.mit.edu/" target="_blank">Robotic Manipulation — Russ Tedrake, MIT course notes</a></li>
+          </ul>
+
+          <h3 style="margin-top: 24px;">Motion Planning</h3>
+          <ul class="detail-list reading-list">
+            <li><a href="https://arxiv.org/abs/1105.1186" target="_blank">Sampling-based Algorithms for Optimal Motion Planning (RRT*) — Karaman &amp; Frazzoli, IJRR 2011</a></li>
+            <li><a href="https://www.ros.org/" target="_blank">ROS 2 Documentation</a></li>
+          </ul>
+
+          <h3 style="margin-top: 24px;">Robot Learning &amp; Sim-to-Real</h3>
+          <ul class="detail-list reading-list">
+            <li><a href="https://arxiv.org/abs/1703.06907" target="_blank">Domain Randomization for Transferring Deep Neural Networks from Simulation to the Real World — Tobin et al., IROS 2017</a></li>
+            <li><a href="https://arxiv.org/abs/1808.00177" target="_blank">Learning Dexterous In-Hand Manipulation — OpenAI, 2018</a></li>
+            <li><a href="https://arxiv.org/abs/2303.04137" target="_blank">Diffusion Policy: Visuomotor Policy Learning via Action Diffusion — Chi et al., RSS 2023</a></li>
+            <li><a href="https://arxiv.org/abs/2307.15818" target="_blank">RT-2: Vision-Language-Action Models — Brohan et al., 2023</a></li>
+          </ul>
+
+          <h3 style="margin-top: 24px;">Multi-Robot Systems</h3>
+          <ul class="detail-list reading-list">
+            <li><a href="https://arxiv.org/abs/1706.02275" target="_blank">Multi-Agent Actor-Critic for Mixed Cooperative-Competitive Environments (MADDPG) — Lowe et al., NeurIPS 2017</a></li>
+          </ul>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>
