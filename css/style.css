@@ -451,9 +451,6 @@ img { max-width: 100%; }
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  object-position: 50% 30%;
   border-radius: var(--radius);
   filter: saturate(0.9);
 }
