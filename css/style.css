@@ -534,6 +534,11 @@ img { max-width: 100%; }
 
 .epigraph { margin-top: var(--space-5); max-width: 52ch; }
 
+.edu-list { list-style: none; }
+.edu-list li { display: flex; justify-content: space-between; gap: var(--space-3); align-items: baseline; }
+.edu-list li + li { margin-top: 4px; }
+.edu-list span { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-secondary); white-space: nowrap; }
+
 /* Research index: rows, not cards */
 .index-list { list-style: none; border-top: 1px solid var(--border); }
 .index-list a {
