@@ -34,7 +34,7 @@ This site is the personal home page in a set of three sites:
 
 Each page has an overview, research directions, tools and a reading list.
 
-**Profile** — Introduce, The people who made me, Photos, Schedule, Skills & Tools & Education, Experience, Awards & Certificates, Pupils and Co-researchers, plus school pages under `pages/education/` and travel logs under `pages/traveling/`.
+**Profile** — Introduce, The people who made me, Schedule, Skills & Tools & Education, Experience, Awards & Certificates, Pupils and Co-researchers, plus school pages under `pages/education/`.
 
 **Research notes** — CS Deadlines, Conference Tier, CS Journals, Overleaf / LaTeX, Engineering Paper Writing, Open Problems and coursework notes.
 
@@ -52,7 +52,6 @@ Each page has an overview, research directions, tools and a reading list.
 ├── pages/
 │   ├── research/           # One page per research area
 │   ├── education/          # School pages
-│   ├── traveling/          # Travel logs
 │   └── *.html              # Profile and research-note pages
 ├── css/
 │   ├── style.css           # Design tokens and home page styles
