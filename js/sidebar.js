@@ -1,7 +1,8 @@
 // ===== Shared Sidebar Component =====
 // Detects if we're in a subpage (pages/) or root
-const isSubpage = window.location.pathname.includes('/pages/');
-const basePath = isSubpage ? '../' : '';
+// One '../' per folder below the site root (pages/x.html -> '../', pages/research/x.html -> '../../')
+const subPath = window.location.pathname.split('/pages/')[1];
+const basePath = subPath === undefined ? '' : '../'.repeat(subPath.split('/').length);
 
 function createSidebar() {
   // Hamburger button
