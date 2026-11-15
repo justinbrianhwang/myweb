@@ -764,19 +764,22 @@ img { max-width: 100%; }
 .marquee-track { display: flex; width: max-content; animation: marquee 60s linear infinite; }
 .marquee:hover .marquee-track { animation-play-state: paused; }
 .marquee-list { display: flex; gap: var(--space-3); margin: 0; padding: 0 var(--space-3) 0 0; list-style: none; }
-.marquee-list li {
-  flex: none; display: grid; place-items: center;
-  width: 128px; height: 64px; padding: 10px 14px;
-  background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+.marquee-list li { flex: none; display: grid; place-items: center; width: 128px; height: 64px; padding: 8px 12px; }
+/* Logos drawn as single-colour ink: white areas drop out, the rest takes the text colour */
+.marquee-list img {
+  display: block; width: auto; height: auto; max-width: 104px; max-height: 44px; object-fit: contain;
+  filter: url(#logo-ink) invert(var(--logo-invert, 1)); opacity: 0.72; transition: opacity var(--transition);
 }
-.marquee-list img { display: block; width: auto; height: auto; max-width: 100px; max-height: 42px; object-fit: contain; }
+.marquee-list li:hover img { opacity: 1; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .marquee-list img { --logo-invert: 0; } }
+:root[data-theme="light"] .marquee-list img { --logo-invert: 0; }
 @keyframes marquee { to { transform: translateX(-50%); } }
 @media (prefers-reduced-motion: reduce) {
   .marquee-track { animation: none; }
   .marquee { overflow-x: auto; }
 }
 @media (max-width: 768px) {
-  .marquee-list li { width: 108px; height: 56px; padding: 8px 12px; }
-  .marquee-list img { max-width: 84px; max-height: 38px; }
+  .marquee-list li { width: 108px; height: 56px; }
+  .marquee-list img { max-width: 88px; max-height: 38px; }
   .marquee-track { animation-duration: 45s; }
 }
