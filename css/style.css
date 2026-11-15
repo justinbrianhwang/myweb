@@ -746,7 +746,7 @@ img { max-width: 100%; }
 /* --- About: portrait on the right of the text --- */
 .about-body { display: grid; grid-template-columns: minmax(0, 1fr) 240px; column-gap: var(--space-6); align-items: start; }
 .about-body > * { grid-column: 1; }
-.about-photo { grid-column: 2; grid-row: 1 / span 3; margin: 0; position: sticky; top: 96px; }
+.about-photo { grid-column: 2; grid-row: 1 / span 3; margin: 0; }
 .about-photo img { display: block; width: 100%; height: auto; border-radius: var(--radius); filter: saturate(0.9); }
 @media (max-width: 900px) {
   .about-body { grid-template-columns: minmax(0, 1fr); }
