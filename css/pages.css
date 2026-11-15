@@ -1979,3 +1979,45 @@
 @media (max-width: 768px) {
   .back-btn { left: 62px; top: 14px; }
 }
+
+/* =====================================================================
+   Film banner: full-width background loop behind the page title, like the
+   home masthead. Type stays light in both themes so it reads over video.
+   ===================================================================== */
+.page-banner {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  width: 100vw;
+  margin: -100px 0 var(--space-6) calc(50% - 50vw);
+  min-height: 440px;
+  display: flex;
+  align-items: flex-end;
+  padding: 140px 0 var(--space-5);
+  background: #0b0c0e;
+  --text-primary: #e8e6e1;
+  --text-secondary: #b3b0aa;
+  --border: rgba(232, 230, 225, 0.16);
+  color: var(--text-primary);
+}
+.page-banner__media { position: absolute; inset: 0; z-index: -1; }
+.page-banner__media video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.page-banner__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(0deg, rgba(8, 9, 11, 0.9) 0%, rgba(8, 9, 11, 0.45) 55%, rgba(8, 9, 11, 0.55) 100%),
+    linear-gradient(90deg, rgba(8, 9, 11, 0.55) 0%, rgba(8, 9, 11, 0) 70%);
+}
+.page-banner__inner { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+.page-banner .page-title { color: var(--text-primary); }
+.page-banner .page-subtitle { margin-bottom: 0; padding-bottom: 0; border-bottom: none; color: var(--text-secondary); }
+.page-banner .page-title:last-child { margin-bottom: 0; }
+.page-banner .ac-hero { border-bottom: none; padding: 0; margin: 0; }
+.page-banner .page-icon--img { background: rgba(255, 255, 255, 0.9); }
+@media (max-width: 768px) {
+  .page-banner { min-height: 340px; padding: 110px 0 var(--space-4); margin-top: -80px; }
+  .page-banner__inner { padding: 0 20px; }
+}
+@media (max-width: 480px) { .page-banner { margin-top: -72px; } .page-banner__inner { padding: 0 16px; } }
