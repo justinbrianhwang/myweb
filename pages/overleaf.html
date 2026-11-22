@@ -332,6 +332,25 @@
       text-align: center;
       font-style: italic;
     }
+    .ov-fig { margin: 18px 0 24px; }
+    .ov-fig img {
+      display: block; max-width: 100%; height: auto; max-height: 460px;
+      border: 1px solid var(--border); border-radius: 10px; cursor: zoom-in; background: #fff;
+    }
+    .ov-fig figcaption { margin-top: 8px; font-size: 0.84rem; color: var(--text-secondary); line-height: 1.55; }
+    .ov-fig figcaption code { font-size: 0.8rem; }
+    .ov-steps { counter-reset: ovstep; }
+    .ov-step { position: relative; padding-left: 44px; margin: 26px 0 8px; }
+    .ov-step::before {
+      counter-increment: ovstep; content: counter(ovstep);
+      position: absolute; left: 0; top: 0; width: 28px; height: 28px; border-radius: 50%;
+      display: grid; place-items: center; font-size: 0.8rem; font-weight: 700;
+      background: rgba(13, 110, 80, 0.12); color: #0d6e50;
+    }
+    .ov-step > h4 { margin: 2px 0 8px; font-size: 1rem; }
+    .ov-step > p { margin-bottom: 10px; }
+    @media (max-width: 600px) { .ov-step { padding-left: 0; padding-top: 36px; } }
+
     .ov-lightbox {
       position: fixed;
       inset: 0;
@@ -381,7 +400,10 @@
         <a href="#sec-figure"><span class="ov-step-num">8</span><span class="ov-step-label">Figures</span></a>
         <a href="#sec-table"><span class="ov-step-num">9</span><span class="ov-step-label">Tables</span></a>
         <a href="#sec-equation"><span class="ov-step-num">10</span><span class="ov-step-label">Equations</span></a>
-        <a href="#sec-full"><span class="ov-step-num">11</span><span class="ov-step-label">Full Paper</span></a>
+        <a href="#sec-lists"><span class="ov-step-num">11</span><span class="ov-step-label">Lists &amp; Emphasis</span></a>
+        <a href="#sec-bib"><span class="ov-step-num">12</span><span class="ov-step-label">Citations (BibTeX)</span></a>
+        <a href="#sec-algorithm"><span class="ov-step-num">13</span><span class="ov-step-label">Algorithms</span></a>
+        <a href="#sec-full"><span class="ov-step-num">14</span><span class="ov-step-label">Full Paper</span></a>
         <a href="#sec-tips"><span class="ov-step-num">+</span><span class="ov-step-label">Tips &amp; Mistakes</span></a>
       </div>
 
@@ -395,6 +417,8 @@
 
         <h3>What is Overleaf?</h3>
         <p><strong>Overleaf</strong> is a cloud-based collaborative LaTeX editor. No installation required — write, compile, and collaborate directly in your browser. <a href="https://www.overleaf.com" target="_blank" style="color:#0d6e50;font-weight:600;">overleaf.com</a></p>
+        <p>Working in Overleaf feels like coding: the <strong>source editor</strong> sits on the left and the <strong>compiled PDF</strong> on the right. Edit the source, press <em>Recompile</em> (or <kbd>Ctrl</kbd> + <kbd>Enter</kbd>), and the PDF updates.</p>
+        <figure class="ov-fig"><img src="../assets/overleaf/image.png" alt="The Overleaf editor — LaTeX source on the left, compiled PDF on the right." loading="lazy"><figcaption>The Overleaf editor — LaTeX source on the left, compiled PDF on the right.</figcaption></figure>
 
         <h3>Compilation Flow</h3>
         <div class="ov-tree">User source (.tex)
@@ -408,12 +432,6 @@ PDF Output</div>
         <div class="ov-callout">
           <strong>Why LaTeX?</strong> Unmatched equation quality, automated cross-references / numbering / bibliography, and consistent output. Most conference and journal templates are LaTeX-based, making it the academic standard.
         </div>
-
-        <div class="ov-shots">
-          <div class="ov-shots__title">Reference Screenshots</div>
-          <div class="ov-shots__grid">
-            <div class="ov-shot"><img src="../assets/overleaf/image.png" alt="Overleaf intro"><div class="ov-shot__caption">Overleaf editor</div></div>
-          </div>
         </div>
       </section>
 
@@ -481,6 +499,15 @@ PDF Output</div>
           The <strong>Preamble</strong> is not printed. It is where you declare the class, load packages, define macros, and set metadata. All visible content must live between <code>\begin{document}</code> and <code>\end{document}</code>.
         </div>
 
+        <h3>Try it: your first compile</h3>
+        <p>The smallest document that compiles is a class plus a document body. Paste this into a new project and recompile:</p>
+        <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\documentclass</span>{article}
+<span class="cmd">\begin</span>{<span class="str">document</span>}
+Hello world!
+<span class="cmd">\end</span>{<span class="str">document</span>}</code></pre>
+        <figure class="ov-fig"><img src="../assets/overleaf/image 1.png" alt="“Hello world!” compiled to PDF. If you see this, everything works." loading="lazy"><figcaption>“Hello world!” compiled to PDF. If you see this, everything works.</figcaption></figure>
+        <p>To force a page break anywhere in the body, use <code>\newpage</code>.</p>
+
         <h3>Document Structure Visualization</h3>
         <div class="ov-tree">Preamble (configuration)
    │  \documentclass{...}
@@ -494,12 +521,6 @@ PDF Output</div>
    │     ...
    ▼
 \end{document}</div>
-
-        <div class="ov-shots">
-          <div class="ov-shots__title">Reference Screenshots</div>
-          <div class="ov-shots__grid">
-            <div class="ov-shot"><img src="../assets/overleaf/image 1.png" alt="Hello world compiled"><div class="ov-shot__caption">Hello World compiled output</div></div>
-          </div>
         </div>
       </section>
 
@@ -542,11 +563,23 @@ PDF Output</div>
           <strong>Note:</strong> If you forget <code>\maketitle</code>, nothing will be printed even if you declared <code>\title</code> / <code>\author</code>.
         </div>
 
-        <div class="ov-shots">
-          <div class="ov-shots__title">Reference Screenshots</div>
-          <div class="ov-shots__grid">
-            <div class="ov-shot"><img src="../assets/overleaf/image 2.png" alt="Title + author + abstract output"><div class="ov-shot__caption">Title + author + abstract compiled output</div></div>
-          </div>
+        <h3>Putting the header together</h3>
+        <p>Declare the title block in the preamble, print it with <code>\maketitle</code>, then add the abstract and the first section (both covered next). <code>\date{\today}</code> prints today's date; an empty <code>\date{}</code> prints none.</p>
+        <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\documentclass</span>{article}
+<span class="cmd">\title</span>{My First Document}
+<span class="cmd">\author</span>{Sunjun Hwang}
+<span class="cmd">\date</span>{<span class="cmd">\today</span>}
+
+<span class="cmd">\begin</span>{<span class="str">document</span>}
+<span class="cmd">\maketitle</span>
+<span class="cmd">\begin</span>{<span class="str">abstract</span>}
+This is a short abstract of the document.
+<span class="cmd">\end</span>{<span class="str">abstract</span>}
+<span class="cmd">\section</span>{Introduction}
+Hello, world.
+<span class="cmd">\end</span>{<span class="str">document</span>}</code></pre>
+        <figure class="ov-fig"><img src="../assets/overleaf/image 2.png" alt="The compiled header: title, author and date, followed by the abstract and Section 1." loading="lazy"><figcaption>The compiled header: title, author and date, followed by the abstract and Section 1.</figcaption></figure>
+        <p>Want the title on a page of its own? Add the class option: <code>\documentclass[titlepage]{article}</code>.</p>
         </div>
       </section>
 
@@ -580,12 +613,10 @@ in subtype classification.
           <strong>A good abstract structure (CARS):</strong> Context → Aim → Result → Significance. Usually 150–250 words, single paragraph.
         </div>
 
-        <div class="ov-shots">
-          <div class="ov-shots__title">Reference Screenshots — Abstract</div>
-          <div class="ov-shots__grid">
-            <div class="ov-shot"><img src="../assets/overleaf/image 6.png" alt="Abstract block output"><div class="ov-shot__caption">Abstract block separated from body</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 7.png" alt="Abstract with dummy text"><div class="ov-shot__caption">Abstract distinction with dummy paragraph</div></div>
-          </div>
+        <p>Unlike <code>\section</code>, the abstract is an <em>environment</em>, so it needs a <code>\begin{abstract}</code> … <code>\end{abstract}</code> pair. Place it right after <code>\maketitle</code> and compile:</p>
+        <figure class="ov-fig"><img src="../assets/overleaf/image 6.png" alt="The abstract is typeset as its own block with a centered heading, before Section 1." loading="lazy"><figcaption>The abstract is typeset as its own block with a centered heading, before Section 1.</figcaption></figure>
+        <p>The difference is clearer once the body has real text. With a dummy paragraph under the Introduction, the abstract stands apart from the body:</p>
+        <figure class="ov-fig"><img src="../assets/overleaf/image 7.png" alt="Abstract (narrower, smaller type) versus a normal body paragraph." loading="lazy"><figcaption>Abstract (narrower, smaller type) versus a normal body paragraph.</figcaption></figure>
         </div>
       </section>
 
@@ -616,19 +647,37 @@ in subtype classification.
           </div>
         </div>
 
+        <p>Write <code>\section{Introduction}</code> followed by ordinary text — LaTeX numbers it for you:</p>
+        <figure class="ov-fig"><img src="../assets/overleaf/image 3.png" alt="\section{Introduction} compiled: the number “1” is added automatically." loading="lazy"><figcaption><code>\section{Introduction}</code> compiled: the number “1” is added automatically.</figcaption></figure>
+
+        <h3>The class changes how sections look</h3>
+        <p>The same source looks different under a different class. Switch <code>article</code> to <code>book</code> and recompile:</p>
+        <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\documentclass</span>{book}
+<span class="cmd">\title</span>{Sunjun's Paper}
+<span class="cmd">\author</span>{Sunjun Hwang}
+<span class="cmd">\date</span>{<span class="cmd">\today</span>}
+<span class="cmd">\begin</span>{<span class="str">document</span>}
+<span class="cmd">\maketitle</span>
+<span class="cmd">\section</span>{Introduction}
+This is going to be a normal paragraph.
+<span class="cmd">\end</span>{<span class="str">document</span>}</code></pre>
+        <figure class="ov-fig"><img src="../assets/overleaf/image 4.png" alt="With book, \maketitle produces a full title page." loading="lazy"><figcaption>With <code>book</code>, <code>\maketitle</code> produces a full title page.</figcaption></figure>
+        <figure class="ov-fig"><img src="../assets/overleaf/image 5.png" alt="The section moves to the next page and is numbered 0.1 — in book, sections live inside chapters, and none has been declared yet." loading="lazy"><figcaption>The section moves to the next page and is numbered 0.1 — in <code>book</code>, sections live inside chapters, and none has been declared yet.</figcaption></figure>
+        <p>Each class has its own conventions, so check the output whenever you switch — and for a paper, use the venue's template class.</p>
+
+        <h3>Subsections and sub-subsections</h3>
+        <p>Papers often need “1.1”-style headings. <code>\subsection</code> adds one level:</p>
+        <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\subsection</span>{Some Background}
+Text of the subsection...</code></pre>
+        <figure class="ov-fig"><img src="../assets/overleaf/image 8.png" alt="\subsection is numbered 1.1." loading="lazy"><figcaption><code>\subsection</code> is numbered 1.1.</figcaption></figure>
+        <p>One level deeper is <code>\subsubsection</code>:</p>
+        <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\subsubsection</span>{Drilled Down}
+Text of the sub-subsection...</code></pre>
+        <figure class="ov-fig"><img src="../assets/overleaf/image 9.png" alt="\subsubsection is numbered 1.1.1." loading="lazy"><figcaption><code>\subsubsection</code> is numbered 1.1.1.</figcaption></figure>
+
         <div class="ov-callout">
           <strong>Unnumbered sections:</strong> Append <code>*</code> like <code>\section*{Acknowledgments}</code> to suppress both numbering and TOC inclusion.
         </div>
-
-        <div class="ov-shots">
-          <div class="ov-shots__title">Reference Screenshots — Sections</div>
-          <div class="ov-shots__grid">
-            <div class="ov-shot"><img src="../assets/overleaf/image 3.png" alt="Section auto-numbering"><div class="ov-shot__caption">\section auto-numbering output</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 4.png" alt="Book class output"><div class="ov-shot__caption">Same source with book class (chapter-style)</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 5.png" alt="Book class section"><div class="ov-shot__caption">Book class — section page</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 8.png" alt="Subsection output"><div class="ov-shot__caption">\subsection — 1.1 numbering</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 9.png" alt="Subsubsection output"><div class="ov-shot__caption">\subsubsection — 1.1.1 numbering</div></div>
-          </div>
         </div>
       </section>
 
@@ -663,80 +712,201 @@ See Figure <span class="cmd">\ref</span>{<span class="arg">fig:overview</span>} 
           <strong>Common mistake:</strong> <code>\label</code> must come <em>after</em> <code>\caption</code> to capture the right number. If <code>\label</code> is placed before <code>\caption</code>, the reference will resolve to the wrong number.
         </div>
 
-        <div class="ov-shots">
-          <div class="ov-shots__title">Reference Screenshots — Cross-Referencing &amp; Sub-files</div>
-          <div class="ov-shots__grid">
-            <div class="ov-shot"><img src="../assets/overleaf/image 21.png" alt="ref auto-numbering"><div class="ov-shot__caption">\ref pulls subsubsection number automatically</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 22.png" alt="Create sub-file"><div class="ov-shot__caption">Creating a new sub-file</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 23.png" alt="Writing in sub-file"><div class="ov-shot__caption">Writing content inside the sub-file</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 24.png" alt="input loaded"><div class="ov-shot__caption">Loaded into main with \input{...}</div></div>
+        <h3>See it work</h3>
+        <p>Give the sub-subsection from Section 6 a label, then refer to it from the text:</p>
+        <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\subsubsection</span>{Drilled Down}
+<span class="cmd">\label</span>{subsubsec:drilled-down}
+...
+As described in Section~<span class="cmd">\ref</span>{subsubsec:drilled-down}, ...</code></pre>
+        <figure class="ov-fig"><img src="../assets/overleaf/image 21.png" alt="\ref prints the current number (1.1.1). Move the section and the number updates itself." loading="lazy"><figcaption><code>\ref</code> prints the current number (1.1.1). Move the section and the number updates itself.</figcaption></figure>
+        <p>Labels never appear in the PDF — they are names for you and your co-authors. The same mechanism works for figures, tables, equations and algorithms.</p>
+
+        <h3>Splitting a paper into sub-files</h3>
+        <p>Long papers are easier to manage, and to write together, when each section lives in its own file.</p>
+        <div class="ov-steps">
+          <div class="ov-step">
+            <h4>Create a new file</h4>
+            <p>In the file tree, choose <em>New File</em> and name it, for example <code>intro.tex</code>.</p>
+            <figure class="ov-fig"><img src="../assets/overleaf/image 22.png" alt="Creating a new .tex file from the Overleaf file tree." loading="lazy"><figcaption>Creating a new <code>.tex</code> file from the Overleaf file tree.</figcaption></figure>
           </div>
+          <div class="ov-step">
+            <h4>Write the section inside it</h4>
+            <p>The sub-file holds only content — no <code>\documentclass</code> and no <code>\begin{document}</code>.</p>
+            <figure class="ov-fig"><img src="../assets/overleaf/image 23.png" alt="The sub-file contains just the section text." loading="lazy"><figcaption>The sub-file contains just the section text.</figcaption></figure>
+          </div>
+          <div class="ov-step">
+            <h4>Pull it into the main file</h4>
+            <p>Where the section should appear in <code>main.tex</code>, write <code>\input{intro}</code> (the <code>.tex</code> extension is optional).</p>
+            <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\begin</span>{<span class="str">document</span>}
+<span class="cmd">\maketitle</span>
+<span class="cmd">\input</span>{intro}      <span class="cmt">% contents of intro.tex appear here</span>
+<span class="cmd">\input</span>{method}
+<span class="cmd">\end</span>{<span class="str">document</span>}</code></pre>
+            <figure class="ov-fig"><img src="../assets/overleaf/image 24.png" alt="After \input, the sub-file’s text is compiled into the main document." loading="lazy"><figcaption>After <code>\input</code>, the sub-file’s text is compiled into the main document.</figcaption></figure>
+          </div>
+        </div>
         </div>
       </section>
 
       <!-- Section 8: Figure -->
       <section class="ov-section" id="sec-figure">
         <h2><span class="ov-num">08</span> Figure</h2>
-        <p class="ov-section__sub">Inserting figures in papers — the float environment.</p>
+        <p class="ov-section__sub">Inserting figures — built up one step at a time, the way you would actually do it.</p>
 
-        <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\begin</span>{<span class="str">figure</span>}[<span class="arg">t</span>]
-  <span class="cmd">\centering</span>
-  <span class="cmd">\includegraphics</span>[<span class="arg">width=0.8\linewidth</span>]{<span class="str">figures/overview.pdf</span>}
-  <span class="cmd">\caption</span>{Overview of our TDA pipeline.}
-  <span class="cmd">\label</span>{<span class="arg">fig:overview</span>}
+        <div class="ov-steps">
+          <div class="ov-step">
+            <h4>Call <code>\includegraphics</code> — and watch it fail</h4>
+            <p><code>\includegraphics{file}</code> inserts an image file (path relative to the project). Try it in a plain document:</p>
+            <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\documentclass</span>{article}
+<span class="cmd">\begin</span>{<span class="str">document</span>}
+<span class="cmd">\section</span>{More stuff}
+Insert a figure in this section.
+<span class="cmd">\includegraphics</span>{overview.pdf}
+<span class="cmd">\end</span>{<span class="str">document</span>}</code></pre>
+            <figure class="ov-fig"><img src="../assets/overleaf/image 10.png" alt="Without the package, no image appears — only the file path is printed as text." loading="lazy"><figcaption>Without the package, no image appears — only the file path is printed as text.</figcaption></figure>
+          </div>
+          <div class="ov-step">
+            <h4>Load <code>graphicx</code> in the preamble</h4>
+            <p>Images need the <code>graphicx</code> package, loaded <em>before</em> <code>\begin{document}</code>:</p>
+            <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\documentclass</span>{article}
+<span class="cmd">\usepackage</span>{graphicx}   <span class="cmt">% must come before \begin{document}</span>
+<span class="cmd">\begin</span>{<span class="str">document</span>}
+...</code></pre>
+            <figure class="ov-fig"><img src="../assets/overleaf/image 11.png" alt="With graphicx loaded, the image appears." loading="lazy"><figcaption>With <code>graphicx</code> loaded, the image appears.</figcaption></figure>
+          </div>
+          <div class="ov-step">
+            <h4>Wrap it in a <code>figure</code> environment</h4>
+            <p>A bare image sits in the text like a giant letter and may not fit the page. Wrapping it in <code>figure</code> makes it a <strong>float</strong>: LaTeX moves it to a good position, and you can add a caption.</p>
+            <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\begin</span>{<span class="str">figure</span>}
+  <span class="cmd">\includegraphics</span>{overview.pdf}
 <span class="cmd">\end</span>{<span class="str">figure</span>}</code></pre>
+            <figure class="ov-fig"><img src="../assets/overleaf/image 12.png" alt="Inside figure, the image becomes a block that LaTeX places for you." loading="lazy"><figcaption>Inside <code>figure</code>, the image becomes a block that LaTeX places for you.</figcaption></figure>
+          </div>
+          <div class="ov-step">
+            <h4>Center, size, caption, label — then refer to it</h4>
+            <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\begin</span>{<span class="str">figure</span>}[t]
+  <span class="cmd">\centering</span>
+  <span class="cmd">\includegraphics</span>[width=0.8<span class="cmd">\linewidth</span>]{figures/overview.pdf}
+  <span class="cmd">\caption</span>{Overview of our TDA pipeline.}
+  <span class="cmd">\label</span>{fig:overview}          <span class="cmt">% always after \caption</span>
+<span class="cmd">\end</span>{<span class="str">figure</span>}
+
+As shown in Figure~<span class="cmd">\ref</span>{fig:overview}, ...</code></pre>
+            <figure class="ov-fig"><img src="../assets/overleaf/image 13.png" alt="\ref{fig:overview} prints the figure number automatically." loading="lazy"><figcaption><code>\ref{fig:overview}</code> prints the figure number automatically.</figcaption></figure>
+          </div>
+        </div>
+
+        <div class="ov-callout">
+          <strong>Use vector images.</strong> PNG and JPEG are raster images and blur when zoomed. Export plots and diagrams as <strong>PDF</strong> so they stay sharp at any size.
+        </div>
 
         <h3>Position Options</h3>
+        <p>The optional argument after <code>\begin{figure}</code> tells LaTeX where it may place the float.</p>
         <table class="ov-table">
           <thead><tr><th>Option</th><th>Meaning</th></tr></thead>
           <tbody>
-            <tr><td><code>h</code></td><td>here — if possible, place at this point</td></tr>
-            <tr><td><code>t</code></td><td>top — top of the page</td></tr>
-            <tr><td><code>b</code></td><td>bottom — bottom of the page</td></tr>
-            <tr><td><code>p</code></td><td>page — on a dedicated float page</td></tr>
-            <tr><td><code>H</code></td><td>absolutely here (requires the float package)</td></tr>
-            <tr><td><code>!</code></td><td>override LaTeX's placement constraints</td></tr>
+            <tr><td><code>h</code></td><td>here — if possible, at this point in the text</td></tr>
+            <tr><td><code>t</code></td><td>top of the page — the most stable choice for papers</td></tr>
+            <tr><td><code>b</code></td><td>bottom of the page</td></tr>
+            <tr><td><code>p</code></td><td>on a dedicated float page</td></tr>
+            <tr><td><code>!</code></td><td>override LaTeX's internal constraints, e.g. <code>[!t]</code></td></tr>
+            <tr><td><code>H</code></td><td>exactly here (requires the <code>float</code> package)</td></tr>
+          </tbody>
+        </table>
+        <p>Options combine: <code>[ht]</code> for drafts, <code>[tb]</code> to allow top or bottom, <code>[htbp]</code> for maximum flexibility. For example, <code>[b]</code>:</p>
+        <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\begin</span>{<span class="str">figure</span>}[b]
+  <span class="cmd">\includegraphics</span>{overview.pdf}
+<span class="cmd">\end</span>{<span class="str">figure</span>}</code></pre>
+        <figure class="ov-fig"><img src="../assets/overleaf/image 14.png" alt="[b] sends the figure to the bottom of the page." loading="lazy"><figcaption><code>[b]</code> sends the figure to the bottom of the page.</figcaption></figure>
+
+        <h3>Sizing the image</h3>
+        <table class="ov-table">
+          <thead><tr><th>Option</th><th>Effect</th></tr></thead>
+          <tbody>
+            <tr><td><code>width=\linewidth</code></td><td>Width of the current column (<code>0.5\linewidth</code> is half)</td></tr>
+            <tr><td><code>width=\textwidth</code></td><td>Width of the whole text block</td></tr>
+            <tr><td><code>height=5cm</code></td><td>Fixed height</td></tr>
+            <tr><td><code>scale=0.7</code></td><td>Scale by a factor</td></tr>
+            <tr><td><code>keepaspectratio</code></td><td>Keep proportions when both width and height are set</td></tr>
           </tbody>
         </table>
 
         <h3>Two-Column-Spanning Figures (two-column layout)</h3>
-        <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\begin</span>{<span class="str">figure*</span>}[<span class="arg">t</span>]    <span class="cmt">% use figure* instead of figure</span>
+        <p>In a two-column paper, an architecture diagram squeezed into one column is often unreadable. <code>figure*</code> spans both columns (it can only go at the top or on a float page):</p>
+        <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\begin</span>{<span class="str">figure*</span>}[t]     <span class="cmt">% figure* instead of figure</span>
   <span class="cmd">\centering</span>
-  <span class="cmd">\includegraphics</span>[<span class="arg">width=\textwidth</span>]{<span class="str">wide.pdf</span>}
+  <span class="cmd">\includegraphics</span>[width=<span class="cmd">\textwidth</span>]{wide.pdf}
   <span class="cmd">\caption</span>{Two-column-spanning figure.}
-  <span class="cmd">\label</span>{<span class="arg">fig:wide</span>}
+  <span class="cmd">\label</span>{fig:wide}
 <span class="cmd">\end</span>{<span class="str">figure*</span>}</code></pre>
 
-        <div class="ov-shots">
-          <div class="ov-shots__title">Reference Screenshots — Figures</div>
-          <div class="ov-shots__grid">
-            <div class="ov-shot"><img src="../assets/overleaf/image 10.png" alt="Figure error without graphicx"><div class="ov-shot__caption">Without \usepackage{graphicx} — figure fails</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 11.png" alt="Figure after graphicx"><div class="ov-shot__caption">Working after adding \usepackage{graphicx}</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 12.png" alt="Figure float env"><div class="ov-shot__caption">Wrapped in \begin{figure}...\end{figure} (float)</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 13.png" alt="ref to figure"><div class="ov-shot__caption">\ref to figure label — auto numbering</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 14.png" alt="Figure [b] option"><div class="ov-shot__caption">[b] option — bottom placement</div></div>
-          </div>
-        </div>
+        <h3>Caption style</h3>
+        <p>With <code>\usepackage{caption}</code> you can tune captions globally: <code>\captionsetup{font=small, labelfont=bf, skip=5pt}</code> gives smaller text, a bold “Figure 1” and a 5pt gap between image and caption. Venue templates usually set this already — don't override them.</p>
       </section>
 
       <!-- Section 9: Table -->
       <section class="ov-section" id="sec-table">
         <h2><span class="ov-num">09</span> Table</h2>
-        <p class="ov-section__sub">Building tables — the <code>table</code> (float) plus <code>tabular</code> (content) combination.</p>
+        <p class="ov-section__sub">The <code>table</code> (float) plus <code>tabular</code> (content) combination, one piece at a time.</p>
 
+        <div class="ov-steps">
+          <div class="ov-step">
+            <h4>Start with <code>tabular</code></h4>
+            <p><code>tabular</code> holds the cells. Its argument declares the columns, one letter per column. Cells are separated by <code>&amp;</code>, and rows end with <code>\\</code>.</p>
+            <figure class="ov-fig"><img src="../assets/overleaf/image 15.png" alt="A bare tabular just sits in the text — it does not yet read as a table." loading="lazy"><figcaption>A bare <code>tabular</code> just sits in the text — it does not yet read as a table.</figcaption></figure>
+          </div>
+          <div class="ov-step">
+            <h4>Wrap it in <code>table</code></h4>
+            <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\begin</span>{<span class="str">table</span>}
+  <span class="cmd">\begin</span>{<span class="str">tabular</span>}{...}
+  ...
+  <span class="cmd">\end</span>{<span class="str">tabular</span>}
+<span class="cmd">\end</span>{<span class="str">table</span>}</code></pre>
+            <figure class="ov-fig"><img src="../assets/overleaf/image 16.png" alt="Inside table, it becomes a float block, separated from the text." loading="lazy"><figcaption>Inside <code>table</code>, it becomes a float block, separated from the text.</figcaption></figure>
+          </div>
+          <div class="ov-step">
+            <h4>Center it</h4>
+            <p>Add <code>\centering</code> as the first line inside <code>table</code>.</p>
+            <figure class="ov-fig"><img src="../assets/overleaf/image 17.png" alt="\centering moves the table to the middle of the page." loading="lazy"><figcaption><code>\centering</code> moves the table to the middle of the page.</figcaption></figure>
+          </div>
+          <div class="ov-step">
+            <h4>Add a rule</h4>
+            <p><code>\hline</code> draws a horizontal line.</p>
+            <figure class="ov-fig"><img src="../assets/overleaf/image 18.png" alt="\hline right after the column spec puts a rule above the header." loading="lazy"><figcaption><code>\hline</code> right after the column spec puts a rule above the header.</figcaption></figure>
+          </div>
+          <div class="ov-step">
+            <h4>Fill in the cells</h4>
+            <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\begin</span>{<span class="str">table</span>}
+<span class="cmd">\centering</span>
+<span class="cmd">\begin</span>{<span class="str">tabular</span>}{lccc} <span class="cmd">\hline</span>
+Head 1 &amp; Head 2 &amp; Head 3 &amp; Head 4 \\
+1      &amp; 2      &amp; 3      &amp; 4      \\ <span class="cmd">\hline</span>
+<span class="cmd">\end</span>{<span class="str">tabular</span>}
+<span class="cmd">\end</span>{<span class="str">table</span>}</code></pre>
+            <figure class="ov-fig"><img src="../assets/overleaf/image 19.png" alt="lccc: the first column left-aligned, the other three centered." loading="lazy"><figcaption><code>lccc</code>: the first column left-aligned, the other three centered.</figcaption></figure>
+          </div>
+          <div class="ov-step">
+            <h4>Vertical lines (optional)</h4>
+            <p>Put <code>|</code> between column letters, e.g. <code>{l|c|c|c}</code>. Most paper templates avoid vertical rules, so use them sparingly.</p>
+            <figure class="ov-fig"><img src="../assets/overleaf/image 20.png" alt="l|c|c|c adds a vertical line between the columns." loading="lazy"><figcaption><code>l|c|c|c</code> adds a vertical line between the columns.</figcaption></figure>
+          </div>
+        </div>
+
+        <h3>A paper-ready table</h3>
+        <p>Like figures, tables take <code>\caption</code> and <code>\label</code>. In tables the caption conventionally goes <em>above</em>:</p>
         <div class="ov-split">
           <div>
             <span class="ov-split__label">Code</span>
-            <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\begin</span>{<span class="str">table</span>}[<span class="arg">t</span>]
+            <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\begin</span>{<span class="str">table</span>}[t]
   <span class="cmd">\centering</span>
   <span class="cmd">\caption</span>{Comparison.}
-  <span class="cmd">\label</span>{<span class="arg">tab:result</span>}
-  <span class="cmd">\begin</span>{<span class="str">tabular</span>}{<span class="arg">lcc</span>}
+  <span class="cmd">\label</span>{tab:result}
+  <span class="cmd">\begin</span>{<span class="str">tabular</span>}{lcc}
     <span class="cmd">\hline</span>
-    Method &amp; Acc. &amp; F1 <span class="cmd">\\</span>
+    Method &amp; Acc. &amp; F1 \\
     <span class="cmd">\hline</span>
-    Baseline &amp; 82.1 &amp; 0.79 <span class="cmd">\\</span>
-    Ours     &amp; <span class="kw">89.4</span> &amp; <span class="kw">0.87</span> <span class="cmd">\\</span>
+    Baseline &amp; 82.1 &amp; 0.79 \\
+    Ours     &amp; 89.4 &amp; 0.87 \\
     <span class="cmd">\hline</span>
   <span class="cmd">\end</span>{<span class="str">tabular</span>}
 <span class="cmd">\end</span>{<span class="str">table</span>}</code></pre>
@@ -756,31 +926,20 @@ See Figure <span class="cmd">\ref</span>{<span class="arg">fig:overview</span>} 
           </div>
         </div>
 
-        <h3>Column Alignment Specifiers</h3>
+        <h3>Column Specifiers</h3>
         <table class="ov-table">
-          <thead><tr><th>Specifier</th><th>Alignment</th></tr></thead>
+          <thead><tr><th>Specifier</th><th>Effect</th></tr></thead>
           <tbody>
-            <tr><td><code>l</code></td><td>Left-aligned</td></tr>
-            <tr><td><code>c</code></td><td>Centered</td></tr>
-            <tr><td><code>r</code></td><td>Right-aligned</td></tr>
-            <tr><td><code>p{3cm}</code></td><td>Fixed width (auto line break)</td></tr>
+            <tr><td><code>l</code> / <code>c</code> / <code>r</code></td><td>Left / centered / right-aligned</td></tr>
+            <tr><td><code>p{3cm}</code></td><td>Fixed width with automatic line breaks (top-aligned)</td></tr>
+            <tr><td><code>m{3cm}</code> / <code>b{3cm}</code></td><td>Fixed width, vertically centered / bottom-aligned (needs <code>array</code>)</td></tr>
+            <tr><td><code>*{3}{c}</code></td><td>Repeat: the same as <code>ccc</code></td></tr>
+            <tr><td><code>&gt;{\centering\arraybackslash}p{3cm}</code></td><td>Fixed width with centered text (needs <code>array</code>)</td></tr>
           </tbody>
         </table>
 
         <div class="ov-callout">
-          For <strong>prettier tables</strong>, use the <code>booktabs</code> package and its <code>\toprule, \midrule, \bottomrule</code> macros — far cleaner than <code>\hline</code>.
-        </div>
-
-        <div class="ov-shots">
-          <div class="ov-shots__title">Reference Screenshots — Tables</div>
-          <div class="ov-shots__grid">
-            <div class="ov-shot"><img src="../assets/overleaf/image 15.png" alt="Bare tabular"><div class="ov-shot__caption">Bare \begin{tabular} — not yet a "table"</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 16.png" alt="Wrapped in table block"><div class="ov-shot__caption">Wrapped in \begin{table}...\end{table}</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 17.png" alt="Centering"><div class="ov-shot__caption">\centering — moves to page center</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 18.png" alt="hline rule"><div class="ov-shot__caption">\hline adds horizontal rule to header</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 19.png" alt="Filled table"><div class="ov-shot__caption">Filled with values (lccc alignment)</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 20.png" alt="Vertical lines"><div class="ov-shot__caption">Vertical lines via l|c|c|c spec</div></div>
-          </div>
+          For <strong>cleaner tables</strong>, use the <code>booktabs</code> package and its <code>\toprule, \midrule, \bottomrule</code> rules instead of <code>\hline</code>. To build a table visually, try <a href="https://www.tablesgenerator.com/" target="_blank" style="color:#0d6e50;font-weight:600;">Tables Generator</a>.
         </div>
       </section>
 
@@ -790,38 +949,30 @@ See Figure <span class="cmd">\ref</span>{<span class="arg">fig:overview</span>} 
         <p class="ov-section__sub">Mathematics — the area where LaTeX shines brightest.</p>
 
         <h3>Inline Math</h3>
-        <div class="ov-split">
-          <div>
-            <span class="ov-split__label">Code</span>
-            <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code>Einstein: $E = mc^2$.</code></pre>
-          </div>
-          <div>
-            <span class="ov-split__label">Preview</span>
-            <div class="ov-preview">Einstein: $E = mc^2$.</div>
-          </div>
-        </div>
+        <p>Math inside a sentence goes between two dollar signs:</p>
+        <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code>The variable is set to $x = 3$ before the loop.</code></pre>
+        <figure class="ov-fig"><img src="../assets/overleaf/image 32.png" alt="$x = 3$ is typeset as math within the line of text." loading="lazy"><figcaption><code>$x = 3$</code> is typeset as math within the line of text.</figcaption></figure>
 
-        <h3>Display Math</h3>
-        <div class="ov-split">
-          <div>
-            <span class="ov-split__label">Code</span>
-            <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\begin</span>{<span class="str">equation</span>}
-<span class="cmd">\label</span>{<span class="arg">eq:loss</span>}
-  L = - <span class="cmd">\sum</span>_{i=1}^{N} y_i <span class="cmd">\log</span> p_i
+        <h3>Display Math (numbered)</h3>
+        <p>A standalone, numbered equation uses the <code>equation</code> environment. Give it a label so you can refer to it with <code>\eqref{eq:emc}</code>:</p>
+        <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\begin</span>{<span class="str">equation</span>} <span class="cmd">\label</span>{eq:emc}
+E = mc^{2}
 <span class="cmd">\end</span>{<span class="str">equation</span>}</code></pre>
-          </div>
-          <div>
-            <span class="ov-split__label">Preview</span>
-            <div class="ov-preview" style="text-align:center;">$$L = -\sum_{i=1}^{N} y_i \log p_i$$</div>
-          </div>
-        </div>
+        <figure class="ov-fig"><img src="../assets/overleaf/image 33.png" alt="A displayed equation, centered, with its number on the right." loading="lazy"><figcaption>A displayed equation, centered, with its number on the right.</figcaption></figure>
 
-        <h3>Align Environment (Multi-line Alignment)</h3>
+        <h3>Display Math (unnumbered)</h3>
+        <p>If you never refer to it, drop the number with the short form:</p>
+        <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code>\[
+E = mc^{2}
+\]</code></pre>
+        <figure class="ov-fig"><img src="../assets/overleaf/image 34.png" alt="\[ … \]: displayed and centered, but without an equation number." loading="lazy"><figcaption><code>\[ … \]</code>: displayed and centered, but without an equation number.</figcaption></figure>
+
+        <h3>Align Environment (multi-line)</h3>
         <div class="ov-split">
           <div>
             <span class="ov-split__label">Code</span>
             <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\begin</span>{<span class="str">align</span>}
-  a &amp;= b + c <span class="cmd">\\</span>
+  a &amp;= b + c \\
     &amp;= d + e + f
 <span class="cmd">\end</span>{<span class="str">align</span>}</code></pre>
           </div>
@@ -830,24 +981,179 @@ See Figure <span class="cmd">\ref</span>{<span class="arg">fig:overview</span>} 
             <div class="ov-preview">$$\begin{aligned} a &= b + c \\ &= d + e + f \end{aligned}$$</div>
           </div>
         </div>
+        <p><code>&amp;</code> marks the alignment point (usually just before <code>=</code>), and <code>\\</code> starts a new line.</p>
 
         <div class="ov-callout">
-          <strong>Required package:</strong> <code>\usepackage{amsmath}</code> — essential for advanced math environments such as <code>align</code>, <code>gather</code>, and <code>cases</code>.
+          <strong>Required package:</strong> <code>\usepackage{amsmath}</code> — needed for <code>align</code>, <code>gather</code>, <code>cases</code> and <code>\eqref</code>. For a full symbol reference, see an online LaTeX math cheat sheet.
         </div>
+      </section>
 
-        <div class="ov-shots">
-          <div class="ov-shots__title">Reference Screenshots — Equations</div>
-          <div class="ov-shots__grid">
-            <div class="ov-shot"><img src="../assets/overleaf/image 32.png" alt="Inline math"><div class="ov-shot__caption">Inline math — $x = 3$</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 33.png" alt="Display equation"><div class="ov-shot__caption">\begin{equation}...\end{equation} (numbered)</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 34.png" alt="Shortcut display math"><div class="ov-shot__caption">\[ ... \] — unnumbered display math</div></div>
+      <!-- Section 11: Lists & Text -->
+      <section class="ov-section" id="sec-lists">
+        <h2><span class="ov-num">11</span> Lists, Emphasis &amp; Code</h2>
+        <p class="ov-section__sub">The small formatting tools you reach for in every paper.</p>
+
+        <h3>The LaTeX logo</h3>
+        <p><code>\LaTeX</code> prints the name as its typeset logo — for example in <code>\title{Using Bibliographies in \LaTeX}</code>.</p>
+        <figure class="ov-fig"><img src="../assets/overleaf/image 25.png" alt="\LaTeX rendered as the logo inside the title." loading="lazy"><figcaption><code>\LaTeX</code> rendered as the logo inside the title.</figcaption></figure>
+
+        <h3>Comments</h3>
+        <p>Everything after <code>%</code> on a line is ignored. In Overleaf, select several lines and press <kbd>Ctrl</kbd> + <kbd>/</kbd> to comment or uncomment them all at once.</p>
+
+        <h3>Numbered and bulleted lists</h3>
+        <div class="ov-split">
+          <div>
+            <span class="ov-split__label">Numbered</span>
+            <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\begin</span>{<span class="str">enumerate</span>}
+  <span class="cmd">\item</span> First step
+  <span class="cmd">\item</span> Second step
+<span class="cmd">\end</span>{<span class="str">enumerate</span>}</code></pre>
+          </div>
+          <div>
+            <span class="ov-split__label">Bulleted</span>
+            <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\begin</span>{<span class="str">itemize</span>}
+  <span class="cmd">\item</span> One point
+  <span class="cmd">\item</span> Another point
+<span class="cmd">\end</span>{<span class="str">itemize</span>}</code></pre>
           </div>
         </div>
+        <figure class="ov-fig"><img src="../assets/overleaf/image 26.png" alt="enumerate (1, 2, …) and itemize (bullets) compiled." loading="lazy"><figcaption><code>enumerate</code> (1, 2, …) and <code>itemize</code> (bullets) compiled.</figcaption></figure>
+
+        <h3>Emphasis</h3>
+        <table class="ov-table">
+          <thead><tr><th>Command</th><th>Effect</th><th>In papers</th></tr></thead>
+          <tbody>
+            <tr><td><code>\emph{}</code></td><td>Emphasis: italic in upright text, upright in italic text</td><td>Preferred</td></tr>
+            <tr><td><code>\textit{}</code></td><td>Italic</td><td>Sparingly</td></tr>
+            <tr><td><code>\textbf{}</code></td><td>Bold</td><td>Sparingly</td></tr>
+            <tr><td><code>\underline{}</code></td><td>Underline</td><td>Avoid</td></tr>
+          </tbody>
+        </table>
+
+        <h3>Code and literal text</h3>
+        <table class="ov-table">
+          <thead><tr><th>Command</th><th>Use</th></tr></thead>
+          <tbody>
+            <tr><td><code>\texttt{python main.py}</code></td><td>Typewriter font for short code; works inside other commands</td></tr>
+            <tr><td><code>\verb|--help|</code></td><td>Prints characters exactly as typed; inline only, and not allowed inside other commands</td></tr>
+            <tr><td><code>\begin{verbatim}…\end{verbatim}</code></td><td>Multi-line code block; keeps indentation and ignores LaTeX commands</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Section 12: Bibliography -->
+      <section class="ov-section" id="sec-bib">
+        <h2><span class="ov-num">12</span> Citations with BibTeX</h2>
+        <p class="ov-section__sub">Keep references in a <code>.bib</code> file and let LaTeX number and format them.</p>
+
+        <div class="ov-steps">
+          <div class="ov-step">
+            <h4>Create a <code>.bib</code> file</h4>
+            <p>Add a new file to the project, e.g. <code>refs.bib</code>. It holds one entry per paper you cite.</p>
+            <figure class="ov-fig"><img src="../assets/overleaf/image 27.png" alt="A new refs.bib in the project." loading="lazy"><figcaption>A new <code>refs.bib</code> in the project.</figcaption></figure>
+          </div>
+          <div class="ov-step">
+            <h4>Copy the BibTeX entry from Google Scholar</h4>
+            <p>On Google Scholar, click <em>Cite</em> under the paper, then <em>BibTeX</em>.</p>
+            <figure class="ov-fig"><img src="../assets/overleaf/image 28.png" alt="Google Scholar’s Cite dialog — the BibTeX link is at the bottom." loading="lazy"><figcaption>Google Scholar’s Cite dialog — the BibTeX link is at the bottom.</figcaption></figure>
+            <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code>@article{vaswani2017attention,
+  title={Attention is all you need},
+  author={Vaswani, Ashish and Shazeer, Noam and Parmar, Niki and others},
+  journal={Advances in neural information processing systems},
+  volume={30},
+  year={2017}
+}</code></pre>
+          </div>
+          <div class="ov-step">
+            <h4>Paste it into <code>refs.bib</code></h4>
+            <p>The first field (<code>vaswani2017attention</code>) is the <strong>key</strong> you cite with. You may shorten it, e.g. to <code>vaswani2017</code>.</p>
+            <figure class="ov-fig"><img src="../assets/overleaf/image 29.png" alt="The entry saved in refs.bib." loading="lazy"><figcaption>The entry saved in <code>refs.bib</code>.</figcaption></figure>
+          </div>
+          <div class="ov-step">
+            <h4>Point the document at the file</h4>
+            <p>At the end of the body, choose a style and name the <code>.bib</code> file (without the extension). Keep this order:</p>
+            <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\bibliographystyle</span>{plain}
+<span class="cmd">\bibliography</span>{refs}</code></pre>
+            <figure class="ov-fig"><img src="../assets/overleaf/image 30.png" alt="A References heading appears, but it stays empty and the text shows [?]: nothing has been cited yet." loading="lazy"><figcaption>A References heading appears, but it stays empty and the text shows [?]: nothing has been cited yet.</figcaption></figure>
+          </div>
+          <div class="ov-step">
+            <h4>Cite in the text</h4>
+            <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code>Transformers~<span class="cmd">\cite</span>{vaswani2017attention} replaced recurrence with attention.</code></pre>
+            <figure class="ov-fig"><img src="../assets/overleaf/image 31.png" alt="\cite inserts the number, and the entry is listed under References." loading="lazy"><figcaption><code>\cite</code> inserts the number, and the entry is listed under References.</figcaption></figure>
+          </div>
+        </div>
+        <div class="ov-callout ov-callout--warn">
+          <strong>Never type references by hand.</strong> Cite through the <code>.bib</code> file so numbering, ordering and formatting stay consistent.
+        </div>
+
+        <h3>Bibliography styles</h3>
+        <table class="ov-table">
+          <thead><tr><th>Style</th><th>Ordering / format</th><th>Typical use</th></tr></thead>
+          <tbody>
+            <tr><td><code>plain</code></td><td>Numbered, sorted by author</td><td>Practice, technical reports</td></tr>
+            <tr><td><code>unsrt</code></td><td>Numbered in order of first citation</td><td>Engineering papers</td></tr>
+            <tr><td><code>abbrv</code></td><td>Like <code>plain</code>, with abbreviated names and venues</td><td>Tight page limits</td></tr>
+            <tr><td><code>plainnat</code> / <code>abbrvnat</code></td><td>For the <code>natbib</code> package</td><td>Author–year citations</td></tr>
+            <tr><td><code>apalike</code></td><td>(Author, Year)</td><td>Social sciences</td></tr>
+            <tr><td><code>IEEEtran</code></td><td>Official IEEE format</td><td>IEEE venues</td></tr>
+            <tr><td><code>ACM-Reference-Format</code></td><td>Official ACM format</td><td>ACM venues</td></tr>
+            <tr><td><code>splncs04</code></td><td>Springer LNCS format</td><td>Springer proceedings</td></tr>
+          </tbody>
+        </table>
+        <p>A venue template already fixes the style — use the one it ships with.</p>
+      </section>
+
+      <!-- Section 13: Algorithm -->
+      <section class="ov-section" id="sec-algorithm">
+        <h2><span class="ov-num">13</span> Algorithm</h2>
+        <p class="ov-section__sub">Pseudocode blocks, common in engineering papers.</p>
+
+        <figure class="ov-fig"><img src="../assets/overleaf/image 35.png" alt="A typical algorithm block in a paper: caption, numbered lines, inputs and outputs." loading="lazy"><figcaption>A typical algorithm block in a paper: caption, numbered lines, inputs and outputs.</figcaption></figure>
+        <p>An algorithm uses two nested environments from two packages, both loaded in the preamble:</p>
+        <table class="ov-table">
+          <thead><tr><th>Environment</th><th>Role</th></tr></thead>
+          <tbody>
+            <tr><td><code>algorithm</code></td><td>The float: caption, number and placement (like <code>figure</code>)</td></tr>
+            <tr><td><code>algorithmic</code></td><td>The pseudocode itself: <code>\IF</code>, <code>\FOR</code>, <code>\REQUIRE</code>, …</td></tr>
+          </tbody>
+        </table>
+        <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\usepackage</span>{algorithm}
+<span class="cmd">\usepackage</span>{algorithmic}
+...
+<span class="cmd">\begin</span>{<span class="str">algorithm</span>}[t]
+<span class="cmd">\caption</span>{My First Simple Algorithm}
+<span class="cmd">\label</span>{alg:first}
+<span class="cmd">\begin</span>{<span class="str">algorithmic</span>}[1]      <span class="cmt">% [1] = number every line</span>
+<span class="cmd">\REQUIRE</span> Input value $i$
+<span class="cmd">\ENSURE</span> Output value $x$
+<span class="cmd">\STATE</span> $x <span class="cmd">\leftarrow</span> 2$
+<span class="cmd">\IF</span>{$i <span class="cmd">\ge</span> 2$}
+    <span class="cmd">\STATE</span> $x <span class="cmd">\leftarrow</span> x + 1$
+<span class="cmd">\ELSE</span>
+    <span class="cmd">\RETURN</span> $x$
+<span class="cmd">\ENDIF</span>
+<span class="cmd">\end</span>{<span class="str">algorithmic</span>}
+<span class="cmd">\end</span>{<span class="str">algorithm</span>}</code></pre>
+        <figure class="ov-fig"><img src="../assets/overleaf/image 36.png" alt="The compiled algorithm: numbered lines, Require/Ensure, and the if/else structure." loading="lazy"><figcaption>The compiled algorithm: numbered lines, Require/Ensure, and the if/else structure.</figcaption></figure>
+
+        <h3>Commands</h3>
+        <table class="ov-table">
+          <thead><tr><th>Command</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td><code>\REQUIRE</code> / <code>\ENSURE</code></td><td>Input / output</td></tr>
+            <tr><td><code>\STATE</code></td><td>One statement</td></tr>
+            <tr><td><code>\IF{…}</code> <code>\ELSE</code> <code>\ENDIF</code></td><td>Conditional</td></tr>
+            <tr><td><code>\FOR{$i=1$ to $N$}</code> … <code>\ENDFOR</code></td><td>For loop</td></tr>
+            <tr><td><code>\WHILE{…}</code> … <code>\ENDWHILE</code></td><td>While loop</td></tr>
+            <tr><td><code>\RETURN</code></td><td>Return a value</td></tr>
+            <tr><td><code>[1]</code> / <code>[0]</code></td><td>Show / hide line numbers</td></tr>
+          </tbody>
+        </table>
       </section>
 
       <!-- Section 11: Full Paper -->
       <section class="ov-section" id="sec-full">
-        <h2><span class="ov-num">11</span> Full Paper Skeleton</h2>
+        <h2><span class="ov-num">14</span> Full Paper Skeleton</h2>
         <p class="ov-section__sub">Everything you've learned, in one file.</p>
 
         <pre class="ov-code"><button class="ov-code-copy" onclick="copyCode(this)">Copy</button><code><span class="cmd">\documentclass</span>[<span class="arg">11pt,a4paper</span>]{<span class="str">article</span>}
@@ -941,32 +1247,8 @@ As shown in Figure <span class="cmd">\ref</span>{<span class="arg">fig:result</s
         <div class="ov-callout">
           <strong>Next steps:</strong> automate references with BibTeX → draw diagrams with TikZ → adopt conference templates → collaborate with co-authors (Overleaf Pro / Git sync).
         </div>
-
-        <div class="ov-shots">
-          <div class="ov-shots__title">Reference Screenshots — Lists &amp; Emphasis</div>
-          <div class="ov-shots__grid">
-            <div class="ov-shot"><img src="../assets/overleaf/image 25.png" alt="LaTeX logo style"><div class="ov-shot__caption">\LaTeX logo typography</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 26.png" alt="enumerate/itemize output"><div class="ov-shot__caption">enumerate &amp; itemize list output</div></div>
-          </div>
         </div>
-
-        <div class="ov-shots">
-          <div class="ov-shots__title">Reference Screenshots — Bibliography (.bib + \cite)</div>
-          <div class="ov-shots__grid">
-            <div class="ov-shot"><img src="../assets/overleaf/image 27.png" alt="bib file"><div class="ov-shot__caption">Creating a refs.bib file</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 28.png" alt="Google Scholar BibTeX"><div class="ov-shot__caption">Exporting BibTeX from Google Scholar</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 29.png" alt="BibTeX entry"><div class="ov-shot__caption">BibTeX entry pasted into refs.bib</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 30.png" alt="References without numbers"><div class="ov-shot__caption">References section before any \cite</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 31.png" alt="cite usage"><div class="ov-shot__caption">\cite{key} — citation rendered with number</div></div>
-          </div>
         </div>
-
-        <div class="ov-shots">
-          <div class="ov-shots__title">Reference Screenshots — Algorithm</div>
-          <div class="ov-shots__grid">
-            <div class="ov-shot"><img src="../assets/overleaf/image 35.png" alt="Algorithm intro"><div class="ov-shot__caption">Algorithm environment overview</div></div>
-            <div class="ov-shot"><img src="../assets/overleaf/image 36.png" alt="Algorithm compiled"><div class="ov-shot__caption">algorithm + algorithmic compiled output</div></div>
-          </div>
         </div>
       </section>
 
@@ -992,7 +1274,7 @@ As shown in Figure <span class="cmd">\ref</span>{<span class="arg">fig:result</s
     }
 
     // Lightbox for screenshot images
-    document.querySelectorAll('.ov-shot img').forEach(img => {
+    document.querySelectorAll('.ov-shot img, .ov-fig img').forEach(img => {
       img.addEventListener('click', () => {
         const lb = document.getElementById('ovLightbox');
         const lbImg = document.getElementById('ovLightboxImg');
