@@ -162,8 +162,59 @@
     }
     .about-quote cite { display: block; margin-top: 8px; font-style: normal; font-weight: 600; color: rgb(var(--page-color)); font-size: 0.85rem; }
 
+    .ab-story ol.ab-solve {
+      list-style: none;
+      margin: 4px 0 0;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+      counter-reset: solve;
+    }
+    .ab-solve li {
+      counter-increment: solve;
+      display: grid;
+      grid-template-columns: 26px 1fr;
+      gap: 10px;
+      align-items: start;
+      color: var(--text-secondary);
+      font-size: 0.92rem;
+      line-height: 1.55;
+    }
+    .ab-solve li::before {
+      content: counter(solve);
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: rgba(var(--page-color), 0.14);
+      color: rgb(var(--page-color));
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 1px;
+    }
+    .ab-solve strong { color: var(--text-primary); }
+
+    .ab-lang { display: grid; gap: 12px; margin-top: 4px; }
+    .ab-lang__row { display: grid; gap: 5px; }
+    .ab-lang__head { display: flex; justify-content: space-between; gap: 10px; font-size: 0.88rem; }
+    .ab-lang__head strong { color: var(--text-primary); }
+    .ab-lang__head span { color: var(--text-secondary); font-size: 0.8rem; text-align: right; }
+    .ab-lang__bar { height: 6px; border-radius: 3px; background: var(--border); overflow: hidden; }
+    .ab-lang__bar i { display: block; height: 100%; width: var(--w); border-radius: 3px; background: rgb(var(--page-color)); }
+    .ab-lang__next { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 0.8rem; color: var(--text-secondary); }
+    .ab-lang__next b {
+      font-weight: 600;
+      padding: 2px 10px;
+      border: 1px dashed rgba(var(--page-color), 0.5);
+      border-radius: 999px;
+      color: var(--text-primary);
+    }
+
+    .ab-story p a { color: rgb(var(--page-color)); text-decoration: underline; text-underline-offset: 2px; }
+    .ab-story--wide { grid-column: span 2; }
+
     @media (max-width: 1024px) {
       .about-person-grid { grid-template-columns: repeat(2, 1fr); }
+      .ab-story--wide { grid-column: auto; }
     }
 
     @media (max-width: 900px) {
@@ -203,7 +254,7 @@
           <div class="about-hero__greeting"><span class="wave">👋</span> Hi, I'm</div>
           <h1>Sunjun Brian Hwang</h1>
           <p class="lead">
-            an undergraduate researcher at Yonsei University. What pulls me across so many fields — <strong>quantum computing, AI security, federated learning, autonomous driving</strong> — is the same gap each time: how a system is <em>supposed</em> to behave, and how it actually behaves under noise, adversarial pressure, hardware faults, or real-world constraints. That gap is where my research lives.
+            an independent researcher in Vancouver, building on my undergraduate research at Yonsei University's RAISE Lab. What pulls me across so many fields — <strong>quantum computing, AI security, federated learning, autonomous driving</strong> — is the same gap each time: how a system is <em>supposed</em> to behave, and how it actually behaves under noise, adversarial pressure, hardware faults, or real-world constraints. That gap is where my research lives.
           </p>
         </div>
       </section>
@@ -211,27 +262,44 @@
       <h2 class="ab-section-title">The Researcher</h2>
       <div class="about-story-grid">
         <div class="ab-story">
+          <div class="ab-story__icon"><i class="fas fa-route"></i></div>
+          <h3>My Research Journey</h3>
+          <p>I started in <strong>Computer Science at Yonsei</strong> in 2022 and joined the <strong>RAISE Lab</strong> in December 2024, working on reliable AI and quantum computing. After graduating in August 2026, I moved to <strong>Vancouver</strong> and kept the same research going as an <em>independent researcher</em>.</p>
+        </div>
+
+        <div class="ab-story">
           <div class="ab-story__icon"><i class="fas fa-atom"></i></div>
-          <h3>Dual Major in CS &amp; Physics</h3>
-          <p>I'm pursuing both <strong>Computer Science</strong> and <strong>Physics (Quantum Mechanics)</strong> at Yonsei. The combination is intentional — physics gives me a different mathematical vocabulary for thinking about uncertainty, and CS gives me the tools to actually build with it. <em>Quantum ML</em> sits naturally at this intersection.</p>
+          <h3>CS, with a Physics Core</h3>
+          <p>My degree is in <strong>Computer Science</strong>, but I planned to double in Physics and took the courses that mattered most to me — <strong>Quantum Mechanics I &amp; II</strong> among them. Physics gives me a vocabulary for uncertainty; CS lets me build with it. <em>Quantum ML</em> sits right where the two meet.</p>
+        </div>
+
+        <div class="ab-story">
+          <div class="ab-story__icon"><i class="fas fa-bullseye"></i></div>
+          <h3>What I Want to Solve</h3>
+          <ol class="ab-solve">
+            <li><span>The gap between how a system is <strong>supposed</strong> to behave and how it actually behaves.</span></li>
+            <li><span>Whether we can <strong>trust</strong> that system at all — under noise, attacks, or hardware faults.</span></li>
+            <li><span>How to <strong>improve</strong> it once we know where it breaks.</span></li>
+            <li><span>And in quantum, how to <strong>design it optimally</strong> from the start.</span></li>
+          </ol>
         </div>
 
         <div class="ab-story">
           <div class="ab-story__icon"><i class="fas fa-code-branch"></i></div>
           <h3>Theory ↔ Implementation</h3>
-          <p>I believe the most useful research lives between disciplines, and between theory and practice. Every algorithm I study, I want to see <em>running</em> — on an FPGA, on a real NISQ device, in a federated learning client. Theory without implementation is incomplete; implementation without theory is brittle.</p>
+          <p>Every algorithm I study, I want to see <em>running</em> — on an FPGA, on a real NISQ device, in a federated learning client. Theory without implementation is incomplete; implementation without theory is brittle.</p>
+        </div>
+
+        <div class="ab-story">
+          <div class="ab-story__icon"><i class="fas fa-rotate"></i></div>
+          <h3>How I Approach Failure</h3>
+          <p>When an experiment of mine fell apart, I was honestly discouraged. So I stepped away — took a trip, emptied my head, and came back properly refreshed. Then I <strong>changed direction, redesigned the experiment</strong>, and that version worked. Now I treat a failed run as a signal to rethink the design, not to push harder on the same one.</p>
         </div>
 
         <div class="ab-story">
           <div class="ab-story__icon"><i class="fas fa-pen-fancy"></i></div>
           <h3>I Document Obsessively</h3>
-          <p>This site is just one of several I maintain — there's a <strong>CV</strong>, a <strong>research portal</strong>, a personal <strong>Wiki</strong>, an <strong>Overleaf / LaTeX guide</strong>, <strong>paper reviews</strong>, and a <strong>CS conference / journal tracker</strong>, all linked from the sidebar. Half of them started as notes to my future self.</p>
-        </div>
-
-        <div class="ab-story">
-          <div class="ab-story__icon"><i class="fas fa-guitar"></i></div>
-          <h3>Beyond Research</h3>
-          <p>Outside the lab, I play <strong>electric guitar, bass, and drums</strong> — usually loud enough that the neighbors can tell when a paper deadline has just passed.</p>
+          <p>This site is one of several I maintain — a <strong>CV</strong>, a <strong>research portal</strong>, a <strong>Wiki</strong>, guides, <strong>paper reviews</strong>, and a <strong>conference tracker</strong>, all in the sidebar. Half of them started as notes to my future self.</p>
         </div>
       </div>
 
@@ -240,40 +308,65 @@
         <div class="ab-story">
           <div class="ab-story__icon"><i class="fas fa-flask"></i></div>
           <h3>Why I Chose Research</h3>
-          <p>Honestly, no million-dollar business idea has ever come to me. But I'm fortunate to have a financial setup that gives me room to think — and when you have that room, research is the most interesting thing I can imagine doing with it. I get to chase <em>questions</em> instead of revenue.</p>
+          <p>No million-dollar business idea has ever come to me. But I have the room to think — and with that room, research is the most interesting thing I can imagine doing. I get to chase <em>questions</em> instead of revenue.</p>
         </div>
 
         <div class="ab-story">
           <div class="ab-story__icon"><i class="fas fa-cat"></i></div>
           <h3>The Cat in the Favicon</h3>
-          <p>Why a cat? Because <strong>Schrödinger</strong>. Quantum mechanics was the first time I felt physics could be both rigorous and beautifully strange, and Schrödinger's thought experiment is the cleanest expression of that — a system that is neither <em>this</em> nor <em>that</em> until you look. The cat sits at the top of every tab as a quiet daily reminder of what got me here.</p>
+          <p>Because <strong>Schrödinger</strong>. Quantum mechanics was the first time physics felt both rigorous and beautifully strange — a system that is neither <em>this</em> nor <em>that</em> until you look. The cat on every tab is a daily reminder of what got me here.</p>
         </div>
 
         <div class="ab-story">
           <div class="ab-story__icon"><i class="fas fa-heart"></i></div>
           <h3>Small Joys</h3>
-          <p>Watching a younger sibling or junior happily eat a meal I bought. Seeing a junior finally crack a problem they asked me about a week earlier. Plugging in the electric guitar for band practice and locking into a groove. The small wins are the real ones.</p>
+          <p>Watching a younger sibling or junior happily eat a meal I bought. Seeing a junior finally crack a problem they asked me about a week earlier. The small wins are the real ones.</p>
         </div>
 
         <div class="ab-story">
-          <div class="ab-story__icon"><i class="fas fa-comments"></i></div>
-          <h3>Let's Talk</h3>
-          <p>I genuinely enjoy helping people figure things out, and I'm the older-brother type with younger juniors. Equally happy to talk about <strong>Bell inequalities</strong>, your latest paper draft, or just how your week has been. Research conversations are great — casual ones are equally welcome.</p>
+          <div class="ab-story__icon"><i class="fas fa-guitar"></i></div>
+          <h3>Beyond Research</h3>
+          <p>I play <strong>electric guitar, bass, and drums</strong> — usually loud enough that the neighbors can tell a paper deadline has just passed.</p>
+        </div>
+
+        <div class="ab-story">
+          <div class="ab-story__icon"><i class="fas fa-book-open"></i></div>
+          <h3>A Lifelong Student</h3>
+          <p>Graduating didn't end the coursework. I keep stacking online specializations — <strong>Stanford, Johns Hopkins, University of Toronto</strong> and more (see <a href="awards.html">Awards</a>) — and I'm now at <strong>ILSC Vancouver</strong> sharpening my academic English.</p>
         </div>
 
         <div class="ab-story">
           <div class="ab-story__icon"><i class="fas fa-language"></i></div>
           <h3>Languages I Speak</h3>
-          <p><strong>Korean</strong> (native) and <strong>English</strong> (fluent). Currently learning <strong>Japanese</strong> and <strong>Spanish</strong> — slowly, mostly so I can read papers from more communities and travel with a little more confidence.</p>
+          <div class="ab-lang">
+            <div class="ab-lang__row">
+              <div class="ab-lang__head"><strong>Korean</strong><span>Native</span></div>
+              <div class="ab-lang__bar"><i style="--w:100%"></i></div>
+            </div>
+            <div class="ab-lang__row">
+              <div class="ab-lang__head"><strong>English</strong><span>Advanced · Duolingo 129</span></div>
+              <div class="ab-lang__bar"><i style="--w:78%"></i></div>
+            </div>
+            <div class="ab-lang__row">
+              <div class="ab-lang__head"><strong>Spanish</strong><span>Beginner · Duolingo 14</span></div>
+              <div class="ab-lang__bar"><i style="--w:14%"></i></div>
+            </div>
+            <div class="ab-lang__next">Next up: <b>Japanese</b><b>French</b></div>
+          </div>
         </div>
 
         <div class="ab-story">
           <div class="ab-story__icon"><i class="fas fa-plane"></i></div>
           <h3>My Roots &amp; Travel</h3>
-          <p>I've lived in <strong>Seoul</strong> my whole life. To balance that rootedness, I try to travel abroad <strong>at least twice a year</strong> — different cities, different languages, different food. The contrast keeps me curious and reminds me how much I still don't know.</p>
+          <p>I grew up in <strong>Seoul</strong>, and my next goal is to build my research career in the <strong>United States</strong>. In between, I travel abroad <strong>at least four times a year</strong> — different cities, languages, and food keep me curious.</p>
+        </div>
+
+        <div class="ab-story ab-story--wide">
+          <div class="ab-story__icon"><i class="fas fa-comments"></i></div>
+          <h3>Let's Talk</h3>
+          <p>I'm the older-brother type who genuinely enjoys helping people figure things out. Happy to talk about <strong>Bell inequalities</strong>, your latest paper draft, or just how your week has been — research and casual conversations are equally welcome.</p>
         </div>
       </div>
-
       <blockquote class="about-quote">
         "When something is important enough, you do it even if the odds are not in your favor."
         <cite>— Elon Musk</cite>
