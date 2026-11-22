@@ -7,6 +7,7 @@
   <link rel="icon" type="image/png" href="../assets/favicon.png">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/research-hero.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -29,6 +30,7 @@
       font-weight: 600; font-size: 0.92rem; text-decoration: none; transition: transform 0.2s ease, filter 0.2s ease;
     }
     .op-hero .op-cta:hover { transform: translateY(-2px); filter: brightness(1.05); }
+    .page-banner .op-hero { background: none; border: none; border-radius: 0; padding: 0; margin: 0; }
 
     .op-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; }
     .op-card {
@@ -78,11 +80,20 @@
   <main class="page-content" data-theme="openproblems">
     <div class="container">
 
+      <header class="page-banner">
+        <div class="page-banner__media" aria-hidden="true">
+          <video autoplay muted loop playsinline preload="auto" poster="../assets/films/open-problems.jpg" aria-hidden="true">
+            <source src="../assets/films/open-problems.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="page-banner__inner">
       <section class="op-hero">
         <h1><i class="fas fa-puzzle-piece" style="color:var(--op)"></i> Open Problems</h1>
         <p>A living list of research problems I find genuinely interesting and would love to solve <strong>together with other researchers</strong>. These are open invitations — if any of them resonates with your work, or you see an angle I've missed, let's talk. Collaboration beats working alone.</p>
         <a href="mailto:sunjun7559@gmail.com?subject=Open%20Problem%20Collaboration" class="op-cta"><i class="fas fa-handshake"></i> Reach out to collaborate</a>
       </section>
+        </div>
+      </header>
 
       <!-- ===== PROBLEM CARD TEMPLATE (duplicate per problem) =====
       <div class="op-card">
