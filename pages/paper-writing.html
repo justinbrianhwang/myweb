@@ -7,6 +7,7 @@
   <link rel="icon" type="image/png" href="../assets/favicon.png">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/research-hero.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -125,6 +126,69 @@
 
     .pw-divider { height: 1px; background: var(--border); margin: 26px 0; border: none; }
 
+    /* Step diagram (replaces ASCII arrows) */
+    .pw-ladder { list-style: none; padding: 0 !important; margin: 6px 0 22px !important; counter-reset: lad; max-width: 620px; }
+    .pw-ladder li {
+      position: relative; counter-increment: lad; margin: 0 0 18px !important;
+      padding: 12px 16px 12px 52px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px;
+    }
+    .pw-ladder li::before {
+      content: counter(lad); position: absolute; left: 14px; top: 12px; width: 24px; height: 24px; border-radius: 50%;
+      display: grid; place-items: center; font-size: 0.75rem; font-weight: 700; background: rgba(var(--pw-rgb), 0.14); color: var(--pw);
+    }
+    .pw-ladder li:not(:last-child)::after {
+      content: ""; position: absolute; left: 26px; bottom: -18px; width: 1px; height: 18px; background: var(--border);
+    }
+    .pw-ladder li strong { display: block; font-size: 0.95rem; }
+    .pw-ladder li span { display: block; font-size: 0.86rem; color: var(--text-secondary); line-height: 1.55; margin-top: 2px; }
+    .pw-ladder li:last-child { border-color: rgba(var(--pw-rgb), 0.5); }
+
+    /* Worked examples */
+    .pw-example { border: 1px solid var(--border); border-radius: 12px; margin: 8px 0 22px; overflow: hidden; background: var(--bg-card); }
+    .pw-example__head {
+      padding: 9px 16px; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--pw); border-bottom: 1px solid var(--border); background: rgba(var(--pw-rgb), 0.06);
+    }
+    .pw-example__body { padding: 16px 18px; }
+    .pw-example__body p, .pw-example__body li { font-size: 0.93rem; }
+    .pw-example__note { font-size: 0.82rem !important; color: var(--text-secondary) !important; margin: 10px 0 0 !important; }
+    .pw-stages { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .pw-stages > div { padding: 14px 16px; border-right: 1px solid var(--border); }
+    .pw-stages > div:last-child { border-right: none; }
+    .pw-stages h5 { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-secondary); margin: 0 0 8px; }
+    .pw-stages ul { padding-left: 16px !important; margin: 0 !important; }
+    .pw-stages li, .pw-stages p { font-size: 0.86rem !important; line-height: 1.6 !important; margin-bottom: 4px !important; }
+
+    /* Annotated paragraphs: each rhetorical move is tinted and tagged */
+    .pw-anno p { line-height: 2 !important; }
+    .pw-anno [data-m] { padding: 2px 3px; border-radius: 4px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+    .pw-anno [data-m]::before {
+      content: attr(data-m); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+      margin-right: 5px; padding: 1px 5px; border-radius: 3px; vertical-align: 1px; color: #fff;
+    }
+    .m1 { background: rgba(91, 141, 239, 0.13); }  .m1::before { background: #5b8def; }
+    .m2 { background: rgba(155, 109, 212, 0.13); } .m2::before { background: #9b6dd4; }
+    .m3 { background: rgba(233, 69, 96, 0.12); }   .m3::before { background: #d9534f; }
+    .m4 { background: rgba(46, 160, 110, 0.13); }  .m4::before { background: #2e9f6e; }
+    .m5 { background: rgba(230, 144, 42, 0.14); }  .m5::before { background: #d4841f; }
+
+    /* Fill-in templates */
+    .pw-template { font-size: 0.93rem; line-height: 1.9; }
+    .pw-template p { margin-bottom: 8px !important; }
+    .pw-blank { border-bottom: 1.5px dashed var(--pw); color: var(--pw); padding: 0 3px; font-style: italic; }
+
+    .pw-checklist { list-style: none; padding-left: 0 !important; }
+    .pw-checklist li { padding-left: 28px; position: relative; }
+    .pw-checklist li::before { content: "\f00c"; font-family: "Font Awesome 6 Free"; font-weight: 900; position: absolute; left: 4px; top: 1px; color: var(--pw); font-size: 0.8rem; }
+
+    @media (max-width: 768px) {
+      .pw-stages { grid-template-columns: 1fr; }
+      .pw-stages > div { border-right: none; border-bottom: 1px solid var(--border); }
+      .pw-stages > div:last-child { border-bottom: none; }
+    }
+
+    .page-banner .pw-hero { background: none; border: none; border-radius: 0; padding: 0; margin: 0; }
+
     @media (max-width: 768px) {
       .pw-section h2 { font-size: 1.4rem; }
       .pw-hero h1 { font-size: 1.75rem; }
@@ -140,12 +204,20 @@
     <div class="container">
 
       <!-- Hero -->
+      <header class="page-banner">
+        <div class="page-banner__media" aria-hidden="true">
+          <video autoplay muted loop playsinline preload="auto" poster="../assets/films/paper-writing.jpg" aria-hidden="true">
+            <source src="../assets/films/paper-writing.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="page-banner__inner">
       <section class="pw-hero">
         <h1><i class="fas fa-pen-nib" style="color:var(--pw)"></i> Engineering Paper Writing <span class="badge">Method Guide</span></h1>
-        <p>A section-by-section field guide to writing engineering research papers — not about generating ideas, but about the <strong>act of writing the paper itself</strong>. This is the part most people underestimate: however strong your method is, a paper that is written badly does not get accepted. Acceptance is a writing problem as much as a research problem.</p>
-        <p>The guide follows the real order of work — understand the structure, outline in bullets, iterate on the outline, and only then draft each section on purpose, section by section, the way an experienced writer actually does it.</p>
-        <p class="pw-credit">Distilled and translated into English from a graduate-level paper-writing special lecture (소휘수 교수님 논문 특강). The lecture used the paper <em>“CHITIN: A Comprehensive In-thread Instruction Replication Technique Against Transient Faults”</em> (a software fault-tolerance paper built on the SRMT idea) as its running example.</p>
+        <p>A section-by-section field guide to writing engineering research papers — not about generating ideas, but about the <strong>act of writing the paper itself</strong>. However strong your method is, a paper that is written badly does not get accepted. Acceptance is a writing problem as much as a research problem.</p>
+        <p>The guide follows the real order of work: understand the structure, outline in bullets, iterate on the outline, and only then draft each section on purpose. Every section ends in something you can copy — a worked example, an annotated paragraph or a fill-in template.</p>
       </section>
+        </div>
+      </header>
 
       <!-- Roadmap -->
       <div class="pw-roadmap">
@@ -158,6 +230,7 @@
         <a href="#sec-conclusion"><span class="pw-step-num">7</span><span class="pw-step-label">Conclusion</span></a>
         <a href="#sec-llm"><span class="pw-step-num">8</span><span class="pw-step-label">Using LLMs</span></a>
         <a href="#sec-venue"><span class="pw-step-num">9</span><span class="pw-step-label">Conference vs Journal</span></a>
+        <a href="#sec-checklist"><span class="pw-step-num"><i class="fas fa-check" style="font-size:0.75rem"></i></span><span class="pw-step-label">Before You Submit</span></a>
         <a href="#sec-resources"><span class="pw-step-num">+</span><span class="pw-step-label">Resources</span></a>
       </div>
 
@@ -171,7 +244,7 @@
         <p>Before any of that, though, comes the hardest skill: <strong>finding a problem worth solving.</strong> Being able to locate a real, tractable problem in the first place is what distinguishes a mature researcher — the entire arc of a master's or PhD is repeated practice at finding and solving problems. This guide assumes you have a problem and a method, and focuses on the step people neglect: turning that work into an accepted paper.</p>
 
         <div class="pw-callout">
-          <strong>The scope of this guide is deliberately narrow but decisive:</strong> how to <em>write</em> the paper. No matter how good the method is, if you cannot write it well, it will not be accepted — and an unaccepted result may as well not exist to the community. (Note: this lecture does not cover writing <em>survey</em> papers, which are a different genre with their own conventions.)
+          <strong>The scope of this guide is deliberately narrow but decisive:</strong> how to <em>write</em> the paper. No matter how good the method is, if you cannot write it well, it will not be accepted — and an unaccepted result may as well not exist to the community. (Note: this guide does not cover writing <em>survey</em> papers, which are a different genre with their own conventions.)
         </div>
 
         <h3><i class="fas fa-list-check"></i> Don't start by writing — start by outlining</h3>
@@ -180,16 +253,14 @@
 
         <h3><i class="fas fa-sitemap"></i> The anatomy of a paper</h3>
         <p>The content you truly author lives in <strong>Sections 1–5</strong> (Introduction, Related Work, Method, Experiments, Conclusion). The reference list, by contrast, is generated automatically in LaTeX — so learn that tooling once and spend your real effort on the sections. If you can carry an argument through the standard flow below, your draft already has the <em>shape</em> of a paper:</p>
-        <div class="pw-flow">A problem that needs solving
-      ▼
-Prior techniques that tried to address it
-      ▼
-The limitation those techniques share
-      ▼
-Therefore, we propose this new technique
-      ▼
-…and we show, experimentally, that it is better</div>
-        <p>In the running example, the CHITIN paper follows exactly this spine: hardware is vulnerable to transient faults → prior hardware/software approaches exist → they share limitations (cost, coverage) → so we propose a software instruction-replication technique → and we demonstrate its coverage and overhead.</p>
+        <ol class="pw-ladder">
+          <li><strong>A problem that needs solving</strong><span>Why the reader should care at all.</span></li>
+          <li><strong>Prior techniques that tried to address it</strong><span>Grouped into a few families, not listed one by one.</span></li>
+          <li><strong>The limitation those techniques share</strong><span>One clear gap — the sentence the whole paper hangs on.</span></li>
+          <li><strong>Therefore, we propose a new technique</strong><span>The idea in one or two sentences.</span></li>
+          <li><strong>…and we show, experimentally, that it is better</strong><span>Numbers, under fair conditions, against the prior techniques.</span></li>
+        </ol>
+        <p>The running example on this page is <em>CHITIN: A Comprehensive In-thread Instruction Replication Technique Against Transient Faults</em>, a software fault-tolerance paper built on the SRMT idea. It follows exactly this spine: hardware is vulnerable to transient faults → prior hardware/software approaches exist → they share limitations (cost, coverage) → so we propose a software instruction-replication technique → and we demonstrate its coverage and overhead.</p>
 
         <div class="pw-callout">
           <strong>Two summaries, nested.</strong> The <em>Introduction is a summary of the whole paper</em>, and the <em>Abstract is a summary of the Introduction</em>. Everything except the Abstract and Introduction maps roughly one-to-one onto the work you actually did — which is why those two are the hardest and the most read.
@@ -210,8 +281,31 @@ Therefore, we propose this new technique
         </div>
 
         <h3><i class="fas fa-arrow-down-wide-short"></i> The expansion ladder</h3>
-        <div class="pw-flow">Main bullet   →   Sub-bullets   →   Paragraph</div>
         <p>Write each section as a single <strong>main bullet</strong> (its job in one line). Break that into <strong>sub-bullets</strong> that carry the detail, the sub-claims, and the evidence. Then expand each sub-bullet into prose. By the time you reach prose, the hard thinking — what to say, in what order, and why — is already done, so drafting becomes almost mechanical.</p>
+        <div class="pw-example">
+          <div class="pw-example__head">Worked example — one Introduction paragraph, three stages</div>
+          <div class="pw-stages">
+            <div>
+              <h5>1 · Main bullet</h5>
+              <ul><li>Prior software fault-tolerance is too slow to use.</li></ul>
+            </div>
+            <div>
+              <h5>2 · Sub-bullets</h5>
+              <ul>
+                <li>transient faults: growing with smaller transistors</li>
+                <li>software replication: no new hardware needed</li>
+                <li>but: 2–3× slowdown, partial coverage</li>
+                <li>→ need low overhead <em>and</em> full coverage</li>
+              </ul>
+            </div>
+            <div>
+              <h5>3 · Paragraph</h5>
+              <p>As transistors shrink, transient faults become a practical threat to correct execution. Software-only replication is attractive because it needs no new hardware, but existing schemes slow programs down by two to three times and still leave some instructions unprotected. A practical technique must therefore keep overhead low without giving up coverage.</p>
+            </div>
+          </div>
+        </div>
+        <p class="pw-example__note" style="margin-top:-12px !important;">Illustrative sentences written for this guide, not quoted from the paper. Notice that every sentence in the paragraph maps back to exactly one sub-bullet.</p>
+
         <p>The reason this works is economic. Fixing a ten-line outline is trivial; restructuring eight pages of finished prose is painful and error-prone. Every structural problem you catch at the outline stage is a problem you never have to untangle later.</p>
 
         <div class="pw-callout pw-callout--good">
@@ -241,13 +335,12 @@ Therefore, we propose this new technique
 
         <h3><i class="fas fa-arrow-trend-up"></i> From existing methods to your contribution</h3>
         <p>If existing solutions had no problem, there would be no reason to propose a new one — so the Introduction has to establish that a gap exists. The move is: briefly mention and summarize prior techniques (<em>briefly</em> — this is the Intro, not Related Work), classify them, then <strong>critique their shared limitation</strong>. The rhetorical pattern is:</p>
-        <div class="pw-flow">Existing methods, summarized
-      ▼
-Their common limitation
-      ▼
-We solve that common limitation
-      ▼
-…and performance improves</div>
+        <ol class="pw-ladder">
+          <li><strong>Existing methods, summarized</strong><span>Two or three families, one sentence each.</span></li>
+          <li><strong>Their common limitation</strong><span>Stated precisely and fairly — this is where reviewers push back.</span></li>
+          <li><strong>We solve that common limitation</strong><span>The key idea, not the mechanism.</span></li>
+          <li><strong>…and performance improves</strong><span>One headline number that proves it.</span></li>
+        </ol>
         <p>An equally good framing is the "gap" version: "this capability simply did not exist before, so we built it." Both end in the same place — a clearly stated contribution that the reviewer can see is new.</p>
 
         <div class="pw-callout pw-callout--eg">
@@ -256,6 +349,18 @@ We solve that common limitation
 
         <div class="pw-callout pw-callout--warn">
           <strong>Anticipate the reviewer.</strong> The limitation and contribution sentences are where reviewers push back hardest. Writing them precisely and fairly — not overclaiming, not attacking — is exactly what reduces pushback later. A sentence that overstates your novelty is an invitation for a reviewer to find a counterexample.
+        </div>
+
+        <h3><i class="fas fa-highlighter"></i> An Introduction, annotated</h3>
+        <p>Below, each rhetorical move of a compact Introduction is tinted and tagged. Read only the tags from top to bottom and you have the outline back.</p>
+        <div class="pw-example pw-anno">
+          <div class="pw-example__head">Annotated example — what each sentence is doing</div>
+          <div class="pw-example__body">
+            <p><span class="m1" data-m="Background">As transistors shrink and supply voltages drop, processors become increasingly vulnerable to transient faults — brief bit flips caused by particle strikes or electrical noise.</span> <span class="m2" data-m="Term">Such faults rarely crash a program; instead they silently corrupt its output, a failure known as silent data corruption (SDC).</span></p>
+            <p><span class="m1" data-m="Background">Hardware redundancy can detect these faults, but it is costly to add to commodity processors.</span> <span class="m3" data-m="Limitation">Software-based replication avoids new hardware, yet existing schemes either duplicate every instruction, slowing programs by more than 2×, or protect only part of the code, leaving faults undetected.</span></p>
+            <p><span class="m4" data-m="Our idea">In this paper, we propose an in-thread replication technique that duplicates instructions within the same thread and checks them only at points where corrupted values would leave the program.</span> <span class="m5" data-m="Contribution">Our contributions are (1) a replication scheme that covers all instructions, (2) a compiler pass that places checks to minimise overhead, and (3) an evaluation on standard benchmarks.</span> <span class="m5" data-m="Result">Across these benchmarks, our technique detects nearly all injected faults while reducing runtime overhead relative to prior software schemes.</span></p>
+            <p class="pw-example__note">Illustrative text written for this guide in the spirit of the running example; it is not quoted from the paper, and the numbers are left qualitative on purpose.</p>
+          </div>
         </div>
 
         <h3><i class="fas fa-clipboard-list"></i> What the Introduction should contain</h3>
@@ -268,6 +373,32 @@ We solve that common limitation
           <li><em>(Optional)</em> a paper-structure paragraph ("Section 2 reviews… Section 3 presents…") — include only if space allows; drop it first when you are over the page budget.</li>
         </ol>
         <p>Build this skeleton first, then flesh it out during outlining: each of items 1–6 becomes a sub-bullet, then a paragraph. Expect the Introduction to take the most drafts of any section — it genuinely is the hardest, and that is normal.</p>
+
+        <h3><i class="fas fa-list-ol"></i> Writing the contributions list</h3>
+        <p>Most engineering papers end the Introduction with a short, numbered list of contributions. Each item should be <strong>verifiable</strong>: a reviewer must be able to point to the section that delivers it.</p>
+        <div class="pw-badgood">
+          <div class="bad">
+            <span class="bg-tag"><i class="fas fa-xmark"></i> Vague</span>
+            <p>“We propose a novel and efficient framework that significantly improves reliability.”</p>
+          </div>
+          <div class="good">
+            <span class="bg-tag"><i class="fas fa-check"></i> Checkable</span>
+            <p>“We propose a compiler pass that places fault checks only at store and branch instructions (Section 4), and show that it lowers overhead on all benchmarks (Section 5.2).”</p>
+          </div>
+        </div>
+
+        <h3><i class="fas fa-compress"></i> The Abstract: the Introduction in five sentences</h3>
+        <p>Since the Abstract summarises the Introduction, write it <em>last</em>, one sentence per move:</p>
+        <div class="pw-example pw-template">
+          <div class="pw-example__head">Template — fill the blanks</div>
+          <div class="pw-example__body">
+            <p><strong>1 · Context.</strong> <span class="pw-blank">Problem area</span> is important because <span class="pw-blank">why it matters</span>.</p>
+            <p><strong>2 · Gap.</strong> However, existing <span class="pw-blank">family of methods</span> <span class="pw-blank">shared limitation</span>.</p>
+            <p><strong>3 · Idea.</strong> We propose <span class="pw-blank">name</span>, which <span class="pw-blank">key idea in one clause</span>.</p>
+            <p><strong>4 · Evidence.</strong> On <span class="pw-blank">benchmarks / datasets</span>, it <span class="pw-blank">headline result with a number</span> compared with <span class="pw-blank">strongest baseline</span>.</p>
+            <p><strong>5 · Takeaway.</strong> These results show that <span class="pw-blank">what the reader should remember</span>.</p>
+          </div>
+        </div>
       </section>
 
       <!-- 04 Related Work -->
@@ -293,6 +424,15 @@ We solve that common limitation
           <li>If you deliberately omit a line of work, you can say so and why.</li>
           <li>When your paper builds directly on one concept (in the example, SRMT), give that concept more room — sometimes even its own section — so its variants and your relationship to them are unmistakable. Skipping this invites "how does this differ from SRMT variant Y?" pushback.</li>
         </ul>
+
+        <h3><i class="fas fa-paragraph"></i> One Related Work paragraph, annotated</h3>
+        <div class="pw-example pw-anno">
+          <div class="pw-example__head">Annotated example — describe, credit, then contrast</div>
+          <div class="pw-example__body">
+            <p><span class="m1" data-m="Category">Software-based redundancy.</span> <span class="m2" data-m="Describe">SRMT [3] runs a redundant copy of the program in a second thread and compares the two threads' results to detect faults.</span> <span class="m4" data-m="Credit">This removes the need for dedicated hardware and works on unmodified processors.</span> <span class="m3" data-m="However">However, communication between the two threads adds substantial overhead, and the scheme relies on a spare core being available.</span> <span class="m5" data-m="Ours">Our technique keeps the redundant instructions in the same thread, so it needs neither inter-thread communication nor an extra core.</span></p>
+            <p class="pw-example__note">Illustrative paragraph. The pattern is the point: describe the work fairly, credit what it does well, state its limitation with “However,” and end on how your work differs.</p>
+          </div>
+        </div>
 
         <h3><i class="fas fa-code-branch"></i> When there is no Related Work section</h3>
         <p>Sometimes Related Work is folded into the Introduction, leaving only a short <em>Preliminaries</em> paragraph — usually to satisfy a page limit (the DATE conference, for instance, caps papers at 6 pages; a comparison table may even be pushed into the Intro). Some venues instead move Related Work to the <em>end</em> of the paper so the method comes first. Each choice trades off reader guidance against momentum. When you are new, follow the standard placement; deviate only with a clear reason.</p>
@@ -345,6 +485,20 @@ We solve that common limitation
           <li>When a point is central, it is fine to spend more space on it — and sometimes to pull "why this matters" into its own short section.</li>
         </ul>
 
+        <h3><i class="fas fa-diagram-next"></i> How a Method section reads</h3>
+        <ol class="pw-ladder">
+          <li><strong>Overview paragraph + overview figure</strong><span>“Figure 3 shows the overall flow of our technique. It has three stages: …” — the reader gets the whole system before any detail.</span></li>
+          <li><strong>One subsection per stage</strong><span>Same order as the figure. Each opens with one sentence saying what the stage does and why it is needed.</span></li>
+          <li><strong>Details inside each subsection</strong><span>Algorithm, equations or a small example, then the design choice and why it beats the obvious alternative.</span></li>
+          <li><strong>Discussion of special cases</strong><span>What happens at the edges (e.g. library calls, memory errors) — the questions a reviewer would otherwise ask.</span></li>
+        </ol>
+        <div class="pw-example pw-template">
+          <div class="pw-example__head">Template — the first sentence of each subsection</div>
+          <div class="pw-example__body">
+            <p>“To <span class="pw-blank">goal of this stage</span>, we <span class="pw-blank">what the stage does</span>. Unlike <span class="pw-blank">prior approach</span>, which <span class="pw-blank">its drawback</span>, this <span class="pw-blank">advantage</span>.”</p>
+          </div>
+        </div>
+
         <div class="pw-callout pw-callout--good">
           <strong>Figure-first.</strong> If you're stuck on the outline, draw the figure first. Once you have a clear overview diagram of how the system works, the explanation — and then the text — follows naturally. A single well-drawn overview figure can be reused throughout the paper. A common and effective device: draw the flaw in the prior approach beside how your system fixes it, then write the paragraph that simply explains the figure.
         </div>
@@ -381,6 +535,25 @@ We solve that common limitation
           <li>Add experiments that back the theory from multiple angles. If a difference looks small from one view, show it from another — e.g., two trajectories that look identical in 2D can differ dramatically when plotted in 3D.</li>
         </ul>
 
+        <h3><i class="fas fa-flask"></i> Structure of the section</h3>
+        <ol class="pw-ladder">
+          <li><strong>Experimental setup</strong><span>Hardware, software versions, benchmarks or datasets, baselines, metrics, and how many runs.</span></li>
+          <li><strong>Main result</strong><span>One figure or table that answers the paper’s central question against all baselines.</span></li>
+          <li><strong>Ablation</strong><span>Remove one component at a time — each row shows what that component contributes.</span></li>
+          <li><strong>Sensitivity and cost</strong><span>Behaviour as parameters change; overheads such as time, memory and code size.</span></li>
+          <li><strong>Discussion and limits</strong><span>Where the method does worse, and why.</span></li>
+        </ol>
+
+        <h3><i class="fas fa-comment-dots"></i> Writing a results paragraph</h3>
+        <p>Never leave a figure to speak for itself. Every results paragraph makes three moves: <strong>what</strong> the figure shows, the <strong>number</strong> that matters, and <strong>why</strong> it happens.</p>
+        <div class="pw-example pw-anno">
+          <div class="pw-example__head">Annotated example</div>
+          <div class="pw-example__body">
+            <p><span class="m1" data-m="What">Figure 6 compares the runtime overhead of our technique with two software baselines across all benchmarks.</span> <span class="m4" data-m="Number">Our technique has the lowest overhead on every benchmark, with the largest gap on memory-intensive programs.</span> <span class="m2" data-m="Why">This is because checks are placed only before stores and branches, so most duplicated instructions run without an immediate comparison.</span> <span class="m3" data-m="Limit">The gap narrows on compute-bound programs, where nearly every instruction feeds a later store.</span></p>
+            <p class="pw-example__note">Illustrative paragraph; in a real paper, the second sentence carries the actual numbers.</p>
+          </div>
+        </div>
+
         <div class="pw-callout pw-callout--warn">
           <strong>Avoid default charts.</strong> Effort is visible, and so is its absence. Make series distinguishable even in <em>black &amp; white</em> (papers are often printed grayscale): use distinct markers, line styles, and hatching — not just a red line vs. a blue line, which can be indistinguishable to colorblind readers and in grayscale. A clear, deliberate figure reads as a careful paper.
         </div>
@@ -397,6 +570,14 @@ We solve that common limitation
           <li>The <strong>limitations</strong> of your approach — stated plainly and without defensiveness.</li>
           <li><strong>Future work</strong> — where this could go next; "it would be worth trying this in another domain" is a perfectly good, common form.</li>
         </ol>
+
+        <div class="pw-example pw-anno">
+          <div class="pw-example__head">Annotated example — the three moves</div>
+          <div class="pw-example__body">
+            <p><span class="m1" data-m="Summary">This paper presented an in-thread instruction replication technique that detects transient faults in software, with full instruction coverage and lower overhead than prior software schemes.</span> <span class="m3" data-m="Limitation">Our evaluation is limited to single-threaded programs, and faults in memory outside the processor are not covered.</span> <span class="m4" data-m="Future">In future work, we plan to extend the technique to multi-threaded programs and to combine it with memory protection.</span></p>
+            <p class="pw-example__note">Illustrative paragraph.</p>
+          </div>
+        </div>
 
         <div class="pw-callout">
           <strong>Some venues require limitations explicitly.</strong> NeurIPS, for example, asks authors to state the limitations of their work. Cover summary, limitations, and future directions and reviewers very rarely push back on the Conclusion — it is the section least likely to cost you an acceptance, so don't overthink it.
@@ -454,6 +635,24 @@ We solve that common limitation
 
         <h3><i class="fas fa-envelope-open-text"></i> Cover letter &amp; response letter</h3>
         <p>When submitting — especially to journals — you write a <strong>cover letter</strong> stating why the paper matters and why it belongs in this particular venue. After a review round, you write a <strong>response letter</strong> that walks through each reviewer comment and explains precisely how you addressed it. Both are short but consequential: they frame how editors and reviewers read your work.</p>
+      </section>
+
+      <!-- Checklist -->
+      <section class="pw-section" id="sec-checklist">
+        <h2><span class="pw-num"><i class="fas fa-check"></i></span> Before You Submit</h2>
+        <p class="pw-sub">A last pass, in the order reviewers will read the paper.</p>
+        <ul class="pw-checklist">
+          <li>The title names the problem and the idea, not just the field.</li>
+          <li>The Abstract has a number in it, and every claim in it appears again in the paper.</li>
+          <li>Each item in the contributions list points to the section that delivers it.</li>
+          <li>Every figure and table is referenced in the text, and its caption makes sense on its own.</li>
+          <li>Figures stay readable in grayscale and at printed size.</li>
+          <li>Baselines are run under the same conditions as your method, and the setup is complete enough to reproduce.</li>
+          <li>Limitations are stated plainly — in the Conclusion, or wherever the venue requires.</li>
+          <li>All references come from the <code>.bib</code> file and are cited at least once; no placeholder “[?]” remains.</li>
+          <li>The paper is within the page limit using the official template, unmodified.</li>
+          <li>The current year's Call for Papers has been re-read: anonymity, LLM disclosure, supplementary material.</li>
+        </ul>
       </section>
 
       <!-- Resources -->
