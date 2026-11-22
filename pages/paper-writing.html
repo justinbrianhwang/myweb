@@ -223,13 +223,17 @@
       <div class="pw-roadmap">
         <a href="#sec-overview"><span class="pw-step-num">1</span><span class="pw-step-label">The Big Picture</span></a>
         <a href="#sec-outline"><span class="pw-step-num">2</span><span class="pw-step-label">Outlining → Drafting</span></a>
-        <a href="#sec-intro"><span class="pw-step-num">3</span><span class="pw-step-label">Introduction</span></a>
-        <a href="#sec-related"><span class="pw-step-num">4</span><span class="pw-step-label">Related Work &amp; Citations</span></a>
-        <a href="#sec-method"><span class="pw-step-num">5</span><span class="pw-step-label">Method</span></a>
-        <a href="#sec-experiments"><span class="pw-step-num">6</span><span class="pw-step-label">Experiments</span></a>
-        <a href="#sec-conclusion"><span class="pw-step-num">7</span><span class="pw-step-label">Conclusion</span></a>
-        <a href="#sec-llm"><span class="pw-step-num">8</span><span class="pw-step-label">Using LLMs</span></a>
-        <a href="#sec-venue"><span class="pw-step-num">9</span><span class="pw-step-label">Conference vs Journal</span></a>
+        <a href="#sec-abstract"><span class="pw-step-num">3</span><span class="pw-step-label">Title &amp; Abstract</span></a>
+        <a href="#sec-intro"><span class="pw-step-num">4</span><span class="pw-step-label">Introduction</span></a>
+        <a href="#sec-related"><span class="pw-step-num">5</span><span class="pw-step-label">Related Work &amp; Citations</span></a>
+        <a href="#sec-method"><span class="pw-step-num">6</span><span class="pw-step-label">Method</span></a>
+        <a href="#sec-experiments"><span class="pw-step-num">7</span><span class="pw-step-label">Experiments</span></a>
+        <a href="#sec-figures"><span class="pw-step-num">8</span><span class="pw-step-label">Figures &amp; Tables</span></a>
+        <a href="#sec-conclusion"><span class="pw-step-num">9</span><span class="pw-step-label">Conclusion</span></a>
+        <a href="#sec-style"><span class="pw-step-num">10</span><span class="pw-step-label">Sentence-Level Style</span></a>
+        <a href="#sec-revision"><span class="pw-step-num">11</span><span class="pw-step-label">Revising &amp; Reviews</span></a>
+        <a href="#sec-llm"><span class="pw-step-num">12</span><span class="pw-step-label">Using LLMs</span></a>
+        <a href="#sec-venue"><span class="pw-step-num">13</span><span class="pw-step-label">Conference vs Journal</span></a>
         <a href="#sec-checklist"><span class="pw-step-num"><i class="fas fa-check" style="font-size:0.75rem"></i></span><span class="pw-step-label">Before You Submit</span></a>
         <a href="#sec-resources"><span class="pw-step-num">+</span><span class="pw-step-label">Resources</span></a>
       </div>
@@ -267,7 +271,34 @@
         </div>
 
         <h3><i class="fas fa-rotate-right"></i> Writing is not the end — the review loop is</h3>
-        <p>Submitting is a milestone, not the finish line. Understand the difference between a conference and a journal (<a href="#sec-venue" style="color:var(--pw);font-weight:600;">Section 9</a>), because it changes deadlines, expectations, and what "done" means. When reviews come back, you <strong>revise</strong> and write a <strong>response letter</strong> that explains, point by point, how you addressed each comment. For a conference, acceptance also means you <strong>present</strong> the work. Writing well up front is what makes this loop short instead of brutal.</p>
+        <p>Submitting is a milestone, not the finish line. Understand the difference between a conference and a journal (<a href="#sec-venue" style="color:var(--pw);font-weight:600;">Section 13</a>), because it changes deadlines, expectations, and what "done" means. When reviews come back, you <strong>revise</strong> and write a <strong>response letter</strong> that explains, point by point, how you addressed each comment. For a conference, acceptance also means you <strong>present</strong> the work. Writing well up front is what makes this loop short instead of brutal.</p>
+
+
+        <h3><i class="fas fa-arrow-down-1-9"></i> The order you write in is not the order you read in</h3>
+        <p>Readers go Title → Abstract → Introduction → figures → Conclusion, and only some of them read the middle. Writers should work almost in reverse, starting from what is already settled and ending with the parts that summarise everything else:</p>
+        <ol class="pw-ladder">
+          <li><strong>Figures and tables of the main results</strong><span>They fix what the paper can actually claim. If a claim has no figure or table behind it, it probably does not belong in the paper.</span></li>
+          <li><strong>Method</strong><span>You built it, so you can describe it. Writing it first also exposes gaps in your own understanding.</span></li>
+          <li><strong>Experiments</strong><span>Setup first, then one paragraph per figure or table.</span></li>
+          <li><strong>Related Work</strong><span>Easier once you know exactly how your method differs.</span></li>
+          <li><strong>Introduction</strong><span>Now you know the real contribution — not the one you planned months ago.</span></li>
+          <li><strong>Conclusion, Abstract and Title</strong><span>Pure summaries of what is already written. Doing them last keeps them true.</span></li>
+        </ol>
+        <div class="pw-callout"><strong>Time budget.</strong> A common rule of thumb: plan for writing to take at least as long as you expect, then add a full week for revision. Aim to have a complete draft — every section present, even if rough — about two weeks before the deadline, so your advisor and co-authors have time for at least two rounds of comments.</div>
+
+        <h3><i class="fas fa-ruler-horizontal"></i> A page budget before the first sentence</h3>
+        <p>Venues give a hard page limit. Decide in advance roughly how many pages each section gets, and write to that budget; it is far easier than cutting a full page from finished text the night before the deadline. A typical split for an 8-page engineering conference paper (adjust to your venue and field):</p>
+        <table class="pw-table">
+          <thead><tr><th>Section</th><th>Approx. length</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Abstract</td><td>150–250 words</td><td>Check the venue's word limit.</td></tr>
+            <tr><td>Introduction</td><td>~1–1.25 pages</td><td>Often includes a teaser figure.</td></tr>
+            <tr><td>Background / Related Work</td><td>~0.75–1 page</td><td>Shorter if folded into the Introduction.</td></tr>
+            <tr><td>Method</td><td>~2–2.5 pages</td><td>Overview figure plus subsections.</td></tr>
+            <tr><td>Experiments</td><td>~2–2.5 pages</td><td>Most of the figures and tables live here.</td></tr>
+            <tr><td>Conclusion</td><td>~0.25 page</td><td>One or two paragraphs.</td></tr>
+          </tbody>
+        </table>
       </section>
 
       <!-- 02 Outlining -->
@@ -315,11 +346,96 @@
         <div class="pw-callout">
           <strong>When a paper breaks the standard structure, it is usually on purpose.</strong> Page limits, a nonstandard contribution, or a venue's house style can all justify deviation. Early on, follow the canonical structure; later, learn to <em>read</em> why an author departed from it — that reading skill is part of becoming a writer.
         </div>
+
+
+        <h3><i class="fas fa-file-lines"></i> What a whole-paper outline looks like</h3>
+        <p>Before drafting, the entire paper should fit on one or two pages of bullets. Each section has its one-line job (the main bullet), and under it the claims in the order they will appear. This is the document you show your advisor first — it takes five minutes to read and catches structural problems that would take days to fix in prose.</p>
+        <div class="pw-example">
+          <div class="pw-example__head">Worked example — a whole-paper outline (illustrative)</div>
+          <div class="pw-example__body">
+            <ul>
+              <li><strong>1 Introduction</strong> — transient faults are a growing threat; software protection is too slow; we make it practical.
+                <ul><li>faults ↑ as transistors shrink → silent data corruption</li><li>hardware redundancy: effective but costly</li><li>software replication: no new hardware, but 2–3× slowdown or partial coverage</li><li>our idea: replicate in-thread, check only where errors escape</li><li>contributions (3) + headline result</li></ul></li>
+              <li><strong>2 Background &amp; Related Work</strong> — fault model; prior hardware and software schemes and their limits.
+                <ul><li>fault model: single bit flip in registers / functional units</li><li>hardware: lockstep, redundant multithreading</li><li>software: instruction duplication, SRMT → overhead / coverage gaps</li></ul></li>
+              <li><strong>3 Method</strong> — how in-thread replication and check placement work.
+                <ul><li>3.1 overview (Fig. 3)</li><li>3.2 instruction replication</li><li>3.3 check placement</li><li>3.4 special cases: calls, memory, I/O</li></ul></li>
+              <li><strong>4 Evaluation</strong> — is it correct, how much does it cost, which parts matter?
+                <ul><li>4.1 setup</li><li>4.2 fault coverage (fault injection)</li><li>4.3 runtime overhead vs. baselines</li><li>4.4 ablation of check placement</li></ul></li>
+              <li><strong>5 Conclusion</strong> — summary, limits (single-threaded only), future work.</li>
+            </ul>
+            <p class="pw-example__note">Notice that every main bullet is a full claim, not a topic word. “Method” tells you nothing; “how in-thread replication and check placement work” tells you what the section must deliver.</p>
+          </div>
+        </div>
+
+        <h3><i class="fas fa-arrows-rotate"></i> How to iterate on the outline</h3>
+        <ol>
+          <li><strong>Read only the main bullets, top to bottom.</strong> They should tell the whole story by themselves, like the spine on the previous diagram. If one does not follow from the one before, the structure is wrong — fix it now.</li>
+          <li><strong>Check that every claim has evidence.</strong> Next to each sub-bullet that makes a claim, note where the support comes from: a citation, a figure, a table or a proof. Unsupported claims either get evidence or get cut.</li>
+          <li><strong>Check that every result has a promise.</strong> Each experiment in Section 4 should answer a question raised earlier. An experiment that answers nothing in the Introduction is either a missing contribution or a distraction.</li>
+          <li><strong>Sketch the figures.</strong> Mark where each figure goes and write its caption as a bullet. Figures decide how much text you need around them.</li>
+          <li><strong>Get feedback on the outline, not the draft.</strong> Ask your advisor and co-authors to comment at this stage, when a change costs one line instead of one page.</li>
+        </ol>
+
+        <h3><i class="fas fa-align-left"></i> From sub-bullet to paragraph</h3>
+        <p>When you finally write prose, each paragraph should do one job. A reliable shape:</p>
+        <ol class="pw-ladder">
+          <li><strong>Topic sentence</strong><span>The point of the paragraph, stated first. A reader skimming only first sentences should still follow the paper.</span></li>
+          <li><strong>Support</strong><span>Explanation, evidence, citation or example — the sub-bullets, now as sentences.</span></li>
+          <li><strong>Link</strong><span>Optional last sentence that hands over to the next paragraph (“This motivates…”, “However, …”).</span></li>
+        </ol>
+        <div class="pw-callout pw-callout--good"><strong>The first-sentence test.</strong> Copy only the first sentence of every paragraph into a new file. If that file reads like a coherent summary of the paper, your structure is working. If it reads like a list of unrelated facts, the topic sentences are missing or buried.</div>
+      </section>
+
+      <section class="pw-section" id="sec-abstract">
+        <h2><span class="pw-num">03</span> Title &amp; Abstract</h2>
+        <p class="pw-sub">The two things every reviewer, every search engine and every future reader see first.</p>
+
+        <h3><i class="fas fa-heading"></i> Writing the title</h3>
+        <p>A good title tells the reader <strong>what problem</strong> and <strong>what kind of solution</strong>, in about 8–15 words. It is a search query as much as a headline: people find papers by the words in the title.</p>
+        <ul>
+          <li><strong>Name the problem and the approach.</strong> “Low-Overhead Software Fault Detection via In-Thread Instruction Replication” says both.</li>
+          <li><strong>Use the terms people search for.</strong> Prefer the field's standard vocabulary over a clever phrase nobody types into a search box.</li>
+          <li><strong>A system name is fine</strong> — <em>NAME: description</em> is a common, useful pattern — but the part after the colon must still stand on its own.</li>
+          <li><strong>Avoid empty words:</strong> “A Novel…”, “Towards…” (unless the work really is preliminary), “An Efficient…” — every paper claims to be novel and efficient.</li>
+        </ul>
+        <div class="pw-badgood">
+          <div class="bad"><span class="bg-tag"><i class="fas fa-xmark"></i> Vague</span><p>“A Novel Approach for Improving Reliability in Computer Systems”</p></div>
+          <div class="good"><span class="bg-tag"><i class="fas fa-check"></i> Specific</span><p>“Low-Overhead Detection of Transient Faults through In-Thread Instruction Replication”</p></div>
+        </div>
+
+        <h3><i class="fas fa-compress"></i> Writing the Abstract</h3>
+        <p>The Abstract is a summary of the Introduction, and it is often the only part a reviewer reads before deciding how carefully to read the rest. Write it <strong>last</strong>, as one paragraph, one sentence (or two) per move:</p>
+        <div class="pw-example pw-template">
+          <div class="pw-example__head">Template — the five-move Abstract</div>
+          <div class="pw-example__body">
+            <p><strong>1 · Context.</strong> <span class="pw-blank">Problem area</span> is important because <span class="pw-blank">why it matters, ideally with a concrete consequence</span>.</p>
+            <p><strong>2 · Gap.</strong> However, existing <span class="pw-blank">family of methods</span> <span class="pw-blank">shared limitation</span>.</p>
+            <p><strong>3 · Idea.</strong> In this paper, we propose <span class="pw-blank">name</span>, which <span class="pw-blank">key idea in one clause</span>.</p>
+            <p><strong>4 · Evidence.</strong> On <span class="pw-blank">benchmarks / datasets</span>, <span class="pw-blank">name</span> <span class="pw-blank">headline result with a number</span> compared with <span class="pw-blank">strongest baseline</span>.</p>
+            <p><strong>5 · Takeaway.</strong> These results show that <span class="pw-blank">what the reader should remember</span>.</p>
+          </div>
+        </div>
+        <div class="pw-example pw-anno">
+          <div class="pw-example__head">Annotated example — a complete Abstract</div>
+          <div class="pw-example__body">
+            <p><span class="m1" data-m="Context">Transient hardware faults are becoming more frequent as transistors shrink, and they can silently corrupt program output.</span> <span class="m3" data-m="Gap">Software-only fault detection avoids hardware changes, but existing schemes either slow programs down substantially or leave part of the code unprotected.</span> <span class="m4" data-m="Idea">We present an in-thread instruction replication technique that duplicates computation within the same thread and places comparisons only where corrupted values could leave the program.</span> <span class="m5" data-m="Evidence">In fault-injection experiments on standard benchmarks, our technique detects nearly all injected faults while incurring lower runtime overhead than prior software approaches.</span> <span class="m2" data-m="Takeaway">These results show that full-coverage software fault detection can be practical on commodity processors.</span></p>
+            <p class="pw-example__note">Illustrative Abstract written for this guide. In a real Abstract, the Evidence sentence should carry an actual number (e.g. coverage and overhead percentages).</p>
+          </div>
+        </div>
+        <h4>Abstract checklist</h4>
+        <ul class="pw-checklist">
+          <li>Within the venue's word limit; one paragraph; no citations, no undefined abbreviations.</li>
+          <li>Contains at least one concrete number.</li>
+          <li>Every claim in it is supported somewhere in the paper — reviewers check.</li>
+          <li>Uses the same name for your method as the rest of the paper.</li>
+          <li>Readable by someone outside your sub-field.</li>
+        </ul>
       </section>
 
       <!-- 03 Introduction -->
       <section class="pw-section" id="sec-intro">
-        <h2><span class="pw-num">03</span> Introduction</h2>
+        <h2><span class="pw-num">04</span> Introduction</h2>
         <p class="pw-sub">The most important — and the hardest — section to write. Budget the most iterations here.</p>
 
         <p>Every paper's Introduction looks broadly similar (the later sections vary far more from paper to paper), because its job is always the same: <strong>convince the reviewers</strong> of how important the problem is and how significant your contribution is. Reviewers judge from the Abstract and Introduction <em>first</em>; if there is nothing compelling there, many will not read on. Today some readers even paste papers into an LLM for a summary — but that summary is still built from your Intro. First impressions decide, so a good Introduction is written for a broad audience: an undergraduate, not only a specialist, should be able to follow it.</p>
@@ -387,23 +503,46 @@
           </div>
         </div>
 
-        <h3><i class="fas fa-compress"></i> The Abstract: the Introduction in five sentences</h3>
-        <p>Since the Abstract summarises the Introduction, write it <em>last</em>, one sentence per move:</p>
-        <div class="pw-example pw-template">
-          <div class="pw-example__head">Template — fill the blanks</div>
-          <div class="pw-example__body">
-            <p><strong>1 · Context.</strong> <span class="pw-blank">Problem area</span> is important because <span class="pw-blank">why it matters</span>.</p>
-            <p><strong>2 · Gap.</strong> However, existing <span class="pw-blank">family of methods</span> <span class="pw-blank">shared limitation</span>.</p>
-            <p><strong>3 · Idea.</strong> We propose <span class="pw-blank">name</span>, which <span class="pw-blank">key idea in one clause</span>.</p>
-            <p><strong>4 · Evidence.</strong> On <span class="pw-blank">benchmarks / datasets</span>, it <span class="pw-blank">headline result with a number</span> compared with <span class="pw-blank">strongest baseline</span>.</p>
-            <p><strong>5 · Takeaway.</strong> These results show that <span class="pw-blank">what the reader should remember</span>.</p>
-          </div>
+
+
+
+        <h3><i class="fas fa-layer-group"></i> Paragraph by paragraph</h3>
+        <p>Most engineering Introductions have four to six paragraphs. Here is what each one does and how to start it:</p>
+        <table class="pw-table">
+          <thead><tr><th>¶</th><th>Job</th><th>Typical opening</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>Why the area matters — broad context and stakes</td><td>“<em>X is widely used in…</em>”, “<em>As … grows, …</em>”</td></tr>
+            <tr><td>2</td><td>The specific problem, with the terms it needs</td><td>“<em>A key challenge in X is…</em>”</td></tr>
+            <tr><td>3</td><td>What has been tried, grouped, and the shared limitation</td><td>“<em>Prior work addresses this by… However, …</em>”</td></tr>
+            <tr><td>4</td><td>Your key idea and why it avoids that limitation</td><td>“<em>In this paper, we propose… Our key insight is that…</em>”</td></tr>
+            <tr><td>5</td><td>Contributions (often a numbered list) and headline results</td><td>“<em>This paper makes the following contributions:</em>”</td></tr>
+            <tr><td>6</td><td><em>(optional)</em> Paper organisation</td><td>“<em>The rest of this paper is organized as follows…</em>”</td></tr>
+          </tbody>
+        </table>
+
+        <h3><i class="fas fa-key"></i> State your key insight explicitly</h3>
+        <p>Reviewers look for the one idea that makes your method work where others did not. Do not make them reconstruct it — write a sentence that begins “<em>Our key insight is that…</em>” or “<em>The main idea is…</em>”. If you cannot complete that sentence, the contribution is not clear yet, and no amount of polishing later sections will fix that.</p>
+        <div class="pw-badgood">
+          <div class="bad"><span class="bg-tag"><i class="fas fa-xmark"></i> No insight</span><p>“We propose a new method that combines several techniques to improve performance.”</p></div>
+          <div class="good"><span class="bg-tag"><i class="fas fa-check"></i> Insight stated</span><p>“Our key insight is that a corrupted value only matters once it leaves the processor — through a store, a branch or a system call — so checks are needed only at those points.”</p></div>
         </div>
+
+        <h3><i class="fas fa-image"></i> The teaser figure</h3>
+        <p>Many strong papers put a small figure on page 1 or 2 that shows the problem or the idea at a glance — for example, the prior approach and yours side by side, or a plot where your method sits in the best corner of a trade-off (lower overhead, higher coverage). A reviewer who understands the teaser is already on your side before reaching Section 3.</p>
+
+        <h3><i class="fas fa-triangle-exclamation"></i> Common Introduction mistakes</h3>
+        <ul>
+          <li><strong>Starting too broad.</strong> “Artificial intelligence has changed the world” spends a sentence saying nothing. Start one step above your actual problem, not five.</li>
+          <li><strong>A history lesson.</strong> Listing prior papers one by one belongs in Related Work. Here, group them and name their shared limitation.</li>
+          <li><strong>Hiding the contribution.</strong> If your idea first appears on page 2, many reviewers will already have formed an opinion without it.</li>
+          <li><strong>Overclaiming.</strong> “Solves”, “eliminates”, “guarantees”, “for the first time” — each is a challenge to the reviewer to find the exception. Claim exactly what your experiments show.</li>
+          <li><strong>Contributions that cannot be checked.</strong> Every item should point to a section, a figure or a table.</li>
+        </ul>
       </section>
 
       <!-- 04 Related Work -->
       <section class="pw-section" id="sec-related">
-        <h2><span class="pw-num">04</span> Related Work &amp; Citations</h2>
+        <h2><span class="pw-num">05</span> Related Work &amp; Citations</h2>
         <p class="pw-sub">Where you prove you know the field — and place your work within it. A weak survey here can sink an otherwise good paper.</p>
 
         <h3><i class="fas fa-book-open"></i> What Related Work does</h3>
@@ -468,11 +607,30 @@
           <li>Collect candidate papers into a running list first, then organize and classify. Some papers even publish their literature <strong>search strategy</strong>; studying those teaches you how to search well yourself.</li>
           <li>Watch <strong>citation position</strong> so markers don't blur together — e.g., when <code>[2]</code> and <code>[3]</code> would otherwise be ambiguous, place each next to the claim it supports.</li>
         </ul>
+
+
+        <h3><i class="fas fa-list-check"></i> Building the section, step by step</h3>
+        <ol class="pw-ladder">
+          <li><strong>Collect</strong><span>Gather every paper you might cite into one list (a reference manager or a plain .bib file). Note one line per paper: what it does and its limitation relative to yours.</span></li>
+          <li><strong>Group</strong><span>Sort the list into two to four families by approach — not by year and not by author. Each family becomes a paragraph or subsection with a short title.</span></li>
+          <li><strong>Order</strong><span>Put the families furthest from your work first and the closest last, so the section ends next to your contribution.</span></li>
+          <li><strong>Write each family</strong><span>Describe the shared idea, cite the main papers, credit what they achieve, then state the limitation that matters for your problem.</span></li>
+          <li><strong>Close with the difference</strong><span>End each family, or the whole section, with one sentence that says how your work differs. Never leave the reader to infer it.</span></li>
+        </ol>
+
+        <h3><i class="fas fa-quote-left"></i> Citing well at the sentence level</h3>
+        <ul>
+          <li><strong>A citation is not a noun.</strong> Write “Smith et al. [4] proposed…” or “…as shown in prior work [4]”, not “[4] proposed…”.</li>
+          <li><strong>Group citations for a shared claim:</strong> “Several schemes duplicate instructions in software [3, 7, 9].”</li>
+          <li><strong>Cite the original</strong>, not a later paper that happened to repeat the idea.</li>
+          <li><strong>Be fair in tone.</strong> “<em>X does not address Y</em>” is a fact; “<em>X fails miserably at Y</em>” is an attack that a reviewer — who may be X's author — will remember.</li>
+          <li><strong>Include recent work.</strong> A Related Work section with nothing from the last two or three years suggests you have not checked the current state of the field.</li>
+        </ul>
       </section>
 
       <!-- 05 Method -->
       <section class="pw-section" id="sec-method">
-        <h2><span class="pw-num">05</span> Method</h2>
+        <h2><span class="pw-num">06</span> Method</h2>
         <p class="pw-sub">Comparatively the easiest section to write — if you can clearly explain what you built.</p>
 
         <p>The Method section is the record of "found a problem → built a solution." If you can explain your technique clearly, you can write this section. Depending on the technique, describe how it was designed and how it operates, in enough detail that a competent reader could reconstruct it.</p>
@@ -506,11 +664,36 @@
         <div class="pw-callout">
           <strong>Study the neighbors first.</strong> Before writing, read a few papers close to yours and observe how they are organized — section order, what goes in a figure vs. text, how much math. Prefer <em>published</em> papers over arXiv preprints, since a preprint may not have passed review and may model habits you don't want to copy. In the end, the only job of this section is to explain your technique effectively.
         </div>
+
+
+        <h3><i class="fas fa-ruler"></i> How much detail is enough?</h3>
+        <p>The standard is <strong>reproducibility by a competent reader</strong>: someone in your field should be able to re-implement the method from the paper alone. In practice, that means every design decision is stated, every parameter has a value (here or in the setup), and every non-obvious choice has a reason. Implementation trivia — file formats, variable names, which library function you called — usually does not belong unless it affects the result.</p>
+
+        <h3><i class="fas fa-square-root-variable"></i> Notation and equations</h3>
+        <ul>
+          <li><strong>Define every symbol</strong> the first time it appears, right next to the equation (“where <em>N</em> is the number of instructions and…”).</li>
+          <li><strong>Keep notation consistent</strong> across the whole paper. If <em>x</em> is an input in Section 3, it cannot be a weight in Section 4. A notation table helps in math-heavy papers.</li>
+          <li><strong>Equations are part of sentences</strong> and take punctuation. Number only the ones you refer to later.</li>
+          <li><strong>Explain the intuition</strong> in words before or after a formula. Many reviewers skim equations and read the sentence around them.</li>
+        </ul>
+
+        <h3><i class="fas fa-code"></i> Algorithms and pseudocode</h3>
+        <p>Use pseudocode when the order of steps matters and prose would be ambiguous. Keep it short (roughly 10–25 lines), number the lines, and refer to them in the text (“lines 4–7 duplicate each arithmetic instruction”). Pseudocode does not replace explanation — it supports it.</p>
+
+        <h3><i class="fas fa-person-chalkboard"></i> Walk through a small example</h3>
+        <p>After describing a mechanism in general terms, show it on a tiny concrete case: three instructions, a small graph, a 4×4 matrix. One worked example, ideally paired with a figure, often explains more than a page of general description — and it is the part reviewers remember.</p>
+        <div class="pw-example pw-anno">
+          <div class="pw-example__head">Annotated example — opening a Method subsection</div>
+          <div class="pw-example__body">
+            <p><span class="m1" data-m="Goal">To detect a fault before it can corrupt program output, our technique must compare original and duplicated values at the right points.</span> <span class="m4" data-m="What we do">We therefore insert a comparison immediately before every instruction through which a value can leave the processor: stores, conditional branches and system calls (Algorithm 1, lines 5–9).</span> <span class="m3" data-m="Contrast">Unlike schemes that compare after every duplicated instruction,</span> <span class="m5" data-m="Benefit">this placement lets most duplicated instructions run without a check, which is the main source of our overhead reduction (Section 4.3).</span></p>
+            <p class="pw-example__note">Illustrative text written for this guide, not quoted from a published paper.</p>
+          </div>
+        </div>
       </section>
 
       <!-- 06 Experiments -->
       <section class="pw-section" id="sec-experiments">
-        <h2><span class="pw-num">06</span> Experiments</h2>
+        <h2><span class="pw-num">07</span> Experiments</h2>
         <p class="pw-sub">Setup, results, analysis, contribution — and, above everything, reproducibility.</p>
 
         <p>The Experiments section answers four questions: How was the experiment <strong>set up</strong>? What <strong>results</strong> came out? How were they <strong>analyzed</strong>? How much did the work <strong>contribute</strong>? Describe the environment and procedure precisely enough that someone else could rebuild it, and explain the <strong>performance metrics</strong> that are standard in your field (accuracy, latency, coverage, overhead — whatever your problem is measured by).</p>
@@ -557,11 +740,98 @@
         <div class="pw-callout pw-callout--warn">
           <strong>Avoid default charts.</strong> Effort is visible, and so is its absence. Make series distinguishable even in <em>black &amp; white</em> (papers are often printed grayscale): use distinct markers, line styles, and hatching — not just a red line vs. a blue line, which can be indistinguishable to colorblind readers and in grayscale. A clear, deliberate figure reads as a careful paper.
         </div>
+
+
+        <h3><i class="fas fa-question"></i> Start from research questions</h3>
+        <p>A clean way to organise an evaluation is to state a few explicit questions at the start and answer one per subsection:</p>
+        <div class="pw-example">
+          <div class="pw-example__head">Example research questions (illustrative)</div>
+          <div class="pw-example__body">
+            <ul>
+              <li><strong>RQ1 — Effectiveness:</strong> How many injected faults does the technique detect?</li>
+              <li><strong>RQ2 — Cost:</strong> What runtime and code-size overhead does it add, compared with the baselines?</li>
+              <li><strong>RQ3 — Design choices:</strong> How much does each component (here: check placement) contribute?</li>
+              <li><strong>RQ4 — Sensitivity:</strong> How do the results change with workload type and input size?</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3><i class="fas fa-list"></i> What the setup subsection must contain</h3>
+        <ul class="pw-checklist">
+          <li><strong>Hardware:</strong> processor or GPU model, memory, number of nodes.</li>
+          <li><strong>Software:</strong> OS, compiler or framework versions, important flags.</li>
+          <li><strong>Workloads:</strong> benchmarks or datasets, with versions, sizes and splits; why these were chosen.</li>
+          <li><strong>Baselines:</strong> which methods, which implementation (official code or your re-implementation), and the settings used.</li>
+          <li><strong>Metrics:</strong> definitions for anything non-standard, and which direction is better.</li>
+          <li><strong>Protocol:</strong> number of runs or seeds, how results are aggregated (mean, median), and how variance is reported.</li>
+          <li><strong>Hyperparameters:</strong> values, and how they were tuned — and that baselines received comparable tuning.</li>
+        </ul>
+
+        <h3><i class="fas fa-scale-balanced"></i> Fair baselines</h3>
+        <ul>
+          <li>Compare against the <strong>strongest</strong> relevant methods, not the easiest to beat. A reviewer will name the one you left out.</li>
+          <li>Give baselines the <strong>same budget</strong>: same hardware, same data, similar tuning effort. Tuning your method for weeks and running baselines with defaults is a common reason for rejection.</li>
+          <li>Where you re-implemented a baseline, say so, and show that your version reproduces the original paper's reported numbers where possible.</li>
+        </ul>
+
+        <h3><i class="fas fa-hashtag"></i> Reporting numbers</h3>
+        <ul>
+          <li>Report <strong>variance</strong> (standard deviation, confidence intervals or min/max over runs) whenever results come from randomness or noisy measurements.</li>
+          <li>Be precise about <strong>relative vs. absolute</strong> changes: from 20% to 15% overhead is a 5 percentage-point drop, or a 25% relative reduction. Say which one you mean.</li>
+          <li>Use a sensible number of digits. “73.4%” is information; “73.41827%” is noise.</li>
+          <li>Highlight the best result in each table column (commonly in bold), and state that convention in the caption.</li>
+          <li>Never report only the benchmarks where you win. If a subset is shown, explain the choice and give the full results in an appendix or supplement.</li>
+        </ul>
+      </section>
+
+      <section class="pw-section" id="sec-figures">
+        <h2><span class="pw-num">08</span> Figures &amp; Tables</h2>
+        <p class="pw-sub">Most reviewers look at the figures before they read the text. Design them to carry the argument alone.</p>
+
+        <h3><i class="fas fa-shapes"></i> Which kind of figure?</h3>
+        <table class="pw-table">
+          <thead><tr><th>You want to show</th><th>Use</th></tr></thead>
+          <tbody>
+            <tr><td>How the system works</td><td>An overview diagram: boxes and arrows, left-to-right or top-to-bottom, with as few labels as possible</td></tr>
+            <tr><td>Your method vs. baselines across benchmarks</td><td>A grouped bar chart, or a table if exact numbers matter</td></tr>
+            <tr><td>A trend as a parameter changes</td><td>A line plot with markers</td></tr>
+            <tr><td>A trade-off (e.g. overhead vs. coverage)</td><td>A scatter plot, with the “better” corner indicated</td></tr>
+            <tr><td>Exact values many readers will compare</td><td>A table</td></tr>
+            <tr><td>Qualitative behaviour (images, trajectories)</td><td>A grid of examples, including failure cases</td></tr>
+          </tbody>
+        </table>
+
+        <h3><i class="fas fa-pen-ruler"></i> Making figures readable</h3>
+        <ul>
+          <li><strong>Font size in the figure should match the caption at print size.</strong> Axis labels that are unreadable on paper are among the most common review comments.</li>
+          <li><strong>Label axes with units</strong> (“Runtime overhead (%)”), and say which direction is better if it is not obvious.</li>
+          <li><strong>Distinguish series by more than colour:</strong> markers, line styles, hatching. Check the figure in grayscale.</li>
+          <li><strong>Use the same colour for the same method</strong> in every figure of the paper.</li>
+          <li><strong>Export as vector</strong> (PDF) from your plotting tool so text and lines stay sharp.</li>
+          <li><strong>Remove chart junk:</strong> 3-D effects, heavy gridlines, shadows and redundant legends add nothing.</li>
+        </ul>
+
+        <h3><i class="fas fa-closed-captioning"></i> Writing captions</h3>
+        <p>A caption should let a reader understand the figure without searching the text: what is shown, how to read it, and — ideally — the takeaway.</p>
+        <div class="pw-badgood">
+          <div class="bad"><span class="bg-tag"><i class="fas fa-xmark"></i> Unhelpful</span><p>“Figure 5: Results.”</p></div>
+          <div class="good"><span class="bg-tag"><i class="fas fa-check"></i> Self-contained</span><p>“Figure 5: Runtime overhead normalised to the unprotected program (lower is better). Our technique has the lowest overhead on all benchmarks; the gap is largest on memory-intensive programs.”</p></div>
+        </div>
+
+        <h3><i class="fas fa-table"></i> Designing tables</h3>
+        <ul>
+          <li>Put the caption <strong>above</strong> a table (the usual convention in engineering venues) and below a figure.</li>
+          <li>Use horizontal rules only (<code>booktabs</code> in LaTeX); avoid vertical lines and grid boxes.</li>
+          <li>Align numbers on the decimal point, and use the same precision within a column.</li>
+          <li>Put your method in the last row (or first), consistently, and mark the best value per column.</li>
+          <li>If the table is wide, transpose it or split it — never shrink text below a readable size.</li>
+        </ul>
+        <div class="pw-callout"><strong>Every figure and table must be referenced in the text</strong> — and the text should say what to notice (“As Figure 5 shows, …”), not just “see Figure 5”. A figure the text never mentions looks like padding.</div>
       </section>
 
       <!-- 07 Conclusion -->
       <section class="pw-section" id="sec-conclusion">
-        <h2><span class="pw-num">07</span> Conclusion</h2>
+        <h2><span class="pw-num">09</span> Conclusion</h2>
         <p class="pw-sub">The most formulaic section — which is exactly why it is the easiest.</p>
 
         <p>Conclusions are highly standardized in both structure and phrasing, so you can safely follow the usual template. Read a few conclusions in your target venue and you will see the same shape repeat. The core is three moves:</p>
@@ -582,11 +852,97 @@
         <div class="pw-callout">
           <strong>Some venues require limitations explicitly.</strong> NeurIPS, for example, asks authors to state the limitations of their work. Cover summary, limitations, and future directions and reviewers very rarely push back on the Conclusion — it is the section least likely to cost you an acceptance, so don't overthink it.
         </div>
+
+
+        <div class="pw-example pw-template">
+          <div class="pw-example__head">Template — a three-move Conclusion</div>
+          <div class="pw-example__body">
+            <p><strong>Summary.</strong> This paper presented <span class="pw-blank">name</span>, a <span class="pw-blank">type of technique</span> that <span class="pw-blank">key idea</span>. On <span class="pw-blank">evaluation</span>, it <span class="pw-blank">headline result</span>.</p>
+            <p><strong>Limitations.</strong> <span class="pw-blank">name</span> currently <span class="pw-blank">assumption or scope it does not cover</span>, and <span class="pw-blank">a second limitation, if any</span>.</p>
+            <p><strong>Future work.</strong> We plan to <span class="pw-blank">most natural extension</span> and to <span class="pw-blank">second direction</span>.</p>
+          </div>
+        </div>
+        <h3><i class="fas fa-triangle-exclamation"></i> Common Conclusion mistakes</h3>
+        <ul>
+          <li><strong>Copying the Abstract.</strong> Same content is fine; the same sentences are not. Rephrase, and you can be more specific now that the reader has seen the results.</li>
+          <li><strong>New results or claims.</strong> Nothing should appear here for the first time.</li>
+          <li><strong>Vague future work.</strong> “We will further improve the method” says nothing; name a concrete next step.</li>
+        </ul>
+      </section>
+
+      <section class="pw-section" id="sec-style">
+        <h2><span class="pw-num">10</span> Sentence-Level Style</h2>
+        <p class="pw-sub">Small habits that make a technical paper easy to read — and that reviewers notice when they are missing.</p>
+
+        <h3><i class="fas fa-spell-check"></i> Rules that cover most problems</h3>
+        <ul>
+          <li><strong>One idea per sentence.</strong> If a sentence needs three commas and a semicolon, split it.</li>
+          <li><strong>Prefer active voice</strong> when the actor matters: “We insert a check before each store” is clearer than “A check is inserted before each store.” Passive voice is fine when the actor is irrelevant.</li>
+          <li><strong>“We” is standard</strong> in engineering papers for what the authors did, even with a single author in many venues — follow the venue's custom.</li>
+          <li><strong>Tense:</strong> present for what the paper says and what is generally true (“Section 3 describes…”, “the method duplicates…”); past for what you did in experiments (“we ran each benchmark ten times”).</li>
+          <li><strong>One term per concept.</strong> If you call it a “check” in Section 3, do not call it a “comparison”, a “validation” and a “verification” later. Readers assume different words mean different things.</li>
+          <li><strong>Define abbreviations once</strong> at first use, and do not define ones you use only once or twice.</li>
+          <li><strong>Cut empty intensifiers:</strong> “very”, “extremely”, “significantly” (unless you mean statistical significance), “clearly”, “obviously”.</li>
+          <li><strong>Quantify instead of describing:</strong> “reduces overhead from 2.1× to 1.4×” beats “greatly reduces overhead”.</li>
+        </ul>
+        <div class="pw-badgood">
+          <div class="bad"><span class="bg-tag"><i class="fas fa-xmark"></i> Wordy</span><p>“It is very important to note that the proposed approach is able to significantly reduce the overhead in a very efficient manner.”</p></div>
+          <div class="good"><span class="bg-tag"><i class="fas fa-check"></i> Direct</span><p>“Our approach reduces runtime overhead from 2.1× to 1.4×.”</p></div>
+        </div>
+        <div class="pw-badgood">
+          <div class="bad"><span class="bg-tag"><i class="fas fa-xmark"></i> Inconsistent and passive</span><p>“In Section 3 the replication is described, and the checking is explained in Section 4, where the validation points are also discussed.”</p></div>
+          <div class="good"><span class="bg-tag"><i class="fas fa-check"></i> Consistent and active</span><p>“Section 3 describes instruction replication; Section 4 describes where checks are placed.”</p></div>
+        </div>
+
+        <h3><i class="fas fa-scale-unbalanced"></i> Claim exactly what you showed</h3>
+        <p>Match the strength of each sentence to its evidence. “Our results suggest” for a trend seen on a few benchmarks; “our results show” for a consistent effect across all of them; “we prove” only with a proof. Words like <em>always</em>, <em>never</em>, <em>optimal</em> and <em>first</em> need either a proof or a very careful literature check.</p>
+
+        <h3><i class="fas fa-language"></i> Writing in English as a second language</h3>
+        <ul>
+          <li>Short sentences are not a weakness — they are what good technical English looks like.</li>
+          <li>Keep a personal list of phrases from well-written papers in your area (“<em>To this end, …</em>”, “<em>In contrast to …</em>”, “<em>This allows us to …</em>”) and reuse the <em>structures</em>, never whole sentences.</li>
+          <li>Run a grammar checker as a final pass, and if possible ask a fluent co-author to read the Abstract and Introduction.</li>
+        </ul>
+      </section>
+
+      <section class="pw-section" id="sec-revision">
+        <h2><span class="pw-num">11</span> Revising &amp; Responding to Reviews</h2>
+        <p class="pw-sub">A first draft is raw material. Most of the quality comes from deliberate passes over it — and from how you answer reviewers.</p>
+
+        <h3><i class="fas fa-layer-group"></i> Revise in passes, one concern at a time</h3>
+        <p>Trying to fix structure, wording and typos in a single read means none of them gets fixed well. Do separate passes:</p>
+        <ol class="pw-ladder">
+          <li><strong>Structure pass</strong><span>Read only section titles and first sentences. Does the story hold? Is anything in the wrong place?</span></li>
+          <li><strong>Claims pass</strong><span>For every claim, find its evidence. Weaken, support or cut anything unsupported.</span></li>
+          <li><strong>Reader pass</strong><span>Give the draft to someone who has not seen the project and ask where they got lost. Their confusion is a preview of the reviewer’s.</span></li>
+          <li><strong>Figures pass</strong><span>Look at every figure and caption alone, at print size.</span></li>
+          <li><strong>Language pass</strong><span>Wording, consistency of terms, abbreviations, tense.</span></li>
+          <li><strong>Format pass</strong><span>Template untouched, page limit, references complete, anonymisation if the venue is double-blind.</span></li>
+        </ol>
+        <div class="pw-callout pw-callout--good"><strong>Leave time between passes.</strong> Even one night away from the draft makes problems visible that you could not see while writing. Reading the paper aloud — or printing it — catches a surprising number of errors.</div>
+
+        <h3><i class="fas fa-reply"></i> Writing the response letter</h3>
+        <p>When reviews come back with a revise decision (always for journals; in conferences with a rebuttal phase, in shortened form), you answer every comment. The format that works:</p>
+        <ol>
+          <li><strong>Thank the reviewers briefly</strong> once at the top — no need to repeat it in every answer.</li>
+          <li><strong>Quote each comment</strong>, numbered (R1.1, R1.2, …), then answer it directly below.</li>
+          <li><strong>Say what you changed and where</strong> — section, page, and ideally quote the new text. Mark changes in the revised manuscript (coloured text or a diff).</li>
+          <li><strong>If you disagree, do it with evidence</strong> and politely: explain, show data, and where possible still add a clarification to the paper so the next reader does not have the same question.</li>
+          <li><strong>Never ignore a comment</strong>, even a small one. An unanswered point is read as a refusal.</li>
+        </ol>
+        <div class="pw-example">
+          <div class="pw-example__head">Example — one response item (illustrative)</div>
+          <div class="pw-example__body">
+            <p><strong>R2.3</strong> — <em>“The overhead comparison does not include [Baseline Z], which seems to be the closest prior work.”</em></p>
+            <p><strong>Response:</strong> We thank the reviewer for pointing this out. We have added Baseline Z to the overhead comparison (Section 4.3, Figure 6) using the authors' public implementation with its default settings. Our technique remains lower in overhead on all benchmarks; the difference is smallest on compute-bound programs, which we now discuss in Section 4.3 (page 8, highlighted).</p>
+          </div>
+        </div>
+        <div class="pw-callout pw-callout--warn"><strong>Rejection is normal.</strong> Most papers at competitive venues are rejected at least once. Read the reviews, wait a day, then treat them as free advice: fix what they found, and submit an improved version to the next suitable venue.</div>
       </section>
 
       <!-- 08 LLM -->
       <section class="pw-section" id="sec-llm">
-        <h2><span class="pw-num">08</span> Using LLMs Responsibly</h2>
+        <h2><span class="pw-num">12</span> Using LLMs Responsibly</h2>
         <p class="pw-sub">Genuinely useful help — under rules that vary by venue and change every single year.</p>
 
         <p>LLMs can turn a set of bullets into draft paragraphs and help you brainstorm framings, and it is increasingly unrealistic to avoid them entirely. But they carry real risks. They <strong>hallucinate</strong> — confidently producing false statements and fabricated references — and they raise <strong>plagiarism and copyright</strong> questions. Journals have already <em>retracted</em> papers over AI-generated, nonsensical figures, and publishers (a BMJ spokesperson among them) have warned that AI is fueling "paper mills." Do not over-trust the output; treat it as a fast but unreliable assistant that you are responsible for.</p>
@@ -610,7 +966,7 @@
 
       <!-- 09 Conference vs Journal -->
       <section class="pw-section" id="sec-venue">
-        <h2><span class="pw-num">09</span> Conference vs Journal</h2>
+        <h2><span class="pw-num">13</span> Conference vs Journal</h2>
         <p class="pw-sub">Two publication venues with very different rhythms, expectations, and career weight.</p>
 
         <p>A <strong>conference proceedings</strong> is the archive of the papers presented at a conference — the collected, published record of that event. Conferences run on <strong>hard deadlines</strong> because there is a fixed presentation schedule, and if your paper is accepted you present it. A <strong>journal</strong> works differently: it runs on iterative <strong>peer review</strong>, usually has no deadline, and accepts a paper once it has been revised enough. Journal papers are typically <em>complete</em> stories; conference papers are often an intermediate checkpoint of ongoing work.</p>
@@ -635,6 +991,19 @@
 
         <h3><i class="fas fa-envelope-open-text"></i> Cover letter &amp; response letter</h3>
         <p>When submitting — especially to journals — you write a <strong>cover letter</strong> stating why the paper matters and why it belongs in this particular venue. After a review round, you write a <strong>response letter</strong> that walks through each reviewer comment and explains precisely how you addressed it. Both are short but consequential: they frame how editors and reviewers read your work.</p>
+
+
+        <div class="pw-example pw-template">
+          <div class="pw-example__head">Template — a short journal cover letter</div>
+          <div class="pw-example__body">
+            <p>Dear <span class="pw-blank">Editor name</span>,</p>
+            <p>We submit our manuscript “<span class="pw-blank">title</span>” for consideration as a <span class="pw-blank">article type</span> in <span class="pw-blank">journal</span>.</p>
+            <p>The paper addresses <span class="pw-blank">problem</span>. Existing approaches <span class="pw-blank">limitation</span>. We propose <span class="pw-blank">idea</span>, and show that <span class="pw-blank">main result</span>.</p>
+            <p>We believe the work fits <span class="pw-blank">journal</span> because <span class="pw-blank">connection to the journal’s scope or recent papers</span>.</p>
+            <p>This manuscript has not been published and is not under consideration elsewhere. All authors have approved the submission.</p>
+            <p>Sincerely, <span class="pw-blank">corresponding author</span></p>
+          </div>
+        </div>
       </section>
 
       <!-- Checklist -->
