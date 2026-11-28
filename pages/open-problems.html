@@ -57,6 +57,10 @@
     .op-card__block li { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; margin-bottom: 4px; }
     .op-card__block p { color: var(--text-secondary); font-size: 0.9rem; line-height: 1.6; margin: 0; }
 
+    .op-card__read { display: inline-flex; align-items: center; gap: 7px; margin-top: 14px; font-size: 0.85rem; font-weight: 600; color: var(--op); text-decoration: none; }
+    .op-card__read::after { content: ""; position: absolute; inset: 0; }
+    .op-card__read i { transition: transform 0.2s ease; }
+    .op-card:hover .op-card__read i { transform: translateX(3px); }
     .op-category { display: flex; align-items: center; gap: 13px; margin: 46px 0 18px; }
     .op-category:first-of-type { margin-top: 10px; }
     .op-category .op-cat-num {
@@ -114,6 +118,7 @@
           <span class="op-card__status">Open</span>
           <p class="op-card__desc">Instead of evaluating robustness after a model is already wrong, can we detect the likelihood that a prediction will fail <em>in advance</em>? Use representation geometry, uncertainty, or topology to find failure precursors under distribution shift and adversarial conditions.</p>
           <div class="op-card__tags"><span class="op-card__tag">Failure Detection</span><span class="op-card__tag">Uncertainty</span><span class="op-card__tag">Distribution Shift</span></div>
+          <a class="op-card__read" href="op-01.html">Read the article <i class="fas fa-arrow-right"></i></a>
         </div>
         <div class="op-card">
           <span class="op-card__num">OP-02</span>
@@ -121,6 +126,7 @@
           <span class="op-card__status">Open</span>
           <p class="op-card__desc">Why are some representations resistant to perturbation while others collapse easily? Beyond accuracy / robust accuracy, is there a property in a representation's geometry or topology that explains robustness itself?</p>
           <div class="op-card__tags"><span class="op-card__tag">Representation</span><span class="op-card__tag">Geometry</span><span class="op-card__tag">Robustness</span></div>
+          <a class="op-card__read" href="op-02.html">Read the article <i class="fas fa-arrow-right"></i></a>
         </div>
         <div class="op-card">
           <span class="op-card__num">OP-03</span>
@@ -128,6 +134,7 @@
           <span class="op-card__status">Open</span>
           <p class="op-card__desc">Rather than defending against one specific adversarial attack, can we build robustness that generalizes to attacks and corruptions never seen during training?</p>
           <div class="op-card__tags"><span class="op-card__tag">Adversarial</span><span class="op-card__tag">Generalization</span><span class="op-card__tag">Corruption</span></div>
+          <a class="op-card__read" href="op-03.html">Read the article <i class="fas fa-arrow-right"></i></a>
         </div>
       </div>
 
@@ -140,6 +147,7 @@
           <span class="op-card__status">Open</span>
           <p class="op-card__desc">Can topological descriptors such as persistent homology catch representation collapse <em>before</em> accuracy drops? If so, it extends beyond robustness to OOD detection, continual learning, and federated learning.</p>
           <div class="op-card__tags"><span class="op-card__tag">TDA</span><span class="op-card__tag">Persistent Homology</span><span class="op-card__tag">OOD</span></div>
+          <a class="op-card__read" href="op-04.html">Read the article <i class="fas fa-arrow-right"></i></a>
         </div>
         <div class="op-card">
           <span class="op-card__num">OP-05</span>
@@ -147,6 +155,7 @@
           <span class="op-card__status">Open</span>
           <p class="op-card__desc">Computing a persistence diagram is not the end. How does that topological structure relate to the <em>semantic</em> structure a model has learned? A more fundamental question about meaning, not just measurement.</p>
           <div class="op-card__tags"><span class="op-card__tag">TDA</span><span class="op-card__tag">Representation</span><span class="op-card__tag">Interpretability</span></div>
+          <a class="op-card__read" href="op-05.html">Read the article <i class="fas fa-arrow-right"></i></a>
         </div>
         <div class="op-card">
           <span class="op-card__num">OP-06</span>
@@ -154,6 +163,7 @@
           <span class="op-card__status">Open</span>
           <p class="op-card__desc">Instead of using topology only as an analysis tool, can we embed it in the loss or regularization to directly learn a desired representation topology?</p>
           <div class="op-card__tags"><span class="op-card__tag">TDA</span><span class="op-card__tag">Training</span><span class="op-card__tag">Regularization</span></div>
+          <a class="op-card__read" href="op-06.html">Read the article <i class="fas fa-arrow-right"></i></a>
         </div>
       </div>
 
@@ -166,6 +176,7 @@
           <span class="op-card__status">Open</span>
           <p class="op-card__desc">Is the robustness of quantum machine learning merely an artifact of a different model structure, or does it arise from the quantum representation itself?</p>
           <div class="op-card__tags"><span class="op-card__tag">Quantum ML</span><span class="op-card__tag">Robustness</span></div>
+          <a class="op-card__read" href="op-07.html">Read the article <i class="fas fa-arrow-right"></i></a>
         </div>
         <div class="op-card">
           <span class="op-card__num">OP-08</span>
@@ -173,6 +184,7 @@
           <span class="op-card__status">Open</span>
           <p class="op-card__desc">Classical ML perturbs <code>x + δ</code>; quantum models also involve state preparation, measurement, and noise. So what threat model should define quantum adversarial robustness? A genuinely fundamental question.</p>
           <div class="op-card__tags"><span class="op-card__tag">Quantum</span><span class="op-card__tag">Adversarial</span><span class="op-card__tag">Threat Model</span></div>
+          <a class="op-card__read" href="op-08.html">Read the article <i class="fas fa-arrow-right"></i></a>
         </div>
         <div class="op-card">
           <span class="op-card__num">OP-09</span>
@@ -180,6 +192,7 @@
           <span class="op-card__status">Open</span>
           <p class="op-card__desc">On identical data, do quantum and classical models exhibit different failure modes — and can that difference be characterized, or even exploited?</p>
           <div class="op-card__tags"><span class="op-card__tag">Quantum</span><span class="op-card__tag">Classical</span><span class="op-card__tag">Failure Modes</span></div>
+          <a class="op-card__read" href="op-09.html">Read the article <i class="fas fa-arrow-right"></i></a>
         </div>
       </div>
 
@@ -192,6 +205,7 @@
           <span class="op-card__status">Open</span>
           <p class="op-card__desc">Beyond Non-IID: how do we guarantee global-model reliability when device, sensor, environment, and compute capability all differ across clients?</p>
           <div class="op-card__tags"><span class="op-card__tag">Federated Learning</span><span class="op-card__tag">Heterogeneity</span><span class="op-card__tag">Reliability</span></div>
+          <a class="op-card__read" href="op-10.html">Read the article <i class="fas fa-arrow-right"></i></a>
         </div>
         <div class="op-card">
           <span class="op-card__num">OP-11</span>
@@ -199,6 +213,7 @@
           <span class="op-card__status">Open</span>
           <p class="op-card__desc">In privacy-preserving FL where raw data is invisible, can we distinguish corrupted, shifted, or adversarial clients from representations, updates, and statistics alone? A natural bridge between AI security and FL.</p>
           <div class="op-card__tags"><span class="op-card__tag">Federated Learning</span><span class="op-card__tag">AI Security</span><span class="op-card__tag">Privacy</span></div>
+          <a class="op-card__read" href="op-11.html">Read the article <i class="fas fa-arrow-right"></i></a>
         </div>
         <div class="op-card">
           <span class="op-card__num">OP-12</span>
@@ -206,6 +221,7 @@
           <span class="op-card__status">Open</span>
           <p class="op-card__desc">Beyond emitting an uncertainty score, can an autonomous-driving / robotics model decide "I should not trust my prediction right now" — and change its action strategy accordingly?</p>
           <div class="op-card__tags"><span class="op-card__tag">Autonomous</span><span class="op-card__tag">Uncertainty</span><span class="op-card__tag">Trust</span></div>
+          <a class="op-card__read" href="op-12.html">Read the article <i class="fas fa-arrow-right"></i></a>
         </div>
       </div>
 
@@ -218,6 +234,7 @@
           <span class="op-card__status op-card__status--seeking">Looking for Collaborators</span>
           <p class="op-card__desc">Autonomous models work well in environments resembling their training data, but real roads constantly present the unseen — unusual construction zones, rare objects, abnormal driver behavior, extreme weather. The real question goes beyond "can we detect OOD?" to: <em>can an autonomous system recognize that it does not understand the current situation — and react safely?</em></p>
           <div class="op-card__tags"><span class="op-card__tag">Autonomous Driving</span><span class="op-card__tag">OOD Detection</span><span class="op-card__tag">Trustworthy AI</span></div>
+          <a class="op-card__read" href="op-13.html">Read the article <i class="fas fa-arrow-right"></i></a>
         </div>
         <div class="op-card">
           <span class="op-card__num">OP-14</span>
@@ -225,6 +242,7 @@
           <span class="op-card__status op-card__status--seeking">Looking for Collaborators</span>
           <p class="op-card__desc">Beyond what perception currently sees, can we foresee a dangerous situation seconds ahead? For example, judging a pedestrian's crossing intent from posture, gaze, and heading before they step onto the road, or predicting a sudden lane change from subtle vehicle motion. The core: <em>can an autonomous vehicle detect the early signatures of an accident before the dangerous event actually occurs?</em></p>
           <div class="op-card__tags"><span class="op-card__tag">Autonomous Driving</span><span class="op-card__tag">Trajectory Prediction</span><span class="op-card__tag">Risk Modeling</span></div>
+          <a class="op-card__read" href="op-14.html">Read the article <i class="fas fa-arrow-right"></i></a>
         </div>
         <div class="op-card">
           <span class="op-card__num">OP-15</span>
@@ -232,6 +250,7 @@
           <span class="op-card__status op-card__status--seeking">Looking for Collaborators</span>
           <p class="op-card__desc">In real vehicles, sensors are not guaranteed healthy — cameras get occluded, LiDAR degrades in bad weather, GPS drifts. Yet typical sensor fusion largely assumes every modality arrives intact. The question: <em>can an autonomous system understand which sensors are trustworthy — and keep driving safely when some are not?</em></p>
           <div class="op-card__tags"><span class="op-card__tag">Autonomous Driving</span><span class="op-card__tag">Sensor Fusion</span><span class="op-card__tag">Robustness</span></div>
+          <a class="op-card__read" href="op-15.html">Read the article <i class="fas fa-arrow-right"></i></a>
         </div>
       </div>
 
@@ -244,6 +263,7 @@
           <span class="op-card__status op-card__status--seeking">Looking for Collaborators</span>
           <p class="op-card__desc">BB84 offers strong security under ideal conditions, but real systems carry non-idealities — photon loss, detector noise, imperfect state preparation, channel fluctuation. The core: <em>how far can practical BB84 deviate from its ideal assumptions before security or key-generation performance becomes unreliable?</em> And can we tell real noise from adversarial disturbance — is a rising QBER hardware imperfection, or an attack?</p>
           <div class="op-card__tags"><span class="op-card__tag">BB84</span><span class="op-card__tag">QKD</span><span class="op-card__tag">Security</span></div>
+          <a class="op-card__read" href="op-16.html">Read the article <i class="fas fa-arrow-right"></i></a>
         </div>
         <div class="op-card">
           <span class="op-card__num">OP-17</span>
@@ -251,6 +271,7 @@
           <span class="op-card__status op-card__status--seeking">Looking for Collaborators</span>
           <p class="op-card__desc">A real quantum channel isn't fixed — loss and noise vary over time, so static settings are either too conservative or unstable. <em>Can a BB84 system adapt its operating parameters — error correction, privacy amplification, transmission rate — in real time without weakening its security guarantees?</em> If ML is involved, it is cleaner to use it for channel estimation and parameter optimization rather than letting it make security decisions directly.</p>
           <div class="op-card__tags"><span class="op-card__tag">BB84</span><span class="op-card__tag">Adaptive Systems</span><span class="op-card__tag">Quantum Networks</span></div>
+          <a class="op-card__read" href="op-17.html">Read the article <i class="fas fa-arrow-right"></i></a>
         </div>
         <div class="op-card">
           <span class="op-card__num">OP-18</span>
@@ -258,6 +279,7 @@
           <span class="op-card__status op-card__status--seeking">Looking for Collaborators</span>
           <p class="op-card__desc">BB84 usually handles only key distribution while the actual data travels on a classical channel. From a systems view: <em>how should quantum key distribution and classical communication be jointly designed as one reliable system?</em> How do we match key-generation rate to classical traffic demand, degrade gracefully when the QKD link falters, allocate quantum-key resources across many users and links, and optimize end-to-end latency and security together?</p>
           <div class="op-card__tags"><span class="op-card__tag">BB84</span><span class="op-card__tag">Hybrid Communication</span><span class="op-card__tag">Network Systems</span></div>
+          <a class="op-card__read" href="op-18.html">Read the article <i class="fas fa-arrow-right"></i></a>
         </div>
       </div>
 
@@ -270,6 +292,7 @@
           <span class="op-card__status op-card__status--seeking">Looking for Collaborators</span>
           <p class="op-card__desc">LLMs generate answers with high confidence, but that confidence often fails to match actual correctness. <em>Can an LLM reliably estimate when its own answer is likely to be wrong?</em> Beyond token probability, can we measure semantic uncertainty, flag hallucination risk <em>before</em> answering, and keep calibration under domain shift?</p>
           <div class="op-card__tags"><span class="op-card__tag">LLM</span><span class="op-card__tag">Uncertainty</span><span class="op-card__tag">Trustworthy AI</span></div>
+          <a class="op-card__read" href="op-19.html">Read the article <i class="fas fa-arrow-right"></i></a>
         </div>
         <div class="op-card">
           <span class="op-card__num">OP-20</span>
@@ -277,6 +300,7 @@
           <span class="op-card__status op-card__status--seeking">Looking for Collaborators</span>
           <p class="op-card__desc">LLMs are easily swayed by prompt injection, misleading context, and poisoned retrieval results. <em>Can an LLM distinguish trustworthy instructions and evidence from adversarial or misleading context?</em> Can injection be caught at the representation level, can a RAG system judge the reliability of retrieved documents, can correct reasoning survive partly-malicious context, and can defenses generalize to new attacks?</p>
           <div class="op-card__tags"><span class="op-card__tag">LLM</span><span class="op-card__tag">Security</span><span class="op-card__tag">Robustness</span></div>
+          <a class="op-card__read" href="op-20.html">Read the article <i class="fas fa-arrow-right"></i></a>
         </div>
         <div class="op-card">
           <span class="op-card__num">OP-21</span>
@@ -284,6 +308,7 @@
           <span class="op-card__status op-card__status--seeking">Looking for Collaborators</span>
           <p class="op-card__desc">A tiny change to a prompt can sharply change the answer or reasoning — so what actually changed in the internal representation? <em>Can we identify the internal representation changes that cause an LLM to switch its reasoning or final answer?</em> Do semantically-equal prompts induce similar internal representations, can certain layers or attention patterns predict answer instability, and can representation geometry or topology explain reasoning transitions? A natural Topology × LLM bridge.</p>
           <div class="op-card__tags"><span class="op-card__tag">LLM</span><span class="op-card__tag">Interpretability</span><span class="op-card__tag">Representation</span></div>
+          <a class="op-card__read" href="op-21.html">Read the article <i class="fas fa-arrow-right"></i></a>
         </div>
       </div>
 

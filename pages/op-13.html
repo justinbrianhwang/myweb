@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OP-13: Can Autonomous Vehicles Recognize Situations They Have Never Seen Before? — Sunjun Hwang</title>
+  <meta name="description" content="Open Problem 13 — can a self-driving car recognise that it does not understand the current situation, and react safely?">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/op-article.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+
+  <main class="page-content" data-theme="openproblems">
+    <div class="container">
+      <article class="opa">
+        <a class="opa-back" href="open-problems.html"><i class="fas fa-arrow-left"></i> All Open Problems</a>
+
+        <header class="opa-head">
+          <div class="opa-kicker">Open Problem 13 · Autonomous Driving</div>
+          <h1>Can Autonomous Vehicles Recognize Situations They Have Never Seen Before?</h1>
+          <div class="opa-meta">
+            <span><i class="far fa-calendar"></i> November 2026</span>
+            <span><i class="far fa-clock"></i> 7 min read</span>
+            <span><i class="fas fa-circle" style="color:var(--op);font-size:.55rem"></i> Status: Open</span>
+          </div>
+
+          <div class="opa-author">
+            <img src="../assets/portrait.jpg" alt="Sunjun Hwang">
+            <div>
+              <div class="opa-author__name">Sunjun Hwang</div>
+              <div class="opa-author__role">Independent Researcher, Vancouver · Quantum Computing, AI Security &amp; Robust ML</div>
+              <div class="opa-author__links">
+                <a href="https://sjhwangcv.com" target="_blank" rel="noopener"><i class="fas fa-id-card"></i> CV</a>
+                <a href="https://sjhwangresearch.com" target="_blank" rel="noopener"><i class="fas fa-flask"></i> Research</a>
+                <a href="https://scholar.google.com/citations?user=6X2EVE0AAAAJ" target="_blank" rel="noopener"><i class="fas fa-graduation-cap"></i> Scholar</a>
+                <a href="mailto:sunjun7559@gmail.com?subject=OP-13%20Collaboration"><i class="fas fa-envelope"></i> Email</a>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="opa-abstract">
+          <h2>In one sentence</h2>
+          <p>Real roads keep producing things no training set contained — can a self-driving car notice <strong>"I do not understand what is in front of me"</strong> and respond safely, instead of forcing the scene into a category it already knows?</p>
+        </section>
+
+        <div class="opa-body">
+          <h2>What is the problem?</h2>
+          <p>A mattress has fallen off a truck and is lying in the middle of the motorway. The car's perception system was trained on millions of images of cars, trucks, cyclists, pedestrians and traffic cones. It was never shown a mattress on a motorway. So what does it do? It does what every standard classifier does: it picks the closest thing it knows. Maybe it calls it "car" with 92% confidence. Maybe it decides it is part of the road surface and ignores it.</p>
+          <p>Mattresses are just one example. Real roads are full of the <strong>unseen</strong>: a construction zone with hand-painted signs, a person in a dinosaur costume, a horse and cart, a police officer directing traffic against the lights, snow that hides every lane marking, a driver reversing on a slip road. Each of these is individually rare, but together they happen all the time. Engineers often call this the <em>long tail</em>.</p>
+          <p>Detecting "this input looks different from training data" is a known research area, usually called out-of-distribution (OOD) detection. But this open problem asks for something more: <em>can the vehicle recognise that it does not understand the current situation — and react safely?</em> Spotting a strange pixel pattern is not enough; the car needs to know that its picture of the world has a hole in it, where the hole is, and what to do about it.</p>
+
+          <figure class="opa-fig">
+            <img src="../assets/op/op13-fig1.png" alt="Top-down road scene seen by a self-driving car: a car and a pedestrian are tagged as known, and an odd object in the lane (a fallen mattress) is outlined in orange and tagged unknown object. Two panels on the right compare a closed-set model, forced to pick 'car' at 92%, with an open-world model that says 'I do not recognise this' and slows down and keeps clear." loading="lazy">
+            <figcaption><strong>Figure 1. Closed-set vs open-world.</strong> The car and the pedestrian are things the model was trained on. The orange object is not. A closed-set model has no word for "unknown", so it confidently mislabels it. An open-world model admits it does not recognise the object — and, just as importantly, connects that admission to a safe action: slow down and keep clear.</figcaption>
+          </figure>
+
+          <h2>Why does it matter?</h2>
+          <p>Autonomous vehicles already work well on the situations they were built for. The remaining serious incidents tend to cluster in exactly the unusual cases: the unexpected object, the unusual road layout, the person behaving strangely. You cannot fix the long tail by collecting more data forever, because there is always another rare case.</p>
+          <ul>
+            <li><strong>Safety:</strong> a car that knows it is confused can slow down, keep distance or ask for help. A car that does not know it is confused carries on at full speed.</li>
+            <li><strong>Deployment:</strong> when a fleet moves to a new city or country, the first sign of trouble is usually a stream of unfamiliar situations. Catching them early is cheaper than learning from accidents.</li>
+            <li><strong>Data collection:</strong> every "I do not understand this" moment is exactly the data that should be sent back to engineers and added to training.</li>
+          </ul>
+
+          <h2>What would a solution look like?</h2>
+          <p>I think a good solution has three layers, each answering a different question:</p>
+          <div class="opa-table-wrap">
+            <table class="opa-table">
+              <thead><tr><th>Layer</th><th>The question it answers</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Object level</strong></td><td>Is there something in this part of the scene that does not belong to any class I know? (An "unknown object" rather than a wrong label.)</td></tr>
+                <tr><td><strong>Scene level</strong></td><td>Is the whole situation unusual, even if every individual object is familiar? (A normal car driving the wrong way; a normal person standing on a motorway.)</td></tr>
+                <tr><td><strong>Action level</strong></td><td>Given what I do not understand, what is the safest thing to do? (Avoid the unknown region, slow down, increase margins, request help — see OP-12.)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>The key idea: "unusual" is not the same as "dangerous"</h2>
+          <p>A naive OOD detector flags anything unfamiliar. On a real road that is almost everything: a car painted an unusual colour, a new style of bus shelter, a shop sign in a different language. If each of these triggered a warning, the car would never move.</p>
+          <p>What matters is novelty <em>that affects the driving decision</em>. A strange billboard at the side of the road is unusual but irrelevant. A strange object in the lane, or a familiar object behaving in an unfamiliar way, is relevant. So the real target is not "is this input different?" but "is there something here that my model of the scene cannot explain, <strong>and</strong> that could change what I should do?" That shift — from statistical novelty to decision-relevant novelty — is, to me, the heart of the problem.</p>
+
+          <h2>Why is it hard?</h2>
+          <ul>
+            <li><strong>You cannot train on the unknown.</strong> By definition, the situations we care about are not in the training data. Any method that needs examples of them is already cheating a little.</li>
+            <li><strong>Networks are over-confident off-distribution.</strong> Standard classifiers can give very high scores to inputs that look nothing like their training data.</li>
+            <li><strong>Novelty is often in the behaviour, not the appearance.</strong> A car, a pedestrian, a road — all familiar. The car driving towards you in your lane is not. Image-level detectors miss this.</li>
+            <li><strong>Many sensors, many time steps.</strong> A self-driving car fuses cameras, LiDAR and radar over time. "Unknown" has to be decided in 3D, in real time, consistently from frame to frame.</li>
+            <li><strong>False alarms are costly.</strong> Every unnecessary brake is uncomfortable and can itself be dangerous for the car behind.</li>
+          </ul>
+
+          <h2>What has been tried so far</h2>
+          <ul>
+            <li><strong>Confidence-based OOD detection</strong> — flag inputs where the classifier's top score is low, or use tweaks such as temperature scaling and energy scores. Simple, but inherits the over-confidence problem.</li>
+            <li><strong>Distance in feature space</strong> — measure how far an input's internal representation is from the training data. Often better than raw confidence, but needs a good notion of "distance".</li>
+            <li><strong>Outlier exposure</strong> — train with a separate set of "other" images so the model learns to give low confidence to things outside its classes. Helps, but the real unknowns may look nothing like the chosen outliers.</li>
+            <li><strong>Open-set and open-world recognition</strong> — detectors that can output an explicit "unknown" class and later learn new classes incrementally.</li>
+            <li><strong>Anomaly segmentation benchmarks</strong> — datasets that place unusual objects (lost cargo, animals, debris) on roads and ask a model to mark the anomalous pixels. Useful for measuring progress on the object level.</li>
+            <li><strong>Reconstruction and generative models</strong> — learn to rebuild normal scenes, and flag regions that cannot be rebuilt well.</li>
+          </ul>
+          <p>Most of this work stops at a score or a pixel mask. Much less of it connects the detection to scene-level reasoning and to the vehicle's behaviour, which is what an actual car needs.</p>
+
+          <h2>How I would approach it</h2>
+          <ol>
+            <li>Start from existing road anomaly benchmarks and driving simulators, where unusual objects and behaviours can be inserted in a controlled way.</li>
+            <li>Compare several kinds of novelty signal side by side — confidence, feature distance, reconstruction error, and how the internal representation changes over time (in the spirit of OP-01 and OP-04).</li>
+            <li>Separate "unusual but harmless" from "unusual and relevant" by asking whether the novel region overlaps the planned path or nearby road users.</li>
+            <li>Feed the result into a simple graded response (OP-12) and measure the trade-off between avoided dangerous situations and unnecessary slowdowns.</li>
+          </ol>
+
+          <h2>Questions still open</h2>
+          <ol class="opa-qs">
+            <li>Can we detect <em>behavioural</em> novelty — familiar objects doing unfamiliar things — as reliably as visual novelty?</li>
+            <li>How do we define and measure "decision-relevant" novelty, so that harmless oddities are ignored?</li>
+            <li>Does the <em>shape</em> of the representation space (topology) reveal unknown situations better than distance alone? (see OP-04)</li>
+            <li>How should the car act around an object it cannot identify — treat it as solid, as moving, as the worst case?</li>
+            <li>Can a fleet share "I did not understand this" moments to improve together without sharing raw camera data? (see OP-10, OP-11)</li>
+            <li>Could an attacker create objects that look ordinary to the novelty detector but fool the main model?</li>
+          </ol>
+
+          <p>This problem connects directly to detecting model failure before it happens (OP-01), deciding when not to trust oneself (OP-12), and foreseeing dangerous scenarios (OP-14).</p>
+
+          <section class="opa-collab">
+            <h2>Work on this together</h2>
+            <p>I am actively looking for collaborators here. If you work on OOD or anomaly detection, open-world perception, autonomous driving datasets or simulation — or you have seen your own driving stack confidently mislabel something strange — I would be glad to hear from you.</p>
+            <a class="btn" href="mailto:sunjun7559@gmail.com?subject=OP-13%20Collaboration"><i class="fas fa-handshake"></i> Reach out about OP-13</a>
+          </section>
+
+          <h2>Further reading</h2>
+          <ul class="opa-refs">
+            <li>Hendrycks &amp; Gimpel — A Baseline for Detecting Misclassified and Out-of-Distribution Examples in Neural Networks (ICLR 2017)</li>
+            <li>Hendrycks, Mazeika &amp; Dietterich — Deep Anomaly Detection with Outlier Exposure (ICLR 2019)</li>
+            <li>Liu et al. — Energy-based Out-of-distribution Detection (NeurIPS 2020)</li>
+            <li>Lee et al. — A Simple Unified Framework for Detecting Out-of-Distribution Samples and Adversarial Attacks (NeurIPS 2018)</li>
+            <li>Bendale &amp; Boult — Towards Open Set Deep Networks (CVPR 2016)</li>
+            <li>Joseph et al. — Towards Open World Object Detection (CVPR 2021)</li>
+            <li>Chan et al. — SegmentMeIfYouCan: A Benchmark for Anomaly Segmentation (NeurIPS Datasets and Benchmarks 2021)</li>
+          </ul>
+          <nav class="opa-nav">
+            <a href="op-12.html"><small>Previous</small>OP-12 · How should autonomous systems know when not to trust themselves?</a>
+            <a href="op-14.html" style="text-align:right"><small>Next</small>OP-14 · Can we predict dangerous driving scenarios before they happen?</a>
+          </nav>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OP-19: Can LLMs Know When They Are Wrong? — Sunjun Hwang</title>
+  <meta name="description" content="Open Problem 19 — getting large language models to reliably estimate when their own answers are likely to be wrong.">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/op-article.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+
+  <main class="page-content" data-theme="openproblems">
+    <div class="container">
+      <article class="opa">
+        <a class="opa-back" href="open-problems.html"><i class="fas fa-arrow-left"></i> All Open Problems</a>
+
+        <header class="opa-head">
+          <div class="opa-kicker">Open Problem 19 · Large Language Models (LLM)</div>
+          <h1>Can LLMs Know When They Are Wrong?</h1>
+          <div class="opa-meta">
+            <span><i class="far fa-calendar"></i> November 2026</span>
+            <span><i class="far fa-clock"></i> 7 min read</span>
+            <span><i class="fas fa-circle" style="color:var(--op);font-size:.55rem"></i> Status: Open</span>
+          </div>
+
+          <div class="opa-author">
+            <img src="../assets/portrait.jpg" alt="Sunjun Hwang">
+            <div>
+              <div class="opa-author__name">Sunjun Hwang</div>
+              <div class="opa-author__role">Independent Researcher, Vancouver · Quantum Computing, AI Security &amp; Robust ML</div>
+              <div class="opa-author__links">
+                <a href="https://sjhwangcv.com" target="_blank" rel="noopener"><i class="fas fa-id-card"></i> CV</a>
+                <a href="https://sjhwangresearch.com" target="_blank" rel="noopener"><i class="fas fa-flask"></i> Research</a>
+                <a href="https://scholar.google.com/citations?user=6X2EVE0AAAAJ" target="_blank" rel="noopener"><i class="fas fa-graduation-cap"></i> Scholar</a>
+                <a href="mailto:sunjun7559@gmail.com?subject=OP-19%20Collaboration"><i class="fas fa-envelope"></i> Email</a>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="opa-abstract">
+          <h2>In one sentence</h2>
+          <p>Large language models sound equally sure whether they are right or inventing things — can we get a <strong>trustworthy signal</strong> of when an answer is likely wrong, ideally before the answer is even written?</p>
+        </section>
+
+        <div class="opa-body">
+          <h2>What is the problem?</h2>
+          <p>Ask a chatbot for the year a small-town museum was founded, or for a court case that supports your argument. It answers in a calm, fluent paragraph, with a precise date or a case name and citation. Sometimes that is correct. Sometimes the museum date is off by twenty years and the court case does not exist. The tone is identical in both cases.</p>
+          <p>This is what people call <strong>hallucination</strong>: fluent, confident text that is not true. The deeper issue is not that the model makes mistakes — every system does — but that its confidence does not tell us <em>which</em> answers are the mistakes.</p>
+          <p>An LLM does produce a number internally: for every word (token) it writes, it assigns a probability. But that number answers the question <em>"how likely is this word to come next?"</em>, not <em>"is this statement true?"</em>. A model can be very sure about the wording of a sentence that is factually wrong.</p>
+          <p>This open problem asks: <em>can an LLM reliably estimate when its own answer is likely to be wrong</em> — in a way that holds up on new topics, and ideally early enough to stop the wrong answer from being written at all?</p>
+
+          <h2>Why does it matter?</h2>
+          <ul>
+            <li><strong>Users cannot check everything.</strong> The point of asking a model is often that you do not know the answer yourself. A good "I'm not sure" is worth more than a confident guess.</li>
+            <li><strong>Agents act on answers.</strong> When an LLM is writing code, filling forms or calling tools, a wrong step is not just a wrong sentence — it is a wrong action. A reliable uncertainty signal lets the system pause and ask.</li>
+            <li><strong>It makes retrieval and escalation smarter.</strong> If the model knows it is unsure, it can search for sources, call a stronger model or hand over to a human only when needed, instead of always or never.</li>
+            <li><strong>High-stakes domains require it.</strong> In medicine, law and finance, a tool that cannot signal its own uncertainty is hard to deploy responsibly.</li>
+          </ul>
+
+          <h2>What would a solution look like?</h2>
+          <p>A useful mental model is <strong>calibration</strong>: when the system says "80% confident", it should be right about 80% of the time, on average, across many questions. A calibrated score lets people and software set sensible thresholds — answer above this, double-check below that.</p>
+          <p>The question is where that score comes from. There are roughly four places to look:</p>
+          <div class="opa-table-wrap">
+            <table class="opa-table">
+              <thead><tr><th>Signal</th><th>The question it asks</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Token probability</strong></td><td>How sure was the model about each word it wrote?</td></tr>
+                <tr><td><strong>Consistency across samples</strong></td><td>If I ask the same question several times, do the answers <em>mean</em> the same thing?</td></tr>
+                <tr><td><strong>Self-report</strong></td><td>If I ask the model "how confident are you?", is its stated number any good?</td></tr>
+                <tr><td><strong>Internal state</strong></td><td>Is there a pattern inside the network's hidden activations that separates "knows" from "is guessing"?</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>The key idea: uncertainty about meaning, not words</h2>
+          <p>This is the part worth slowing down for.</p>
+          <p>Suppose you ask <em>"What is the capital of Australia?"</em> five times. You might get "Canberra.", "The capital is Canberra.", "It's Canberra, not Sydney." The words differ a lot, so a word-level measure says the model is uncertain. But every answer <em>means</em> the same thing, so the model is actually sure.</p>
+          <p>Now ask about an obscure person's birthplace and you get "Lyon", "Marseille", "Lyon", "Geneva", "Paris". The words are short and each one might have been produced confidently — but the <em>meanings</em> disagree. That disagreement is a strong sign the model does not really know.</p>
+
+          <figure class="opa-fig">
+            <img src="../assets/op/op19-fig1.png" alt="Two panels. Left, low uncertainty: a question goes to an LLM, which produces several answer cards that all share one meaning; a gauge reads likely correct. Right, high uncertainty: the same setup but the answers split into three groups with different meanings, shown in orange; a gauge reads hallucination risk." loading="lazy">
+            <figcaption><strong>Figure 1. Counting meanings instead of words.</strong> In both panels the model is asked the same question several times. On the left, the answers may be worded differently, but they all say the same thing — one meaning, so the answer is probably reliable. On the right, the answers fall into several groups that disagree — three meanings, a warning sign of hallucination. Grouping answers by meaning, not by wording, is the core of <em>semantic uncertainty</em>.</figcaption>
+          </figure>
+
+          <p>Measuring uncertainty this way — sample several answers, group them by meaning, see how spread out the groups are — has turned out to be a much better hallucination detector than looking at word probabilities. Its weakness is cost: it needs several full answers before it can say anything. That is why the second half of this problem matters to me: can we get a similar signal <strong>before</strong> generating, from the model's internal state when it first reads the question?</p>
+
+          <h2>Why is it hard?</h2>
+          <ul>
+            <li><strong>Fine-tuning can hurt calibration.</strong> Pre-trained models are often reasonably calibrated on multiple-choice questions, but the extra training that makes them helpful and pleasant to talk to has been reported to make their confidence less meaningful.</li>
+            <li><strong>Open-ended answers have no single "correct" string.</strong> Many different sentences can be right, so even defining "the probability of being right" takes work.</li>
+            <li><strong>Consistently wrong is still wrong.</strong> If the model has learned a false fact firmly, it will repeat it every time. Sampling-based methods see agreement and report confidence.</li>
+            <li><strong>Shift breaks calibration.</strong> A confidence score tuned on trivia questions may not hold on medical questions, code or a new language — exactly when we need it most.</li>
+            <li><strong>Words of confidence are trained behaviour.</strong> When a model says "I'm quite sure", that phrase is also just generated text, shaped by training to sound appropriate, not necessarily linked to what it actually knows.</li>
+          </ul>
+
+          <h2>What has been tried so far</h2>
+          <ul>
+            <li><strong>Calibrating token probabilities</strong>, for example by rescaling them on a held-out set so that confidence matches accuracy. Cheap, but limited for long, open-ended answers.</li>
+            <li><strong>Asking the model directly</strong> to state its confidence, in words or as a number, or to judge whether its own answer is true. This works surprisingly well for large models on some tasks, less well on others.</li>
+            <li><strong>Self-consistency checks</strong>: sample several answers and check whether they support each other, sentence by sentence. Needs no access to the model internals.</li>
+            <li><strong>Semantic entropy</strong>: group sampled answers by meaning (using another model to judge whether two answers say the same thing) and measure how spread out the groups are.</li>
+            <li><strong>Probing hidden states</strong>: train a small classifier on the model's internal activations to predict whether a statement is true, or whether the upcoming answer will be correct. Promising and cheap at run time, but it can learn shortcuts that do not transfer to new topics.</li>
+          </ul>
+          <p>Each of these captures part of the picture. What is still missing is a signal that is cheap enough to run on every query, works <em>before</em> generation, and stays calibrated when the topic changes.</p>
+
+          <h2>How I would approach it</h2>
+          <ol>
+            <li>Collect question sets from several different domains — general knowledge, science, code, a specialised field — so that calibration can be tested on topics it was not tuned on.</li>
+            <li>For each question, compute the expensive "reference" signal (semantic uncertainty from many samples) and record the model's hidden states at the moment it finishes reading the question.</li>
+            <li>Ask whether a small probe on those hidden states can predict the expensive signal — and, more importantly, the actual correctness — without generating anything.</li>
+            <li>Test the probe on the domains it never saw, and compare how much calibration degrades against token probability and self-reported confidence.</li>
+            <li>Look at the geometry of those hidden states, in the spirit of OP-01: do "known" and "guessed" questions sit in visibly different regions?</li>
+          </ol>
+
+          <h2>Questions still open</h2>
+          <ol class="opa-qs">
+            <li>Is there an internal signal that predicts hallucination <em>before</em> the answer is generated, and how early does it appear?</li>
+            <li>How can we catch answers that are consistently wrong, where sampling shows full agreement?</li>
+            <li>Which uncertainty signals stay calibrated when the topic, language or task changes?</li>
+            <li>How should uncertainty be measured for long answers that mix correct and incorrect claims?</li>
+            <li>Can a model's stated confidence be trained to reflect its internal signal honestly, rather than sounding appropriate?</li>
+            <li>How does misleading context change a model's uncertainty — does it become wrongly confident? (see OP-20)</li>
+          </ol>
+
+          <p>This is the language-model version of the general failure-warning question in OP-01. It connects closely to OP-20 (staying reliable when the context is misleading) and OP-21 (understanding why answers flip), since an answer that flips easily is often one the model was never sure about.</p>
+
+          <section class="opa-collab">
+            <h2>Work on this together</h2>
+            <p>If you work on uncertainty estimation, hallucination detection or interpretability of language models — or you deploy LLMs somewhere that a confident wrong answer is costly — I would love to hear from you. Disagreeing with how I framed the problem is just as welcome.</p>
+            <a class="btn" href="mailto:sunjun7559@gmail.com?subject=OP-19%20Collaboration"><i class="fas fa-handshake"></i> Reach out about OP-19</a>
+          </section>
+
+          <h2>Further reading</h2>
+          <ul class="opa-refs">
+            <li>Guo et al. — On Calibration of Modern Neural Networks (ICML 2017)</li>
+            <li>Kadavath et al. — Language Models (Mostly) Know What They Know (arXiv 2022)</li>
+            <li>Lin, Hilton &amp; Evans — Teaching Models to Express Their Uncertainty in Words (TMLR 2022)</li>
+            <li>Kuhn, Gal &amp; Farquhar — Semantic Uncertainty: Linguistic Invariances for Uncertainty Estimation in Natural Language Generation (ICLR 2023)</li>
+            <li>Manakul, Liusie &amp; Gales — SelfCheckGPT: Zero-Resource Black-Box Hallucination Detection for Generative Large Language Models (EMNLP 2023)</li>
+            <li>Azaria &amp; Mitchell — The Internal State of an LLM Knows When It's Lying (Findings of EMNLP 2023)</li>
+            <li>Burns et al. — Discovering Latent Knowledge in Language Models Without Supervision (ICLR 2023)</li>
+            <li>Farquhar, Kossen, Kuhn &amp; Gal — Detecting Hallucinations in Large Language Models Using Semantic Entropy (Nature 2024)</li>
+          </ul>
+          <nav class="opa-nav">
+            <a href="op-18.html"><small>Previous</small>OP-18 · How should BB84 coexist with classical communication in hybrid networks?</a>
+            <a href="op-20.html" style="text-align:right"><small>Next</small>OP-20 · How can LLMs remain reliable under adversarial or misleading context?</a>
+          </nav>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

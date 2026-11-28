@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OP-12: How Should Autonomous Systems Know When Not to Trust Themselves? — Sunjun Hwang</title>
+  <meta name="description" content="Open Problem 12 — turning uncertainty into action: how a self-driving car or robot can decide not to trust its own prediction and change what it does.">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/op-article.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+
+  <main class="page-content" data-theme="openproblems">
+    <div class="container">
+      <article class="opa">
+        <a class="opa-back" href="open-problems.html"><i class="fas fa-arrow-left"></i> All Open Problems</a>
+
+        <header class="opa-head">
+          <div class="opa-kicker">Open Problem 12 · Distributed / Real-World AI</div>
+          <h1>How Should Autonomous Systems Know When Not to Trust Themselves?</h1>
+          <div class="opa-meta">
+            <span><i class="far fa-calendar"></i> November 2026</span>
+            <span><i class="far fa-clock"></i> 7 min read</span>
+            <span><i class="fas fa-circle" style="color:var(--op);font-size:.55rem"></i> Status: Open</span>
+          </div>
+
+          <div class="opa-author">
+            <img src="../assets/portrait.jpg" alt="Sunjun Hwang">
+            <div>
+              <div class="opa-author__name">Sunjun Hwang</div>
+              <div class="opa-author__role">Independent Researcher, Vancouver · Quantum Computing, AI Security &amp; Robust ML</div>
+              <div class="opa-author__links">
+                <a href="https://sjhwangcv.com" target="_blank" rel="noopener"><i class="fas fa-id-card"></i> CV</a>
+                <a href="https://sjhwangresearch.com" target="_blank" rel="noopener"><i class="fas fa-flask"></i> Research</a>
+                <a href="https://scholar.google.com/citations?user=6X2EVE0AAAAJ" target="_blank" rel="noopener"><i class="fas fa-graduation-cap"></i> Scholar</a>
+                <a href="mailto:sunjun7559@gmail.com?subject=OP-12%20Collaboration"><i class="fas fa-envelope"></i> Email</a>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="opa-abstract">
+          <h2>In one sentence</h2>
+          <p>An uncertainty score on its own changes nothing — can a self-driving car or a robot actually <strong>decide</strong> "I should not trust my own prediction right now" and change <em>how it acts</em> because of it?</p>
+        </section>
+
+        <div class="opa-body">
+          <h2>What is the problem?</h2>
+          <p>Imagine a delivery robot rolling down a pavement at dusk. A shadow falls across its path, the camera is half blinded by a low sun, and its path planner says <em>"clear, continue at 1.5 m/s."</em> Somewhere inside the software, an uncertainty estimate has quietly jumped from 0.05 to 0.4. Nothing else happens. The robot keeps going at exactly the same speed, because nobody told the rest of the system what that number should mean.</p>
+          <p>This is surprisingly common. A lot of research has gone into making models <em>output</em> an honest uncertainty: a variance, an entropy, a confidence interval. Much less has gone into the next step: <strong>what should the machine do differently</strong> when that number goes up? Should it slow down? Look again? Use a simpler, more conservative controller? Pull over? Ask a person?</p>
+          <p>This open problem is about closing that loop. Not just <em>"how uncertain am I?"</em> but <em>"given how much I trust myself right now, what is the right way to behave?"</em> — and doing that in real time, on a moving vehicle, without either freezing up at every shadow or ignoring real danger.</p>
+
+          <h2>Why does it matter?</h2>
+          <p>Humans do this all the time without thinking about it. A good driver who suddenly cannot see well does not keep driving as if the road were clear. They slow down, increase the gap to the car in front, turn the wipers on, and, if it gets bad enough, pull over. The <em>uncertainty</em> is not the useful part; the <em>change in behaviour</em> is.</p>
+          <ul>
+            <li><strong>Safety.</strong> Most dangerous moments for an autonomous system are moments when it is wrong <em>and does not act like it might be wrong</em>.</li>
+            <li><strong>Handover.</strong> Cars with a human safety driver, and robots with a remote operator, need to know <em>when</em> to ask for help — early enough that the human can actually take over.</li>
+            <li><strong>Availability.</strong> A system that stops every time it feels slightly unsure is useless. Graded responses (slow down a little, then more, then stop) keep it useful while staying safe.</li>
+            <li><strong>Certification.</strong> Regulators and safety engineers want to see an explicit rule for what happens when the system is outside its comfort zone, not an implicit hope that the model will be right.</li>
+          </ul>
+
+          <h2>What would a solution look like?</h2>
+          <p>I picture a small <strong>self-trust check</strong> sitting between the model's prediction and the vehicle's actions. It collects several kinds of evidence about whether the system is on solid ground, turns them into a single trust level, and then picks a <em>driving mode</em> to match.</p>
+
+          <figure class="opa-fig">
+            <img src="../assets/op/op12-fig1.png" alt="Pipeline: Sensors feed Perception and Planning. An orange arrow goes to a Self-Trust Check with three inputs — uncertainty, whether the situation is familiar, and sensor health. Its output selects one of four modes on a scale from high to low trust: normal driving, cautious (slow down, keep distance), ask for help or hand over, and minimal-risk stop." loading="lazy">
+            <figcaption><strong>Figure 1. From uncertainty to action.</strong> The grey path is the usual stack: sensors, then perception and planning. The orange part is what this problem adds. The self-trust check does not just report a number — it selects a behaviour. As trust falls, the vehicle moves down the ladder of modes, from normal driving to a minimal-risk stop, instead of jumping straight from "fine" to "emergency".</figcaption>
+          </figure>
+
+          <p>Three ingredients make this different from simply thresholding an uncertainty score:</p>
+          <div class="opa-table-wrap">
+            <table class="opa-table">
+              <thead><tr><th>Ingredient</th><th>What it means in practice</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Several kinds of evidence</strong></td><td>Model uncertainty, "have I seen a situation like this before?" (OP-13) and "are my sensors healthy?" (OP-15) are different questions and can fail independently.</td></tr>
+                <tr><td><strong>Graded responses</strong></td><td>Not a single on/off alarm, but a ladder of behaviours, each one cheaper to reverse than the next.</td></tr>
+                <tr><td><strong>Context-aware cost</strong></td><td>Being unsure on an empty motorway is not the same as being unsure next to a school. The same trust level should lead to different actions depending on what is at stake.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>The key idea: uncertainty is an input to planning, not a label on the output</h2>
+          <p>The usual picture is: perception produces an answer plus a confidence, planning uses the answer, and the confidence is logged somewhere. I think the confidence has to travel <em>forward</em> into the planner and change its choices.</p>
+          <p>A concrete example: if the system is very sure where the pedestrian is, the planner can pass at a normal distance. If it is unsure, the "possible pedestrian" region it must avoid gets larger, and the safe speed automatically goes down. The car does not need a separate "panic" rule — the uncertainty is already shaping the space of safe actions. The hard and interesting part is that the model's uncertainty must be <em>honest</em> for this to work: an over-confident model shrinks those regions exactly when it should not.</p>
+
+          <h2>Why is it hard?</h2>
+          <ul>
+            <li><strong>Uncertainty scores are not reliable on their own.</strong> Networks are often most over-confident on exactly the strange inputs where we need caution (see OP-01).</li>
+            <li><strong>Different uncertainties need different reactions.</strong> "The sensor is noisy" (wait, look again) is not the same as "I have never seen this object" (keep clear, maybe ask for help). Mixing them into one number loses that.</li>
+            <li><strong>Being too cautious is also unsafe.</strong> A car that brakes hard for every shadow gets rear-ended. Sudden mode switches can themselves cause accidents.</li>
+            <li><strong>Humans are slow to take over.</strong> A handover request that arrives one second before a problem is often useless; a human driver may need several seconds to re-engage.</li>
+            <li><strong>Hard to test.</strong> The situations where self-distrust matters are rare by definition, so it is difficult to collect enough of them to check that the policy behaves well.</li>
+          </ul>
+
+          <h2>What has been tried so far</h2>
+          <ul>
+            <li><strong>Better uncertainty estimates</strong> — ensembles, MC dropout, Bayesian layers, and separating "noise in the data" from "lack of knowledge in the model". These give a better number, but do not say what to do with it.</li>
+            <li><strong>Safety envelopes and fallback controllers</strong> — a simple, verified controller (or a "minimal-risk manoeuvre" like a controlled stop) takes over when the main system leaves a safe region. Robust, but often an all-or-nothing switch.</li>
+            <li><strong>Uncertainty-aware planning</strong> — planners that treat the world state as a probability distribution and choose actions that are safe across many possibilities. Principled, but expensive and only as good as the probabilities they are given.</li>
+            <li><strong>Learning when to defer</strong> — training a model to hand difficult cases to a human or an expert system. Well studied for classification, much less for continuous control on a moving vehicle.</li>
+            <li><strong>Introspective perception</strong> — training a separate component to predict when the perception system is likely to fail, from its inputs and internal state.</li>
+          </ul>
+          <p>Each of these solves a piece. What is still missing, I think, is a clear framework that connects <em>which kind</em> of distrust the system has to <em>which kind</em> of response it chooses — and a way to test that this connection actually reduces risk.</p>
+
+          <h2>How I would approach it</h2>
+          <ol>
+            <li>Start in simulation (for example a driving simulator), where I can control exactly how hard the situation is: fog, sensor dropouts, unusual objects.</li>
+            <li>Give the self-trust check separate signals for model uncertainty, novelty and sensor health, rather than one score.</li>
+            <li>Define a small ladder of behaviours — normal, cautious, request help, minimal-risk stop — and compare simple rules against a learned policy for choosing between them.</li>
+            <li>Measure two things together: how often the system ends up in a dangerous state, and how much it unnecessarily slows down or stops. A good policy should improve the first without wrecking the second.</li>
+          </ol>
+
+          <h2>Questions still open</h2>
+          <ol class="opa-qs">
+            <li>Which kinds of uncertainty should lead to which kinds of action, and can that mapping be learned rather than hand-written?</li>
+            <li>How do we avoid "flickering" between modes when the trust level hovers around a threshold?</li>
+            <li>How early must a handover request come for a human to take over safely, and can the system predict its own distrust that far ahead? (see OP-14)</li>
+            <li>Can an attacker make a car distrust itself on purpose — for example to force it to stop in the middle of a road?</li>
+            <li>How should we test a self-distrust policy when the situations it is designed for are, by definition, rare?</li>
+            <li>When a fleet of vehicles learns together (federated learning), can they share what made them distrust themselves without sharing raw data? (see OP-10, OP-11)</li>
+          </ol>
+
+          <p>This problem is the "action" half of several others: detecting failure before it happens (OP-01), recognising never-seen situations on the road (OP-13), and staying reliable when sensors fail (OP-15).</p>
+
+          <section class="opa-collab">
+            <h2>Work on this together</h2>
+            <p>If you work on uncertainty estimation, safe planning, robotics, or human–machine handover — or you run real vehicles or robots and have seen your system be confidently wrong — I would love to talk. Telling me the framing is wrong is equally welcome.</p>
+            <a class="btn" href="mailto:sunjun7559@gmail.com?subject=OP-12%20Collaboration"><i class="fas fa-handshake"></i> Reach out about OP-12</a>
+          </section>
+
+          <h2>Further reading</h2>
+          <ul class="opa-refs">
+            <li>Amodei et al. — Concrete Problems in AI Safety (arXiv 2016)</li>
+            <li>Kendall &amp; Gal — What Uncertainties Do We Need in Bayesian Deep Learning for Computer Vision? (NeurIPS 2017)</li>
+            <li>Gal &amp; Ghahramani — Dropout as a Bayesian Approximation (ICML 2016)</li>
+            <li>Lakshminarayanan et al. — Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles (NeurIPS 2017)</li>
+            <li>Shalev-Shwartz, Shammah &amp; Shashua — On a Formal Model of Safe and Scalable Self-driving Cars (arXiv 2017)</li>
+            <li>Kahn et al. — Uncertainty-Aware Reinforcement Learning for Collision Avoidance (arXiv 2017)</li>
+          </ul>
+          <nav class="opa-nav">
+            <a href="op-11.html"><small>Previous</small>OP-11 · Can we identify unreliable clients without seeing their data?</a>
+            <a href="op-13.html" style="text-align:right"><small>Next</small>OP-13 · Can autonomous vehicles recognize situations they have never seen before?</a>
+          </nav>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

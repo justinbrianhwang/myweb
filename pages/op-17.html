@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OP-17: Can BB84 Dynamically Adapt to Changing Channel Conditions? — Sunjun Hwang</title>
+  <meta name="description" content="Open Problem 17 — letting a BB84 quantum key distribution system tune its settings to a changing channel in real time without weakening its security guarantees.">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/op-article.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+
+  <main class="page-content" data-theme="openproblems">
+    <div class="container">
+      <article class="opa">
+        <a class="opa-back" href="open-problems.html"><i class="fas fa-arrow-left"></i> All Open Problems</a>
+
+        <header class="opa-head">
+          <div class="opa-kicker">Open Problem 17 · Quantum Communication (BB84)</div>
+          <h1>Can BB84 Dynamically Adapt to Changing Channel Conditions?</h1>
+          <div class="opa-meta">
+            <span><i class="far fa-calendar"></i> November 2026</span>
+            <span><i class="far fa-clock"></i> 8 min read</span>
+            <span><i class="fas fa-circle" style="color:var(--op);font-size:.55rem"></i> Status: Open</span>
+          </div>
+
+          <div class="opa-author">
+            <img src="../assets/portrait.jpg" alt="Sunjun Hwang">
+            <div>
+              <div class="opa-author__name">Sunjun Hwang</div>
+              <div class="opa-author__role">Independent Researcher, Vancouver · Quantum Computing, AI Security &amp; Robust ML</div>
+              <div class="opa-author__links">
+                <a href="https://sjhwangcv.com" target="_blank" rel="noopener"><i class="fas fa-id-card"></i> CV</a>
+                <a href="https://sjhwangresearch.com" target="_blank" rel="noopener"><i class="fas fa-flask"></i> Research</a>
+                <a href="https://scholar.google.com/citations?user=6X2EVE0AAAAJ" target="_blank" rel="noopener"><i class="fas fa-graduation-cap"></i> Scholar</a>
+                <a href="mailto:sunjun7559@gmail.com?subject=OP-17%20Collaboration"><i class="fas fa-envelope"></i> Email</a>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="opa-abstract">
+          <h2>In one sentence</h2>
+          <p>Real quantum channels drift from minute to minute — can a BB84 system keep re-tuning itself to get the most secret key out of the channel it actually has, <strong>without ever</strong> letting the tuning weaken the security proof?</p>
+        </section>
+
+        <div class="opa-body">
+          <h2>What is the problem?</h2>
+          <p>Picture a quantum link running over 30 km of fibre buried along a city road, or through open air between two rooftops. In the morning it is quiet. At midday the fibre warms up and stretches slightly, the polarisation of the light slowly rotates, a truck rumbles past, sunlight leaks into the free-space detector. The amount of light lost and the number of errors at the receiver change all day long.</p>
+          <p>The system on that link runs <strong>BB84</strong>, the oldest and best-understood quantum key distribution (QKD) protocol. In plain words, it works like this:</p>
+          <ul>
+            <li><strong>Alice</strong> sends single photons, each carrying one bit encoded in one of two randomly chosen <em>bases</em> — think of them as two different "alphabets", for example horizontal/vertical polarisation or diagonal polarisation.</li>
+            <li><strong>Bob</strong> measures each photon, also in a randomly chosen basis. When his basis matches Alice's, he reads the bit correctly; when it does not, his result is a coin flip.</li>
+            <li>Over an ordinary public channel they compare <em>which bases</em> they used (never the bits) and throw away the mismatches. This is called <strong>sifting</strong>.</li>
+            <li>They reveal a random sample of the remaining bits to estimate the <strong>quantum bit error rate (QBER)</strong>. Quantum physics guarantees that an eavesdropper who measures the photons inevitably disturbs some of them, so errors are the fingerprint of possible eavesdropping. If the QBER is too high, they abort.</li>
+            <li>Otherwise they run <strong>error correction</strong> so both hold identical bits, then <strong>privacy amplification</strong>: they compress the key with a hash so that whatever partial information an eavesdropper might have becomes useless.</li>
+          </ul>
+
+          <figure class="opa-fig">
+            <img src="../assets/op/op17-fig1.png" alt="BB84 pipeline from Alice to Bob over a quantum channel and a public classical channel: send photons in random bases, measure in random bases, sifting, estimate QBER (with an abort branch if too high), error correction, privacy amplification, ending in a shared secret key." loading="lazy">
+            <figcaption><strong>Figure 1. The BB84 pipeline.</strong> Read left to right. Only the first two steps are quantum; everything after that happens over an ordinary public channel. The orange step — estimating the error rate — is the security checkpoint: every later step is sized according to how much an eavesdropper <em>could</em> know, given that number.</figcaption>
+          </figure>
+
+          <p>Every stage after sifting has knobs: how many bits go into one block, how strong the error-correcting code is, how hard to compress during privacy amplification, how often to re-align the polarisation, how fast to send. Today, most systems pick these knobs once — usually conservatively — or adjust them with simple hand-written rules. When the channel is good, a conservative setting wastes key. When the channel gets worse, an aggressive setting causes failed error-correction rounds, aborted blocks, or an unstable key rate.</p>
+          <p>This open problem asks: <em>can the system adapt its operating parameters in real time to the channel it actually has, while keeping the security guarantee exactly as strong as before?</em></p>
+
+          <h2>Why does it matter?</h2>
+          <p>QKD is no longer only a laboratory demonstration; it runs on metropolitan fibre networks, on satellite links and in national test beds. On all of these, the channel is not the stable thing a textbook assumes. Adapting well would mean:</p>
+          <ul>
+            <li><strong>more key from the same hardware</strong> — key rate is the scarce resource in QKD, and every unnecessary bit spent on over-cautious error correction or compression is lost;</li>
+            <li><strong>fewer outages</strong> — a link that slides gracefully to a lower rate is far more useful than one that alternates between full speed and aborting;</li>
+            <li><strong>links that work in harder places</strong> — free-space and satellite channels change on the scale of seconds, and only an adaptive system can track them;</li>
+            <li><strong>a cleaner path to networks</strong> — when many links share a key-management layer (see OP-18), predictable per-link rates make the whole network easier to plan.</li>
+          </ul>
+
+          <h2>What would a solution look like?</h2>
+          <p>I imagine a feedback loop wrapped around the protocol. A <strong>monitor</strong> watches what the link is doing — loss, QBER, how often error correction fails, how fast the polarisation drifts. An <strong>estimator</strong> turns that into a short-term forecast of the channel. An <strong>optimizer</strong> picks the settings for the next block. And, crucially, a <strong>security check</strong> sits between the optimizer and the link and only lets through settings that are covered by a proven security bound.</p>
+
+          <figure class="opa-fig">
+            <img src="../assets/op/op17-fig2.png" alt="Feedback loop: BB84 link feeds a channel monitor (loss, QBER, drift), which feeds an estimator / ML forecast, then a parameter optimizer (block size, code rate, compression, send rate), then an orange security check based on proven bounds. Approved settings go back to the link; rejected settings fall back to safe defaults." loading="lazy">
+            <figcaption><strong>Figure 2. Adaptation with a security gate.</strong> The loop on the left is about <em>performance</em>: watch, forecast, choose settings. The orange shield is about <em>security</em>: it does not learn or guess, it only checks the proposed settings against a proven formula. If the check fails, the system falls back to safe defaults. This separation is the core design idea of this problem.</figcaption>
+          </figure>
+
+          <h2>The key idea: estimation may be clever, security must be boring</h2>
+          <p>This is where adaptive QKD can easily go wrong, so it deserves care.</p>
+          <p>The security of BB84 does not come from the channel behaving nicely. It comes from a proof that says: <em>given the errors you actually measured on this block, an eavesdropper's information is at most X, so compress by at least X</em>. The proof is written in a worst-case way — it assumes the eavesdropper controls the channel.</p>
+          <p>That gives a very clean rule. Anything that decides <strong>how efficiently</strong> to run — block size, code rate, when to recalibrate, how fast to send — can be as clever as we like, including machine learning, because a bad guess only costs key rate. But anything that decides <strong>how much secrecy is left</strong> — the error estimate used in the security formula and the amount of compression — must come from measured data and the proven bound, never from a prediction. A forecast that says "the channel will be quiet in the next block" is exactly what an eavesdropper would like the system to believe.</p>
+          <p>A second subtlety: adaptation itself leaks a little. If Alice and Bob announce over the public channel that they have switched to a stronger code, that announcement is information too, and the bookkeeping of the proof has to count it.</p>
+
+          <h2>Why is it hard?</h2>
+          <ul>
+            <li><strong>Finite blocks.</strong> Real keys are produced in blocks of limited size, so the error rate is only estimated with some statistical uncertainty. Smaller blocks let you adapt faster but force a bigger safety margin; bigger blocks are efficient but slow to react. Adaptivity and finite-size security pull in opposite directions.</li>
+            <li><strong>The eavesdropper can shape the channel.</strong> An attacker can make the channel <em>look</em> different over time, for example quiet during sampling and noisy elsewhere, or can try to push the adaptive loop into a bad state. The loop must not open a new attack surface.</li>
+            <li><strong>Noise and attack look alike.</strong> A rising QBER can be warm fibre or an intercept-resend attack. The adaptive system cannot assume which (this is the heart of OP-16).</li>
+            <li><strong>Hardware loops interact.</strong> Polarisation tracking, timing synchronisation and detector settings already run their own control loops. Adding another layer of adaptation can make them fight each other.</li>
+            <li><strong>Proofs are written for fixed protocols.</strong> Most security proofs assume parameters are fixed in advance. Letting parameters depend on earlier observations needs care to keep the proof valid.</li>
+          </ul>
+
+          <h2>What has been tried so far</h2>
+          <ul>
+            <li><strong>Rate-adaptive error correction.</strong> Error-correcting codes (LDPC codes and the interactive Cascade method) that can change their strength to match the measured error rate, so less information is revealed when the channel is good.</li>
+            <li><strong>Blind reconciliation.</strong> Error correction that starts optimistic and reveals extra information only if decoding fails, which avoids needing a precise error estimate up front.</li>
+            <li><strong>Finite-key security analysis.</strong> A large body of work that tells you exactly how much to compress for a given block size and measured error, which is what any adaptive scheme has to respect.</li>
+            <li><strong>Decoy states.</strong> Practical QKD sources send weak laser pulses, not perfect single photons. Mixing in pulses of different intensities lets Alice and Bob estimate how much of the key really came from single photons; choosing these intensities is itself an optimisation problem.</li>
+            <li><strong>Parameter optimisation, including ML.</strong> Studies that use numerical search or neural networks to choose QKD parameters (such as intensities and probabilities) quickly for a given distance and loss, and work on active polarisation and phase tracking for drifting fibre.</li>
+          </ul>
+          <p>Most of this optimises one piece at a time. What is less developed is a <strong>whole-pipeline controller</strong> that adapts several knobs together over time, with a clear argument that the security bound stays intact while it does.</p>
+
+          <h2>How I would approach it</h2>
+          <ol>
+            <li>Build a simulator of a BB84 link with time-varying loss and noise — slow drift, sudden jumps and periodic patterns — and a small set of attack models on top.</li>
+            <li>Write down, explicitly, which parameters are <em>performance-only</em> and which feed the <em>security formula</em>, and keep a hard wall between them in the design.</li>
+            <li>Compare three controllers on the same traces: fixed conservative settings, simple rule-based adaptation, and a learned forecaster that drives the optimizer — all behind the same proven security gate.</li>
+            <li>Measure not only average key rate but also stability: how often blocks abort, how often error correction fails, how quickly the system recovers.</li>
+            <li>Finally, let an adversary try to steer the controller, and check that the worst it can do is lower the key rate — never the secrecy.</li>
+          </ol>
+
+          <h2>Questions still open</h2>
+          <ol class="opa-qs">
+            <li>How much key rate does adaptation actually gain on realistic, time-varying channels, compared with a well-chosen fixed setting?</li>
+            <li>What is the right trade-off between block size and speed of adaptation under finite-key security?</li>
+            <li>Can we prove, in general, that a controller which only touches performance parameters can never weaken secrecy — including the information leaked by announcing its decisions?</li>
+            <li>Can an adversary exploit the adaptive loop itself, for example to drive it into constant fallback (a denial-of-service)?</li>
+            <li>When the QBER rises, how should the system tell drift from attack, and does it need to? (see OP-16)</li>
+            <li>How should adaptation on one link coordinate with the rest of a network that depends on its key? (see OP-18)</li>
+          </ol>
+
+          <p>This problem builds directly on the realistic-noise question in OP-16, and its output — a predictable, stable key rate — is what the hybrid-network design in OP-18 needs as input.</p>
+
+          <section class="opa-collab">
+            <h2>Work on this together</h2>
+            <p>If you work on QKD systems, finite-key security, reconciliation codes or control of noisy physical links — or you have real channel traces from a fibre or free-space link — I would love to hear from you. Telling me where this framing is naive is just as welcome.</p>
+            <a class="btn" href="mailto:sunjun7559@gmail.com?subject=OP-17%20Collaboration"><i class="fas fa-handshake"></i> Reach out about OP-17</a>
+          </section>
+
+          <h2>Further reading</h2>
+          <ul class="opa-refs">
+            <li>Bennett &amp; Brassard — Quantum Cryptography: Public Key Distribution and Coin Tossing (IEEE ICCSSP 1984)</li>
+            <li>Shor &amp; Preskill — Simple Proof of Security of the BB84 Quantum Key Distribution Protocol (Physical Review Letters 2000)</li>
+            <li>Brassard &amp; Salvail — Secret-Key Reconciliation by Public Discussion (EUROCRYPT 1993)</li>
+            <li>Lo, Ma &amp; Chen — Decoy State Quantum Key Distribution (Physical Review Letters 2005)</li>
+            <li>Tomamichel, Lim, Gisin &amp; Renner — Tight Finite-Key Analysis for Quantum Cryptography (Nature Communications 2012)</li>
+            <li>Scarani et al. — The Security of Practical Quantum Key Distribution (Reviews of Modern Physics 2009)</li>
+          </ul>
+          <nav class="opa-nav">
+            <a href="op-16.html"><small>Previous</small>OP-16 · How robust is BB84 under realistic noise and imperfect hardware?</a>
+            <a href="op-18.html" style="text-align:right"><small>Next</small>OP-18 · How should BB84 coexist with classical communication in hybrid networks?</a>
+          </nav>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

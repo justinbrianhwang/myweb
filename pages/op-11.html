@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OP-11: Can We Identify Unreliable Clients Without Seeing Their Data? — Sunjun Hwang</title>
+  <meta name="description" content="Open Problem 11 — in privacy-preserving federated learning, telling corrupted, shifted and adversarial clients apart from updates, representations and statistics alone.">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/op-article.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+
+  <main class="page-content" data-theme="openproblems">
+    <div class="container">
+      <article class="opa">
+        <a class="opa-back" href="open-problems.html"><i class="fas fa-arrow-left"></i> All Open Problems</a>
+
+        <header class="opa-head">
+          <div class="opa-kicker">Open Problem 11 · Distributed / Real-World AI</div>
+          <h1>Can We Identify Unreliable Clients Without Seeing Their Data?</h1>
+          <div class="opa-meta">
+            <span><i class="far fa-calendar"></i> November 2026</span>
+            <span><i class="far fa-clock"></i> 7 min read</span>
+            <span><i class="fas fa-circle" style="color:var(--op);font-size:.55rem"></i> Status: Open</span>
+          </div>
+
+          <div class="opa-author">
+            <img src="../assets/portrait.jpg" alt="Sunjun Hwang">
+            <div>
+              <div class="opa-author__name">Sunjun Hwang</div>
+              <div class="opa-author__role">Independent Researcher, Vancouver · Quantum Computing, AI Security &amp; Robust ML</div>
+              <div class="opa-author__links">
+                <a href="https://sjhwangcv.com" target="_blank" rel="noopener"><i class="fas fa-id-card"></i> CV</a>
+                <a href="https://sjhwangresearch.com" target="_blank" rel="noopener"><i class="fas fa-flask"></i> Research</a>
+                <a href="https://scholar.google.com/citations?user=6X2EVE0AAAAJ" target="_blank" rel="noopener"><i class="fas fa-graduation-cap"></i> Scholar</a>
+                <a href="mailto:sunjun7559@gmail.com?subject=OP-11%20Collaboration"><i class="fas fa-envelope"></i> Email</a>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="opa-abstract">
+          <h2>In one sentence</h2>
+          <p>In federated learning the server never sees anyone's data — so from the <strong>model updates and summary statistics alone</strong>, can it tell which clients are broken, which are simply different, and which are <strong>attacking</strong>?</p>
+        </section>
+
+        <div class="opa-body">
+          <h2>What is the problem?</h2>
+          <p>Imagine a keyboard app that learns better word suggestions from millions of phones using <strong>federated learning</strong>: each phone improves a copy of the model on what its owner types, and sends back only the <em>update</em> — the change to the model — never the text itself. The server combines the updates into one shared model.</p>
+          <p>Now suppose a few of those phones are a problem. One has a bug that scrambles its training labels. Another belongs to someone who types in an unusual dialect. A third is controlled by an attacker who wants the keyboard to suggest a particular brand name, or to fail on certain words. All three send updates that look somewhat different from the crowd. Only one of them is malicious; one is broken; one is perfectly legitimate and deserves to be served <em>better</em>, not thrown out.</p>
+          <p>The server has to tell them apart without ever looking at the data that explains the difference. This open problem asks: <strong>in privacy-preserving federated learning, can we distinguish corrupted, shifted and adversarial clients from their representations, updates and statistics alone?</strong></p>
+
+          <h2>Why does it matter?</h2>
+          <ul>
+            <li><strong>Security.</strong> A handful of malicious clients can plant a hidden "backdoor" in the shared model, or quietly reduce its accuracy for everyone.</li>
+            <li><strong>Quality.</strong> Clients with faulty sensors or buggy pipelines can drag the model down without anyone meaning harm.</li>
+            <li><strong>Fairness.</strong> A defence that removes every unusual update will also remove honest minorities — the clients whose data is rare and who most need the model to learn from them (see OP-10).</li>
+            <li><strong>Privacy is the whole point.</strong> If the only way to check clients is to look at their data, federated learning loses its reason to exist.</li>
+          </ul>
+
+          <h2>What would a solution look like?</h2>
+          <p>The server can see a surprising amount without seeing any data: each client's update, how it changes from round to round, how the client's version of the model responds to a shared probe, and simple statistics the client agrees to report. The hope is that different kinds of unreliability leave different fingerprints in these signals.</p>
+
+          <figure class="opa-fig">
+            <img src="../assets/op/op11-fig1.png" alt="Left: five clients, each with a padlock on its data, send only their updates to the server. Right: what the server sees — a tight cluster of grey dots for honest clients and three orange dots outside it, labelled shifted data (slightly offset), corrupted labels (far away), and attacker hiding (at the edge of the cluster)." loading="lazy">
+            <figcaption><strong>Figure 1. The server's view.</strong> Each dot is one client's update. Honest clients form a cluster. A client with corrupted labels lands far away and is easy to spot. A client with legitimately different data sits slightly off — it looks suspicious but should be kept. The hardest case is the attacker <em>at the edge of the cluster</em>: a careful adversary makes its update look just normal enough to pass, which is why "remove the outliers" is not enough.</figcaption>
+          </figure>
+
+          <p>A good answer would not just flag "odd" clients. It would give each client a <strong>reliability profile</strong> — how likely its update is to be corrupted, shifted or adversarial — so the server can respond appropriately: down-weight a broken client, personalise for a shifted one, and exclude an attacker.</p>
+
+          <div class="opa-table-wrap">
+            <table class="opa-table">
+              <thead><tr><th>Kind of client</th><th>What is going on</th><th>What the server should do</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Corrupted</strong></td><td>Wrong labels, broken sensor, buggy preprocessing — no intent</td><td>Down-weight or ask the client to check its pipeline</td></tr>
+                <tr><td><strong>Shifted</strong></td><td>Honest but genuinely different data: new region, device or population</td><td>Keep it, and possibly personalise the model for it</td></tr>
+                <tr><td><strong>Adversarial</strong></td><td>Deliberately crafted updates to damage or backdoor the model</td><td>Exclude it, ideally without the attacker noticing how</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>The key idea: look at behaviour, not just distance</h2>
+          <p>Most current defences ask one question: <em>how far is this update from the others?</em> That single number lumps all three kinds of client together. My intuition is that the signals become separable when we look at <strong>how a client behaves</strong>, not only where its update lands:</p>
+          <ul>
+            <li><strong>Consistency over time.</strong> A shifted client is different in the same way every round. A broken client is often erratic. An attacker may behave normally for a while and then act.</li>
+            <li><strong>Which parts of the model move.</strong> A different input distribution tends to change the early, feature-extracting layers; label corruption and many backdoors tend to show up more in the final, decision-making layers.</li>
+            <li><strong>How the client's model sees a shared probe.</strong> If the server sends a small public set of inputs, the internal representations each client's model produces can be compared — a view of "how this client sees the world" that reveals nothing private about its data.</li>
+          </ul>
+
+          <h2>Why is it hard?</h2>
+          <ul>
+            <li><strong>Different and dangerous look alike.</strong> In real federations honest clients vary a lot, so the "normal" cluster is wide — and wide clusters are easy for attackers to hide in.</li>
+            <li><strong>Attackers adapt.</strong> Once a defence is known, an attacker can design updates that pass it. Several published defences have been broken this way.</li>
+            <li><strong>Privacy tools hide the evidence.</strong> Secure aggregation lets the server see only the <em>sum</em> of updates, not each one; added privacy noise blurs individual updates. Both make detection harder.</li>
+            <li><strong>Many attackers can coordinate.</strong> A group of fake clients can vote together and shift what "normal" looks like.</li>
+            <li><strong>No ground truth.</strong> In a real deployment, nobody knows which clients are actually bad, so detectors are hard to evaluate outside simulation.</li>
+          </ul>
+
+          <h2>What has been tried so far</h2>
+          <ul>
+            <li><strong>Robust aggregation</strong>: instead of averaging, take a median, trim the most extreme values, or pick the update closest to most others. Effective against crude attacks, but tends to discard honest minorities and can be fooled by careful attackers.</li>
+            <li><strong>Similarity-based detection</strong>: flag groups of clients whose updates are suspiciously similar to each other, which catches coordinated fake clients.</li>
+            <li><strong>Trust from a small clean dataset</strong>: the server keeps a little trusted data of its own and scores each update by how well it agrees with an update computed on that data.</li>
+            <li><strong>Clustering clients</strong> by their updates, mainly to personalise models — which also, as a side effect, separates clients with different data.</li>
+            <li><strong>Attack research</strong> showing how backdoors can be planted, how a small, well-crafted change can slip past defences, and how much private information updates can leak — which sets the bar any detector must clear.</li>
+          </ul>
+          <p>Most defences answer a yes/no question — "keep or reject?" — and treat every unusual client as a threat. Very few try to tell <em>why</em> a client is unusual.</p>
+
+          <h2>How I would approach it</h2>
+          <ol>
+            <li>Build a simulated federation containing all three kinds of unreliable client, alongside honest clients with naturally varied data.</li>
+            <li>For every client and round, record several privacy-safe signals: the update itself, which layers it changes most, how it changes over rounds, and the representations its model produces on a small public probe set.</li>
+            <li>Ask which signals separate the three kinds best — and especially whether any signal separates <em>shifted</em> from <em>adversarial</em>, which is the hard pair.</li>
+            <li>Then attack my own detector: give the adversary knowledge of how it works and see how easily it can be evaded.</li>
+            <li>Finally, check what survives when secure aggregation or privacy noise is added, since a detector that needs to see individual updates may not be usable in practice.</li>
+          </ol>
+
+          <h2>Questions still open</h2>
+          <ol class="opa-qs">
+            <li>Can corrupted, shifted and adversarial clients be told apart reliably, or only "normal vs not normal"?</li>
+            <li>Which privacy-safe signals — updates, layer-wise changes, probe representations, history — carry the most information?</li>
+            <li>Is there a detector that remains useful against an attacker who knows exactly how it works?</li>
+            <li>How much detection is still possible under secure aggregation or strong privacy noise?</li>
+            <li>Can the same signals warn a client that the global model is failing on its data? (see OP-01)</li>
+            <li>How do we avoid punishing honest minority clients while still excluding attackers? (see OP-10)</li>
+          </ol>
+
+          <p>This problem is the natural bridge between AI security and federated learning: it pairs with OP-10 on heterogeneous clients, uses the failure-warning ideas from OP-01, and faces the same "attacker adapts to the defence" difficulty as OP-03 on unseen attacks.</p>
+
+          <section class="opa-collab">
+            <h2>Work on this together</h2>
+            <p>If you work on federated learning, poisoning and backdoor attacks, privacy-preserving computation, or you run a federation and have seen strange clients in practice, I would love to hear from you. Telling me which of my signals an attacker would break first is especially welcome.</p>
+            <a class="btn" href="mailto:sunjun7559@gmail.com?subject=OP-11%20Collaboration"><i class="fas fa-handshake"></i> Reach out about OP-11</a>
+          </section>
+
+          <h2>Further reading</h2>
+          <ul class="opa-refs">
+            <li>Blanchard et al. — Machine Learning with Adversaries: Byzantine Tolerant Gradient Descent (NeurIPS 2017)</li>
+            <li>Yin et al. — Byzantine-Robust Distributed Learning: Towards Optimal Statistical Rates (ICML 2018)</li>
+            <li>Bagdasaryan et al. — How To Backdoor Federated Learning (AISTATS 2020)</li>
+            <li>Baruch, Baruch &amp; Goldberg — A Little Is Enough: Circumventing Defenses For Distributed Learning (NeurIPS 2019)</li>
+            <li>Fung, Yoon &amp; Beschastnikh — The Limitations of Federated Learning in Sybil Settings (RAID 2020)</li>
+            <li>Cao et al. — FLTrust: Byzantine-robust Federated Learning via Trust Bootstrapping (NDSS 2021)</li>
+            <li>Bonawitz et al. — Practical Secure Aggregation for Privacy-Preserving Machine Learning (CCS 2017)</li>
+            <li>Zhu, Liu &amp; Han — Deep Leakage from Gradients (NeurIPS 2019)</li>
+          </ul>
+          <nav class="opa-nav">
+            <a href="op-10.html"><small>Previous</small>OP-10 · How do we build robust federated learning under heterogeneous clients?</a>
+            <a href="op-12.html" style="text-align:right"><small>Next</small>OP-12 · How should autonomous systems know when not to trust themselves?</a>
+          </nav>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

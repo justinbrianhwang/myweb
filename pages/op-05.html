@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OP-05: What Does the Topology of a Learned Representation Actually Mean? — Sunjun Hwang</title>
+  <meta name="description" content="Open Problem 05 — connecting the loops, clusters and holes found by persistent homology to what a model has actually learned.">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/op-article.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+
+  <main class="page-content" data-theme="openproblems">
+    <div class="container">
+      <article class="opa">
+        <a class="opa-back" href="open-problems.html"><i class="fas fa-arrow-left"></i> All Open Problems</a>
+
+        <header class="opa-head">
+          <div class="opa-kicker">Open Problem 05 · Topology &times; Machine Learning</div>
+          <h1>What Does the Topology of a Learned Representation Actually Mean?</h1>
+          <div class="opa-meta">
+            <span><i class="far fa-calendar"></i> November 2026</span>
+            <span><i class="far fa-clock"></i> 7 min read</span>
+            <span><i class="fas fa-circle" style="color:var(--op);font-size:.55rem"></i> Status: Open</span>
+          </div>
+
+          <div class="opa-author">
+            <img src="../assets/portrait.jpg" alt="Sunjun Hwang">
+            <div>
+              <div class="opa-author__name">Sunjun Hwang</div>
+              <div class="opa-author__role">Independent Researcher, Vancouver · Quantum Computing, AI Security &amp; Robust ML</div>
+              <div class="opa-author__links">
+                <a href="https://sjhwangcv.com" target="_blank" rel="noopener"><i class="fas fa-id-card"></i> CV</a>
+                <a href="https://sjhwangresearch.com" target="_blank" rel="noopener"><i class="fas fa-flask"></i> Research</a>
+                <a href="https://scholar.google.com/citations?user=6X2EVE0AAAAJ" target="_blank" rel="noopener"><i class="fas fa-graduation-cap"></i> Scholar</a>
+                <a href="mailto:sunjun7559@gmail.com?subject=OP-05%20Collaboration"><i class="fas fa-envelope"></i> Email</a>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="opa-abstract">
+          <h2>In one sentence</h2>
+          <p>When topological tools find a loop, a gap or a set of clusters inside a neural network's representation, <strong>what does that shape say about what the model has learned</strong> — and how do we tell a meaningful shape from an accident of measurement?</p>
+        </section>
+
+        <div class="opa-body">
+          <h2>What is the problem?</h2>
+          <p>Suppose you show a vision model hundreds of photos of the same coffee mug, each one rotated a few degrees further than the last, all the way round. You record the model's internal representation of every photo and run persistent homology on the resulting cloud of points (the method is explained in OP-04). The output says: <em>"one long-lived loop."</em></p>
+          <p>That is a tidy result. But what does it <em>mean</em>? The tempting story is that the model has learned that rotation is circular — that turning the mug 360° brings you back to where you started. That might be true. It might also be that the loop comes from the way photos were lit, from the distance measure used, or from something about the training method that has nothing to do with mugs at all.</p>
+          <p>This is the situation for much of topological analysis of neural networks today. We can <strong>compute</strong> persistence diagrams for almost any layer of almost any model. We are much worse at <strong>reading</strong> them: saying which features of the diagram correspond to concepts the model uses, and which are noise.</p>
+          <p>This open problem is about meaning, not measurement: how the topological structure of a representation relates to the <em>semantic</em> structure the model has learned.</p>
+
+          <h2>Why does it matter?</h2>
+          <ul>
+            <li><strong>Without meaning, topology is just another number.</strong> If we use topology to warn of failure (OP-04) or to guide training (OP-06), we need to know what we are warning about or asking for.</li>
+            <li><strong>It could be a new kind of interpretability.</strong> Most interpretability looks at single neurons or single directions. Topology looks at the global organisation of many inputs together — how concepts are arranged relative to each other.</li>
+            <li><strong>It helps tell good models from lucky ones.</strong> Two models with the same accuracy might organise their knowledge very differently. Shape could reveal which one has captured the real structure of the world.</li>
+            <li><strong>It guards against over-interpretation.</strong> Beautiful topological pictures are easy to produce and easy to over-read. A proper theory of meaning would tell us when to stop.</li>
+          </ul>
+
+          <h2>The key idea: the same shape can mean different things</h2>
+          <p>The central difficulty fits in one picture.</p>
+
+          <figure class="opa-fig">
+            <img src="../assets/op/op05-fig1.png" alt="A ring of dots in a feature space labelled one loop found, with arrows to two boxes. Left box, meaningful: the same ring with pictures of a coffee mug at 0, 90, 180 and 270 degrees placed around it, labelled loop equals rotating the object. Right box, artifact: the same ring next to a question mark, labelled loop equals side effect of the training method or of the distance measure. In the middle: Which one is it?" loading="lazy">
+            <figcaption><strong>Figure 1. One loop, two stories.</strong> Persistent homology only reports the shape in the middle: a single loop. On the left, the loop is meaningful — walking around it corresponds to rotating the object, and the model has captured that rotation comes back to its start. On the right, the identical loop is an artifact of how the data was collected, how distance was measured, or how the network was trained. The barcode alone cannot tell these apart. The open problem is to find what can.</figcaption>
+          </figure>
+
+          <p>For a loop to be <em>meaningful</em>, it should pass some tests that the barcode alone does not provide:</p>
+          <div class="opa-table-wrap">
+            <table class="opa-table">
+              <thead><tr><th>Test</th><th>The question it asks</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Walk the loop</strong></td><td>If I follow the loop and look at the inputs along the way, do they change in a way a person can name — angle, colour, time of day?</td></tr>
+                <tr><td><strong>Stability</strong></td><td>Does the same loop appear with a different random seed, a different distance measure, or a different sample of inputs?</td></tr>
+                <tr><td><strong>Ground truth</strong></td><td>When I build data whose true shape I know in advance, does the representation recover that shape?</td></tr>
+                <tr><td><strong>Use</strong></td><td>If I disturb the representation so the loop breaks, does the model's behaviour change in a related way?</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>There are encouraging precedents. Topological analysis of small patches of natural images found that they are organised along a surprisingly specific low-dimensional shape related to edges at different angles. In neuroscience, the activity of grid cells — neurons that help animals know where they are — has been shown to lie on a doughnut-shaped surface (a torus), matching the periodic pattern those cells respond to. In both cases, the topology was meaningful because it could be tied back to a known property of the world. That is the standard I would like to reach for neural network representations.</p>
+
+          <h2>Why is it hard?</h2>
+          <ul>
+            <li><strong>Topology throws information away on purpose.</strong> It ignores exact distances and keeps only connectivity. That is why it is robust, but also why it cannot say <em>which</em> inputs make up a feature without extra work.</li>
+            <li><strong>Results depend on choices.</strong> Which layer, which distance, how many points, which construction — each can change the barcode. Separating the model's structure from the analyst's choices is not trivial.</li>
+            <li><strong>High-dimensional data is not naturally a neat shape.</strong> Real representations are noisy, uneven in density, and live in hundreds of dimensions. A clean loop or sphere is the exception, not the rule.</li>
+            <li><strong>Concepts are fuzzy.</strong> Even if we find a feature, naming what it means is a human judgement. Two people might read the same loop differently.</li>
+            <li><strong>Few benchmarks.</strong> There is little shared data with known "true" topology to test interpretations against.</li>
+          </ul>
+
+          <h2>What has been tried so far</h2>
+          <ul>
+            <li><strong>Topology of natural image data</strong> — studying the shape of small image patches directly and finding structure that matches how edges and orientations are arranged.</li>
+            <li><strong>Mapper graphs</strong> — a method that turns a point cloud into a simple network of overlapping clusters that people can look at and colour by labels, making shape easier to inspect by eye.</li>
+            <li><strong>Topology of network weights and filters</strong> — finding that the learned filters of image networks are organised in shapes similar to those found in natural image patches.</li>
+            <li><strong>Topology through the layers</strong> — showing that deep networks gradually simplify the shape of the data as it moves toward the output.</li>
+            <li><strong>Representation similarity measures</strong> — non-topological ways of comparing representations between layers or models, useful as a reference point.</li>
+            <li><strong>Critical studies</strong> — careful work asking when persistent homology actually helps on a task and when simpler features do just as well.</li>
+          </ul>
+          <p>What is still missing is a reliable <strong>link back to meaning</strong>: a routine way to go from "the diagram has this feature" to "the model represents this concept", with checks that rule out artifacts.</p>
+
+          <h2>How I would approach it</h2>
+          <ol>
+            <li>Start where the right answer is known: build datasets with controlled structure — rotating objects (a loop), objects varying along two independent circular factors (a torus), several unrelated categories (separate pieces).</li>
+            <li>Train ordinary networks on tasks that use these datasets, and check at every layer whether persistent homology recovers the known shape.</li>
+            <li>For every feature found, walk it: look at the inputs along the loop or inside the cluster and check whether they share a nameable property.</li>
+            <li>Repeat with different seeds, distance measures and samples, and keep only features that survive. Then move to real datasets, using the same checks as a filter against over-interpretation.</li>
+          </ol>
+
+          <h2>Questions still open</h2>
+          <ol class="opa-qs">
+            <li>When a learned representation has a long-lived loop or hole, how often does it correspond to a real, nameable property of the data?</li>
+            <li>Which choices in the analysis (layer, distance, sampling) change the topology, and which leave it alone?</li>
+            <li>Does a model whose representation matches the data's true shape generalize or resist attacks better? (see OP-02)</li>
+            <li>When topology changes under distribution shift, can we say <em>which</em> concept broke? (see OP-04)</li>
+            <li>Do quantum models, whose states live in a very different space, organise concepts with different shapes? (see OP-08)</li>
+          </ol>
+
+          <p>This problem is the interpretive layer underneath the other topology questions: it decides whether a topological warning (OP-04) or a topological training target (OP-06) is actually about something the model knows.</p>
+
+          <section class="opa-collab">
+            <h2>Work on this together</h2>
+            <p>If you work on topological data analysis, interpretability or computational neuroscience — or you have data whose true shape you know and would like to test a model against — I would love to hear from you. Disagreeing with how I framed the problem is just as welcome.</p>
+            <a class="btn" href="mailto:sunjun7559@gmail.com?subject=OP-05%20Collaboration"><i class="fas fa-handshake"></i> Reach out about OP-05</a>
+          </section>
+
+          <h2>Further reading</h2>
+          <ul class="opa-refs">
+            <li>Singh, Mémoli &amp; Carlsson — Topological Methods for the Analysis of High Dimensional Data Sets and 3D Object Recognition (Eurographics SPBG 2007)</li>
+            <li>Carlsson et al. — On the Local Behavior of Spaces of Natural Images (International Journal of Computer Vision, 2008)</li>
+            <li>Carlsson — Topology and Data (Bulletin of the American Mathematical Society, 2009)</li>
+            <li>Kornblith et al. — Similarity of Neural Network Representations Revisited (ICML 2019)</li>
+            <li>Naitzat, Zhitnikov &amp; Lim — Topology of Deep Neural Networks (JMLR 2020)</li>
+            <li>Gardner et al. — Toroidal Topology of Population Activity in Grid Cells (Nature, 2022)</li>
+            <li>Turkeš, Montúfar &amp; Otter — On the Effectiveness of Persistent Homology (NeurIPS 2022)</li>
+          </ul>
+          <nav class="opa-nav">
+            <a href="op-04.html"><small>Previous</small>OP-04 · Can topology predict neural network failure?</a>
+            <a href="op-06.html" style="text-align:right"><small>Next</small>OP-06 · Can we train neural networks to preserve useful topology?</a>
+          </nav>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

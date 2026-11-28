@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OP-04: Can Topology Predict Neural Network Failure? — Sunjun Hwang</title>
+  <meta name="description" content="Open Problem 04 — whether topological summaries such as persistent homology can catch representation collapse before accuracy drops.">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/op-article.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+
+  <main class="page-content" data-theme="openproblems">
+    <div class="container">
+      <article class="opa">
+        <a class="opa-back" href="open-problems.html"><i class="fas fa-arrow-left"></i> All Open Problems</a>
+
+        <header class="opa-head">
+          <div class="opa-kicker">Open Problem 04 · Topology &times; Machine Learning</div>
+          <h1>Can Topology Predict Neural Network Failure?</h1>
+          <div class="opa-meta">
+            <span><i class="far fa-calendar"></i> November 2026</span>
+            <span><i class="far fa-clock"></i> 8 min read</span>
+            <span><i class="fas fa-circle" style="color:var(--op);font-size:.55rem"></i> Status: Open</span>
+          </div>
+
+          <div class="opa-author">
+            <img src="../assets/portrait.jpg" alt="Sunjun Hwang">
+            <div>
+              <div class="opa-author__name">Sunjun Hwang</div>
+              <div class="opa-author__role">Independent Researcher, Vancouver · Quantum Computing, AI Security &amp; Robust ML</div>
+              <div class="opa-author__links">
+                <a href="https://sjhwangcv.com" target="_blank" rel="noopener"><i class="fas fa-id-card"></i> CV</a>
+                <a href="https://sjhwangresearch.com" target="_blank" rel="noopener"><i class="fas fa-flask"></i> Research</a>
+                <a href="https://scholar.google.com/citations?user=6X2EVE0AAAAJ" target="_blank" rel="noopener"><i class="fas fa-graduation-cap"></i> Scholar</a>
+                <a href="mailto:sunjun7559@gmail.com?subject=OP-04%20Collaboration"><i class="fas fa-envelope"></i> Email</a>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="opa-abstract">
+          <h2>In one sentence</h2>
+          <p>Can we watch the <strong>shape</strong> of a network's internal data — how many separate groups it forms, whether it has loops or holes — and see that shape start to break down <strong>before</strong> the model's accuracy does?</p>
+        </section>
+
+        <div class="opa-body">
+          <h2>What is the problem?</h2>
+          <p>Think of a model that reads chest X-rays, moved from the hospital where it was trained to a new one. The new hospital uses a different scanner. Nobody has labelled the new images yet, so nobody knows whether the model still works. Months later, an audit shows that accuracy quietly dropped from the first week.</p>
+          <p>Inside the model, something must have changed long before the audit. Each image becomes a point in a high-dimensional space, and on the old data those points formed tidy groups — one per diagnosis, clearly apart. On the new scanner's images, those groups may have started to blur, merge, or split into fragments. The <em>answers</em> might still look plausible for a while. The <em>structure</em> underneath was already going wrong.</p>
+          <p><strong>Topology</strong> is the branch of mathematics that studies exactly this kind of structure: not exact distances, but properties like "how many pieces", "is there a loop", "is there an empty cavity". A tool called <strong>persistent homology</strong> makes those properties measurable on a cloud of data points.</p>
+          <p>This open problem asks a concrete question: do topological summaries of a network's representation change <strong>earlier</strong> than accuracy, early enough to be used as a warning — and do they see something that simpler measurements miss? It is the topological half of OP-01.</p>
+
+          <h2>Why does it matter?</h2>
+          <ul>
+            <li><strong>No labels needed.</strong> Topology is computed from the inputs' representations alone, so it can be monitored in deployment, where correct answers arrive late or never.</li>
+            <li><strong>A different kind of evidence.</strong> Most monitoring looks at confidence or distance. Topology looks at the overall shape of many points at once, which may react to slow structural damage that per-point measures miss.</li>
+            <li><strong>It goes beyond robustness.</strong> The same signal could tell us when inputs are unlike anything seen in training (out-of-distribution detection), when a model is forgetting old tasks while learning new ones (continual learning), and when one client in a shared training setup is sending something odd (federated learning).</li>
+          </ul>
+
+          <h2>What is persistent homology, in plain words?</h2>
+          <p>This is the one technical idea the whole problem rests on, so it is worth a picture.</p>
+
+          <figure class="opa-fig">
+            <img src="../assets/op/op04-fig1.png" alt="Four panels. Points: about twelve dots arranged in a ring plus a few scattered dots. Small radius: a small orange disc around each dot, few touching. Medium radius: discs merge into a ring with an empty hole in the middle, labelled loop appears. Large radius: discs cover everything and the hole is filled, labelled loop disappears. Below, a radius axis with several short grey bars labelled noise: short bars, and one long orange bar spanning from the medium to the large radius, labelled real loop: long bar." loading="lazy">
+            <figcaption><strong>Figure 1. How persistent homology reads shape.</strong> Grow a disc around every point, slowly. At some size the discs join up around the ring and enclose a hole — a loop is "born". At a larger size the hole fills in and the loop "dies". Each feature becomes a bar from its birth to its death. Random gaps between nearby points give short grey bars; the real ring gives one long orange bar. The list of bars (a <em>barcode</em>) is a summary of the shape that ignores small noise.</figcaption>
+          </figure>
+
+          <p>The same recipe also counts <strong>pieces</strong>: at a small radius every point is its own piece, and pieces merge as the discs grow. Clusters that stay separate for a long time are real groups; ones that merge immediately are not. For a classifier, we would expect, roughly, one long-lived piece per class and few unexplained loops. When data shifts, the barcode should change: classes merging early, new short-lived fragments appearing, loops forming where there were none.</p>
+
+          <h2>The key idea: watch the barcode, not just the answers</h2>
+          <p>The proposal is to turn this into a monitor that runs alongside the model in deployment.</p>
+
+          <figure class="opa-fig">
+            <img src="../assets/op/op04-fig2.png" alt="Pipeline: incoming data batch, then network layer, then point cloud of features, then persistent homology shown as a barcode, then a topology summary number such as 0.72. Below, a line chart over time or data shift: an orange topology change line rises early and crosses a threshold at a dashed line labelled warning; a grey accuracy line stays flat and only drops later, at a dashed line labelled failure." loading="lazy">
+            <figcaption><strong>Figure 2. A topological early-warning monitor.</strong> Top row: each new batch of inputs is passed through the network, the representation from a middle layer is treated as a cloud of points, and persistent homology turns that cloud into a single summary number. Bottom: the hope. As the data drifts, the topology summary (orange) should rise <em>before</em> accuracy (grey) falls. The gap between "warning" and "failure" is the time we would have to react. Whether that gap really exists is the open question.</figcaption>
+          </figure>
+
+          <p>Note that the monitor works on <strong>batches</strong>, not single inputs: shape is a property of many points together. That makes it a natural fit for detecting a drifting environment, and a less natural fit for flagging one bad prediction — which is why I see it as a complement to the per-input signals in OP-01, not a replacement.</p>
+
+          <h2>Why is it hard?</h2>
+          <ul>
+            <li><strong>Cost.</strong> Persistent homology on thousands of high-dimensional points is expensive. A practical monitor needs sampling or approximations that do not throw away the signal.</li>
+            <li><strong>High dimensions blur distances.</strong> In very high-dimensional spaces, all points tend to look roughly equally far apart, which can wash out the shape. The choice of layer and distance matters a lot.</li>
+            <li><strong>Which number?</strong> A barcode is a whole list of bars. Turning it into one alarm signal — total bar length, number of long bars, distance between today's and yesterday's barcode — is a design choice with no obvious right answer.</li>
+            <li><strong>Is it really earlier?</strong> Topology might change at the same moment accuracy drops, in which case it adds cost but no warning time.</li>
+            <li><strong>Is it really new?</strong> Simple statistics such as average distance to the training data may already capture whatever topology captures. The extra information has to be shown, not assumed.</li>
+          </ul>
+
+          <h2>What has been tried so far</h2>
+          <ul>
+            <li><strong>Topology of the network's weights</strong> — summarising the network itself as a graph and measuring its persistent homology, for example to track training progress or model complexity.</li>
+            <li><strong>Topology of activations</strong> — building graphs from which neurons fire together on an input, and showing that their topology relates to how well the network generalizes, sometimes well enough to estimate test error without a test set.</li>
+            <li><strong>Topological uncertainty</strong> — comparing the topology of a new input's activation pattern with typical patterns from training, to flag unusual inputs.</li>
+            <li><strong>Tracking how topology changes through the layers</strong> — showing that well-trained networks progressively simplify the shape of the data, untangling complicated classes into simple ones.</li>
+            <li><strong>Non-topological shift detection</strong> — statistical tests that compare new data with training data. Useful, and an important baseline that any topological monitor has to beat.</li>
+          </ul>
+          <p>What I have not seen done systematically is the <strong>timing</strong> question: under gradually increasing shift, does a topological signal reliably move first, and by how much compared with simpler signals?</p>
+
+          <h2>How I would approach it</h2>
+          <ol>
+            <li>Take ordinary trained classifiers and feed them data under gradually increasing shift — growing noise or blur, a slowly changing camera, attacks of increasing strength.</li>
+            <li>At each step, take a batch, extract a middle-layer representation, compute persistent homology on a sample of points, and record a few candidate summaries next to the true accuracy.</li>
+            <li>Measure how far ahead of the accuracy drop each summary crosses a threshold, and compare against simple non-topological baselines on the same data.</li>
+            <li>Only if topology wins on timing, try it on the wider settings — new kinds of input, continual learning, federated clients — to see whether the same signal carries over.</li>
+          </ol>
+
+          <h2>Questions still open</h2>
+          <ol class="opa-qs">
+            <li>Does topological change reliably <em>lead</em> accuracy loss, or only accompany it?</li>
+            <li>Which layer's representation gives the earliest and cleanest signal?</li>
+            <li>Which summary of the barcode should be the alarm, and how should its threshold be set without labels?</li>
+            <li>Can it be computed cheaply enough to run continuously in deployment?</li>
+            <li>When the alarm fires, can we tell <em>what</em> changed — which classes merged, which fragments appeared? (see OP-05)</li>
+            <li>Could a server detect an unreliable federated client from the topology of its updates or features, without seeing its data? (see OP-11)</li>
+          </ol>
+
+          <p>If this works, it also suggests the reverse question — whether we can <em>train</em> networks to keep a healthy topology in the first place (OP-06) — and it gives a candidate answer to what makes a representation robust (OP-02).</p>
+
+          <section class="opa-collab">
+            <h2>Work on this together</h2>
+            <p>If you work on topological data analysis, distribution shift or model monitoring — or you maintain a deployed model where labels arrive late and silent failures are costly — I would love to hear from you. Disagreeing with how I framed the problem is just as welcome.</p>
+            <a class="btn" href="mailto:sunjun7559@gmail.com?subject=OP-04%20Collaboration"><i class="fas fa-handshake"></i> Reach out about OP-04</a>
+          </section>
+
+          <h2>Further reading</h2>
+          <ul class="opa-refs">
+            <li>Carlsson — Topology and Data (Bulletin of the American Mathematical Society, 2009)</li>
+            <li>Rieck et al. — Neural Persistence: A Complexity Measure for Deep Neural Networks Using Algebraic Topology (ICLR 2019)</li>
+            <li>Rabanser, Günnemann &amp; Lipton — Failing Loudly: An Empirical Study of Methods for Detecting Dataset Shift (NeurIPS 2019)</li>
+            <li>Corneanu, Escalera &amp; Martinez — Computing the Testing Error Without a Testing Set (CVPR 2020)</li>
+            <li>Naitzat, Zhitnikov &amp; Lim — Topology of Deep Neural Networks (JMLR 2020)</li>
+            <li>Lacombe et al. — Topological Uncertainty: Monitoring Trained Neural Networks through Persistence of Activation Graphs (IJCAI 2021)</li>
+            <li>Hensel, Moor &amp; Rieck — A Survey of Topological Machine Learning Methods (Frontiers in Artificial Intelligence, 2021)</li>
+          </ul>
+          <nav class="opa-nav">
+            <a href="op-03.html"><small>Previous</small>OP-03 · Can robustness generalize to unseen attacks?</a>
+            <a href="op-05.html" style="text-align:right"><small>Next</small>OP-05 · What does the topology of a learned representation actually mean?</a>
+          </nav>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

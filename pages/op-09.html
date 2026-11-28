@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OP-09: Can Quantum and Classical Models Fail Differently on the Same Data? — Sunjun Hwang</title>
+  <meta name="description" content="Open Problem 09 — on identical data, do quantum and classical models make different mistakes, and can that difference be characterised or even exploited?">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/op-article.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+
+  <main class="page-content" data-theme="openproblems">
+    <div class="container">
+      <article class="opa">
+        <a class="opa-back" href="open-problems.html"><i class="fas fa-arrow-left"></i> All Open Problems</a>
+
+        <header class="opa-head">
+          <div class="opa-kicker">Open Problem 09 · Quantum &times; AI</div>
+          <h1>Can Quantum and Classical Models Fail Differently on the Same Data?</h1>
+          <div class="opa-meta">
+            <span><i class="far fa-calendar"></i> November 2026</span>
+            <span><i class="far fa-clock"></i> 7 min read</span>
+            <span><i class="fas fa-circle" style="color:var(--op);font-size:.55rem"></i> Status: Open</span>
+          </div>
+
+          <div class="opa-author">
+            <img src="../assets/portrait.jpg" alt="Sunjun Hwang">
+            <div>
+              <div class="opa-author__name">Sunjun Hwang</div>
+              <div class="opa-author__role">Independent Researcher, Vancouver · Quantum Computing, AI Security &amp; Robust ML</div>
+              <div class="opa-author__links">
+                <a href="https://sjhwangcv.com" target="_blank" rel="noopener"><i class="fas fa-id-card"></i> CV</a>
+                <a href="https://sjhwangresearch.com" target="_blank" rel="noopener"><i class="fas fa-flask"></i> Research</a>
+                <a href="https://scholar.google.com/citations?user=6X2EVE0AAAAJ" target="_blank" rel="noopener"><i class="fas fa-graduation-cap"></i> Scholar</a>
+                <a href="mailto:sunjun7559@gmail.com?subject=OP-09%20Collaboration"><i class="fas fa-envelope"></i> Email</a>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="opa-abstract">
+          <h2>In one sentence</h2>
+          <p>Even if a quantum model is no more accurate than a classical one, does it get <strong>different examples wrong</strong> — and if so, can we describe that difference and use it, for example to catch each other's mistakes?</p>
+        </section>
+
+        <div class="opa-body">
+          <h2>What is the problem?</h2>
+          <p>Suppose two doctors each read 1,000 X-rays and each misdiagnoses 50. If they miss the <em>same</em> 50, asking for a second opinion is pointless. If they miss completely <em>different</em> ones, then whenever they disagree you know to look closer, and together they are far more reliable than either alone. What matters is not just how often each one is wrong, but <strong>where</strong>.</p>
+          <p>Now replace the doctors with two machine-learning models trained on the same data: an ordinary neural network and a quantum model. A quick reminder of what the second one is: it loads the data into <strong>qubits</strong> — quantum bits that can be in a <em>superposition</em>, a weighted blend of 0 and 1 — transforms them with a circuit of adjustable quantum operations, and then <strong>measures</strong> them, getting random 0s and 1s whose frequencies give the prediction. Its internal "view" of the data is a quantum state rather than a stack of neuron activations.</p>
+          <p>Most comparisons between the two stop at a single number: accuracy, or accuracy under attack. This open problem asks the next question: <strong>on identical data, do quantum and classical models fail in different ways — and can that difference be characterised, or even exploited?</strong></p>
+
+          <h2>Why does it matter?</h2>
+          <ul>
+            <li><strong>A new use for quantum models.</strong> A quantum model does not have to beat a classical one to be useful. If it is wrong in different places, it can be a valuable second opinion — a claim that is easier to test than outright quantum advantage.</li>
+            <li><strong>Safer systems.</strong> Disagreement between two very different models is a cheap warning signal: when they disagree, slow down or ask a human.</li>
+            <li><strong>Harder attacks.</strong> An adversarial example crafted against one kind of model often fools similar models too. If quantum and classical models have different weak spots, an attacker would have to fool both at once.</li>
+            <li><strong>Understanding.</strong> Knowing <em>which</em> inputs each model finds hard tells us what each kind of model actually learns.</li>
+          </ul>
+
+          <h2>What would a solution look like?</h2>
+          <p>The basic tool is simple: run both models on the same test set and compare their mistakes example by example, not just in total.</p>
+
+          <figure class="opa-fig">
+            <img src="../assets/op/op09-fig1.png" alt="Left: a Venn diagram of classical model errors and quantum model errors, with regions only classical wrong, both wrong, and only quantum wrong. Right: a flow where a new input goes to both a classical and a quantum model, their answers are compared, and agreement leads to trust while disagreement is flagged for review." loading="lazy">
+            <figcaption><strong>Figure 1. Where the mistakes fall, and how to use it.</strong> On the left, each circle is the set of test examples one model gets wrong. A small overlap ("both wrong") means the models fail differently. On the right is the simplest way to exploit that: run both, trust the answer when they agree, and flag the input when they disagree. This only pays off if the overlap is genuinely small — which is exactly the open question.</figcaption>
+          </figure>
+
+          <p>A full answer would go beyond counting the overlap. It would describe <em>what kind</em> of inputs fall in each region — for example, "the quantum model struggles with inputs whose values are very large, because its encoding wraps them around," or "the classical model is fooled by tiny high-frequency patterns the quantum model ignores." That description is what turns an observation into understanding.</p>
+
+          <h2>The key idea: different structure, different blind spots</h2>
+          <p>Every model has <strong>inductive biases</strong> — built-in preferences for some kinds of patterns over others. A neural network with ReLU activations naturally carves the input into many flat pieces. A quantum model that encodes data as qubit rotations naturally builds its predictions out of smooth, wave-like (periodic) functions of the input. Those are different "vocabularies" for describing a decision boundary.</p>
+          <p>When two models describe the boundary in different vocabularies, they tend to bend it in different places — and the places where a boundary is bent wrongly are exactly where mistakes happen. That is the hypothesis: different structure should produce different blind spots. But there is a catch. Both models are trained on the same data, and much of what makes an example hard — a blurry image, an ambiguous label — is hard for <em>any</em> model. The interesting part is whatever is left after those shared hard cases are removed.</p>
+
+          <h2>Why is it hard?</h2>
+          <ul>
+            <li><strong>Same data, same difficulty.</strong> Many errors come from the data itself — noise, mislabelled examples, genuinely ambiguous cases — so a large overlap may be unavoidable.</li>
+            <li><strong>Is it quantum, or just different?</strong> Two classical models with different architectures also make different mistakes. To claim something about <em>quantum</em> models, the comparison has to include classical models with matched structure (see OP-07).</li>
+            <li><strong>Small quantum models.</strong> Today's quantum models are small and usually work on simplified or compressed data, so differences may reflect that preprocessing rather than the model.</li>
+            <li><strong>Randomness.</strong> A quantum model's output comes from repeated random measurements, and hardware noise adds more randomness. Some "different mistakes" may just be noise and vanish if the model is run again.</li>
+            <li><strong>Describing a difference is hard.</strong> Saying the error sets differ is easy; explaining <em>how</em> they differ in human terms is much harder.</li>
+          </ul>
+
+          <h2>What has been tried so far</h2>
+          <ul>
+            <li><strong>Ensembles and diversity in classical ML.</strong> It has long been known that combining models helps most when their errors are not correlated, and there are standard ways to measure how much two models disagree.</li>
+            <li><strong>Transferability of adversarial examples</strong> between different classical architectures — attacks often carry over, but less so between very different model families. Early quantum studies hint that attacks crafted on classical networks carry over only partly to quantum classifiers.</li>
+            <li><strong>Accuracy-and-robustness benchmarks</strong> comparing quantum and classical classifiers. These usually report totals, not which individual examples each one gets wrong.</li>
+            <li><strong>Theory of quantum model structure</strong>, showing that common quantum models compute sums of periodic functions of their inputs, which hints at where their biases lie.</li>
+            <li><strong>Hybrid quantum–classical models</strong> that stack a quantum layer on top of a classical network — but these mix the two rather than comparing their failures.</li>
+          </ul>
+          <p>I have not seen a systematic, example-by-example comparison of quantum and classical failure modes on shared data, with structure-matched baselines and an attempt to describe the differences.</p>
+
+          <h2>How I would approach it</h2>
+          <ol>
+            <li>Choose a few small datasets where both kinds of model reach similar accuracy, so neither is simply better.</li>
+            <li>Train several classical models (different architectures) and several quantum models (different encodings), each with multiple random seeds.</li>
+            <li>For every test example, record which models get it wrong. Measure the overlap between quantum and classical errors, and compare it with the overlap between two <em>classical</em> architectures — the honest baseline.</li>
+            <li>Repeat with adversarial examples: craft attacks on one model and check how often they fool the other.</li>
+            <li>Group the examples that only one family gets wrong and look for a pattern — in feature values, frequency content, or position relative to the boundary.</li>
+            <li>Finally, test the payoff: does flagging quantum–classical disagreement catch more errors than flagging classical–classical disagreement?</li>
+          </ol>
+
+          <h2>Questions still open</h2>
+          <ol class="opa-qs">
+            <li>Is the error overlap between a quantum and a classical model smaller than between two different classical models?</li>
+            <li>If the failure modes differ, can the difference be described in terms of the encoding or the model's natural "vocabulary"?</li>
+            <li>Do adversarial examples transfer less between quantum and classical models than within each family? (see OP-08)</li>
+            <li>Could disagreement between the two serve as a failure warning before the label is known? (see OP-01)</li>
+            <li>Do the differences survive on real, noisy hardware, or only in simulation?</li>
+            <li>Is any of this specific to quantum models, or would a carefully designed classical model with the same biases behave the same way? (see OP-07)</li>
+          </ol>
+
+          <p>This problem closes the quantum &times; AI trio: OP-07 asks whether quantum robustness is real, OP-08 asks what an attack on a quantum model even means, and this one asks whether quantum and classical models are useful <em>together</em>. The disagreement idea also links to the failure-warning question in OP-01 and to autonomous systems that must know when not to trust themselves (OP-12).</p>
+
+          <section class="opa-collab">
+            <h2>Work on this together</h2>
+            <p>If you build quantum classifiers, study ensembles and model diversity, or work on adversarial transferability, I would love to hear from you — especially if you think the overlap will turn out to be large and want to prove it.</p>
+            <a class="btn" href="mailto:sunjun7559@gmail.com?subject=OP-09%20Collaboration"><i class="fas fa-handshake"></i> Reach out about OP-09</a>
+          </section>
+
+          <h2>Further reading</h2>
+          <ul class="opa-refs">
+            <li>Dietterich — Ensemble Methods in Machine Learning (Multiple Classifier Systems 2000)</li>
+            <li>Lakshminarayanan et al. — Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles (NeurIPS 2017)</li>
+            <li>Papernot, McDaniel &amp; Goodfellow — Transferability in Machine Learning: from Phenomena to Black-Box Attacks using Adversarial Samples (arXiv 2016)</li>
+            <li>Schuld, Sweke &amp; Meyer — Effect of Data Encoding on the Expressive Power of Variational Quantum Machine Learning Models (Physical Review A 2021)</li>
+            <li>Huang et al. — Power of Data in Quantum Machine Learning (Nature Communications 2021)</li>
+            <li>West et al. — Towards Quantum Enhanced Adversarial Robustness in Machine Learning (Nature Machine Intelligence 2023)</li>
+            <li>Geirhos et al. — Shortcut Learning in Deep Neural Networks (Nature Machine Intelligence 2020)</li>
+          </ul>
+          <nav class="opa-nav">
+            <a href="op-08.html"><small>Previous</small>OP-08 · What does an adversarial example mean in quantum state space?</a>
+            <a href="op-10.html" style="text-align:right"><small>Next</small>OP-10 · How do we build robust federated learning under heterogeneous clients?</a>
+          </nav>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

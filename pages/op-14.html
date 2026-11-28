@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OP-14: Can We Predict Dangerous Driving Scenarios Before They Happen? — Sunjun Hwang</title>
+  <meta name="description" content="Open Problem 14 — foreseeing dangerous driving situations seconds ahead, from early signals such as a pedestrian's posture or a car's subtle drift.">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/op-article.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+
+  <main class="page-content" data-theme="openproblems">
+    <div class="container">
+      <article class="opa">
+        <a class="opa-back" href="open-problems.html"><i class="fas fa-arrow-left"></i> All Open Problems</a>
+
+        <header class="opa-head">
+          <div class="opa-kicker">Open Problem 14 · Autonomous Driving</div>
+          <h1>Can We Predict Dangerous Driving Scenarios Before They Happen?</h1>
+          <div class="opa-meta">
+            <span><i class="far fa-calendar"></i> November 2026</span>
+            <span><i class="far fa-clock"></i> 7 min read</span>
+            <span><i class="fas fa-circle" style="color:var(--op);font-size:.55rem"></i> Status: Open</span>
+          </div>
+
+          <div class="opa-author">
+            <img src="../assets/portrait.jpg" alt="Sunjun Hwang">
+            <div>
+              <div class="opa-author__name">Sunjun Hwang</div>
+              <div class="opa-author__role">Independent Researcher, Vancouver · Quantum Computing, AI Security &amp; Robust ML</div>
+              <div class="opa-author__links">
+                <a href="https://sjhwangcv.com" target="_blank" rel="noopener"><i class="fas fa-id-card"></i> CV</a>
+                <a href="https://sjhwangresearch.com" target="_blank" rel="noopener"><i class="fas fa-flask"></i> Research</a>
+                <a href="https://scholar.google.com/citations?user=6X2EVE0AAAAJ" target="_blank" rel="noopener"><i class="fas fa-graduation-cap"></i> Scholar</a>
+                <a href="mailto:sunjun7559@gmail.com?subject=OP-14%20Collaboration"><i class="fas fa-envelope"></i> Email</a>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="opa-abstract">
+          <h2>In one sentence</h2>
+          <p>Can an autonomous vehicle pick up the <strong>early signatures</strong> of an accident — a pedestrian's glance, a car's slight drift — and act seconds before the dangerous event actually happens?</p>
+        </section>
+
+        <div class="opa-body">
+          <h2>What is the problem?</h2>
+          <p>You are driving down a city street. A woman is standing on the pavement, phone in hand. She is not on a crossing. But she glances over her shoulder at the traffic, shifts her weight forward and takes a half-step towards the kerb. Without thinking, you lift your foot off the accelerator. Two seconds later she steps into the road — and you are already slow enough to stop comfortably.</p>
+          <p>Experienced drivers do this constantly. They react not to what <em>is</em> happening but to what is <em>about to</em> happen. A car ahead creeping towards the lane line, wheels turned slightly, is about to change lanes even before its indicator comes on. A ball rolling into the road may be followed by a child.</p>
+          <p>Most of an autonomous vehicle's perception stack is about the <strong>present</strong>: where are the objects now, how fast are they moving now. Prediction modules extend this forward, but mostly from <em>position and velocity</em>. This open problem asks whether a machine can read the subtle early cues — posture, gaze, heading, tiny changes in motion — and turn them into a warning <em>before</em> the danger becomes visible in the obvious signals.</p>
+
+          <h2>Why does it matter?</h2>
+          <p>In driving, time is everything. At city speeds a car covers more than ten metres every second. A warning that arrives one or two seconds earlier can be the difference between a gentle slowdown and an emergency stop — or between a near-miss and a collision.</p>
+          <ul>
+            <li><strong>Earlier, softer reactions.</strong> If the car anticipates, it can ease off gently instead of braking hard, which is both safer and more comfortable.</li>
+            <li><strong>Vulnerable road users.</strong> Pedestrians and cyclists are the people most at risk, and also the hardest to predict from motion alone, because they can change direction almost instantly.</li>
+            <li><strong>Mixed traffic.</strong> As long as autonomous cars share roads with human drivers, they need to understand human intent, not just human positions.</li>
+            <li><strong>Handover time.</strong> If a human must take over (OP-12), they need seconds of warning, which only anticipation can give.</li>
+          </ul>
+
+          <h2>What would a solution look like?</h2>
+          <p>Instead of predicting one future, the system predicts <strong>several possible futures</strong>, each with a probability, and asks how dangerous each one would be. The cues it uses go beyond where things are and how fast they move.</p>
+
+          <figure class="opa-fig">
+            <img src="../assets/op/op14-fig1.png" alt="Top-down street: a pedestrian on the left pavement with cues labelled head turned toward road, leaning forward, stepping toward curb. Three dashed future paths: keeps walking (0.60), waits (0.15), and an orange path crossing the road in front of an approaching car (0.25). A timeline below marks an early warning to slow down at 'now' and the pedestrian entering the road at plus 2 seconds." loading="lazy">
+            <figcaption><strong>Figure 1. Acting on an early signature.</strong> The pedestrian has not stepped into the road yet, so a system that only tracks position sees nothing wrong. But the body cues (left) make crossing a real possibility. Even at 25%, the orange future is dangerous enough to justify slowing down <em>now</em>. The timeline shows the gap we want to win: the warning comes about two seconds before the event. (Numbers are illustrative.)</figcaption>
+          </figure>
+
+          <p>The useful cues fall into a few families:</p>
+          <div class="opa-table-wrap">
+            <table class="opa-table">
+              <thead><tr><th>Cue</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Body language</strong></td><td>Head turned towards traffic, leaning forward, a step towards the kerb, a cyclist looking over their shoulder.</td></tr>
+                <tr><td><strong>Subtle vehicle motion</strong></td><td>A slow drift towards the lane line, a small change of heading, a car slowing in an odd place.</td></tr>
+                <tr><td><strong>Context</strong></td><td>A bus stop, a school, a parked ice-cream van, a gap in traffic someone may try to use.</td></tr>
+                <tr><td><strong>Interaction</strong></td><td>Two road users heading for the same space; a driver who seems not to have seen a cyclist.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>The key idea: probability times consequence</h2>
+          <p>A common mistake is to plan only for the <em>most likely</em> future. In Figure 1 the most likely outcome is that the pedestrian keeps walking. If the car plans only for that, it does nothing — and it is wrong one time in four.</p>
+          <p>The better question is: <em>how likely is each future, and how bad would it be?</em> A 25% chance of someone stepping in front of the car is far more important than a 60% chance of them walking along the pavement. So the goal is not just accurate prediction, but a <strong>risk estimate</strong> that combines probability and consequence, and that is calibrated enough to act on.</p>
+
+          <h2>Why is it hard?</h2>
+          <ul>
+            <li><strong>The future is genuinely uncertain.</strong> People change their minds. No model can know for certain whether someone will cross; it can only estimate.</li>
+            <li><strong>The cues are small and noisy.</strong> A head turn may be a few pixels at 40 metres, in the rain, partly hidden behind a parked car.</li>
+            <li><strong>Dangerous events are rare.</strong> Driving datasets contain hours of normal driving for every few seconds of real danger, so models see very few examples of what they most need to learn.</li>
+            <li><strong>Everyone reacts to everyone.</strong> The pedestrian's decision depends on what the car does, and vice versa. Predicting one agent in isolation misses this.</li>
+            <li><strong>Too many warnings.</strong> If the car slows for every person near a kerb, it becomes unusable and annoying to the traffic behind it.</li>
+          </ul>
+
+          <h2>What has been tried so far</h2>
+          <ul>
+            <li><strong>Trajectory prediction from past motion</strong> — learn how people and vehicles usually move, and extend their recent paths forward. Modern versions output several possible futures, not just one.</li>
+            <li><strong>Social and interaction models</strong> — let the predicted paths of nearby agents influence each other, so that people avoid collisions with each other, follow groups, and so on.</li>
+            <li><strong>Pedestrian intention estimation</strong> — datasets and models that look at a pedestrian's appearance and pose to predict whether they will cross. This is very close to the example above.</li>
+            <li><strong>Map-aware prediction</strong> — use lanes, crossings and road layout to restrict which futures are plausible.</li>
+            <li><strong>Accident anticipation from dashcam video</strong> — learn, from real crash footage, to raise an alarm as early as possible before the collision.</li>
+            <li><strong>Classic safety measures</strong> — time-to-collision and similar quantities. Simple and well understood, but they react to motion that has already started.</li>
+          </ul>
+          <p>What I think is still missing is a tight link between the <em>early cues</em>, a <em>calibrated risk</em> estimate, and a clear measure of <em>how early</em> the warning arrived. Many methods are judged by how close their predicted path is to the real one, not by whether they gave a useful warning in time.</p>
+
+          <h2>How I would approach it</h2>
+          <ol>
+            <li>Use public pedestrian-intention and trajectory datasets, and focus specifically on the moments just before a crossing or a lane change.</li>
+            <li>Compare a motion-only predictor with one that also sees body pose, head direction and scene context, and measure <em>how many seconds earlier</em> each one notices the event.</li>
+            <li>Turn the predictions into a risk score (probability times consequence) and check whether that score is calibrated — whether "25% risk" really means about one in four.</li>
+            <li>Evaluate in simulation whether acting on the early warning reduces near-misses without making the car slow down all the time.</li>
+          </ol>
+
+          <h2>Questions still open</h2>
+          <ol class="opa-qs">
+            <li>How far ahead can danger be predicted reliably — one second, three, five — and does that horizon depend on the type of road user?</li>
+            <li>Which early cues carry the most information: posture, gaze, motion, context, or their combination?</li>
+            <li>How should "early" be measured so that different methods can be compared fairly? (a question shared with OP-01)</li>
+            <li>How do we train for events that are rare, without simply simulating unrealistic ones?</li>
+            <li>What should the car do when the prediction itself is uncertain — for example because the pedestrian is partly hidden? (see OP-12)</li>
+            <li>How does the prediction change in a city or country where people behave differently, such as different jaywalking norms? (see OP-13)</li>
+          </ol>
+
+          <p>This problem builds on recognising unfamiliar situations (OP-13) and deciding when not to trust oneself (OP-12), and it relies on healthy sensor inputs (OP-15).</p>
+
+          <section class="opa-collab">
+            <h2>Work on this together</h2>
+            <p>I am looking for collaborators on this one. If you work on trajectory prediction, pedestrian behaviour, human pose estimation, driving datasets or risk modelling — or you simply have strong intuitions about how good human drivers anticipate — please get in touch.</p>
+            <a class="btn" href="mailto:sunjun7559@gmail.com?subject=OP-14%20Collaboration"><i class="fas fa-handshake"></i> Reach out about OP-14</a>
+          </section>
+
+          <h2>Further reading</h2>
+          <ul class="opa-refs">
+            <li>Alahi et al. — Social LSTM: Human Trajectory Prediction in Crowded Spaces (CVPR 2016)</li>
+            <li>Gupta et al. — Social GAN: Socially Acceptable Trajectories with Generative Adversarial Networks (CVPR 2018)</li>
+            <li>Rasouli, Kotseruba &amp; Tsotsos — Are They Going to Cross? A Benchmark Dataset and Baseline for Pedestrian Crosswalk Behavior (ICCV Workshops 2017)</li>
+            <li>Rasouli et al. — PIE: A Large-Scale Dataset and Models for Pedestrian Intention Estimation and Trajectory Prediction (ICCV 2019)</li>
+            <li>Salzmann et al. — Trajectron++: Dynamically-Feasible Trajectory Forecasting with Heterogeneous Data (ECCV 2020)</li>
+            <li>Chan et al. — Anticipating Accidents in Dashcam Videos (ACCV 2016)</li>
+          </ul>
+          <nav class="opa-nav">
+            <a href="op-13.html"><small>Previous</small>OP-13 · Can autonomous vehicles recognize situations they have never seen before?</a>
+            <a href="op-15.html" style="text-align:right"><small>Next</small>OP-15 · How can autonomous driving systems remain reliable when sensors fail?</a>
+          </nav>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OP-03: Can Robustness Generalize to Unseen Attacks? — Sunjun Hwang</title>
+  <meta name="description" content="Open Problem 03 — building robustness that carries over to attacks and corruptions never seen during training.">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/op-article.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+
+  <main class="page-content" data-theme="openproblems">
+    <div class="container">
+      <article class="opa">
+        <a class="opa-back" href="open-problems.html"><i class="fas fa-arrow-left"></i> All Open Problems</a>
+
+        <header class="opa-head">
+          <div class="opa-kicker">Open Problem 03 · Robust &amp; Trustworthy AI</div>
+          <h1>Can Robustness Generalize to Unseen Attacks?</h1>
+          <div class="opa-meta">
+            <span><i class="far fa-calendar"></i> November 2026</span>
+            <span><i class="far fa-clock"></i> 7 min read</span>
+            <span><i class="fas fa-circle" style="color:var(--op);font-size:.55rem"></i> Status: Open</span>
+          </div>
+
+          <div class="opa-author">
+            <img src="../assets/portrait.jpg" alt="Sunjun Hwang">
+            <div>
+              <div class="opa-author__name">Sunjun Hwang</div>
+              <div class="opa-author__role">Independent Researcher, Vancouver · Quantum Computing, AI Security &amp; Robust ML</div>
+              <div class="opa-author__links">
+                <a href="https://sjhwangcv.com" target="_blank" rel="noopener"><i class="fas fa-id-card"></i> CV</a>
+                <a href="https://sjhwangresearch.com" target="_blank" rel="noopener"><i class="fas fa-flask"></i> Research</a>
+                <a href="https://scholar.google.com/citations?user=6X2EVE0AAAAJ" target="_blank" rel="noopener"><i class="fas fa-graduation-cap"></i> Scholar</a>
+                <a href="mailto:sunjun7559@gmail.com?subject=OP-03%20Collaboration"><i class="fas fa-envelope"></i> Email</a>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="opa-abstract">
+          <h2>In one sentence</h2>
+          <p>Today's defences mostly protect a model against the specific attack it practised on; can we instead build a model that stays reliable against attacks and corruptions it has <strong>never seen</strong> — the way a good immune system handles a new virus?</p>
+        </section>
+
+        <div class="opa-body">
+          <h2>What is the problem?</h2>
+          <p>Suppose a security team hardens an image classifier. They attack it over and over during training with a well-known method that adds tiny amounts of noise to every pixel, and the model learns to ignore that noise. On their test, it now resists the attack almost perfectly.</p>
+          <p>Then someone tries something slightly different. They rotate the image by a few degrees. Or they change the colours a little. Or they add a small sticker in one corner. Or it is simply a foggy day. Very often, the hardened model fails on these as badly as an unprotected one — sometimes worse.</p>
+          <p>The model did not learn to be <em>robust</em>. It learned to be robust to <em>that one thing</em>. In security terms, it is like a lock that resists one particular lock-pick but opens for any other.</p>
+          <p>This open problem asks whether robustness can <strong>generalize</strong>: whether we can train against a limited set of threats and still get protection against threats we did not — and could not — anticipate.</p>
+
+          <h2>Why does it matter?</h2>
+          <p>In the real world, nobody tells you in advance which attack is coming.</p>
+          <ul>
+            <li>An attacker who knows a model is defended against one method will simply <strong>switch to another</strong>. A defence that only covers the threats it trained on gives a false sense of safety.</li>
+            <li>Natural problems — weather, lighting, worn-out sensors, compression artefacts — are endlessly varied. No training set can list them all.</li>
+            <li>Training against every known attack at once is expensive, and new attacks keep being invented after the model is deployed.</li>
+            <li>For safety-critical systems — cars, medical devices, security cameras — "robust to the attacks in our paper" is not the guarantee people actually need.</li>
+          </ul>
+
+          <h2>What would a solution look like?</h2>
+          <p>It helps to picture each kind of attack as a <strong>region</strong> around a clean image: the set of all changed versions that attack is allowed to produce. Noise on every pixel gives one shape of region. Rotations and shifts give a differently shaped one. Fog, blur and stickers give others. These regions overlap, but none of them contains all the others.</p>
+
+          <figure class="opa-fig">
+            <img src="../assets/op/op03-fig1.png" alt="A clean image in the centre, surrounded by an orange square labelled trained defence (one attack type). Overlapping grey hatched shapes stick out beyond the square in different directions: a circle labelled different noise budget, an ellipse labelled rotation / shift, a cloud labelled fog / blur, and a star labelled new attack. An arrow labelled unprotected points at the part of the cloud outside the orange square." loading="lazy">
+            <figcaption><strong>Figure 1. Why one defence is not enough.</strong> The orange square is what standard adversarial training protects: every change of one specific kind, up to a set size. Each grey shape is a different kind of change. The hatched parts that stick <em>outside</em> the square are inputs the model has never been trained to handle — and that is exactly where an attacker, or bad weather, will go. Generalizing robustness means covering those parts without having to draw every shape in advance.</figcaption>
+          </figure>
+
+          <p>A real solution would not just make the orange square bigger. It would protect against changes the designer never listed, and it would come with an honest way to measure that — by holding some attack types back entirely and testing on them only at the end, the same way we keep a test set hidden from training.</p>
+
+          <h2>The key idea: robust to what, exactly?</h2>
+          <p>The heart of the problem is that we usually define robustness by a <strong>rule about the input</strong>: "no pixel may change by more than a tiny amount." That rule is easy to state and easy to attack with, so it became the standard. But it is not what we actually care about.</p>
+          <p>What we care about is closer to: <em>"a change that would not fool a person should not fool the model."</em> A person is not bothered by a slight rotation, a colour shift or light fog — none of which follows the pixel rule. So a model can satisfy the rule perfectly and still be fragile in every way that matters to people.</p>
+          <p>That suggests two routes to generalization. One is to describe allowed changes in a way that is closer to human perception — for example, changes that a perceptual similarity measure considers small. The other, which interests me most, is to move away from the input entirely and ask for robustness <strong>inside the model</strong>: if the internal representation is built from stable, meaningful features, then any change that leaves those features intact should leave the answer intact too, no matter what kind of change it was (see OP-02).</p>
+
+          <h2>Why is it hard?</h2>
+          <ul>
+            <li><strong>"Unseen" is open-ended.</strong> There is no complete list of possible attacks or corruptions, so we can never test everything. Any evaluation is only as good as the variety of held-out threats.</li>
+            <li><strong>Defences can trade off against each other.</strong> Becoming more robust to one kind of change can make a model <em>less</em> robust to another. Covering several at once often lowers protection against each.</li>
+            <li><strong>Evaluation is easy to get wrong.</strong> Many published defences looked strong until someone attacked them more carefully. A defence that seems to generalize may simply be hiding its weakness from weak attacks.</li>
+            <li><strong>Accuracy and cost.</strong> Broad robustness usually costs clean accuracy and a lot of extra training computation.</li>
+            <li><strong>Attacks and corruptions are different.</strong> A deliberate attacker searches for the worst case; fog and blur are random. A method that handles one does not automatically handle the other.</li>
+          </ul>
+
+          <h2>What has been tried so far</h2>
+          <ul>
+            <li><strong>Training against several attacks at once</strong> — mixing different kinds of perturbation during training. It widens protection, but each added type tends to weaken the others, and it still does not reach truly new attacks.</li>
+            <li><strong>Perception-based threat models</strong> — defining "small change" with a learned measure of how different two images look to people, and training against the worst such change. A promising way to cover many kinds of change at once.</li>
+            <li><strong>Data augmentation for corruptions</strong> — training on mixtures of randomly transformed images so the model sees many kinds of distortion. This improves robustness to natural corruptions held out from training.</li>
+            <li><strong>Benchmarks of unforeseen threats</strong> — test suites of common corruptions, and collections of attack types deliberately not used in training, so generalization can actually be measured.</li>
+            <li><strong>Stronger, standardised evaluation</strong> — automatic attack suites that check defences more carefully, after many earlier defences turned out to be weaker than claimed.</li>
+            <li><strong>Certified methods</strong> — mathematical guarantees of robustness within a region. Reliable, but only for the specific region they are designed for.</li>
+          </ul>
+          <p>Most of these still work at the level of the <strong>input</strong>: they decide which input changes are allowed. Much less has been done on making the <strong>representation</strong> itself stable in a way that does not depend on any particular list of changes.</p>
+
+          <h2>How I would approach it</h2>
+          <ol>
+            <li>Split threats into a training group and a held-out group <em>by family</em> — for example, train only against pixel noise, then test on rotations, colour shifts, patches, blur and fog that the model never saw.</li>
+            <li>Compare standard defences with methods that encourage a stable internal representation, measured inside the network rather than only at the output.</li>
+            <li>For each model, check whether a simple measurement of representation stability on <em>seen</em> threats predicts its accuracy on the <em>unseen</em> ones. If it does, that is a cheap way to forecast generalization before deployment.</li>
+            <li>Evaluate every defence with strong, adaptive attacks — including attacks that know about the defence — so that any apparent generalization is real.</li>
+          </ol>
+
+          <h2>Questions still open</h2>
+          <ol class="opa-qs">
+            <li>Is there a definition of "small change" that covers most unseen attacks and corruptions at once, and that people would agree with?</li>
+            <li>Can robustness defined inside the representation transfer to new input-level attacks better than robustness defined on the input? (see OP-02)</li>
+            <li>Why do defences against different kinds of change interfere with each other — and can that interference be avoided?</li>
+            <li>How should "unseen" be tested fairly, so that results are not just a lucky choice of held-out attacks?</li>
+            <li>When a model meets an attack it cannot handle, can it at least notice and raise a warning? (see OP-01)</li>
+            <li>Does the same problem appear in language models facing new styles of misleading prompts? (see OP-20)</li>
+          </ol>
+
+          <p>This problem connects naturally to recognising never-seen situations in autonomous driving (OP-13), where the "unseen attack" is often just an unusual road, and to sensor failures that no training set prepared for (OP-15).</p>
+
+          <section class="opa-collab">
+            <h2>Work on this together</h2>
+            <p>If you work on adversarial attacks and defences, robustness benchmarks or perceptual similarity — or you run a system that keeps meeting failures nobody planned for — I would love to hear from you. Disagreeing with how I framed the problem is just as welcome.</p>
+            <a class="btn" href="mailto:sunjun7559@gmail.com?subject=OP-03%20Collaboration"><i class="fas fa-handshake"></i> Reach out about OP-03</a>
+          </section>
+
+          <h2>Further reading</h2>
+          <ul class="opa-refs">
+            <li>Madry et al. — Towards Deep Learning Models Resistant to Adversarial Attacks (ICLR 2018)</li>
+            <li>Athalye, Carlini &amp; Wagner — Obfuscated Gradients Give a False Sense of Security (ICML 2018)</li>
+            <li>Hendrycks &amp; Dietterich — Benchmarking Neural Network Robustness to Common Corruptions and Perturbations (ICLR 2019)</li>
+            <li>Engstrom et al. — Exploring the Landscape of Spatial Robustness (ICML 2019)</li>
+            <li>Tramèr &amp; Boneh — Adversarial Training and Robustness for Multiple Perturbations (NeurIPS 2019)</li>
+            <li>Hendrycks et al. — AugMix: A Simple Data Processing Method to Improve Robustness and Uncertainty (ICLR 2020)</li>
+            <li>Croce &amp; Hein — Reliable Evaluation of Adversarial Robustness with an Ensemble of Diverse Parameter-free Attacks (ICML 2020)</li>
+            <li>Laidlaw, Singla &amp; Feizi — Perceptual Adversarial Robustness: Defense Against Unseen Threat Models (ICLR 2021)</li>
+          </ul>
+          <nav class="opa-nav">
+            <a href="op-02.html"><small>Previous</small>OP-02 · What makes a representation inherently robust?</a>
+            <a href="op-04.html" style="text-align:right"><small>Next</small>OP-04 · Can topology predict neural network failure?</a>
+          </nav>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

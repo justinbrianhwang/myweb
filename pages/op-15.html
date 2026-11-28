@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OP-15: How Can Autonomous Driving Systems Remain Reliable When Sensors Fail? — Sunjun Hwang</title>
+  <meta name="description" content="Open Problem 15 — keeping a self-driving car safe when cameras are blocked, LiDAR degrades in bad weather or GPS drifts: knowing which sensors to trust.">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/op-article.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+
+  <main class="page-content" data-theme="openproblems">
+    <div class="container">
+      <article class="opa">
+        <a class="opa-back" href="open-problems.html"><i class="fas fa-arrow-left"></i> All Open Problems</a>
+
+        <header class="opa-head">
+          <div class="opa-kicker">Open Problem 15 · Autonomous Driving</div>
+          <h1>How Can Autonomous Driving Systems Remain Reliable When Sensors Fail?</h1>
+          <div class="opa-meta">
+            <span><i class="far fa-calendar"></i> November 2026</span>
+            <span><i class="far fa-clock"></i> 7 min read</span>
+            <span><i class="fas fa-circle" style="color:var(--op);font-size:.55rem"></i> Status: Open</span>
+          </div>
+
+          <div class="opa-author">
+            <img src="../assets/portrait.jpg" alt="Sunjun Hwang">
+            <div>
+              <div class="opa-author__name">Sunjun Hwang</div>
+              <div class="opa-author__role">Independent Researcher, Vancouver · Quantum Computing, AI Security &amp; Robust ML</div>
+              <div class="opa-author__links">
+                <a href="https://sjhwangcv.com" target="_blank" rel="noopener"><i class="fas fa-id-card"></i> CV</a>
+                <a href="https://sjhwangresearch.com" target="_blank" rel="noopener"><i class="fas fa-flask"></i> Research</a>
+                <a href="https://scholar.google.com/citations?user=6X2EVE0AAAAJ" target="_blank" rel="noopener"><i class="fas fa-graduation-cap"></i> Scholar</a>
+                <a href="mailto:sunjun7559@gmail.com?subject=OP-15%20Collaboration"><i class="fas fa-envelope"></i> Email</a>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="opa-abstract">
+          <h2>In one sentence</h2>
+          <p>Real sensors get dirty, blinded, soaked and confused — can a self-driving car work out <strong>which of its sensors it can still trust</strong>, and keep driving safely on the ones that remain?</p>
+        </section>
+
+        <div class="opa-body">
+          <h2>What is the problem?</h2>
+          <p>A self-driving car is heading down a motorway in a winter storm. Slush from the truck in front splashes across the front camera, leaving a brown smear over half the image. Heavy snowflakes create thousands of false points in the LiDAR. Between tall buildings, the GPS position jumps by fifteen metres. The radar, meanwhile, works almost perfectly.</p>
+          <p>The car's perception system combines all of these sensors — this is called <em>sensor fusion</em>. Each sensor has different strengths: cameras see colour and read signs, LiDAR measures precise 3D shape, radar measures distance and speed and copes well with rain and fog, GPS says roughly where on the map the car is. Together they are much better than any one alone.</p>
+          <p>The catch is that many fusion systems are built and trained as if <strong>every sensor always arrives intact</strong>. They have learned to rely heavily on whichever sensor was most useful in the training data — often the camera or LiDAR. When that sensor quietly degrades, the fused output can get worse than if the bad sensor had simply been switched off. This open problem asks: <em>can the system understand which sensors are trustworthy right now — and keep driving safely when some are not?</em></p>
+
+          <h2>Why does it matter?</h2>
+          <p>Sensor problems are not rare edge cases; they are part of daily operation:</p>
+          <ul>
+            <li>cameras are blinded by low sun, headlights, dirt, rain drops and condensation,</li>
+            <li>LiDAR returns are scattered by fog, rain, snow and dust, and some surfaces (black cars, wet roads) reflect poorly,</li>
+            <li>GPS drifts or jumps in tunnels, under bridges and between tall buildings,</li>
+            <li>any sensor can be knocked out of alignment, overheat, lose its connection, or — a security concern — be deliberately fooled or jammed.</li>
+          </ul>
+          <p>A system that only works when everything is perfect is not really ready for public roads. And because a degraded sensor often still produces data that <em>looks</em> plausible, the failure can be silent.</p>
+
+          <h2>What would a solution look like?</h2>
+          <p>I imagine adding a <strong>sensor health monitor</strong> in front of the fusion step. It continuously estimates how trustworthy each sensor is, and the fusion step uses those estimates as weights, leaning on healthy sensors and down-weighting the damaged ones.</p>
+
+          <figure class="opa-fig">
+            <img src="../assets/op/op15-fig1.png" alt="Four sensors on the left with health bars: camera (occluded, low), LiDAR (degraded by rain, medium), radar (healthy, full) and GPS (drifting, medium). All feed a Sensor Health Monitor, which sends arrows of different thickness into Trust-Weighted Fusion — thick for radar, thin for camera — followed by the driving decision." loading="lazy">
+            <figcaption><strong>Figure 1. Trust-weighted fusion.</strong> Each sensor on the left has a health bar. The monitor in the middle estimates these from the data itself — without being told which sensor is broken. Look at the arrows into the fusion box: their thickness is how much each sensor counts. In this storm the radar carries most of the weight, while the occluded camera is almost ignored. When conditions change, the weights should change with them.</figcaption>
+          </figure>
+
+          <p>How can a monitor tell that a sensor is unhealthy without a ground truth? A few kinds of evidence:</p>
+          <div class="opa-table-wrap">
+            <table class="opa-table">
+              <thead><tr><th>Evidence</th><th>The question it asks</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Self-check</strong></td><td>Does this sensor's data look normal on its own? (A camera image that is mostly one blurry colour; a LiDAR scan full of points floating in mid-air.)</td></tr>
+                <tr><td><strong>Cross-check</strong></td><td>Does it agree with the other sensors? If radar and LiDAR both see a car at 30 m and the camera sees nothing there, the camera is suspicious.</td></tr>
+                <tr><td><strong>Consistency over time</strong></td><td>Does it agree with itself a moment ago? Real cars do not jump fifteen metres between frames; GPS sometimes does.</td></tr>
+                <tr><td><strong>Context</strong></td><td>Is it raining, dark, inside a tunnel? Some sensors are known to struggle in some conditions.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>Why is it hard?</h2>
+          <ul>
+            <li><strong>Who checks the checker?</strong> When two sensors disagree, which one is wrong? With only two, you often cannot tell. With several, a majority can still be fooled by a shared cause, such as heavy fog affecting both cameras and LiDAR.</li>
+            <li><strong>Degradation is gradual.</strong> A sensor rarely dies cleanly. It gets slowly worse, and the system must decide when "a bit noisy" becomes "do not trust".</li>
+            <li><strong>Learned fusion hides its reliance.</strong> Deep fusion networks mix the sensors deep inside the model, so it is not obvious which sensor a decision actually depended on.</li>
+            <li><strong>Training data is too clean.</strong> Most driving datasets are recorded in good conditions with working sensors, so models never learn what to do when one fails.</li>
+            <li><strong>Attacks look like failures.</strong> A spoofed GPS signal or a laser aimed at the LiDAR can be designed to look like a healthy sensor that is simply reporting something false.</li>
+          </ul>
+
+          <h2>What has been tried so far</h2>
+          <ul>
+            <li><strong>Classic probabilistic fusion</strong> — Kalman filters and their relatives combine sensors weighted by their expected noise, and can reject measurements that are too far from what was expected. Principled, but the noise levels are usually fixed in advance rather than estimated live.</li>
+            <li><strong>Deep multi-sensor fusion</strong> — networks that fuse camera and LiDAR (and sometimes radar) features, for example in a shared bird's-eye-view map. Very accurate when everything works.</li>
+            <li><strong>Robustness benchmarks</strong> — studies that systematically corrupt or remove one sensor and measure how much fusion models suffer. They show that many models depend heavily on one modality.</li>
+            <li><strong>Training with dropped or corrupted sensors</strong> — randomly blanking or damaging inputs during training so the model learns to cope. Helps, but only with the kinds of damage that were simulated.</li>
+            <li><strong>Adverse-weather datasets</strong> — recordings in fog, snow and rain, which make it possible to test fusion in the conditions that actually break it.</li>
+            <li><strong>Redundancy by design</strong> — duplicate sensors and independent fallback systems. Effective but expensive.</li>
+          </ul>
+          <p>What I think is still missing is a monitor that estimates sensor trust <em>live, without labels</em>, explains which sensor it distrusts and why, and hands that information to the rest of the car so its behaviour can change too (OP-12).</p>
+
+          <h2>How I would approach it</h2>
+          <ol>
+            <li>Take an existing camera–LiDAR(–radar) fusion model and a driving dataset, and build a set of realistic sensor faults: occlusion, blur, glare, LiDAR noise from rain, sparse returns, GPS drift and sudden jumps.</li>
+            <li>Measure how badly the fused model fails under each fault, and how often it would have been better to ignore the damaged sensor entirely.</li>
+            <li>Build simple health signals (self-check, cross-check, temporal consistency) and test whether they identify the faulty sensor without being told.</li>
+            <li>Use the health scores as fusion weights, and compare against the untouched model and against training with random sensor dropout.</li>
+          </ol>
+
+          <h2>Questions still open</h2>
+          <ol class="opa-qs">
+            <li>Can sensor health be estimated reliably without any labels, from the data and the agreement between sensors alone?</li>
+            <li>How should the system handle faults that affect several sensors at once, like dense fog?</li>
+            <li>Can a fusion model be made to <em>explain</em> which sensor its decision rests on, so that a failure in that sensor is caught immediately?</li>
+            <li>How do we tell an innocent failure from a deliberate attack on a sensor — and does it matter for what the car should do? (a question that also appears in BB84, OP-16)</li>
+            <li>What is the minimum set of healthy sensors needed to keep driving, and when should the car stop instead? (see OP-12)</li>
+            <li>Could vehicles in a fleet share what sensor faults look like, without sharing raw data? (see OP-10, OP-11)</li>
+          </ol>
+
+          <p>This problem feeds into deciding when not to trust oneself (OP-12) and recognising never-seen situations (OP-13): a car cannot judge its own understanding if it does not know which of its senses are working.</p>
+
+          <section class="opa-collab">
+            <h2>Work on this together</h2>
+            <p>I am actively looking for collaborators. If you work on sensor fusion, state estimation, adverse-weather perception or sensor security — or you have real vehicle data with messy, imperfect sensors — I would love to hear from you.</p>
+            <a class="btn" href="mailto:sunjun7559@gmail.com?subject=OP-15%20Collaboration"><i class="fas fa-handshake"></i> Reach out about OP-15</a>
+          </section>
+
+          <h2>Further reading</h2>
+          <ul class="opa-refs">
+            <li>Kalman — A New Approach to Linear Filtering and Prediction Problems (Journal of Basic Engineering, 1960)</li>
+            <li>Bijelic et al. — Seeing Through Fog Without Seeing Fog: Deep Multimodal Sensor Fusion in Unseen Adverse Weather (CVPR 2020)</li>
+            <li>Caesar et al. — nuScenes: A Multimodal Dataset for Autonomous Driving (CVPR 2020)</li>
+            <li>Liu et al. — BEVFusion: Multi-Task Multi-Sensor Fusion with Unified Bird's-Eye View Representation (ICRA 2023)</li>
+            <li>Cao et al. — Adversarial Sensor Attack on LiDAR-based Perception in Autonomous Driving (ACM CCS 2019)</li>
+            <li>Hendrycks &amp; Dietterich — Benchmarking Neural Network Robustness to Common Corruptions and Perturbations (ICLR 2019)</li>
+          </ul>
+          <nav class="opa-nav">
+            <a href="op-14.html"><small>Previous</small>OP-14 · Can we predict dangerous driving scenarios before they happen?</a>
+            <a href="op-16.html" style="text-align:right"><small>Next</small>OP-16 · How robust is BB84 under realistic noise and imperfect hardware?</a>
+          </nav>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

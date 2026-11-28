@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OP-06: Can We Train Neural Networks to Preserve Useful Topology? — Sunjun Hwang</title>
+  <meta name="description" content="Open Problem 06 — using topology as a training signal, not only an analysis tool, so networks learn a desired representation shape.">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/op-article.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+
+  <main class="page-content" data-theme="openproblems">
+    <div class="container">
+      <article class="opa">
+        <a class="opa-back" href="open-problems.html"><i class="fas fa-arrow-left"></i> All Open Problems</a>
+
+        <header class="opa-head">
+          <div class="opa-kicker">Open Problem 06 · Topology &times; Machine Learning</div>
+          <h1>Can We Train Neural Networks to Preserve Useful Topology?</h1>
+          <div class="opa-meta">
+            <span><i class="far fa-calendar"></i> November 2026</span>
+            <span><i class="far fa-clock"></i> 7 min read</span>
+            <span><i class="fas fa-circle" style="color:var(--op);font-size:.55rem"></i> Status: Open</span>
+          </div>
+
+          <div class="opa-author">
+            <img src="../assets/portrait.jpg" alt="Sunjun Hwang">
+            <div>
+              <div class="opa-author__name">Sunjun Hwang</div>
+              <div class="opa-author__role">Independent Researcher, Vancouver · Quantum Computing, AI Security &amp; Robust ML</div>
+              <div class="opa-author__links">
+                <a href="https://sjhwangcv.com" target="_blank" rel="noopener"><i class="fas fa-id-card"></i> CV</a>
+                <a href="https://sjhwangresearch.com" target="_blank" rel="noopener"><i class="fas fa-flask"></i> Research</a>
+                <a href="https://scholar.google.com/citations?user=6X2EVE0AAAAJ" target="_blank" rel="noopener"><i class="fas fa-graduation-cap"></i> Scholar</a>
+                <a href="mailto:sunjun7559@gmail.com?subject=OP-06%20Collaboration"><i class="fas fa-envelope"></i> Email</a>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="opa-abstract">
+          <h2>In one sentence</h2>
+          <p>Instead of only measuring the shape of a network's internal representation after training, can we <strong>build the desired shape into training itself</strong> — so the network learns, for example, one clean piece per class and no spurious holes — and does that make it better?</p>
+        </section>
+
+        <div class="opa-body">
+          <h2>What is the problem?</h2>
+          <p>Imagine training a network to outline blood vessels in retinal scans. The result scores 98% on a pixel-by-pixel measure. But when a doctor looks at it, a single vessel has been broken into three disconnected pieces, and two separate vessels have been fused into one. Almost every pixel is right; the <em>shape</em> is wrong — and for the doctor, the shape is what matters.</p>
+          <p>The same thing happens inside networks that do not output shapes at all. A classifier's representation might split one class into several islands, or let two classes touch at a thin bridge. Accuracy on the training set can still be high, because the loss function — the number training tries to make small — only checks whether each answer is right. It says nothing about how the representation is organised.</p>
+          <p>So far on this list, topology has been a <strong>diagnostic</strong>: something we compute to understand a model (OP-05) or to warn about failure (OP-04). This open problem asks whether topology can be a <strong>design goal</strong>: added to the loss or used as a regulariser, so the network is directly pushed toward a representation with the shape we want.</p>
+
+          <h2>Why does it matter?</h2>
+          <ul>
+            <li><strong>Correct shape, not just correct pixels.</strong> In tasks like segmenting vessels, roads, neurons or cell membranes, connectivity errors are what users actually notice. A topology-aware loss attacks those errors directly.</li>
+            <li><strong>Robustness by construction.</strong> If robust representations have a particular shape (OP-02), training for that shape might give robustness without training against any specific attack (OP-03).</li>
+            <li><strong>Faithful compressed views.</strong> When high-dimensional data is squeezed into a few dimensions for visualisation or compression, preserving its clusters and loops keeps the picture honest.</li>
+            <li><strong>Built-in monitoring.</strong> A network trained to have a known shape gives a clear reference: if deployed data breaks that shape, something is wrong.</li>
+          </ul>
+
+          <h2>What would a solution look like?</h2>
+          <p>The mechanism is a second term in the loss. The usual training loop compares the network's answers with the labels and nudges the weights to reduce the error. The topological version adds a parallel path that measures the shape of the representation and penalises the difference from a target shape.</p>
+
+          <figure class="opa-fig">
+            <img src="../assets/op/op06-fig1.png" alt="Training loop. Training images go into a neural network, which produces features shown as a point cloud. An upper grey path goes from features to a classifier and then to task loss. A lower orange path goes from features to persistent homology (a barcode icon), then to compare with target shape, then to topology loss. Both losses merge into a circle: total loss equals task loss plus lambda times topology loss. A dashed arrow labelled update weights curves back from total loss to the neural network." loading="lazy">
+            <figcaption><strong>Figure 1. Training with a topology loss.</strong> The grey path is ordinary training: get the answers right. The orange path is new: compute the shape of the current representation with persistent homology, compare it with the shape we want, and turn the difference into a second penalty. The weight <em>λ</em> sets how much the network should care about shape versus accuracy. The dashed arrow is the hard part — the error has to flow back through the topology computation to tell each weight how to change.</figcaption>
+          </figure>
+
+          <p>What "target shape" means depends on the goal:</p>
+          <div class="opa-table-wrap">
+            <table class="opa-table">
+              <thead><tr><th>Goal</th><th>What the topology loss asks for</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Clean classes</strong></td><td>Each class forms a single connected piece, well separated from the others.</td></tr>
+                <tr><td><strong>Correct structure in outputs</strong></td><td>A predicted segmentation has the same number of pieces and holes as the true one.</td></tr>
+                <tr><td><strong>Faithful compression</strong></td><td>The compressed representation keeps the clusters and loops of the original data.</td></tr>
+                <tr><td><strong>Simple decision borders</strong></td><td>The regions the classifier assigns to each class have no unnecessary islands or holes.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>The key idea: making shape something a network can learn from</h2>
+          <p>Networks learn by following gradients — small signals that say, for each weight, "move a bit this way to reduce the loss." For that to work, every step from the weights to the loss must respond smoothly to small changes.</p>
+          <p>Topology looks like the opposite of smooth. The number of pieces or holes is a whole number; it jumps from 2 to 1 at a single moment. That seems useless for gradients. The insight that makes this problem possible is that a persistence barcode is not just a count — each bar has a <strong>birth</strong> and a <strong>death</strong> value, and each of those is set by a specific pair of points. Moving those points moves the bar's ends continuously. So we <em>can</em> say "make this bar shorter" (merge these pieces sooner) or "make this bar longer" (keep this hole open), and translate that into a push on particular points, and from there into a push on the weights.</p>
+          <p>That turns topology from something we observe into something we can steer — at least locally, and at least in principle.</p>
+
+          <h2>Why is it hard?</h2>
+          <ul>
+            <li><strong>Cost per step.</strong> Persistent homology has to be computed at every training step, on every batch. That can easily dominate training time.</li>
+            <li><strong>Sparse, jumpy gradients.</strong> Each bar depends on only a few points, so most points get no signal at all, and the set of "responsible" points can change abruptly from one step to the next. Training can become unstable.</li>
+            <li><strong>Batches see only part of the shape.</strong> A batch of 128 points is a small, random glimpse of the whole representation. The shape of the batch may not reflect the shape of the data.</li>
+            <li><strong>Which shape is "useful"?</strong> For segmentation the target is clear. For a classifier's internal representation, it is not obvious which topology to ask for — and asking for the wrong one could hurt (see OP-05).</li>
+            <li><strong>Trade-off with accuracy.</strong> The topology term competes with the task term. Too little weight and nothing changes; too much and accuracy suffers.</li>
+          </ul>
+
+          <h2>What has been tried so far</h2>
+          <ul>
+            <li><strong>Topological losses for segmentation</strong> — comparing the barcodes of predicted and true masks, and penalising extra or missing pieces and holes. Clear improvements in getting thin, connected structures right.</li>
+            <li><strong>Topological regularisers for classifiers</strong> — penalising unnecessary pieces in the decision regions, so the classifier draws simpler borders.</li>
+            <li><strong>Topological autoencoders</strong> — adding a loss that keeps the topology of the compressed representation close to that of the input data.</li>
+            <li><strong>Shaping representation connectivity</strong> — training representations so that their pieces connect at a chosen scale, which helps later tasks that rely on that structure.</li>
+            <li><strong>General tools</strong> — differentiable topology layers that can be dropped into any network, and theory on when gradient-based optimisation of persistence-based functions actually converges.</li>
+          </ul>
+          <p>Most of this work targets the <strong>output</strong> (segmentation masks, decision regions) or a <strong>compressed copy</strong> of the data. Much less is known about shaping the <em>hidden</em> representation of a standard classifier, and whether doing so makes it more robust or easier to monitor.</p>
+
+          <h2>How I would approach it</h2>
+          <ol>
+            <li>Start with the simplest target: ask a classifier's middle-layer representation to form exactly one connected piece per class within a batch, with nothing else changed.</li>
+            <li>Compare it with an ordinary model and with a simpler, non-topological regulariser that pulls classes together, to see whether topology adds anything beyond "make clusters tighter".</li>
+            <li>Test the trained models on corruptions and attacks they never saw (OP-03), and on the early-warning setup from OP-04 — does a network trained to have a clean shape give a clearer alarm when that shape breaks?</li>
+            <li>Track the cost honestly: training time, stability across random seeds, and sensitivity to the weight given to the topology term.</li>
+          </ol>
+
+          <h2>Questions still open</h2>
+          <ol class="opa-qs">
+            <li>Which target topology actually helps a classifier — and is it the same for different datasets and architectures?</li>
+            <li>Does training for a clean representation shape improve robustness on its own, or only when combined with other methods? (see OP-02, OP-03)</li>
+            <li>Can topological losses be made cheap and stable enough for large models and large batches?</li>
+            <li>How should a topology computed on small batches be trusted as a guide to the shape of the whole dataset?</li>
+            <li>Does a network with a deliberately shaped representation make failures easier to detect? (see OP-01, OP-04)</li>
+            <li>In federated learning, could each client's training include a shared topological target, so that clients with very different data still learn compatible representations? (see OP-10)</li>
+          </ol>
+
+          <p>This is the "engineering" end of the topology questions on this list: OP-04 asks whether topology can warn us, OP-05 asks what it means, and this problem asks whether we can put it to work during training.</p>
+
+          <section class="opa-collab">
+            <h2>Work on this together</h2>
+            <p>If you work on topological deep learning, regularisation or structure-aware segmentation — or you have a task where getting the shape right matters more than getting every pixel right — I would love to hear from you. Disagreeing with how I framed the problem is just as welcome.</p>
+            <a class="btn" href="mailto:sunjun7559@gmail.com?subject=OP-06%20Collaboration"><i class="fas fa-handshake"></i> Reach out about OP-06</a>
+          </section>
+
+          <h2>Further reading</h2>
+          <ul class="opa-refs">
+            <li>Hofer et al. — Deep Learning with Topological Signatures (NeurIPS 2017)</li>
+            <li>Chen et al. — A Topological Regularizer for Classifiers via Persistent Homology (AISTATS 2019)</li>
+            <li>Hofer et al. — Connectivity-Optimized Representation Learning via Persistent Homology (ICML 2019)</li>
+            <li>Hu et al. — Topology-Preserving Deep Image Segmentation (NeurIPS 2019)</li>
+            <li>Moor et al. — Topological Autoencoders (ICML 2020)</li>
+            <li>Gabrielsson et al. — A Topology Layer for Machine Learning (AISTATS 2020)</li>
+            <li>Carrière et al. — Optimizing Persistent Homology Based Functions (ICML 2021)</li>
+          </ul>
+          <nav class="opa-nav">
+            <a href="op-05.html"><small>Previous</small>OP-05 · What does the topology of a learned representation actually mean?</a>
+            <a href="op-07.html" style="text-align:right"><small>Next</small>OP-07 · Does quantum ML offer robustness classical models cannot?</a>
+          </nav>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

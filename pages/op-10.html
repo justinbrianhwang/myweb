@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OP-10: How Do We Build Robust Federated Learning Under Heterogeneous Clients? — Sunjun Hwang</title>
+  <meta name="description" content="Open Problem 10 — beyond non-IID data: keeping a federated global model reliable when devices, sensors, environments and compute all differ across clients.">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/op-article.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+
+  <main class="page-content" data-theme="openproblems">
+    <div class="container">
+      <article class="opa">
+        <a class="opa-back" href="open-problems.html"><i class="fas fa-arrow-left"></i> All Open Problems</a>
+
+        <header class="opa-head">
+          <div class="opa-kicker">Open Problem 10 · Distributed / Real-World AI</div>
+          <h1>How Do We Build Robust Federated Learning Under Heterogeneous Clients?</h1>
+          <div class="opa-meta">
+            <span><i class="far fa-calendar"></i> November 2026</span>
+            <span><i class="far fa-clock"></i> 7 min read</span>
+            <span><i class="fas fa-circle" style="color:var(--op);font-size:.55rem"></i> Status: Open</span>
+          </div>
+
+          <div class="opa-author">
+            <img src="../assets/portrait.jpg" alt="Sunjun Hwang">
+            <div>
+              <div class="opa-author__name">Sunjun Hwang</div>
+              <div class="opa-author__role">Independent Researcher, Vancouver · Quantum Computing, AI Security &amp; Robust ML</div>
+              <div class="opa-author__links">
+                <a href="https://sjhwangcv.com" target="_blank" rel="noopener"><i class="fas fa-id-card"></i> CV</a>
+                <a href="https://sjhwangresearch.com" target="_blank" rel="noopener"><i class="fas fa-flask"></i> Research</a>
+                <a href="https://scholar.google.com/citations?user=6X2EVE0AAAAJ" target="_blank" rel="noopener"><i class="fas fa-graduation-cap"></i> Scholar</a>
+                <a href="mailto:sunjun7559@gmail.com?subject=OP-10%20Collaboration"><i class="fas fa-envelope"></i> Email</a>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="opa-abstract">
+          <h2>In one sentence</h2>
+          <p>When one shared model is trained across thousands of phones, cars and hospitals that each have <strong>different sensors, surroundings and computing power</strong>, how do we make sure the final model works reliably for <strong>every</strong> one of them — not just on average?</p>
+        </section>
+
+        <div class="opa-body">
+          <h2>What is the problem?</h2>
+          <p>Picture five hospitals that want to train one model to spot tumours in scans. Privacy rules mean none of them can send patient images anywhere. <strong>Federated learning</strong> solves this: a central server sends the current model to each hospital, each hospital improves it on its own data, and only the <em>changes to the model</em> — the update — travel back. The server averages the updates into a better global model, and the cycle repeats.</p>
+          <p>On paper it works beautifully. In practice the hospitals are not alike. One has a new scanner and another a ten-year-old one. One sees mostly elderly patients, another mostly children. One has a powerful server and can train for hours; another can only manage a few minutes a night. The averaged model might score well overall yet perform badly at exactly the hospital whose scanner is unusual.</p>
+          <p>Research has focused heavily on one kind of difference, called <strong>non-IID data</strong> — the fact that each client's data has a different mix of examples (one phone user types mostly in Korean, another in English). That is real, but it is only one layer. Clients also differ in <strong>device</strong>, <strong>sensor</strong>, <strong>environment</strong> and <strong>compute</strong>, and these differences interact.</p>
+          <p>This open problem asks: <strong>how do we guarantee the reliability of the global model when clients differ in all of these ways at once?</strong></p>
+
+          <figure class="opa-fig">
+            <img src="../assets/op/op10-fig1.png" alt="A central server holding the global model sends the model down to four different clients — a phone with an old camera, a car in night and rain, a hospital with a different scanner, and a low-compute sensor. Each sends an update back up without sharing raw data; the orange up-arrows have different thicknesses, showing unequal contributions." loading="lazy">
+            <figcaption><strong>Figure 1. One model, very different clients.</strong> The grey arrows carry the same global model to everyone. The orange arrows carry each client's update back — never the raw data. Look at the labels under each client: the differences are not only in <em>what</em> data they have, but in <em>how</em> it was captured and how much computing each can do. The uneven arrow widths are the point: some clients shape the global model far more than others, and the quiet ones are the ones most likely to be served badly.</figcaption>
+          </figure>
+
+          <h2>Why does it matter?</h2>
+          <ul>
+            <li><strong>Average accuracy hides the worst case.</strong> A model that is 95% accurate overall can be 70% accurate for a minority of clients — often the ones with older devices or rarer conditions.</li>
+            <li><strong>Fairness.</strong> If clients with weaker hardware contribute less, the global model drifts toward the needs of well-equipped clients.</li>
+            <li><strong>Safety-critical uses.</strong> Federated learning is proposed for cars, medical devices and industrial sensors, where a model that silently fails in one environment is dangerous.</li>
+            <li><strong>Trust in the whole system.</strong> Clients will only keep joining if the shared model actually works for them.</li>
+          </ul>
+
+          <h2>What would a solution look like?</h2>
+          <p>It helps to separate the kinds of difference, because each one breaks training in its own way:</p>
+          <div class="opa-table-wrap">
+            <table class="opa-table">
+              <thead><tr><th>Difference</th><th>Example</th><th>What it does to training</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Data mix</strong></td><td>One client sees mostly cats, another mostly dogs</td><td>Local updates pull the model in conflicting directions</td></tr>
+                <tr><td><strong>Device &amp; sensor</strong></td><td>Different cameras, microphones, scanners</td><td>The same object looks different, so features learned on one device may not carry over</td></tr>
+                <tr><td><strong>Environment</strong></td><td>Day vs night, city vs countryside, season</td><td>Data shifts over time as well as between clients</td></tr>
+                <tr><td><strong>Compute &amp; connection</strong></td><td>Powerful server vs battery-limited sensor</td><td>Some clients send small, late or no updates, so they are under-represented</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>A robust system would handle all four rows together, and — crucially — come with a way to <strong>check</strong> that the global model is reliable for each kind of client, not just in total. That means reporting the worst-served group, not only the average.</p>
+
+          <h2>The key idea: reliability per client, not just accuracy overall</h2>
+          <p>Most federated learning methods are judged by the accuracy of the global model on a pooled test set. But no client ever sees the pooled test set; each sees only its own world. The question that actually matters to a client is: <em>"does this model work on my data, captured by my device, in my environment?"</em></p>
+          <p>Shifting the goal from "high average" to "reliable for everyone" changes the design. The server may need to weight updates so that quiet clients are not drowned out, allow parts of the model to be personalised per device type, and keep checking — without seeing the data — whether some clients are being left behind. It also means knowing <em>when</em> the global model should not be trusted on a given client, which links directly to failure warnings (OP-01).</p>
+
+          <h2>Why is it hard?</h2>
+          <ul>
+            <li><strong>The server is blind.</strong> It cannot look at any client's data, so it cannot directly see who is badly served or why.</li>
+            <li><strong>Differences are tangled.</strong> A client may have an unusual sensor <em>and</em> rare data <em>and</em> a slow connection. Methods usually address one difference at a time.</li>
+            <li><strong>Unusual is not the same as bad.</strong> An update that looks very different could come from a legitimately unusual client, or from a broken or malicious one. Robustness methods that discard outliers may throw away exactly the clients that most need help (see OP-11).</li>
+            <li><strong>Things change.</strong> Clients join and leave, devices get replaced, seasons change. A model that was reliable last month may not be now.</li>
+            <li><strong>Personalisation vs sharing.</strong> Tailoring the model to each client helps that client but weakens what everyone learns together.</li>
+          </ul>
+
+          <h2>What has been tried so far</h2>
+          <ul>
+            <li><strong>Federated averaging</strong>, the original method: average the clients' updates, weighted by how much data each has. Simple and effective when clients are similar.</li>
+            <li><strong>Keeping local training on a leash</strong> — adding a penalty so each client's model does not drift too far from the global one, or correcting for the direction each client tends to drift in.</li>
+            <li><strong>Normalising unequal work</strong>, so a client that trained for many steps does not dominate one that trained for few.</li>
+            <li><strong>Fairness-aware objectives</strong> that give more weight to clients where the global model does worst.</li>
+            <li><strong>Personalisation</strong>: shared core layers plus small client-specific parts, or grouping similar clients and training one model per group.</li>
+            <li><strong>Robust aggregation</strong> — taking medians or trimming extreme updates — mainly designed to resist attackers rather than to serve unusual honest clients.</li>
+          </ul>
+          <p>Each of these handles one slice of the problem, mostly the data-mix slice. Much less work looks at device, sensor and environment differences together, or measures reliability per client type rather than accuracy overall.</p>
+
+          <h2>How I would approach it</h2>
+          <ol>
+            <li>Build a simulated federation where each client differs along several controlled axes: data mix, a simulated sensor change (blur, colour shift, noise), an environment change, and a compute limit.</li>
+            <li>Turn each axis on alone and then in combination, and measure not only average accuracy but the accuracy of the <em>worst-served</em> client group.</li>
+            <li>Test standard methods to see which axis hurts each one most — my guess is that sensor and compute differences are under-estimated today.</li>
+            <li>Try combining a fairness-aware weighting with lightweight per-device personalisation, and check whether the worst-group accuracy improves without hurting the others.</li>
+            <li>Add a label-free reliability check on each client, so the system can warn when the global model is likely to fail there.</li>
+          </ol>
+
+          <h2>Questions still open</h2>
+          <ol class="opa-qs">
+            <li>Which kind of difference — data, sensor, environment or compute — hurts global-model reliability most in realistic settings?</li>
+            <li>Can we give a meaningful guarantee for the worst-served client, not just the average?</li>
+            <li>How can the server tell a legitimately unusual client from a faulty or malicious one? (see OP-11)</li>
+            <li>How should a client know, without labels, that the global model is not working on its data? (see OP-01)</li>
+            <li>How should the system adapt when clients' devices and environments change over time?</li>
+            <li>What is the right balance between one shared model and per-client personalisation?</li>
+          </ol>
+
+          <p>This problem pairs naturally with OP-11, which asks how to spot unreliable clients without seeing their data. It also connects to the autonomous-driving problems — reliability under sensor failure (OP-15) and unseen situations (OP-13) — since fleets of cars are one of the most heterogeneous federations imaginable.</p>
+
+          <section class="opa-collab">
+            <h2>Work on this together</h2>
+            <p>If you work on federated or distributed learning, deploy models across many different devices, or have a real federation where some clients are quietly being served badly, I would love to hear from you. Disagreeing with how I framed the problem is just as welcome.</p>
+            <a class="btn" href="mailto:sunjun7559@gmail.com?subject=OP-10%20Collaboration"><i class="fas fa-handshake"></i> Reach out about OP-10</a>
+          </section>
+
+          <h2>Further reading</h2>
+          <ul class="opa-refs">
+            <li>McMahan et al. — Communication-Efficient Learning of Deep Networks from Decentralized Data (AISTATS 2017)</li>
+            <li>Kairouz et al. — Advances and Open Problems in Federated Learning (Foundations and Trends in Machine Learning 2021)</li>
+            <li>Zhao et al. — Federated Learning with Non-IID Data (arXiv 2018)</li>
+            <li>Li et al. — Federated Optimization in Heterogeneous Networks (MLSys 2020)</li>
+            <li>Karimireddy et al. — SCAFFOLD: Stochastic Controlled Averaging for Federated Learning (ICML 2020)</li>
+            <li>Wang et al. — Tackling the Objective Inconsistency Problem in Heterogeneous Federated Optimization (NeurIPS 2020)</li>
+            <li>Li, Sanjabi, Beirami &amp; Smith — Fair Resource Allocation in Federated Learning (ICLR 2020)</li>
+            <li>Sattler, Müller &amp; Samek — Clustered Federated Learning (IEEE Transactions on Neural Networks and Learning Systems 2021)</li>
+          </ul>
+          <nav class="opa-nav">
+            <a href="op-09.html"><small>Previous</small>OP-09 · Can quantum and classical models fail differently on the same data?</a>
+            <a href="op-11.html" style="text-align:right"><small>Next</small>OP-11 · Can we identify unreliable clients without seeing their data?</a>
+          </nav>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

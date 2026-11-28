@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OP-02: What Makes a Representation Inherently Robust? — Sunjun Hwang</title>
+  <meta name="description" content="Open Problem 02 — which property of a network's internal representation actually explains why it resists perturbation.">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/op-article.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+
+  <main class="page-content" data-theme="openproblems">
+    <div class="container">
+      <article class="opa">
+        <a class="opa-back" href="open-problems.html"><i class="fas fa-arrow-left"></i> All Open Problems</a>
+
+        <header class="opa-head">
+          <div class="opa-kicker">Open Problem 02 · Robust &amp; Trustworthy AI</div>
+          <h1>What Makes a Representation Inherently Robust?</h1>
+          <div class="opa-meta">
+            <span><i class="far fa-calendar"></i> November 2026</span>
+            <span><i class="far fa-clock"></i> 7 min read</span>
+            <span><i class="fas fa-circle" style="color:var(--op);font-size:.55rem"></i> Status: Open</span>
+          </div>
+
+          <div class="opa-author">
+            <img src="../assets/portrait.jpg" alt="Sunjun Hwang">
+            <div>
+              <div class="opa-author__name">Sunjun Hwang</div>
+              <div class="opa-author__role">Independent Researcher, Vancouver · Quantum Computing, AI Security &amp; Robust ML</div>
+              <div class="opa-author__links">
+                <a href="https://sjhwangcv.com" target="_blank" rel="noopener"><i class="fas fa-id-card"></i> CV</a>
+                <a href="https://sjhwangresearch.com" target="_blank" rel="noopener"><i class="fas fa-flask"></i> Research</a>
+                <a href="https://scholar.google.com/citations?user=6X2EVE0AAAAJ" target="_blank" rel="noopener"><i class="fas fa-graduation-cap"></i> Scholar</a>
+                <a href="mailto:sunjun7559@gmail.com?subject=OP-02%20Collaboration"><i class="fas fa-envelope"></i> Email</a>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="opa-abstract">
+          <h2>In one sentence</h2>
+          <p>When two networks are equally accurate but one shrugs off small disturbances and the other falls apart, what is <strong>different about the inside</strong> of the robust one — and can we name that property directly, instead of only measuring the end result?</p>
+        </section>
+
+        <div class="opa-body">
+          <h2>What is the problem?</h2>
+          <p>Take two image classifiers trained on the same photos. Both score 95% on the test set. Now add a layer of noise to each photo — so faint that a person cannot see it. The first model still gets almost everything right. The second one starts calling cats "trucks".</p>
+          <p>From the outside, before the noise, these two models looked identical. Same accuracy, same kind of architecture, same data. Something about how each one <em>organised</em> what it learned must be different, and that difference only shows up when the input is disturbed.</p>
+          <p>Every network turns an input into an internal description — a long list of numbers called its <strong>representation</strong>. The final answer is read off that description. So the natural place to look for the difference is there: in the shape of the space where the representations live.</p>
+          <p>Today we usually summarise robustness with two numbers: <strong>accuracy</strong> on clean data and <strong>robust accuracy</strong> under a chosen attack. Those numbers tell us <em>how much</em> a model resists. They do not tell us <em>why</em>. This open problem asks for the why: a property of the representation itself — its geometry or its topology — that explains robustness rather than just recording it.</p>
+
+          <h2>Why does it matter?</h2>
+          <p>If robustness can only be measured by attacking a model, then every new model has to be attacked again, with every attack we can think of, and we still never know what we missed. A property we could read off the representation would change that:</p>
+          <ul>
+            <li>we could <strong>check</strong> a model's robustness without running an expensive battery of attacks,</li>
+            <li>we could <strong>train for</strong> that property directly, rather than training against one particular attack (see OP-03),</li>
+            <li>we could <strong>compare</strong> architectures and training recipes by what they do to the representation, not only by a leaderboard number,</li>
+            <li>and it would give us an actual explanation — something that tells us where robustness comes from, not just that it is there.</li>
+          </ul>
+
+          <h2>What would a solution look like?</h2>
+          <p>Imagine the representation space as a map. Each input lands somewhere on it, and inputs of the same class tend to gather into clusters. The model's decision is essentially <em>"which region of the map is this point in?"</em> A small change to the input moves the point a little. Whether the answer changes depends on what the map looks like around that point.</p>
+
+          <figure class="opa-fig">
+            <img src="../assets/op/op02-fig1.png" alt="Two panels of a feature space. Left, fragile representation: two clusters of dots, Class A and Class B, pressed against a wavy decision boundary; an orange point of Class A is pushed across the boundary by a small perturbation arrow, labelled tiny change leads to wrong answer. Right, robust representation: the same clusters, compact and far apart, separated by a straight boundary inside a wide shaded margin; the same-length arrow leaves the orange point inside Class A, labelled same change leads to same answer." loading="lazy">
+            <figcaption><strong>Figure 1. Same push, different outcome.</strong> The orange arrow is the same size in both panels — it stands for a tiny, almost invisible change to the input. On the left the clusters sit right against a wiggly border, so the push carries the point across it. On the right the clusters are compact, far apart, and separated by a wide empty band, so the same push changes nothing. Both models could have the same clean accuracy; only the structure of the map differs.</figcaption>
+          </figure>
+
+          <p>Figure 1 shows the intuition, but "compact, well separated, smooth border" is a picture, not a definition. A real solution would turn it into measurable properties and show which ones actually track robustness. The candidates I find most promising:</p>
+          <div class="opa-table-wrap">
+            <table class="opa-table">
+              <thead><tr><th>Property</th><th>The question it asks</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Margin</strong></td><td>How far is a typical point from the nearest decision border, measured inside the representation?</td></tr>
+                <tr><td><strong>Smoothness</strong></td><td>If the input moves a little, does the representation also move only a little — or can a tiny change send it flying?</td></tr>
+                <tr><td><strong>Cluster shape</strong></td><td>Are classes tight and round, or long and thin with arms reaching towards other classes?</td></tr>
+                <tr><td><strong>Dimensionality</strong></td><td>Does the data use only a few directions in the space, or does it spread into many directions an attacker could exploit?</td></tr>
+                <tr><td><strong>Topology</strong></td><td>Is each class one connected piece, or broken into islands with gaps between them where errors can hide? (see OP-04, OP-05)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>The key idea: robustness as a property of the map</h2>
+          <p>One observation makes me think this is a real, findable property and not just a vague hope. Models trained to be robust — usually by practising on attacked examples during training — turn out to learn <em>different representations</em>, not just a different final layer. Their internal features tend to line up better with what humans find meaningful, and are less dependent on tiny textures and pixel patterns that people cannot see.</p>
+          <p>There is also strong evidence that ordinary models rely on such invisible patterns because they are genuinely useful for getting the training labels right. In other words, a standard network is not "broken" — it is using real but fragile clues. A robust representation is one built from clues that do not vanish under small changes.</p>
+          <p>If that is right, robustness is something the representation <strong>has</strong>, not only something the model <strong>does</strong> under attack. And if it is something the representation has, we should be able to measure it there.</p>
+
+          <h2>Why is it hard?</h2>
+          <ul>
+            <li><strong>High dimensions are unintuitive.</strong> Representations often have hundreds or thousands of numbers. Distances, volumes and "nearness" behave very differently there than in the two-dimensional picture in Figure 1.</li>
+            <li><strong>Correlation is not explanation.</strong> Robust models differ from standard ones in many ways at once. Finding a property that merely goes along with robustness is easy; showing that it <em>causes</em> robustness is hard.</li>
+            <li><strong>Robust against what?</strong> A model can be robust to one kind of change and fragile to another. A single property may only explain one kind of robustness (see OP-03).</li>
+            <li><strong>Every layer is different.</strong> The geometry of early, middle and late layers can tell different stories. It is not obvious which layer — or which combination — carries the explanation.</li>
+            <li><strong>Accuracy may pull the other way.</strong> There is evidence that robustness and clean accuracy can be in tension, so a "perfectly robust" representation may give up some accuracy.</li>
+          </ul>
+
+          <h2>What has been tried so far</h2>
+          <p>Several lines of work each capture part of the picture:</p>
+          <ul>
+            <li><strong>Adversarial training</strong> — training on attacked inputs so the model learns to resist them. Still the most reliable way to get robustness in practice, but it explains little about <em>why</em> the result is robust, and it is tied to the attack used.</li>
+            <li><strong>Large-margin training</strong> — pushing data points further from decision borders, sometimes inside hidden layers rather than only at the output. Close in spirit to Figure 1.</li>
+            <li><strong>Controlling smoothness</strong> — limiting how much each layer can stretch its input (for example by constraining its weights), so small input changes cannot grow into large ones.</li>
+            <li><strong>Certified robustness</strong> — methods such as randomized smoothing that come with a mathematical guarantee within a small radius. Strong guarantees, but only for a narrow kind of change.</li>
+            <li><strong>Studying what robust models learn</strong> — comparing features of robust and standard models, and showing that standard models depend on real but fragile patterns in the data.</li>
+          </ul>
+          <p>What is mostly missing is a <strong>side-by-side test</strong>: take many models with known robustness, compute many candidate properties of their representations, and ask which property explains the most — including the topological ones that have barely been tried.</p>
+
+          <h2>How I would approach it</h2>
+          <ol>
+            <li>Collect a family of models with the same architecture but very different robustness — standard training, adversarial training at several strengths, smoothness constraints, different data augmentation.</li>
+            <li>For each model and each layer, compute the candidate properties from the table above: margin, smoothness, cluster shape, effective dimensionality and simple topological summaries.</li>
+            <li>Ask which property best predicts measured robustness across the whole family — not just whether robust models score higher on average.</li>
+            <li>Then test cause, not just correlation: train new models while directly encouraging the winning property (see OP-06) and check whether robustness follows, without ever showing the model an attack.</li>
+          </ol>
+
+          <h2>Questions still open</h2>
+          <ol class="opa-qs">
+            <li>Is there one property of the representation that explains robustness across many kinds of attack and corruption, or one per kind?</li>
+            <li>Which layer matters most — the last one before the answer, or the middle of the network?</li>
+            <li>Does topology (how many pieces each class forms, whether there are holes) add anything beyond margin and smoothness? (see OP-04, OP-05)</li>
+            <li>If we encourage that property directly during training, do we get robustness "for free", or does it only appear alongside adversarial training?</li>
+            <li>Is the tension between robustness and accuracy a fact about the data, or a side effect of how we currently train?</li>
+            <li>Do quantum models, whose internal states live in a very different kind of space, follow the same rules? (see OP-07, OP-08)</li>
+          </ol>
+
+          <p>This question also underlies its neighbours on the list: building robustness that carries over to unseen attacks (OP-03), and warning that a model is about to fail (OP-01) — both become easier if we know what a healthy representation looks like.</p>
+
+          <section class="opa-collab">
+            <h2>Work on this together</h2>
+            <p>If you study adversarial robustness, representation geometry or interpretability — or you have a collection of trained models with very different robustness that could be compared — I would love to hear from you. Disagreeing with how I framed the problem is just as welcome.</p>
+            <a class="btn" href="mailto:sunjun7559@gmail.com?subject=OP-02%20Collaboration"><i class="fas fa-handshake"></i> Reach out about OP-02</a>
+          </section>
+
+          <h2>Further reading</h2>
+          <ul class="opa-refs">
+            <li>Szegedy et al. — Intriguing Properties of Neural Networks (ICLR 2014)</li>
+            <li>Goodfellow, Shlens &amp; Szegedy — Explaining and Harnessing Adversarial Examples (ICLR 2015)</li>
+            <li>Madry et al. — Towards Deep Learning Models Resistant to Adversarial Attacks (ICLR 2018)</li>
+            <li>Cisse et al. — Parseval Networks: Improving Robustness to Adversarial Examples (ICML 2017)</li>
+            <li>Elsayed et al. — Large Margin Deep Networks for Classification (NeurIPS 2018)</li>
+            <li>Tsipras et al. — Robustness May Be at Odds with Accuracy (ICLR 2019)</li>
+            <li>Ilyas et al. — Adversarial Examples Are Not Bugs, They Are Features (NeurIPS 2019)</li>
+            <li>Cohen, Rosenfeld &amp; Kolter — Certified Adversarial Robustness via Randomized Smoothing (ICML 2019)</li>
+          </ul>
+          <nav class="opa-nav">
+            <a href="op-01.html"><small>Previous</small>OP-01 · Can we detect model failure before it happens?</a>
+            <a href="op-03.html" style="text-align:right"><small>Next</small>OP-03 · Can robustness generalize to unseen attacks?</a>
+          </nav>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

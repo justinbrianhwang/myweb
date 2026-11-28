@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OP-07: Does Quantum ML Offer Robustness Classical Models Cannot? — Sunjun Hwang</title>
+  <meta name="description" content="Open Problem 07 — is the robustness reported for quantum machine learning a genuinely quantum effect, or just a side effect of a different model structure?">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/op-article.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+
+  <main class="page-content" data-theme="openproblems">
+    <div class="container">
+      <article class="opa">
+        <a class="opa-back" href="open-problems.html"><i class="fas fa-arrow-left"></i> All Open Problems</a>
+
+        <header class="opa-head">
+          <div class="opa-kicker">Open Problem 07 · Quantum &times; AI</div>
+          <h1>Does Quantum ML Offer Robustness Classical Models Cannot?</h1>
+          <div class="opa-meta">
+            <span><i class="far fa-calendar"></i> November 2026</span>
+            <span><i class="far fa-clock"></i> 8 min read</span>
+            <span><i class="fas fa-circle" style="color:var(--op);font-size:.55rem"></i> Status: Open</span>
+          </div>
+
+          <div class="opa-author">
+            <img src="../assets/portrait.jpg" alt="Sunjun Hwang">
+            <div>
+              <div class="opa-author__name">Sunjun Hwang</div>
+              <div class="opa-author__role">Independent Researcher, Vancouver · Quantum Computing, AI Security &amp; Robust ML</div>
+              <div class="opa-author__links">
+                <a href="https://sjhwangcv.com" target="_blank" rel="noopener"><i class="fas fa-id-card"></i> CV</a>
+                <a href="https://sjhwangresearch.com" target="_blank" rel="noopener"><i class="fas fa-flask"></i> Research</a>
+                <a href="https://scholar.google.com/citations?user=6X2EVE0AAAAJ" target="_blank" rel="noopener"><i class="fas fa-graduation-cap"></i> Scholar</a>
+                <a href="mailto:sunjun7559@gmail.com?subject=OP-07%20Collaboration"><i class="fas fa-envelope"></i> Email</a>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="opa-abstract">
+          <h2>In one sentence</h2>
+          <p>When a quantum machine-learning model turns out to be harder to fool than a classical one, is that because of something <strong>genuinely quantum</strong> — or simply because it is a <strong>differently shaped model</strong> that a classical computer could imitate just as well?</p>
+        </section>
+
+        <div class="opa-body">
+          <h2>What is the problem?</h2>
+          <p>Imagine two image classifiers that both recognise handwritten digits with about the same accuracy. One is an ordinary neural network. The other is a small <em>quantum</em> model running on a few qubits. An attacker adds a faint, carefully chosen pattern of noise to the images — invisible to a person — and the ordinary network starts calling a 7 a 1. The quantum model, on the same attack, makes noticeably fewer mistakes.</p>
+          <p>It is tempting to write the headline: <em>"quantum models are more robust."</em> But that headline hides a question. The two models differ in many ways at once. The quantum model is much smaller. It reads the data through a very particular encoding. Its output is averaged over many noisy measurements. Any of those could be the real reason it held up better — and most of them have nothing to do with quantum physics.</p>
+          <p>A few words of background, because they matter for everything below. A <strong>qubit</strong> is the quantum version of a bit. A bit is 0 or 1; a qubit can be in a <strong>superposition</strong> — a blend of 0 and 1 with certain weights. Several qubits together can be <strong>entangled</strong>, meaning their state cannot be described one qubit at a time. When we <strong>measure</strong> a qubit we only ever get 0 or 1, at random, with probabilities set by its state, so a quantum model has to be run many times and its answers averaged. And today's hardware is <strong>noisy</strong>: every operation is slightly imperfect and the qubits slowly lose their quantum behaviour.</p>
+          <p>This open problem asks for a clean separation: <strong>which part of the robustness we see in quantum ML comes from the quantum representation itself, and which part would appear in any classical model with the same structure?</strong></p>
+
+          <h2>Why does it matter?</h2>
+          <p>Quantum hardware is expensive and scarce. If we are going to argue that some tasks deserve it, the argument needs to be honest:</p>
+          <ul>
+            <li>if the robustness is a <strong>structural</strong> effect, we can get it far more cheaply by building that structure into a classical model — a useful result in itself,</li>
+            <li>if it is a <strong>quantum</strong> effect, it would be one of the few concrete, near-term reasons to use quantum models for learning, beyond speed,</li>
+            <li>security-critical users (sensors, communication, finance) need to know whether a claimed robustness will survive when the hardware, the encoding or the attacker changes,</li>
+            <li>and the field as a whole benefits from comparisons that cannot be explained away later as an unfair baseline.</li>
+          </ul>
+
+          <h2>What does a quantum model actually look like?</h2>
+          <p>Most quantum ML today uses a hybrid design often called a <em>variational quantum classifier</em>. It is easier to see than to describe:</p>
+
+          <figure class="opa-fig">
+            <img src="../assets/op/op07-fig1.png" alt="Pipeline of a quantum classifier: classical data is encoded into qubit rotations, passed through a trainable circuit of gates with adjustable angles, measured repeatedly, and turned into a prediction. An orange bracket under the encoding, circuit and measurement stages marks where noise acts." loading="lazy">
+            <figcaption><strong>Figure 1. A typical quantum classifier.</strong> Read it left to right. The numbers are first <em>encoded</em> as rotations of the qubits, then a <em>trainable circuit</em> mixes and entangles them, and finally the qubits are <em>measured</em> many times to estimate class probabilities. A classical computer tunes the angles in the circuit, much like weights in a network. Notice the orange bracket: noise touches every quantum stage — one reason robustness here is not a single, simple property.</figcaption>
+          </figure>
+
+          <p>Each stage is a possible source of "robustness" that has nothing to do with quantum advantage. The encoding may squash large input changes into small rotations. The circuit may have very few parameters, so it simply cannot learn the fragile, fine-grained features attackers exploit in big networks. And averaging many noisy measurements smooths the output, a bit like adding random noise on purpose — a known classical defence.</p>
+
+          <h2>The key idea: compare against a classical twin</h2>
+          <p>The way to untangle this is to change one thing at a time. For a small quantum model, we can usually simulate it exactly on an ordinary computer. That gives us a <strong>classical twin</strong>: a model with the same encoding, the same structure and the same number of parameters, computed without any quantum hardware. We can then also compare against an ordinary neural network of similar size.</p>
+
+          <figure class="opa-fig">
+            <img src="../assets/op/op07-fig2.png" alt="Experimental design: the same data and attack feed three models — a quantum circuit, a classical twin with the same structure simulated on a normal computer, and an ordinary neural network. Each produces a robustness bar. An orange bracket between the quantum and twin bars is labelled 'Gap = quantum effect?'; a grey bracket between the twin and the ordinary network is labelled 'Gap = model structure'." loading="lazy">
+            <figcaption><strong>Figure 2. Splitting the robustness gap in two.</strong> The grey gap (twin vs ordinary network) measures what the <em>shape</em> of the model buys you; a classical computer can have that too. Only the orange gap (real quantum run vs its exact classical twin) could hint at something that needs quantum hardware — and even then, much of it may turn out to be hardware noise rather than quantum structure.</figcaption>
+          </figure>
+
+          <p>The important twist is that, for small models, the quantum circuit and its exact classical simulation compute <em>the same function</em>. If they behave differently under attack, the difference has to come from the hardware — mostly noise and the randomness of measurement. So for small models the honest question becomes: is there anything left once structure and noise are accounted for? For large models that cannot be simulated, the question is open in a deeper way, because there we cannot build the twin at all.</p>
+
+          <h2>Why is it hard?</h2>
+          <ul>
+            <li><strong>Fair baselines are hard to define.</strong> "Same size" can mean same number of parameters, same number of operations or same accuracy. Each choice can flip the conclusion.</li>
+            <li><strong>Small models are easy to simulate.</strong> The quantum models we can run today are small enough to copy classically — which makes a genuinely quantum effect hard to isolate by definition.</li>
+            <li><strong>Noise helps and hurts.</strong> Random noise can blur an attacker's carefully tuned pattern, which looks like robustness, but it also lowers accuracy. Robustness bought by lower accuracy is not a free lunch.</li>
+            <li><strong>Attacks are often too weak.</strong> Quantum models can be hard to differentiate on real hardware, so attacks that rely on gradients may simply fail to find the weak spots. That is robustness of the <em>evaluation</em>, not of the model.</li>
+            <li><strong>Theory points both ways.</strong> Some results suggest quantum classifiers become <em>more</em> vulnerable as they grow, because very high-dimensional state spaces are easy to nudge; others show that certain noise can give provable protection.</li>
+          </ul>
+
+          <h2>What has been tried so far</h2>
+          <ul>
+            <li><strong>Head-to-head benchmarks</strong> of small quantum classifiers against classical ones under standard attacks. Useful first evidence, but usually without a structure-matched classical twin.</li>
+            <li><strong>Theoretical vulnerability results</strong> showing that, as the number of qubits grows, small perturbations can be enough to flip a quantum classifier's answer — the quantum version of "high dimensions make attacks easy."</li>
+            <li><strong>Noise as a defence:</strong> work showing that some kinds of hardware noise act like the randomised smoothing used in classical ML, giving a guaranteed (if modest) robustness radius.</li>
+            <li><strong>Formal verification</strong> methods that check, for a given quantum classifier and input, whether any perturbation within a budget can change the output.</li>
+            <li><strong>Careful benchmarking studies</strong> that compare quantum models to well-tuned classical ones and often find the classical models match or beat them — a reminder that baselines matter.</li>
+            <li><strong>Encoding studies</strong> showing that how data is loaded into qubits largely decides what functions a quantum model can represent — which suggests the encoding, not "quantumness", may drive much of the behaviour.</li>
+          </ul>
+          <p>What I find missing is a study that, on the same data and the same attacks, systematically separates the three ingredients — <strong>structure, noise and quantum representation</strong> — and reports how much of the robustness each one explains.</p>
+
+          <h2>How I would approach it</h2>
+          <ol>
+            <li>Pick a few small, well-understood datasets and build a quantum classifier for each, plus its exact classical twin and a size-matched ordinary network.</li>
+            <li>Attack all three with the same strong attacks, including ones that do not need gradients, so that weak attacks cannot masquerade as robustness.</li>
+            <li>Run the quantum model in three settings: perfect simulation, simulation with realistic noise, and, where possible, real hardware. This isolates what noise contributes.</li>
+            <li>Then give the classical twin the same benefits — the same encoding squashing, the same amount of added randomness — and check whether the remaining gap closes.</li>
+            <li>Finally, scale up the number of qubits as far as simulation allows, to see whether any leftover gap grows, shrinks or disappears.</li>
+          </ol>
+          <p>My working hypothesis is that most of today's reported robustness is structural or noise-driven. That would not be a disappointing result — it would tell us exactly which quantum ingredient is worth looking for next.</p>
+
+          <h2>Questions still open</h2>
+          <ol class="opa-qs">
+            <li>Once structure and noise are matched, is there any robustness left that a classical model cannot reproduce?</li>
+            <li>What is the right notion of a "fair" classical baseline for a quantum model?</li>
+            <li>Is noise-driven robustness worth the accuracy it costs, compared with classical smoothing?</li>
+            <li>Does robustness survive when models grow too large to simulate — or does vulnerability grow faster?</li>
+            <li>Is "robustness" even defined the same way for both kinds of model? (see OP-08)</li>
+            <li>Even if neither model is more robust overall, do they fail on <em>different</em> inputs? (see OP-09)</li>
+          </ol>
+
+          <p>This problem is the first of three on quantum and AI. OP-08 asks what an attack even means once states, measurement and noise are part of the model, and OP-09 asks whether quantum and classical models make different mistakes that could be used together. It also connects to the representation questions in OP-02.</p>
+
+          <section class="opa-collab">
+            <h2>Work on this together</h2>
+            <p>If you work on quantum machine learning, adversarial robustness or careful benchmarking — or you have access to quantum hardware and want to test a hypothesis rather than chase a headline — I would love to hear from you. Telling me the framing is wrong is just as welcome.</p>
+            <a class="btn" href="mailto:sunjun7559@gmail.com?subject=OP-07%20Collaboration"><i class="fas fa-handshake"></i> Reach out about OP-07</a>
+          </section>
+
+          <h2>Further reading</h2>
+          <ul class="opa-refs">
+            <li>Biamonte et al. — Quantum Machine Learning (Nature 2017)</li>
+            <li>Havlíček et al. — Supervised Learning with Quantum-Enhanced Feature Spaces (Nature 2019)</li>
+            <li>Schuld, Sweke &amp; Meyer — Effect of Data Encoding on the Expressive Power of Variational Quantum Machine Learning Models (Physical Review A 2021)</li>
+            <li>Liu &amp; Wittek — Vulnerability of Quantum Classification to Adversarial Perturbations (Physical Review A 2020)</li>
+            <li>Lu, Duan &amp; Deng — Quantum Adversarial Machine Learning (Physical Review Research 2020)</li>
+            <li>Du et al. — Quantum Noise Protects Quantum Classifiers Against Adversaries (Physical Review Research 2021)</li>
+            <li>West et al. — Towards Quantum Enhanced Adversarial Robustness in Machine Learning (Nature Machine Intelligence 2023)</li>
+            <li>Bowles, Ahmed &amp; Schuld — Better Than Classical? The Subtle Art of Benchmarking Quantum Machine Learning Models (arXiv 2024)</li>
+          </ul>
+          <nav class="opa-nav">
+            <a href="op-06.html"><small>Previous</small>OP-06 · Can we train neural networks to preserve useful topology?</a>
+            <a href="op-08.html" style="text-align:right"><small>Next</small>OP-08 · What does an adversarial example mean in quantum state space?</a>
+          </nav>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

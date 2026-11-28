@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OP-21: Can We Understand Why an LLM Changes Its Answer? — Sunjun Hwang</title>
+  <meta name="description" content="Open Problem 21 — finding the internal representation changes that make a language model switch its reasoning or final answer after a tiny change to the prompt.">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/op-article.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+
+  <main class="page-content" data-theme="openproblems">
+    <div class="container">
+      <article class="opa">
+        <a class="opa-back" href="open-problems.html"><i class="fas fa-arrow-left"></i> All Open Problems</a>
+
+        <header class="opa-head">
+          <div class="opa-kicker">Open Problem 21 · Large Language Models (LLM)</div>
+          <h1>Can We Understand Why an LLM Changes Its Answer?</h1>
+          <div class="opa-meta">
+            <span><i class="far fa-calendar"></i> November 2026</span>
+            <span><i class="far fa-clock"></i> 7 min read</span>
+            <span><i class="fas fa-circle" style="color:var(--op);font-size:.55rem"></i> Status: Open</span>
+          </div>
+
+          <div class="opa-author">
+            <img src="../assets/portrait.jpg" alt="Sunjun Hwang">
+            <div>
+              <div class="opa-author__name">Sunjun Hwang</div>
+              <div class="opa-author__role">Independent Researcher, Vancouver · Quantum Computing, AI Security &amp; Robust ML</div>
+              <div class="opa-author__links">
+                <a href="https://sjhwangcv.com" target="_blank" rel="noopener"><i class="fas fa-id-card"></i> CV</a>
+                <a href="https://sjhwangresearch.com" target="_blank" rel="noopener"><i class="fas fa-flask"></i> Research</a>
+                <a href="https://scholar.google.com/citations?user=6X2EVE0AAAAJ" target="_blank" rel="noopener"><i class="fas fa-graduation-cap"></i> Scholar</a>
+                <a href="mailto:sunjun7559@gmail.com?subject=OP-21%20Collaboration"><i class="fas fa-envelope"></i> Email</a>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="opa-abstract">
+          <h2>In one sentence</h2>
+          <p>Change one harmless word in a prompt and a language model may flip from "yes" to "no" — can we find <strong>what changed inside the model</strong> to cause the flip, and use that to predict which answers are fragile?</p>
+        </section>
+
+        <div class="opa-body">
+          <h2>What is the problem?</h2>
+          <p>Ask a model: <em>"Is it safe to take ibuprofen with this medication?"</em> and it says no, with a careful explanation. Ask again with <em>"Can I safely take ibuprofen with this medication?"</em> — the same question, in different words — and it says yes. Swap the order of two answer options in a multiple-choice question, add an extra space, or say "Please" at the start, and the accuracy on a benchmark can move by several points.</p>
+          <p>For a human, those prompts are the same question. For the model, they are different sequences of tokens, and somewhere between the first layer and the last, the two runs go their separate ways. We see only the end result: different answers, sometimes with completely different reasoning attached.</p>
+          <p>Right now we mostly treat this as a black-box phenomenon: we measure <em>how often</em> answers change across rephrasings. This open problem asks the next question: <em>can we identify the internal representation changes that cause an LLM to switch its reasoning or final answer?</em></p>
+
+          <h2>Why does it matter?</h2>
+          <ul>
+            <li><strong>Reliability.</strong> If an answer flips under harmless rephrasing, the model never really "knew" it. Being able to spot such fragile answers is a direct route to the uncertainty signals in OP-19.</li>
+            <li><strong>Security.</strong> Attacks such as jailbreaks and prompt injection are, at heart, small input changes that cause big behaviour changes. Understanding the mechanism of a flip helps defend against deliberate ones (see OP-20).</li>
+            <li><strong>Evaluation.</strong> Benchmark scores that move with formatting are not measuring what they claim. Knowing why helps build fairer tests.</li>
+            <li><strong>Trust in explanations.</strong> A model's written reasoning does not always reflect what actually drove its answer. Looking inside is one way to check.</li>
+          </ul>
+
+          <h2>What would a solution look like?</h2>
+          <p>Imagine running two nearly identical prompts through the model side by side and recording its internal state at every layer. In the early layers the two runs should look almost the same — they are reading almost the same text. At some point they may separate. If they separate early and stay apart, the model is treating the wording difference as meaningful. If they stay together until a specific layer and then split sharply, that layer is where the "decision" is being made.</p>
+
+          <figure class="opa-fig">
+            <img src="../assets/op/op21-fig1.png" alt="Two prompts, Prompt A and Prompt B with one word changed, pass through six model layers. Their paths, grey and orange, run close together through layers 1 to 3, then split at a divergence point at layer 4. The grey path ends at Answer: Yes and the orange path at Answer: No." loading="lazy">
+            <figcaption><strong>Figure 1. Finding where two runs part ways.</strong> The grey and orange dotted lines are the model's internal state for two prompts that differ by one word. Through the first layers they stay close — the model is treating the two prompts as the same question. At the orange <em>divergence point</em> they split, and they end in opposite answers. The goal of this problem is to find such points, understand what happens there, and learn to predict them.</figcaption>
+          </figure>
+
+          <p>A useful answer would let us say things like: <em>"the flip happens around layer 18, it is carried mostly by these attention heads, and it moves the state along a direction that also separates confident from unconfident answers."</em> Better still, it would let us look at a <strong>single</strong> prompt and say how close it is to such a tipping point — before anyone tries a rephrasing.</p>
+
+          <h2>The key idea: answers as regions, flips as border crossings</h2>
+          <p>Inside a model, every prompt becomes a point in a very high-dimensional space at each layer. Prompts that lead to the same answer tend to gather in the same region. A flip, in this picture, is a small step in input that becomes a step across the border between two regions.</p>
+          <p>That suggests two things to measure. The first is <strong>distance to the border</strong>: answers whose internal state sits close to a boundary should be the ones that flip easily, exactly like the fragile predictions in OP-01. The second is the <strong>shape of the regions</strong>: if semantically equal prompts form a tight, well-connected cluster, the model treats them as one question; if they are scattered or split into several islands, the model is reacting to surface wording. Tools from topology — which describe how clusters connect, split and form holes — are a natural way to describe that shape, which is why I see this as a bridge between topology and LLMs (see OP-04).</p>
+
+          <h2>Why is it hard?</h2>
+          <ul>
+            <li><strong>Huge, entangled internals.</strong> Modern models have billions of parameters and thousands of dimensions per layer. Single neurons rarely mean one clean thing; concepts are spread across many.</li>
+            <li><strong>Correlation is not cause.</strong> Seeing that two runs differ at layer 18 does not prove layer 18 caused the flip. Proving cause needs interventions — swapping parts of one run into the other and seeing whether the answer follows.</li>
+            <li><strong>"Same meaning" is fuzzy.</strong> Two prompts that look equivalent to one person may carry a real difference in nuance. Building a fair set of truly equivalent prompts is itself a research task.</li>
+            <li><strong>Reasoning is long.</strong> With step-by-step reasoning, a flip may start with one different word early on and snowball across hundreds of generated tokens.</li>
+            <li><strong>Results may not transfer.</strong> A mechanism found in one small model may look different in a larger model or a different architecture.</li>
+          </ul>
+
+          <h2>What has been tried so far</h2>
+          <ul>
+            <li><strong>Measuring prompt sensitivity.</strong> Studies that show how much benchmark accuracy moves with formatting, option order or phrasing — establishing the problem, but from the outside.</li>
+            <li><strong>Reading predictions layer by layer</strong> ("logit lens" and "tuned lens"): decoding what answer the model would give if it stopped at each layer, to see when the final answer forms.</li>
+            <li><strong>Causal tracing and activation patching</strong>: running a clean and a changed prompt, then copying internal states from one run into the other, to find which layers and positions actually carry the decisive information.</li>
+            <li><strong>Circuit analysis</strong>: reverse-engineering small groups of attention heads and neurons that implement a specific behaviour.</li>
+            <li><strong>Representation directions</strong>: finding directions in activation space linked to concepts such as truthfulness or refusal, and showing that pushing along them changes behaviour.</li>
+            <li><strong>Comparing representations</strong> with similarity measures, to check whether two inputs or two models encode things alike.</li>
+          </ul>
+          <p>These tools are powerful but mostly used to explain one behaviour on one task. Less work uses them systematically on <em>flips</em> — pairs of near-identical prompts with different answers — and asks whether the flips share a common internal signature.</p>
+
+          <h2>How I would approach it</h2>
+          <ol>
+            <li>Build sets of prompts that mean the same thing (rephrasings, reordered options, formatting changes) and mark which ones make an open-weight model change its answer.</li>
+            <li>For every pair, record the hidden states at each layer and measure where they diverge — the picture in Figure 1, but for thousands of pairs.</li>
+            <li>Use activation patching on a subset to check which divergences actually <em>cause</em> the flip, not just accompany it.</li>
+            <li>Describe the cluster of equivalent prompts at each layer with distance and simple topological summaries, and test whether a messy, split cluster predicts that the answer will be unstable.</li>
+            <li>Finally, try to predict flip-prone questions from a single prompt's internal state, and compare that with the uncertainty signals from OP-19.</li>
+          </ol>
+
+          <h2>Questions still open</h2>
+          <ol class="opa-qs">
+            <li>Do semantically equal prompts produce similar internal representations, and at which layers does the similarity break?</li>
+            <li>Are there specific layers or attention heads that reliably predict answer instability?</li>
+            <li>Is there a common internal signature shared by many different kinds of flips, or is every flip its own story?</li>
+            <li>Can the geometry or topology of internal representations explain transitions in step-by-step reasoning, not just in the final answer? (see OP-04)</li>
+            <li>Can we predict that an answer is fragile from one prompt alone, without trying rephrasings?</li>
+            <li>Do deliberate attacks, such as prompt injection, use the same internal route as accidental flips? (see OP-20)</li>
+          </ol>
+
+          <p>This problem connects the general failure-warning question in OP-01 with the language-model problems OP-19 (knowing when an answer is wrong) and OP-20 (resisting misleading context), and brings in the topology-based view of representations from OP-04.</p>
+
+          <section class="opa-collab">
+            <h2>Work on this together</h2>
+            <p>If you work on mechanistic interpretability, representation analysis or topological data analysis — or you have seen a model flip in a way you could not explain — I would love to hear from you. Disagreeing with how I framed the problem is just as welcome.</p>
+            <a class="btn" href="mailto:sunjun7559@gmail.com?subject=OP-21%20Collaboration"><i class="fas fa-handshake"></i> Reach out about OP-21</a>
+          </section>
+
+          <h2>Further reading</h2>
+          <ul class="opa-refs">
+            <li>Kornblith et al. — Similarity of Neural Network Representations Revisited (ICML 2019)</li>
+            <li>Elhage et al. — A Mathematical Framework for Transformer Circuits (Transformer Circuits Thread 2021)</li>
+            <li>Meng et al. — Locating and Editing Factual Associations in GPT (NeurIPS 2022)</li>
+            <li>Wang et al. — Interpretability in the Wild: A Circuit for Indirect Object Identification in GPT-2 Small (ICLR 2023)</li>
+            <li>Turpin et al. — Language Models Don't Always Say What They Think: Unfaithful Explanations in Chain-of-Thought Prompting (NeurIPS 2023)</li>
+            <li>Belrose et al. — Eliciting Latent Predictions from Transformers with the Tuned Lens (arXiv 2023)</li>
+            <li>Zou et al. — Representation Engineering: A Top-Down Approach to AI Transparency (arXiv 2023)</li>
+            <li>Sclar et al. — Quantifying Language Models' Sensitivity to Spurious Features in Prompt Design (ICLR 2024)</li>
+          </ul>
+          <nav class="opa-nav">
+            <a href="op-20.html"><small>Previous</small>OP-20 · How can LLMs remain reliable under adversarial or misleading context?</a>
+            <a href="open-problems.html" style="text-align:right"><small>Back to</small>All Open Problems</a>
+          </nav>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>
