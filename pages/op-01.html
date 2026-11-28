@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OP-01: Can We Detect Model Failure Before It Happens? — Sunjun Hwang</title>
+  <meta name="description" content="Open Problem 01 — predicting when a model's prediction will fail, before the label arrives.">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/op-article.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <script src="../js/theme.js"></script>
+  <script src="../js/sidebar.js"></script>
+
+  <main class="page-content" data-theme="openproblems">
+    <div class="container">
+      <article class="opa">
+        <a class="opa-back" href="open-problems.html"><i class="fas fa-arrow-left"></i> All Open Problems</a>
+
+        <header class="opa-head">
+          <div class="opa-kicker">Open Problem 01 · Robust &amp; Trustworthy AI</div>
+          <h1>Can We Detect Model Failure Before It Happens?</h1>
+          <div class="opa-meta">
+            <span><i class="far fa-calendar"></i> November 2026</span>
+            <span><i class="far fa-clock"></i> 8 min read</span>
+            <span><i class="fas fa-circle" style="color:var(--op);font-size:.55rem"></i> Status: Open</span>
+          </div>
+
+          <div class="opa-author">
+            <img src="../assets/portrait.jpg" alt="Sunjun Hwang">
+            <div>
+              <div class="opa-author__name">Sunjun Hwang</div>
+              <div class="opa-author__role">Independent Researcher, Vancouver · Quantum Computing, AI Security &amp; Robust ML</div>
+              <div class="opa-author__links">
+                <a href="https://sjhwangcv.com" target="_blank" rel="noopener"><i class="fas fa-id-card"></i> CV</a>
+                <a href="https://sjhwangresearch.com" target="_blank" rel="noopener"><i class="fas fa-flask"></i> Research</a>
+                <a href="https://scholar.google.com/citations?user=6X2EVE0AAAAJ" target="_blank" rel="noopener"><i class="fas fa-graduation-cap"></i> Scholar</a>
+                <a href="mailto:sunjun7559@gmail.com?subject=OP-01%20Collaboration"><i class="fas fa-envelope"></i> Email</a>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <section class="opa-abstract">
+          <h2>Abstract</h2>
+          <p>Most robustness research measures failure after the fact: a model is evaluated on a shifted or attacked test set, and we report how much accuracy dropped. In deployment, that is too late — the wrong prediction has already been used. This article states the problem of <strong>failure prediction</strong>: estimating, at inference time and without the true label, how likely a given prediction is to be wrong, and how much a model's error rate will rise on a new data distribution before any labels from it exist. I outline why confidence scores alone are not enough, summarise the main families of existing approaches, and propose looking for <em>failure precursors</em> in the geometry and topology of a model's internal representations. I close with concrete open questions and an invitation to collaborate.</p>
+        </section>
+        <p class="opa-keywords"><strong>Keywords:</strong> failure prediction · selective classification · uncertainty estimation · distribution shift · representation geometry</p>
+
+        <div class="opa-body">
+          <h2><span class="n">1</span> Introduction</h2>
+          <p>A deployed classifier answers every query, including the ones it should not. A medical model shown a scan from an unfamiliar scanner, a driving model at dusk in heavy rain, a language model asked about a fact it never saw — in each case the model still produces an output, and often a confident one.</p>
+          <p>The standard response is to evaluate robustness offline: build a corrupted or adversarial benchmark, measure the accuracy drop, and try to make that drop smaller. This is useful, but it answers a different question. It tells us <em>how much</em> a model fails on a population we already labelled. It does not tell us <em>which</em> individual predictions to distrust right now, or whether tomorrow's data will be the kind on which the model breaks.</p>
+          <p>The question this article asks is the forward-looking one: <strong>can we detect that a prediction is likely to fail before we learn that it failed?</strong> If we could, a system could abstain, defer to a human, request another sensor reading, or switch to a safer fallback — turning silent errors into handled ones.</p>
+
+          <figure class="opa-fig">
+            <div class="opa-fig__placeholder"><i class="far fa-image"></i>Figure 1 — to be added<br><small>Same model, two inputs: one where internal representations stay stable, one where they drift toward a failure region before the output changes.</small></div>
+            <figcaption><strong>Figure 1.</strong> Failure prediction asks for a warning signal that appears <em>before</em> the wrong output — ideally from inside the model, not only from its final confidence.</figcaption>
+          </figure>
+
+          <h2><span class="n">2</span> Problem Statement</h2>
+          <p>Let <em>f</em> be a trained classifier and <em>x</em> an input whose true label <em>y</em> is unknown at inference time. We want a failure score <em>g</em> that ranks inputs by how likely <em>f</em> is to be wrong on them:</p>
+          <div class="opa-eq">g(x, f) ≈ P( f(x) ≠ y | x ) <span class="tag">(1)</span></div>
+          <p>Two levels of the problem are worth separating.</p>
+          <h3>2.1 Per-input failure prediction</h3>
+          <p>Given one input, decide whether to trust the prediction. A natural way to evaluate this is <strong>selective prediction</strong>: the model is allowed to abstain on a fraction of inputs, and we trace the error on the inputs it keeps (the <em>risk</em>) against the fraction it keeps (the <em>coverage</em>). A good failure score gives low risk at high coverage. Ranking quality can also be summarised with AUROC for separating correct from incorrect predictions.</p>
+          <h3>2.2 Distribution-level failure prediction</h3>
+          <p>Given an unlabelled batch from a new environment, estimate the model's accuracy there:</p>
+          <div class="opa-eq">Âcc(D<sub>new</sub>) ≈ E<sub>(x,y)∼D<sub>new</sub></sub>[ 1{ f(x) = y } ] , using only unlabelled x ∼ D<sub>new</sub> <span class="tag">(2)</span></div>
+          <p>This is what an operator actually needs when a system moves to a new hospital, city, or season: <em>should we trust this model here at all?</em></p>
+          <h3>2.3 What "before it happens" means</h3>
+          <p>I use "in advance" in two senses. Temporally, as data drifts gradually, the signal should rise before accuracy falls. Structurally, the signal should come from evidence that precedes the output — such as the internal representation — rather than from the output alone.</p>
+
+          <h2><span class="n">3</span> Why This Is Hard</h2>
+          <ul>
+            <li><strong>Confidence is not correctness.</strong> Modern networks are often over-confident, and their softmax scores can stay high on inputs far from the training data. Calibration methods improve the average match between confidence and accuracy, but calibration measured on in-distribution data does not guarantee good behaviour under shift.</li>
+            <li><strong>No labels where it matters.</strong> The failures we care about occur in exactly the settings where we have no labels to check against, so any method must rely on unlabelled signals and assumptions about how the shift behaves.</li>
+            <li><strong>Many kinds of failure.</strong> Natural corruptions, covariate shift, label shift, adversarial perturbations and genuinely novel classes break a model in different ways. A score tuned to one may be blind to another.</li>
+            <li><strong>Adversarial pressure.</strong> If a failure detector is known, an attacker can try to fool the model and the detector at once.</li>
+            <li><strong>Cost of abstaining.</strong> A detector that flags everything is useless. The goal is a good trade-off between coverage and risk, which depends on the application.</li>
+          </ul>
+
+          <h2><span class="n">4</span> Existing Approaches</h2>
+          <p>Several lines of work already address parts of this problem. The table groups them by where the signal comes from.</p>
+          <div class="opa-table-wrap">
+            <table class="opa-table">
+              <thead><tr><th>Signal source</th><th>Representative ideas</th><th>Limitation for this problem</th></tr></thead>
+              <tbody>
+                <tr><td>Output confidence</td><td>Maximum softmax probability as a baseline<sup><a href="#r1">[1]</a></sup>; temperature scaling for calibration<sup><a href="#r2">[2]</a></sup></td><td>Cheap, but can be confidently wrong under shift</td></tr>
+                <tr><td>Model uncertainty</td><td>MC dropout<sup><a href="#r3">[3]</a></sup>; deep ensembles<sup><a href="#r4">[4]</a></sup></td><td>Better under shift, but costly at inference time</td></tr>
+                <tr><td>Selective prediction</td><td>Risk–coverage guarantees for abstaining classifiers<sup><a href="#r5">[5]</a></sup></td><td>Quality depends entirely on the underlying score</td></tr>
+                <tr><td>Learned failure scores</td><td>Trust score from nearest-neighbour agreement<sup><a href="#r6">[6]</a></sup>; a separate network that predicts the true-class probability<sup><a href="#r7">[7]</a></sup></td><td>Learned on in-distribution errors; may not transfer to new failure types</td></tr>
+                <tr><td>Feature space</td><td>Class-conditional Gaussian (Mahalanobis) distance in hidden layers<sup><a href="#r8">[8]</a></sup></td><td>Designed for out-of-distribution detection rather than per-input error</td></tr>
+                <tr><td>Accuracy estimation</td><td>Predicting accuracy on unlabelled target data from a confidence threshold learned on source data<sup><a href="#r9">[9]</a></sup></td><td>Relies on assumptions about the shift that can break</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>What these share is that most read the signal from the <strong>output</strong> or from a <strong>distance</strong> in feature space. Fewer ask how the <em>shape</em> of the representation changes as a model approaches failure.</p>
+
+          <h2><span class="n">5</span> A Direction: Failure Precursors in Representations</h2>
+          <p>My working hypothesis is that failure leaves a trace inside the network before it shows up in the output. Concretely, I want to test whether some of the following move <em>ahead of</em> the accuracy drop:</p>
+          <ol>
+            <li><strong>Geometry.</strong> Local distortion of the feature space around an input — how strongly small input perturbations move the representation, or how close the representation sits to a decision boundary in feature space.</li>
+            <li><strong>Topology.</strong> Changes in the shape of class clusters, measured with persistent homology: clusters merging, holes appearing, or structure collapsing as data drifts (this links to <a href="open-problems.html">OP-04</a>).</li>
+            <li><strong>Layer-wise disagreement.</strong> Whether intermediate layers would predict different classes from the final one; disagreement across depth may mark an input the network is not processing in a stable way.</li>
+            <li><strong>Trajectory under shift.</strong> For gradually drifting data, whether these quantities change smoothly and early enough to serve as a warning.</li>
+          </ol>
+          <p>A useful precursor should be measurable without labels, cheap enough for inference, and should hold across several types of shift — not just the one it was designed for.</p>
+
+          <figure class="opa-fig">
+            <div class="opa-fig__placeholder"><i class="far fa-image"></i>Figure 2 — to be added<br><small>Accuracy and a candidate precursor signal plotted against shift severity; the precursor rises before accuracy falls.</small></div>
+            <figcaption><strong>Figure 2.</strong> The kind of evidence the hypothesis needs: a label-free signal that leads the accuracy curve rather than following it.</figcaption>
+          </figure>
+
+          <h3>5.1 A minimal experiment</h3>
+          <ol>
+            <li>Train standard image classifiers and pick a benchmark with graded corruption severities.</li>
+            <li>At each severity, record accuracy together with candidate signals: confidence, ensemble disagreement, feature-space distance, layer-wise disagreement, and topological summaries of the representation.</li>
+            <li>Ask two questions: which signal best ranks individual errors (risk–coverage), and which signal changes earliest as severity increases?</li>
+            <li>Repeat under a different kind of shift (for example adversarial perturbation) to see whether the winner holds.</li>
+          </ol>
+
+          <h2><span class="n">6</span> Open Questions</h2>
+          <ol class="opa-qs">
+            <li>Is there a label-free signal that reliably moves <em>before</em> accuracy under gradual distribution shift, rather than at the same time?</li>
+            <li>Can one failure score work across natural corruptions, adversarial perturbations and novel classes, or do we need a different detector per failure type?</li>
+            <li>Do topological changes in the representation (OP-04) carry information beyond simple feature-space distance?</li>
+            <li>How easily can a known failure detector be attacked, and can detection be made robust to an adaptive adversary?</li>
+            <li>What is the right evaluation protocol for "early" warning — how should lead time be measured and compared?</li>
+            <li>How should these signals be combined in federated or on-device settings, where data cannot be centralised (OP-10, OP-11)?</li>
+          </ol>
+
+          <h2><span class="n">7</span> Why It Matters</h2>
+          <p>Failure prediction turns a robustness problem into a decision problem. A model does not have to be right everywhere if it knows where it is likely to be wrong. That is what lets a driving system slow down, a clinical tool ask for a second reading, or a language model say it is unsure. It is also a building block for several other problems on this list — OOD recognition in autonomous driving (OP-13), unreliable-client detection in federated learning (OP-11), and LLMs knowing when they are wrong (OP-19).</p>
+
+          <section class="opa-collab">
+            <h2><span class="n">→</span> Work on This Together</h2>
+            <p>If you are working on uncertainty, selective prediction, representation analysis or TDA — or you have a dataset where failures are expensive and labels arrive late — I would be glad to hear from you. Critiques of the framing are just as welcome as collaboration ideas.</p>
+            <a class="btn" href="mailto:sunjun7559@gmail.com?subject=OP-01%20Collaboration"><i class="fas fa-handshake"></i> Reach out about OP-01</a>
+          </section>
+
+          <h2><span class="n"></span> References</h2>
+          <ol class="opa-refs">
+            <li id="r1">D. Hendrycks and K. Gimpel. A Baseline for Detecting Misclassified and Out-of-Distribution Examples in Neural Networks. <em>ICLR</em>, 2017.</li>
+            <li id="r2">C. Guo, G. Pleiss, Y. Sun, and K. Q. Weinberger. On Calibration of Modern Neural Networks. <em>ICML</em>, 2017.</li>
+            <li id="r3">Y. Gal and Z. Ghahramani. Dropout as a Bayesian Approximation: Representing Model Uncertainty in Deep Learning. <em>ICML</em>, 2016.</li>
+            <li id="r4">B. Lakshminarayanan, A. Pritzel, and C. Blundell. Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles. <em>NeurIPS</em>, 2017.</li>
+            <li id="r5">Y. Geifman and R. El-Yaniv. Selective Classification for Deep Neural Networks. <em>NeurIPS</em>, 2017.</li>
+            <li id="r6">H. Jiang, B. Kim, M. Guan, and M. Gupta. To Trust Or Not To Trust A Classifier. <em>NeurIPS</em>, 2018.</li>
+            <li id="r7">C. Corbière, N. Thome, A. Bar-Hen, M. Cord, and P. Pérez. Addressing Failure Prediction by Learning Model Confidence. <em>NeurIPS</em>, 2019.</li>
+            <li id="r8">K. Lee, K. Lee, H. Lee, and J. Shin. A Simple Unified Framework for Detecting Out-of-Distribution Samples and Adversarial Attacks. <em>NeurIPS</em>, 2018.</li>
+            <li id="r9">S. Garg, S. Balakrishnan, Z. C. Lipton, B. Neyshabur, and H. Sedghi. Leveraging Unlabeled Data to Predict Out-of-Distribution Performance. <em>ICLR</em>, 2022.</li>
+          </ol>
+
+          <nav class="opa-nav">
+            <a href="open-problems.html"><small>Back to</small>All Open Problems</a>
+          </nav>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Sunjun Hwang. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>

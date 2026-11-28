@@ -1,0 +1,77 @@
+/* Open Problem article pages (pages/op-XX.html) */
+:root { --op: #ff8c42; --op-rgb: 255, 140, 66; }
+
+.opa { max-width: 780px; margin: 0 auto; padding-bottom: 40px; }
+.opa-back { display: inline-flex; align-items: center; gap: 8px; font-size: 0.88rem; color: var(--text-secondary); text-decoration: none; margin: 8px 0 28px; }
+.opa-back:hover { color: var(--op); }
+
+.opa-head { border-bottom: 1px solid var(--border); padding-bottom: 26px; margin-bottom: 26px; }
+.opa-kicker { font-family: 'Space Grotesk', monospace; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; color: var(--op); text-transform: uppercase; }
+.opa-head h1 { font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 700; line-height: 1.2; letter-spacing: -0.4px; margin: 10px 0 14px; }
+.opa-meta { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 0.85rem; color: var(--text-secondary); }
+.opa-meta span { display: inline-flex; align-items: center; gap: 6px; }
+
+/* author card */
+.opa-author { display: grid; grid-template-columns: 76px 1fr; gap: 16px; align-items: center; padding: 16px 18px; margin: 22px 0 0; background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; }
+.opa-author img { width: 76px; height: 76px; border-radius: 50%; object-fit: cover; object-position: 50% 22%; display: block; }
+.opa-author__name { font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; color: var(--text-primary); }
+.opa-author__role { font-size: 0.85rem; color: var(--text-secondary); margin: 2px 0 8px; line-height: 1.5; }
+.opa-author__links { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 0.82rem; }
+.opa-author__links a { color: var(--op); text-decoration: none; display: inline-flex; align-items: center; gap: 5px; }
+.opa-author__links a:hover { text-decoration: underline; }
+
+/* abstract + body */
+.opa-abstract { background: rgba(var(--op-rgb), 0.06); border-left: 3px solid var(--op); border-radius: 0 12px 12px 0; padding: 18px 22px; margin-bottom: 14px; }
+.opa-abstract h2 { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--op); margin: 0 0 8px; }
+.opa-abstract p { margin: 0; line-height: 1.75; color: var(--text-primary); font-size: 0.97rem; }
+.opa-keywords { font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 34px; }
+.opa-keywords strong { color: var(--text-primary); }
+
+.opa-body h2 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; margin: 40px 0 14px; display: flex; gap: 12px; align-items: baseline; }
+.opa-body h2 .n { color: var(--op); font-family: 'Space Grotesk', monospace; font-size: 1.05rem; }
+.opa-body h3 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; margin: 26px 0 10px; }
+.opa-body p, .opa-body li { color: var(--text-secondary); line-height: 1.8; font-size: 0.98rem; }
+.opa-body p { margin: 0 0 14px; }
+.opa-body strong { color: var(--text-primary); }
+.opa-body em { color: var(--text-primary); }
+.opa-body ul, .opa-body ol { padding-left: 22px; margin: 0 0 16px; }
+.opa-body li { margin-bottom: 6px; }
+.opa-body a { color: var(--op); }
+.opa-body sup a { text-decoration: none; font-size: 0.75em; }
+
+.opa-eq { margin: 18px 0 20px; padding: 14px 18px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; font-family: 'JetBrains Mono', 'Space Grotesk', monospace; font-size: 0.92rem; color: var(--text-primary); overflow-x: auto; line-height: 1.8; }
+.opa-eq .tag { float: right; color: var(--text-secondary); }
+
+.opa-fig { margin: 26px 0 28px; }
+.opa-fig img { width: 100%; border-radius: 12px; border: 1px solid var(--border); display: block; }
+.opa-fig__placeholder { aspect-ratio: 16 / 9; border: 1px dashed rgba(var(--op-rgb), 0.5); border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; color: var(--text-secondary); font-size: 0.88rem; background: rgba(var(--op-rgb), 0.04); text-align: center; padding: 20px; }
+.opa-fig__placeholder i { font-size: 1.8rem; color: var(--op); opacity: 0.7; }
+.opa-fig figcaption { font-size: 0.86rem; color: var(--text-secondary); line-height: 1.6; margin-top: 10px; }
+.opa-fig figcaption strong { color: var(--text-primary); }
+
+.opa-table { width: 100%; border-collapse: collapse; margin: 14px 0 22px; font-size: 0.9rem; }
+.opa-table th, .opa-table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.6; }
+.opa-table th { color: var(--text-primary); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.opa-table td { color: var(--text-secondary); }
+.opa-table-wrap { overflow-x: auto; }
+
+.opa-qs { counter-reset: q; list-style: none; padding: 0 !important; }
+.opa-qs li { counter-increment: q; position: relative; padding: 12px 16px 12px 52px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; margin-bottom: 10px; }
+.opa-qs li::before { content: "Q" counter(q); position: absolute; left: 14px; top: 12px; font-family: 'Space Grotesk', monospace; font-weight: 700; color: var(--op); font-size: 0.85rem; }
+
+.opa-collab { margin-top: 40px; padding: 22px 24px; border: 1px solid rgba(var(--op-rgb), 0.4); border-radius: 14px; background: rgba(var(--op-rgb), 0.05); }
+.opa-collab h2 { margin-top: 0 !important; }
+.opa-collab a.btn { display: inline-flex; align-items: center; gap: 8px; margin-top: 6px; padding: 10px 18px; border-radius: 10px; background: var(--op); color: #fff; text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+
+.opa-refs { font-size: 0.86rem; padding-left: 26px !important; }
+.opa-refs li { line-height: 1.6 !important; font-size: 0.88rem !important; }
+
+.opa-nav { display: flex; justify-content: space-between; gap: 12px; margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 0.88rem; }
+.opa-nav a { color: var(--text-secondary); text-decoration: none; max-width: 48%; }
+.opa-nav a:hover { color: var(--op); }
+.opa-nav small { display: block; color: var(--op); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; font-size: 0.72rem; }
+
+@media (max-width: 600px) {
+  .opa-author { grid-template-columns: 60px 1fr; }
+  .opa-author img { width: 60px; height: 60px; }
+}
