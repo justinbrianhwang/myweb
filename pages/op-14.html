@@ -59,7 +59,7 @@
           <p>Most of an autonomous vehicle's perception stack is about the <strong>present</strong>: where are the objects now, how fast are they moving now. Prediction modules extend this forward, but mostly from <em>position and velocity</em>. This open problem asks whether a machine can read the subtle early cues — posture, gaze, heading, tiny changes in motion — and turn them into a warning <em>before</em> the danger becomes visible in the obvious signals.</p>
 
           <h2>Why does it matter?</h2>
-          <p>In driving, time is everything. At city speeds a car covers more than ten metres every second. A warning that arrives one or two seconds earlier can be the difference between a gentle slowdown and an emergency stop — or between a near-miss and a collision.</p>
+          <p>In driving, time is everything. At city speeds a car covers more than ten meters every second. A warning that arrives one or two seconds earlier can be the difference between a gentle slowdown and an emergency stop — or between a near-miss and a collision.</p>
           <ul>
             <li><strong>Earlier, softer reactions.</strong> If the car anticipates, it can ease off gently instead of braking hard, which is both safer and more comfortable.</li>
             <li><strong>Vulnerable road users.</strong> Pedestrians and cyclists are the people most at risk, and also the hardest to predict from motion alone, because they can change direction almost instantly.</li>
@@ -71,7 +71,7 @@
           <p>Instead of predicting one future, the system predicts <strong>several possible futures</strong>, each with a probability, and asks how dangerous each one would be. The cues it uses go beyond where things are and how fast they move.</p>
 
           <figure class="opa-fig">
-            <img src="../assets/op/op14-fig1.png" alt="Top-down street: a pedestrian on the left pavement with cues labelled head turned toward road, leaning forward, stepping toward curb. Three dashed future paths: keeps walking (0.60), waits (0.15), and an orange path crossing the road in front of an approaching car (0.25). A timeline below marks an early warning to slow down at 'now' and the pedestrian entering the road at plus 2 seconds." loading="lazy">
+            <img src="../assets/op/op14-fig1.png" alt="Top-down street: a pedestrian on the left pavement with cues labeled head turned toward road, leaning forward, stepping toward curb. Three dashed future paths: keeps walking (0.60), waits (0.15), and an orange path crossing the road in front of an approaching car (0.25). A timeline below marks an early warning to slow down at 'now' and the pedestrian entering the road at plus 2 seconds." loading="lazy">
             <figcaption><strong>Figure 1. Acting on an early signature.</strong> The pedestrian has not stepped into the road yet, so a system that only tracks position sees nothing wrong. But the body cues (left) make crossing a real possibility. Even at 25%, the orange future is dangerous enough to justify slowing down <em>now</em>. The timeline shows the gap we want to win: the warning comes about two seconds before the event. (Numbers are illustrative.)</figcaption>
           </figure>
 
@@ -95,7 +95,7 @@
           <h2>Why is it hard?</h2>
           <ul>
             <li><strong>The future is genuinely uncertain.</strong> People change their minds. No model can know for certain whether someone will cross; it can only estimate.</li>
-            <li><strong>The cues are small and noisy.</strong> A head turn may be a few pixels at 40 metres, in the rain, partly hidden behind a parked car.</li>
+            <li><strong>The cues are small and noisy.</strong> A head turn may be a few pixels at 40 meters, in the rain, partly hidden behind a parked car.</li>
             <li><strong>Dangerous events are rare.</strong> Driving datasets contain hours of normal driving for every few seconds of real danger, so models see very few examples of what they most need to learn.</li>
             <li><strong>Everyone reacts to everyone.</strong> The pedestrian's decision depends on what the car does, and vice versa. Predicting one agent in isolation misses this.</li>
             <li><strong>Too many warnings.</strong> If the car slows for every person near a kerb, it becomes unusable and annoying to the traffic behind it.</li>
@@ -130,11 +130,11 @@
             <li>How does the prediction change in a city or country where people behave differently, such as different jaywalking norms? (see OP-13)</li>
           </ol>
 
-          <p>This problem builds on recognising unfamiliar situations (OP-13) and deciding when not to trust oneself (OP-12), and it relies on healthy sensor inputs (OP-15).</p>
+          <p>This problem builds on recognizing unfamiliar situations (OP-13) and deciding when not to trust oneself (OP-12), and it relies on healthy sensor inputs (OP-15).</p>
 
           <section class="opa-collab">
             <h2>Work on this together</h2>
-            <p>I am looking for collaborators on this one. If you work on trajectory prediction, pedestrian behaviour, human pose estimation, driving datasets or risk modelling — or you simply have strong intuitions about how good human drivers anticipate — please get in touch.</p>
+            <p>I am looking for collaborators on this one. If you work on trajectory prediction, pedestrian behavior, human pose estimation, driving datasets or risk modeling — or you simply have strong intuitions about how good human drivers anticipate — please get in touch.</p>
             <a class="btn" href="mailto:sunjun7559@gmail.com?subject=OP-14%20Collaboration"><i class="fas fa-handshake"></i> Reach out about OP-14</a>
           </section>
 

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OP-13: Can Autonomous Vehicles Recognize Situations They Have Never Seen Before? — Sunjun Hwang</title>
-  <meta name="description" content="Open Problem 13 — can a self-driving car recognise that it does not understand the current situation, and react safely?">
+  <meta name="description" content="Open Problem 13 — can a self-driving car recognize that it does not understand the current situation, and react safely?">
   <link rel="icon" type="image/png" href="../assets/favicon.png">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/pages.css">
@@ -56,11 +56,11 @@
           <h2>What is the problem?</h2>
           <p>A mattress has fallen off a truck and is lying in the middle of the motorway. The car's perception system was trained on millions of images of cars, trucks, cyclists, pedestrians and traffic cones. It was never shown a mattress on a motorway. So what does it do? It does what every standard classifier does: it picks the closest thing it knows. Maybe it calls it "car" with 92% confidence. Maybe it decides it is part of the road surface and ignores it.</p>
           <p>Mattresses are just one example. Real roads are full of the <strong>unseen</strong>: a construction zone with hand-painted signs, a person in a dinosaur costume, a horse and cart, a police officer directing traffic against the lights, snow that hides every lane marking, a driver reversing on a slip road. Each of these is individually rare, but together they happen all the time. Engineers often call this the <em>long tail</em>.</p>
-          <p>Detecting "this input looks different from training data" is a known research area, usually called out-of-distribution (OOD) detection. But this open problem asks for something more: <em>can the vehicle recognise that it does not understand the current situation — and react safely?</em> Spotting a strange pixel pattern is not enough; the car needs to know that its picture of the world has a hole in it, where the hole is, and what to do about it.</p>
+          <p>Detecting "this input looks different from training data" is a known research area, usually called out-of-distribution (OOD) detection. But this open problem asks for something more: <em>can the vehicle recognize that it does not understand the current situation — and react safely?</em> Spotting a strange pixel pattern is not enough; the car needs to know that its picture of the world has a hole in it, where the hole is, and what to do about it.</p>
 
           <figure class="opa-fig">
-            <img src="../assets/op/op13-fig1.png" alt="Top-down road scene seen by a self-driving car: a car and a pedestrian are tagged as known, and an odd object in the lane (a fallen mattress) is outlined in orange and tagged unknown object. Two panels on the right compare a closed-set model, forced to pick 'car' at 92%, with an open-world model that says 'I do not recognise this' and slows down and keeps clear." loading="lazy">
-            <figcaption><strong>Figure 1. Closed-set vs open-world.</strong> The car and the pedestrian are things the model was trained on. The orange object is not. A closed-set model has no word for "unknown", so it confidently mislabels it. An open-world model admits it does not recognise the object — and, just as importantly, connects that admission to a safe action: slow down and keep clear.</figcaption>
+            <img src="../assets/op/op13-fig1.png" alt="Top-down road scene seen by a self-driving car: a car and a pedestrian are tagged as known, and an odd object in the lane (a fallen mattress) is outlined in orange and tagged unknown object. Two panels on the right compare a closed-set model, forced to pick 'car' at 92%, with an open-world model that says 'I do not recognize this' and slows down and keeps clear." loading="lazy">
+            <figcaption><strong>Figure 1. Closed-set vs open-world.</strong> The car and the pedestrian are things the model was trained on. The orange object is not. A closed-set model has no word for "unknown", so it confidently mislabels it. An open-world model admits it does not recognize the object — and, just as importantly, connects that admission to a safe action: slow down and keep clear.</figcaption>
           </figure>
 
           <h2>Why does it matter?</h2>
@@ -85,14 +85,14 @@
           </div>
 
           <h2>The key idea: "unusual" is not the same as "dangerous"</h2>
-          <p>A naive OOD detector flags anything unfamiliar. On a real road that is almost everything: a car painted an unusual colour, a new style of bus shelter, a shop sign in a different language. If each of these triggered a warning, the car would never move.</p>
+          <p>A naive OOD detector flags anything unfamiliar. On a real road that is almost everything: a car painted an unusual color, a new style of bus shelter, a shop sign in a different language. If each of these triggered a warning, the car would never move.</p>
           <p>What matters is novelty <em>that affects the driving decision</em>. A strange billboard at the side of the road is unusual but irrelevant. A strange object in the lane, or a familiar object behaving in an unfamiliar way, is relevant. So the real target is not "is this input different?" but "is there something here that my model of the scene cannot explain, <strong>and</strong> that could change what I should do?" That shift — from statistical novelty to decision-relevant novelty — is, to me, the heart of the problem.</p>
 
           <h2>Why is it hard?</h2>
           <ul>
             <li><strong>You cannot train on the unknown.</strong> By definition, the situations we care about are not in the training data. Any method that needs examples of them is already cheating a little.</li>
             <li><strong>Networks are over-confident off-distribution.</strong> Standard classifiers can give very high scores to inputs that look nothing like their training data.</li>
-            <li><strong>Novelty is often in the behaviour, not the appearance.</strong> A car, a pedestrian, a road — all familiar. The car driving towards you in your lane is not. Image-level detectors miss this.</li>
+            <li><strong>Novelty is often in the behavior, not the appearance.</strong> A car, a pedestrian, a road — all familiar. The car driving towards you in your lane is not. Image-level detectors miss this.</li>
             <li><strong>Many sensors, many time steps.</strong> A self-driving car fuses cameras, LiDAR and radar over time. "Unknown" has to be decided in 3D, in real time, consistently from frame to frame.</li>
             <li><strong>False alarms are costly.</strong> Every unnecessary brake is uncomfortable and can itself be dangerous for the car behind.</li>
           </ul>
@@ -106,11 +106,11 @@
             <li><strong>Anomaly segmentation benchmarks</strong> — datasets that place unusual objects (lost cargo, animals, debris) on roads and ask a model to mark the anomalous pixels. Useful for measuring progress on the object level.</li>
             <li><strong>Reconstruction and generative models</strong> — learn to rebuild normal scenes, and flag regions that cannot be rebuilt well.</li>
           </ul>
-          <p>Most of this work stops at a score or a pixel mask. Much less of it connects the detection to scene-level reasoning and to the vehicle's behaviour, which is what an actual car needs.</p>
+          <p>Most of this work stops at a score or a pixel mask. Much less of it connects the detection to scene-level reasoning and to the vehicle's behavior, which is what an actual car needs.</p>
 
           <h2>How I would approach it</h2>
           <ol>
-            <li>Start from existing road anomaly benchmarks and driving simulators, where unusual objects and behaviours can be inserted in a controlled way.</li>
+            <li>Start from existing road anomaly benchmarks and driving simulators, where unusual objects and behaviors can be inserted in a controlled way.</li>
             <li>Compare several kinds of novelty signal side by side — confidence, feature distance, reconstruction error, and how the internal representation changes over time (in the spirit of OP-01 and OP-04).</li>
             <li>Separate "unusual but harmless" from "unusual and relevant" by asking whether the novel region overlaps the planned path or nearby road users.</li>
             <li>Feed the result into a simple graded response (OP-12) and measure the trade-off between avoided dangerous situations and unnecessary slowdowns.</li>
@@ -118,7 +118,7 @@
 
           <h2>Questions still open</h2>
           <ol class="opa-qs">
-            <li>Can we detect <em>behavioural</em> novelty — familiar objects doing unfamiliar things — as reliably as visual novelty?</li>
+            <li>Can we detect <em>behavioral</em> novelty — familiar objects doing unfamiliar things — as reliably as visual novelty?</li>
             <li>How do we define and measure "decision-relevant" novelty, so that harmless oddities are ignored?</li>
             <li>Does the <em>shape</em> of the representation space (topology) reveal unknown situations better than distance alone? (see OP-04)</li>
             <li>How should the car act around an object it cannot identify — treat it as solid, as moving, as the worst case?</li>

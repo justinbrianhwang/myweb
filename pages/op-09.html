@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OP-09: Can Quantum and Classical Models Fail Differently on the Same Data? — Sunjun Hwang</title>
-  <meta name="description" content="Open Problem 09 — on identical data, do quantum and classical models make different mistakes, and can that difference be characterised or even exploited?">
+  <meta name="description" content="Open Problem 09 — on identical data, do quantum and classical models make different mistakes, and can that difference be characterized or even exploited?">
   <link rel="icon" type="image/png" href="../assets/favicon.png">
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/pages.css">
@@ -56,7 +56,7 @@
           <h2>What is the problem?</h2>
           <p>Suppose two doctors each read 1,000 X-rays and each misdiagnoses 50. If they miss the <em>same</em> 50, asking for a second opinion is pointless. If they miss completely <em>different</em> ones, then whenever they disagree you know to look closer, and together they are far more reliable than either alone. What matters is not just how often each one is wrong, but <strong>where</strong>.</p>
           <p>Now replace the doctors with two machine-learning models trained on the same data: an ordinary neural network and a quantum model. A quick reminder of what the second one is: it loads the data into <strong>qubits</strong> — quantum bits that can be in a <em>superposition</em>, a weighted blend of 0 and 1 — transforms them with a circuit of adjustable quantum operations, and then <strong>measures</strong> them, getting random 0s and 1s whose frequencies give the prediction. Its internal "view" of the data is a quantum state rather than a stack of neuron activations.</p>
-          <p>Most comparisons between the two stop at a single number: accuracy, or accuracy under attack. This open problem asks the next question: <strong>on identical data, do quantum and classical models fail in different ways — and can that difference be characterised, or even exploited?</strong></p>
+          <p>Most comparisons between the two stop at a single number: accuracy, or accuracy under attack. This open problem asks the next question: <strong>on identical data, do quantum and classical models fail in different ways — and can that difference be characterized, or even exploited?</strong></p>
 
           <h2>Why does it matter?</h2>
           <ul>
@@ -82,7 +82,7 @@
 
           <h2>Why is it hard?</h2>
           <ul>
-            <li><strong>Same data, same difficulty.</strong> Many errors come from the data itself — noise, mislabelled examples, genuinely ambiguous cases — so a large overlap may be unavoidable.</li>
+            <li><strong>Same data, same difficulty.</strong> Many errors come from the data itself — noise, mislabeled examples, genuinely ambiguous cases — so a large overlap may be unavoidable.</li>
             <li><strong>Is it quantum, or just different?</strong> Two classical models with different architectures also make different mistakes. To claim something about <em>quantum</em> models, the comparison has to include classical models with matched structure (see OP-07).</li>
             <li><strong>Small quantum models.</strong> Today's quantum models are small and usually work on simplified or compressed data, so differences may reflect that preprocessing rather than the model.</li>
             <li><strong>Randomness.</strong> A quantum model's output comes from repeated random measurements, and hardware noise adds more randomness. Some "different mistakes" may just be noise and vanish if the model is run again.</li>

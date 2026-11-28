@@ -54,7 +54,7 @@
 
         <div class="opa-body">
           <h2>What is the problem?</h2>
-          <p>In ordinary machine learning, an adversarial example has a clean definition. Take a photo of a panda, add a tiny pattern of pixel changes — so small a person cannot see it — and the network now says "gibbon." "Tiny" is measured as a distance between the original and the changed image, and a model is called robust if no change within that distance can flip its answer. This shared definition, the <strong>threat model</strong>, is what lets researchers compare attacks and defences fairly.</p>
+          <p>In ordinary machine learning, an adversarial example has a clean definition. Take a photo of a panda, add a tiny pattern of pixel changes — so small a person cannot see it — and the network now says "gibbon." "Tiny" is measured as a distance between the original and the changed image, and a model is called robust if no change within that distance can flip its answer. This shared definition, the <strong>threat model</strong>, is what lets researchers compare attacks and defenses fairly.</p>
           <p>Now consider a quantum classifier. Its input is not just a list of numbers. The data is loaded into <strong>qubits</strong> — quantum bits that can hold a <em>superposition</em>, a weighted blend of 0 and 1 — and the result is a <strong>quantum state</strong>. A circuit transforms that state, and then we <strong>measure</strong> it, which gives random 0s and 1s whose probabilities depend on the state. Hardware <strong>noise</strong> disturbs the state at every step.</p>
           <p>Suddenly "change the input a little" is ambiguous. Does the attacker change the classical data before it is loaded? The quantum state after it is loaded? Can they add noise to the circuit, or bias the measurement? And what does "a little" mean for a quantum state, which is not a picture we can compare pixel by pixel?</p>
           <p>This open problem asks for a principled answer: <strong>what threat model should define adversarial robustness for quantum machine learning?</strong></p>
@@ -64,7 +64,7 @@
           <ul>
             <li>two papers can both say "our quantum model is robust" and mean completely different things, making results impossible to compare,</li>
             <li>a model that resists data changes may still be easy to fool by an attacker who can touch the quantum state directly — for example in a quantum sensor or a network that passes quantum states between machines,</li>
-            <li>without clear rules, defences tend to be tested against the easiest attacker, and the real risk is underestimated,</li>
+            <li>without clear rules, defenses tend to be tested against the easiest attacker, and the real risk is underestimated,</li>
             <li>and if quantum models ever process data that is <em>already</em> quantum (from sensors or quantum communication links), there is no classical input to perturb at all — the classical definition simply stops applying.</li>
           </ul>
 
@@ -72,7 +72,7 @@
           <p>The easiest way to see the problem is to lay the quantum pipeline out and ask, at each stage, "could someone interfere here?"</p>
 
           <figure class="opa-fig">
-            <img src="../assets/op/op08-fig1.png" alt="Pipeline of a quantum classifier: input data, state preparation, quantum circuit, measurement, prediction. Orange markers above the first four stages show four possible attacks: change the data, disturb the prepared state, add or shape noise, tamper with readout. A grey note under the input stage says classical attacks stop here." loading="lazy">
+            <img src="../assets/op/op08-fig1.png" alt="Pipeline of a quantum classifier: input data, state preparation, quantum circuit, measurement, prediction. Orange markers above the first four stages show four possible attacks: change the data, disturb the prepared state, add or shape noise, tamper with readout. A gray note under the input stage says classical attacks stop here." loading="lazy">
             <figcaption><strong>Figure 1. Four places to attack, not one.</strong> Classical adversarial ML only considers the first marker — changing the data. A quantum model adds three more stages an attacker might reach: the prepared state, the noise inside the circuit and the measurement. Each needs its own rules about what the attacker controls and how big a change counts as "small."</figcaption>
           </figure>
 
@@ -92,7 +92,7 @@
           <p>For images, "small" means few pixels changed by little. For quantum states, the natural notion of "small" comes from physics: two states are close if <strong>no measurement can reliably tell them apart</strong>. Physicists have precise ways of scoring this — often called <em>fidelity</em> or <em>trace distance</em> — but the intuition is simple: if even an ideal observer would struggle to see the difference, the change is small.</p>
 
           <figure class="opa-fig">
-            <img src="../assets/op/op08-fig2.png" alt="Two panels. Left: two pixel images of a handwritten 7, the second with faint noise, linked by an arrow labelled small change in pixels; caption: classical, distance between inputs. Right: a Bloch sphere with a dark and an orange arrow separated by a small angle labelled small rotation, beside a bar chart of two nearly equal measured outcomes; caption: quantum, closeness of states." loading="lazy">
+            <img src="../assets/op/op08-fig2.png" alt="Two panels. Left: two pixel images of a handwritten 7, the second with faint noise, linked by an arrow labeled small change in pixels; caption: classical, distance between inputs. Right: a Bloch sphere with a dark and an orange arrow separated by a small angle labeled small rotation, beside a bar chart of two nearly equal measured outcomes; caption: quantum, closeness of states." loading="lazy">
             <figcaption><strong>Figure 2. Two different meanings of "small."</strong> On the left, closeness is measured on the input itself. On the right, a single qubit is drawn as an arrow on a sphere (the Bloch sphere); a small rotation of the arrow is a small change of state. The bar chart shows why this is the right yardstick: after a small rotation the measured outcomes barely change, so the attack is hard to detect — yet it may still be enough to push a classifier over its decision boundary.</figcaption>
           </figure>
 
@@ -103,7 +103,7 @@
             <li><strong>Who controls what is unclear.</strong> In most near-term uses, an attacker can only touch the classical data. Allowing them to touch the quantum state is a much stronger assumption — realistic for some settings (quantum networks, sensors), unrealistic for others.</li>
             <li><strong>Measurement is random.</strong> The model's output is itself an average of random outcomes, so an attack may only succeed <em>sometimes</em>. Is a 30% success rate a broken model?</li>
             <li><strong>Noise is both enemy and shield.</strong> Natural hardware noise and adversarial noise are hard to separate, and some noise can even make a classifier more robust.</li>
-            <li><strong>High dimensions favour the attacker.</strong> Theory suggests that as the number of qubits grows, almost every state sits close to a decision boundary, so tiny state changes can flip the answer.</li>
+            <li><strong>High dimensions favor the attacker.</strong> Theory suggests that as the number of qubits grows, almost every state sits close to a decision boundary, so tiny state changes can flip the answer.</li>
             <li><strong>Gradients are costly.</strong> On real hardware, the information needed to compute the strongest attacks is expensive to estimate, so weak attacks can make a model look safer than it is.</li>
           </ul>
 
@@ -111,7 +111,7 @@
           <ul>
             <li><strong>Borrowing the classical definition:</strong> attacking the classical input before encoding. Practical and easy to compare with classical models, but it ignores the quantum stages.</li>
             <li><strong>State-level perturbations:</strong> theoretical work that measures attacks by closeness of quantum states, and shows that large quantum classifiers can be surprisingly vulnerable.</li>
-            <li><strong>Noise-based guarantees:</strong> results showing that certain kinds of noise give a provable robustness radius, similar to randomised smoothing in classical ML.</li>
+            <li><strong>Noise-based guarantees:</strong> results showing that certain kinds of noise give a provable robustness radius, similar to randomized smoothing in classical ML.</li>
             <li><strong>Verification:</strong> methods that check whether any state within a given distance could change a quantum classifier's output.</li>
             <li><strong>Quantum adversarial training:</strong> training on attacked states or inputs, carried over from classical adversarial training.</li>
           </ul>
@@ -136,11 +136,11 @@
             <li>Do attacks on quantum and classical models exploit the same weak spots, or different ones? (see OP-09)</li>
           </ol>
 
-          <p>This question sits between OP-07, which asks whether quantum robustness is real, and OP-09, which asks whether the two kinds of model fail differently. It also echoes OP-03, which asks whether robustness can generalise to attacks a model was never trained against, and the security of quantum communication itself in OP-16.</p>
+          <p>This question sits between OP-07, which asks whether quantum robustness is real, and OP-09, which asks whether the two kinds of model fail differently. It also echoes OP-03, which asks whether robustness can generalize to attacks a model was never trained against, and the security of quantum communication itself in OP-16.</p>
 
           <section class="opa-collab">
             <h2>Work on this together</h2>
-            <p>If you work on quantum information, adversarial machine learning or security threat modelling — or you think the whole classical notion of an "adversarial example" should be thrown out for quantum models — I would love to hear from you.</p>
+            <p>If you work on quantum information, adversarial machine learning or security threat modeling — or you think the whole classical notion of an "adversarial example" should be thrown out for quantum models — I would love to hear from you.</p>
             <a class="btn" href="mailto:sunjun7559@gmail.com?subject=OP-08%20Collaboration"><i class="fas fa-handshake"></i> Reach out about OP-08</a>
           </section>
 

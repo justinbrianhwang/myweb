@@ -55,9 +55,9 @@
         <div class="opa-body">
           <h2>What is the problem?</h2>
           <p>Take two image classifiers trained on the same photos. Both score 95% on the test set. Now add a layer of noise to each photo — so faint that a person cannot see it. The first model still gets almost everything right. The second one starts calling cats "trucks".</p>
-          <p>From the outside, before the noise, these two models looked identical. Same accuracy, same kind of architecture, same data. Something about how each one <em>organised</em> what it learned must be different, and that difference only shows up when the input is disturbed.</p>
+          <p>From the outside, before the noise, these two models looked identical. Same accuracy, same kind of architecture, same data. Something about how each one <em>organized</em> what it learned must be different, and that difference only shows up when the input is disturbed.</p>
           <p>Every network turns an input into an internal description — a long list of numbers called its <strong>representation</strong>. The final answer is read off that description. So the natural place to look for the difference is there: in the shape of the space where the representations live.</p>
-          <p>Today we usually summarise robustness with two numbers: <strong>accuracy</strong> on clean data and <strong>robust accuracy</strong> under a chosen attack. Those numbers tell us <em>how much</em> a model resists. They do not tell us <em>why</em>. This open problem asks for the why: a property of the representation itself — its geometry or its topology — that explains robustness rather than just recording it.</p>
+          <p>Today we usually summarize robustness with two numbers: <strong>accuracy</strong> on clean data and <strong>robust accuracy</strong> under a chosen attack. Those numbers tell us <em>how much</em> a model resists. They do not tell us <em>why</em>. This open problem asks for the why: a property of the representation itself — its geometry or its topology — that explains robustness rather than just recording it.</p>
 
           <h2>Why does it matter?</h2>
           <p>If robustness can only be measured by attacking a model, then every new model has to be attacked again, with every attack we can think of, and we still never know what we missed. A property we could read off the representation would change that:</p>
@@ -72,7 +72,7 @@
           <p>Imagine the representation space as a map. Each input lands somewhere on it, and inputs of the same class tend to gather into clusters. The model's decision is essentially <em>"which region of the map is this point in?"</em> A small change to the input moves the point a little. Whether the answer changes depends on what the map looks like around that point.</p>
 
           <figure class="opa-fig">
-            <img src="../assets/op/op02-fig1.png" alt="Two panels of a feature space. Left, fragile representation: two clusters of dots, Class A and Class B, pressed against a wavy decision boundary; an orange point of Class A is pushed across the boundary by a small perturbation arrow, labelled tiny change leads to wrong answer. Right, robust representation: the same clusters, compact and far apart, separated by a straight boundary inside a wide shaded margin; the same-length arrow leaves the orange point inside Class A, labelled same change leads to same answer." loading="lazy">
+            <img src="../assets/op/op02-fig1.png" alt="Two panels of a feature space. Left, fragile representation: two clusters of dots, Class A and Class B, pressed against a wavy decision boundary; an orange point of Class A is pushed across the boundary by a small perturbation arrow, labeled tiny change leads to wrong answer. Right, robust representation: the same clusters, compact and far apart, separated by a straight boundary inside a wide shaded margin; the same-length arrow leaves the orange point inside Class A, labeled same change leads to same answer." loading="lazy">
             <figcaption><strong>Figure 1. Same push, different outcome.</strong> The orange arrow is the same size in both panels — it stands for a tiny, almost invisible change to the input. On the left the clusters sit right against a wiggly border, so the push carries the point across it. On the right the clusters are compact, far apart, and separated by a wide empty band, so the same push changes nothing. Both models could have the same clean accuracy; only the structure of the map differs.</figcaption>
           </figure>
 
@@ -91,7 +91,7 @@
           </div>
 
           <h2>The key idea: robustness as a property of the map</h2>
-          <p>One observation makes me think this is a real, findable property and not just a vague hope. Models trained to be robust — usually by practising on attacked examples during training — turn out to learn <em>different representations</em>, not just a different final layer. Their internal features tend to line up better with what humans find meaningful, and are less dependent on tiny textures and pixel patterns that people cannot see.</p>
+          <p>One observation makes me think this is a real, findable property and not just a vague hope. Models trained to be robust — usually by practizing on attacked examples during training — turn out to learn <em>different representations</em>, not just a different final layer. Their internal features tend to line up better with what humans find meaningful, and are less dependent on tiny textures and pixel patterns that people cannot see.</p>
           <p>There is also strong evidence that ordinary models rely on such invisible patterns because they are genuinely useful for getting the training labels right. In other words, a standard network is not "broken" — it is using real but fragile clues. A robust representation is one built from clues that do not vanish under small changes.</p>
           <p>If that is right, robustness is something the representation <strong>has</strong>, not only something the model <strong>does</strong> under attack. And if it is something the representation has, we should be able to measure it there.</p>
 
@@ -133,7 +133,7 @@
             <li>Do quantum models, whose internal states live in a very different kind of space, follow the same rules? (see OP-07, OP-08)</li>
           </ol>
 
-          <p>This question also underlies its neighbours on the list: building robustness that carries over to unseen attacks (OP-03), and warning that a model is about to fail (OP-01) — both become easier if we know what a healthy representation looks like.</p>
+          <p>This question also underlies its neighbors on the list: building robustness that carries over to unseen attacks (OP-03), and warning that a model is about to fail (OP-01) — both become easier if we know what a healthy representation looks like.</p>
 
           <section class="opa-collab">
             <h2>Work on this together</h2>

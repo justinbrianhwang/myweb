@@ -100,7 +100,7 @@
             <li><strong>Open-ended answers have no single "correct" string.</strong> Many different sentences can be right, so even defining "the probability of being right" takes work.</li>
             <li><strong>Consistently wrong is still wrong.</strong> If the model has learned a false fact firmly, it will repeat it every time. Sampling-based methods see agreement and report confidence.</li>
             <li><strong>Shift breaks calibration.</strong> A confidence score tuned on trivia questions may not hold on medical questions, code or a new language — exactly when we need it most.</li>
-            <li><strong>Words of confidence are trained behaviour.</strong> When a model says "I'm quite sure", that phrase is also just generated text, shaped by training to sound appropriate, not necessarily linked to what it actually knows.</li>
+            <li><strong>Words of confidence are trained behavior.</strong> When a model says "I'm quite sure", that phrase is also just generated text, shaped by training to sound appropriate, not necessarily linked to what it actually knows.</li>
           </ul>
 
           <h2>What has been tried so far</h2>
@@ -115,7 +115,7 @@
 
           <h2>How I would approach it</h2>
           <ol>
-            <li>Collect question sets from several different domains — general knowledge, science, code, a specialised field — so that calibration can be tested on topics it was not tuned on.</li>
+            <li>Collect question sets from several different domains — general knowledge, science, code, a specialized field — so that calibration can be tested on topics it was not tuned on.</li>
             <li>For each question, compute the expensive "reference" signal (semantic uncertainty from many samples) and record the model's hidden states at the moment it finishes reading the question.</li>
             <li>Ask whether a small probe on those hidden states can predict the expensive signal — and, more importantly, the actual correctness — without generating anything.</li>
             <li>Test the probe on the domains it never saw, and compare how much calibration degrades against token probability and self-reported confidence.</li>

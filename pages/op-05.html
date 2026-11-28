@@ -62,8 +62,8 @@
           <h2>Why does it matter?</h2>
           <ul>
             <li><strong>Without meaning, topology is just another number.</strong> If we use topology to warn of failure (OP-04) or to guide training (OP-06), we need to know what we are warning about or asking for.</li>
-            <li><strong>It could be a new kind of interpretability.</strong> Most interpretability looks at single neurons or single directions. Topology looks at the global organisation of many inputs together — how concepts are arranged relative to each other.</li>
-            <li><strong>It helps tell good models from lucky ones.</strong> Two models with the same accuracy might organise their knowledge very differently. Shape could reveal which one has captured the real structure of the world.</li>
+            <li><strong>It could be a new kind of interpretability.</strong> Most interpretability looks at single neurons or single directions. Topology looks at the global organization of many inputs together — how concepts are arranged relative to each other.</li>
+            <li><strong>It helps tell good models from lucky ones.</strong> Two models with the same accuracy might organize their knowledge very differently. Shape could reveal which one has captured the real structure of the world.</li>
             <li><strong>It guards against over-interpretation.</strong> Beautiful topological pictures are easy to produce and easy to over-read. A proper theory of meaning would tell us when to stop.</li>
           </ul>
 
@@ -71,7 +71,7 @@
           <p>The central difficulty fits in one picture.</p>
 
           <figure class="opa-fig">
-            <img src="../assets/op/op05-fig1.png" alt="A ring of dots in a feature space labelled one loop found, with arrows to two boxes. Left box, meaningful: the same ring with pictures of a coffee mug at 0, 90, 180 and 270 degrees placed around it, labelled loop equals rotating the object. Right box, artifact: the same ring next to a question mark, labelled loop equals side effect of the training method or of the distance measure. In the middle: Which one is it?" loading="lazy">
+            <img src="../assets/op/op05-fig1.png" alt="A ring of dots in a feature space labeled one loop found, with arrows to two boxes. Left box, meaningful: the same ring with pictures of a coffee mug at 0, 90, 180 and 270 degrees placed around it, labeled loop equals rotating the object. Right box, artifact: the same ring next to a question mark, labeled loop equals side effect of the training method or of the distance measure. In the middle: Which one is it?" loading="lazy">
             <figcaption><strong>Figure 1. One loop, two stories.</strong> Persistent homology only reports the shape in the middle: a single loop. On the left, the loop is meaningful — walking around it corresponds to rotating the object, and the model has captured that rotation comes back to its start. On the right, the identical loop is an artifact of how the data was collected, how distance was measured, or how the network was trained. The barcode alone cannot tell these apart. The open problem is to find what can.</figcaption>
           </figure>
 
@@ -80,15 +80,15 @@
             <table class="opa-table">
               <thead><tr><th>Test</th><th>The question it asks</th></tr></thead>
               <tbody>
-                <tr><td><strong>Walk the loop</strong></td><td>If I follow the loop and look at the inputs along the way, do they change in a way a person can name — angle, colour, time of day?</td></tr>
+                <tr><td><strong>Walk the loop</strong></td><td>If I follow the loop and look at the inputs along the way, do they change in a way a person can name — angle, color, time of day?</td></tr>
                 <tr><td><strong>Stability</strong></td><td>Does the same loop appear with a different random seed, a different distance measure, or a different sample of inputs?</td></tr>
                 <tr><td><strong>Ground truth</strong></td><td>When I build data whose true shape I know in advance, does the representation recover that shape?</td></tr>
-                <tr><td><strong>Use</strong></td><td>If I disturb the representation so the loop breaks, does the model's behaviour change in a related way?</td></tr>
+                <tr><td><strong>Use</strong></td><td>If I disturb the representation so the loop breaks, does the model's behavior change in a related way?</td></tr>
               </tbody>
             </table>
           </div>
 
-          <p>There are encouraging precedents. Topological analysis of small patches of natural images found that they are organised along a surprisingly specific low-dimensional shape related to edges at different angles. In neuroscience, the activity of grid cells — neurons that help animals know where they are — has been shown to lie on a doughnut-shaped surface (a torus), matching the periodic pattern those cells respond to. In both cases, the topology was meaningful because it could be tied back to a known property of the world. That is the standard I would like to reach for neural network representations.</p>
+          <p>There are encouraging precedents. Topological analysis of small patches of natural images found that they are organized along a surprisingly specific low-dimensional shape related to edges at different angles. In neuroscience, the activity of grid cells — neurons that help animals know where they are — has been shown to lie on a doughnut-shaped surface (a torus), matching the periodic pattern those cells respond to. In both cases, the topology was meaningful because it could be tied back to a known property of the world. That is the standard I would like to reach for neural network representations.</p>
 
           <h2>Why is it hard?</h2>
           <ul>
@@ -102,8 +102,8 @@
           <h2>What has been tried so far</h2>
           <ul>
             <li><strong>Topology of natural image data</strong> — studying the shape of small image patches directly and finding structure that matches how edges and orientations are arranged.</li>
-            <li><strong>Mapper graphs</strong> — a method that turns a point cloud into a simple network of overlapping clusters that people can look at and colour by labels, making shape easier to inspect by eye.</li>
-            <li><strong>Topology of network weights and filters</strong> — finding that the learned filters of image networks are organised in shapes similar to those found in natural image patches.</li>
+            <li><strong>Mapper graphs</strong> — a method that turns a point cloud into a simple network of overlapping clusters that people can look at and color by labels, making shape easier to inspect by eye.</li>
+            <li><strong>Topology of network weights and filters</strong> — finding that the learned filters of image networks are organized in shapes similar to those found in natural image patches.</li>
             <li><strong>Topology through the layers</strong> — showing that deep networks gradually simplify the shape of the data as it moves toward the output.</li>
             <li><strong>Representation similarity measures</strong> — non-topological ways of comparing representations between layers or models, useful as a reference point.</li>
             <li><strong>Critical studies</strong> — careful work asking when persistent homology actually helps on a task and when simpler features do just as well.</li>
@@ -124,7 +124,7 @@
             <li>Which choices in the analysis (layer, distance, sampling) change the topology, and which leave it alone?</li>
             <li>Does a model whose representation matches the data's true shape generalize or resist attacks better? (see OP-02)</li>
             <li>When topology changes under distribution shift, can we say <em>which</em> concept broke? (see OP-04)</li>
-            <li>Do quantum models, whose states live in a very different space, organise concepts with different shapes? (see OP-08)</li>
+            <li>Do quantum models, whose states live in a very different space, organize concepts with different shapes? (see OP-08)</li>
           </ol>
 
           <p>This problem is the interpretive layer underneath the other topology questions: it decides whether a topological warning (OP-04) or a topological training target (OP-06) is actually about something the model knows.</p>

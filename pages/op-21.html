@@ -61,7 +61,7 @@
           <h2>Why does it matter?</h2>
           <ul>
             <li><strong>Reliability.</strong> If an answer flips under harmless rephrasing, the model never really "knew" it. Being able to spot such fragile answers is a direct route to the uncertainty signals in OP-19.</li>
-            <li><strong>Security.</strong> Attacks such as jailbreaks and prompt injection are, at heart, small input changes that cause big behaviour changes. Understanding the mechanism of a flip helps defend against deliberate ones (see OP-20).</li>
+            <li><strong>Security.</strong> Attacks such as jailbreaks and prompt injection are, at heart, small input changes that cause big behavior changes. Understanding the mechanism of a flip helps defend against deliberate ones (see OP-20).</li>
             <li><strong>Evaluation.</strong> Benchmark scores that move with formatting are not measuring what they claim. Knowing why helps build fairer tests.</li>
             <li><strong>Trust in explanations.</strong> A model's written reasoning does not always reflect what actually drove its answer. Looking inside is one way to check.</li>
           </ul>
@@ -70,8 +70,8 @@
           <p>Imagine running two nearly identical prompts through the model side by side and recording its internal state at every layer. In the early layers the two runs should look almost the same — they are reading almost the same text. At some point they may separate. If they separate early and stay apart, the model is treating the wording difference as meaningful. If they stay together until a specific layer and then split sharply, that layer is where the "decision" is being made.</p>
 
           <figure class="opa-fig">
-            <img src="../assets/op/op21-fig1.png" alt="Two prompts, Prompt A and Prompt B with one word changed, pass through six model layers. Their paths, grey and orange, run close together through layers 1 to 3, then split at a divergence point at layer 4. The grey path ends at Answer: Yes and the orange path at Answer: No." loading="lazy">
-            <figcaption><strong>Figure 1. Finding where two runs part ways.</strong> The grey and orange dotted lines are the model's internal state for two prompts that differ by one word. Through the first layers they stay close — the model is treating the two prompts as the same question. At the orange <em>divergence point</em> they split, and they end in opposite answers. The goal of this problem is to find such points, understand what happens there, and learn to predict them.</figcaption>
+            <img src="../assets/op/op21-fig1.png" alt="Two prompts, Prompt A and Prompt B with one word changed, pass through six model layers. Their paths, gray and orange, run close together through layers 1 to 3, then split at a divergence point at layer 4. The gray path ends at Answer: Yes and the orange path at Answer: No." loading="lazy">
+            <figcaption><strong>Figure 1. Finding where two runs part ways.</strong> The gray and orange dotted lines are the model's internal state for two prompts that differ by one word. Through the first layers they stay close — the model is treating the two prompts as the same question. At the orange <em>divergence point</em> they split, and they end in opposite answers. The goal of this problem is to find such points, understand what happens there, and learn to predict them.</figcaption>
           </figure>
 
           <p>A useful answer would let us say things like: <em>"the flip happens around layer 18, it is carried mostly by these attention heads, and it moves the state along a direction that also separates confident from unconfident answers."</em> Better still, it would let us look at a <strong>single</strong> prompt and say how close it is to such a tipping point — before anyone tries a rephrasing.</p>
@@ -94,11 +94,11 @@
             <li><strong>Measuring prompt sensitivity.</strong> Studies that show how much benchmark accuracy moves with formatting, option order or phrasing — establishing the problem, but from the outside.</li>
             <li><strong>Reading predictions layer by layer</strong> ("logit lens" and "tuned lens"): decoding what answer the model would give if it stopped at each layer, to see when the final answer forms.</li>
             <li><strong>Causal tracing and activation patching</strong>: running a clean and a changed prompt, then copying internal states from one run into the other, to find which layers and positions actually carry the decisive information.</li>
-            <li><strong>Circuit analysis</strong>: reverse-engineering small groups of attention heads and neurons that implement a specific behaviour.</li>
-            <li><strong>Representation directions</strong>: finding directions in activation space linked to concepts such as truthfulness or refusal, and showing that pushing along them changes behaviour.</li>
+            <li><strong>Circuit analysis</strong>: reverse-engineering small groups of attention heads and neurons that implement a specific behavior.</li>
+            <li><strong>Representation directions</strong>: finding directions in activation space linked to concepts such as truthfulness or refusal, and showing that pushing along them changes behavior.</li>
             <li><strong>Comparing representations</strong> with similarity measures, to check whether two inputs or two models encode things alike.</li>
           </ul>
-          <p>These tools are powerful but mostly used to explain one behaviour on one task. Less work uses them systematically on <em>flips</em> — pairs of near-identical prompts with different answers — and asks whether the flips share a common internal signature.</p>
+          <p>These tools are powerful but mostly used to explain one behavior on one task. Less work uses them systematically on <em>flips</em> — pairs of near-identical prompts with different answers — and asks whether the flips share a common internal signature.</p>
 
           <h2>How I would approach it</h2>
           <ol>

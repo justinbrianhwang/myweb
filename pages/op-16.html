@@ -49,19 +49,19 @@
 
         <section class="opa-abstract">
           <h2>In one sentence</h2>
-          <p>BB84 is provably secure on paper — but real lasers, fibres and detectors are imperfect, so <strong>how far can a practical system drift from the ideal before its key becomes unreliable</strong>, and can we tell ordinary noise apart from an eavesdropper?</p>
+          <p>BB84 is provably secure on paper — but real lasers, fibers and detectors are imperfect, so <strong>how far can a practical system drift from the ideal before its key becomes unreliable</strong>, and can we tell ordinary noise apart from an eavesdropper?</p>
         </section>
 
         <div class="opa-body">
           <h2>What is the problem?</h2>
-          <p>A bank in Vancouver wants to send encryption keys to its data centre across the city. Instead of trusting mathematics that a future computer might break, it uses <em>quantum key distribution</em> (QKD): single particles of light sent down an optical fibre. The famous promise of QKD is that anyone who tries to listen in will inevitably disturb the light, and the bank will notice.</p>
-          <p>One morning the system reports that its error rate has crept up from 2% to 5%. Is that a spy? Or is it just that the fibre runs past a construction site, the building got colder overnight, and one of the detectors is getting old? The security of the whole system rests on how that question is handled.</p>
-          <p>The oldest and best-known QKD protocol is <strong>BB84</strong>, proposed by Charles Bennett and Gilles Brassard in 1984. Its security has been proved rigorously — <em>for an idealised system</em>. This open problem asks how far real BB84 can deviate from those ideal assumptions before either its security or its ability to produce useful key breaks down, and whether a rising error rate can be read as hardware imperfection or as an attack.</p>
+          <p>A bank in Vancouver wants to send encryption keys to its data center across the city. Instead of trusting mathematics that a future computer might break, it uses <em>quantum key distribution</em> (QKD): single particles of light sent down an optical fiber. The famous promise of QKD is that anyone who tries to listen in will inevitably disturb the light, and the bank will notice.</p>
+          <p>One morning the system reports that its error rate has crept up from 2% to 5%. Is that a spy? Or is it just that the fiber runs past a construction site, the building got colder overnight, and one of the detectors is getting old? The security of the whole system rests on how that question is handled.</p>
+          <p>The oldest and best-known QKD protocol is <strong>BB84</strong>, proposed by Charles Bennett and Gilles Brassard in 1984. Its security has been proved rigorously — <em>for an idealized system</em>. This open problem asks how far real BB84 can deviate from those ideal assumptions before either its security or its ability to produce useful key breaks down, and whether a rising error rate can be read as hardware imperfection or as an attack.</p>
 
           <h2>How BB84 works, in plain words</h2>
-          <p>Two people, traditionally called <strong>Alice</strong> (sender) and <strong>Bob</strong> (receiver), want to share a random secret key. They have a quantum channel (for example a fibre carrying single photons) and an ordinary public channel (for example the internet), which anyone can read but nobody can tamper with — in practice this is ensured by message authentication.</p>
+          <p>Two people, traditionally called <strong>Alice</strong> (sender) and <strong>Bob</strong> (receiver), want to share a random secret key. They have a quantum channel (for example a fiber carrying single photons) and an ordinary public channel (for example the internet), which anyone can read but nobody can tamper with — in practice this is ensured by message authentication.</p>
           <ol>
-            <li><strong>Alice picks random bits and random bases.</strong> For each photon she chooses a bit (0 or 1) and one of two "bases" for encoding it in the photon's polarisation: the <em>rectilinear</em> basis (+), where 0 is vertical and 1 is horizontal, or the <em>diagonal</em> basis (×), where 0 and 1 are the two diagonals.</li>
+            <li><strong>Alice picks random bits and random bases.</strong> For each photon she chooses a bit (0 or 1) and one of two "bases" for encoding it in the photon's polarization: the <em>rectilinear</em> basis (+), where 0 is vertical and 1 is horizontal, or the <em>diagonal</em> basis (×), where 0 and 1 are the two diagonals.</li>
             <li><strong>Bob measures in a random basis.</strong> He does not know Alice's basis, so he guesses + or × for each photon. If he guesses the same basis, he reads Alice's bit correctly. If he guesses the other basis, quantum mechanics gives him a completely random result.</li>
             <li><strong>Sifting.</strong> Afterwards, over the public channel, they announce <em>which basis</em> they used for each photon — never the bit values. They keep only the positions where the bases matched (about half) and throw the rest away. What is left is the <em>sifted key</em>.</li>
             <li><strong>Estimating the error rate.</strong> They publicly compare a random sample of the sifted bits. The fraction that disagree is the <strong>quantum bit error rate (QBER)</strong>. Those sample bits are then discarded.</li>
@@ -70,7 +70,7 @@
           </ol>
 
           <figure class="opa-fig">
-            <img src="../assets/op/op16-fig1.png" alt="BB84 overview. Alice chooses random bits and random bases and sends polarised photons (vertical, diagonal, horizontal, anti-diagonal arrows) along a fibre to Bob, who measures in random bases; an orange eavesdropper Eve taps the fibre. A table of six positions shows Alice's bits 0 1 1 0 1 0, Alice's bases + x + x x +, Bob's bases + + + x x x, keep yes no yes yes yes no, sifted key 0 - 1 0 1 -. Below, a pipeline: sifting, estimate QBER, error correction, privacy amplification, secret key." loading="lazy">
+            <img src="../assets/op/op16-fig1.png" alt="BB84 overview. Alice chooses random bits and random bases and sends polarised photons (vertical, diagonal, horizontal, anti-diagonal arrows) along a fiber to Bob, who measures in random bases; an orange eavesdropper Eve taps the fiber. A table of six positions shows Alice's bits 0 1 1 0 1 0, Alice's bases + x + x x +, Bob's bases + + + x x x, keep yes no yes yes yes no, sifted key 0 - 1 0 1 -. Below, a pipeline: sifting, estimate QBER, error correction, privacy amplification, secret key." loading="lazy">
             <figcaption><strong>Figure 1. BB84 from photons to key.</strong> Read the table column by column. Where Alice's and Bob's bases match, the bit is kept; where they differ (columns 2 and 6), it is thrown away, because Bob's result there is random. The bottom row is what remains to be processed. Every step in the strip below costs some bits, so the final secret key is much shorter than the number of photons sent.</figcaption>
           </figure>
 
@@ -83,28 +83,28 @@
 
           <h2>The key idea: noise is paid for, imperfections can be exploited</h2>
           <p>It helps to separate two very different things that real hardware does.</p>
-          <p><strong>Noise</strong> raises the QBER: detector dark counts (clicks with no photon), small misalignments in the polarisation optics, polarisation drifting in the fibre as temperature changes. Standard security proofs handle this in a conservative way: they <em>assume every error might be caused by Eve</em>. So noise does not break security; it costs key. More errors mean more information leaked during error correction and more compression during privacy amplification. With the standard one-way post-processing, once the QBER passes roughly <strong>11%</strong>, nothing is left and Alice and Bob must abort.</p>
+          <p><strong>Noise</strong> raises the QBER: detector dark counts (clicks with no photon), small misalignments in the polarization optics, polarization drifting in the fiber as temperature changes. Standard security proofs handle this in a conservative way: they <em>assume every error might be caused by Eve</em>. So noise does not break security; it costs key. More errors mean more information leaked during error correction and more compression during privacy amplification. With the standard one-way post-processing, once the QBER passes roughly <strong>11%</strong>, nothing is left and Alice and Bob must abort.</p>
 
           <figure class="opa-fig">
-            <img src="../assets/op/op16-fig2.png" alt="A stacked bar labelled Measured QBER on an axis from 0 to 15 percent. Grey segments from bottom: detector dark counts, imperfect optics or misalignment, channel fluctuation. An orange segment on top is labelled eavesdropper with a question mark. A dashed red line near 11 percent is labelled abort threshold (about 11%). A note reads: same number, different causes — is it noise or an attack?" loading="lazy">
-            <figcaption><strong>Figure 2. One number, many causes.</strong> Alice and Bob only see the total height of the bar. The grey parts are ordinary hardware and channel noise; the orange part is whatever an eavesdropper adds. Security proofs treat the whole bar as if it might be orange, which is safe but wasteful: every bit of honest noise eats into the key. (Segment sizes are illustrative; the ~11% figure applies to the standard BB84 analysis with one-way post-processing.)</figcaption>
+            <img src="../assets/op/op16-fig2.png" alt="A stacked bar labeled Measured QBER on an axis from 0 to 15 percent. Gray segments from bottom: detector dark counts, imperfect optics or misalignment, channel fluctuation. An orange segment on top is labeled eavesdropper with a question mark. A dashed red line near 11 percent is labeled abort threshold (about 11%). A note reads: same number, different causes — is it noise or an attack?" loading="lazy">
+            <figcaption><strong>Figure 2. One number, many causes.</strong> Alice and Bob only see the total height of the bar. The gray parts are ordinary hardware and channel noise; the orange part is whatever an eavesdropper adds. Security proofs treat the whole bar as if it might be orange, which is safe but wasteful: every bit of honest noise eats into the key. (Segment sizes are illustrative; the ~11% figure applies to the standard BB84 analysis with one-way post-processing.)</figcaption>
           </figure>
 
           <p><strong>Imperfections</strong> are more dangerous, because they can break the assumptions of the proof without raising the QBER at all:</p>
           <ul>
             <li><strong>Not really single photons.</strong> Most systems use very weak laser pulses. Occasionally a pulse contains two or more photons, and Eve can in principle split off one of them and keep it, learning the bit without disturbing the others (the <em>photon-number-splitting</em> attack).</li>
-            <li><strong>Loss.</strong> Fibres absorb light — after tens of kilometres most photons never arrive. Loss alone does not cause errors, but it shrinks the key rate and gives Eve room to hide her attacks among the missing photons.</li>
+            <li><strong>Loss.</strong> Fibers absorb light — after tens of kilometers most photons never arrive. Loss alone does not cause errors, but it shrinks the key rate and gives Eve room to hide her attacks among the missing photons.</li>
             <li><strong>Detector quirks.</strong> Real single-photon detectors have limited efficiency, dead times and, in some designs, can be "blinded" with bright light and then controlled from outside. Demonstrated attacks on commercial systems used exactly this — and they produced no unusual QBER.</li>
-            <li><strong>Imperfect state preparation.</strong> If Alice's polarisations are slightly off, or the basis choice leaks through timing or other side channels, the clean picture of "two perfectly random bases" no longer holds.</li>
+            <li><strong>Imperfect state preparation.</strong> If Alice's polarizations are slightly off, or the basis choice leaks through timing or other side channels, the clean picture of "two perfectly random bases" no longer holds.</li>
             <li><strong>Finite key.</strong> Proofs often assume a huge number of photons. Real systems work in blocks of finite size, so the QBER estimate itself has statistical uncertainty, which has to be paid for with extra compression.</li>
           </ul>
 
           <h2>Why is it hard?</h2>
           <ul>
             <li><strong>Many small deviations add up.</strong> Each imperfection may be manageable alone; together they interact in ways that are hard to bound.</li>
-            <li><strong>Models of the hardware are never complete.</strong> A security proof can only cover the imperfections someone thought to include. Attacks tend to come from the ones nobody modelled.</li>
+            <li><strong>Models of the hardware are never complete.</strong> A security proof can only cover the imperfections someone thought to include. Attacks tend to come from the ones nobody modeled.</li>
             <li><strong>The QBER is one number.</strong> It cannot, on its own, say <em>why</em> errors are happening. Separating noise from attack needs more information than the standard protocol collects.</li>
-            <li><strong>Channels change.</strong> Real fibre and free-space links fluctuate with temperature, vibration and weather, so the "normal" noise level is itself a moving target (see OP-17).</li>
+            <li><strong>Channels change.</strong> Real fiber and free-space links fluctuate with temperature, vibration and weather, so the "normal" noise level is itself a moving target (see OP-17).</li>
             <li><strong>Being too conservative also fails.</strong> Treating every fluctuation as an attack keeps the system secure but may leave it producing almost no key, which makes it useless.</li>
           </ul>
 

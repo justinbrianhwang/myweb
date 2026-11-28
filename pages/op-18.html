@@ -54,15 +54,15 @@
 
         <div class="opa-body">
           <h2>What is the problem?</h2>
-          <p>Imagine a bank with two data centres across a city, linked by a QKD system running BB84. A common misconception is that the bank's data is now "sent quantumly." It is not. The quantum link does one thing: it slowly produces a stream of shared secret bits at both ends. The bank's transactions still travel over normal fibre, encrypted with those bits.</p>
+          <p>Imagine a bank with two data centers across a city, linked by a QKD system running BB84. A common misconception is that the bank's data is now "sent quantumly." It is not. The quantum link does one thing: it slowly produces a stream of shared secret bits at both ends. The bank's transactions still travel over normal fiber, encrypted with those bits.</p>
           <p>A quick reminder of what BB84 gives you. Alice sends single photons in randomly chosen <em>bases</em>; Bob measures in random bases; over a public channel they keep only the positions where the bases matched (<strong>sifting</strong>). They check a sample for errors — the <strong>quantum bit error rate (QBER)</strong> — because an eavesdropper who measures the photons inevitably causes errors. If the error rate is low enough, they fix the remaining errors and apply <strong>privacy amplification</strong>, a compression step that removes any partial knowledge an eavesdropper could have. Out comes a key that is secret by the laws of physics, not by an assumption that some maths problem is hard.</p>
-          <p>The catch is that this key arrives slowly — typically thousands to perhaps millions of secret bits per second on a good metropolitan link, falling steeply with distance — while the data link next to it may carry billions of bits per second. And a single QKD link only reaches roughly a hundred kilometres of fibre before losses make the key rate too small.</p>
+          <p>The catch is that this key arrives slowly — typically thousands to perhaps millions of secret bits per second on a good metropolitan link, falling steeply with distance — while the data link next to it may carry billions of bits per second. And a single QKD link only reaches roughly a hundred kilometers of fiber before losses make the key rate too small.</p>
           <p>So the real system is a <strong>hybrid</strong>: a quantum layer that makes keys, a classical layer that carries data, and something in between that decides who gets which key, when. This open problem asks: <em>how should the quantum and classical parts be designed as one reliable system, rather than bolted together?</em></p>
 
           <h2>Why does it matter?</h2>
           <ul>
             <li><strong>Keys are a scarce, perishable resource.</strong> If the key rate cannot keep up with demand, either traffic waits, or keys get reused for longer than intended, quietly weakening the security that QKD was meant to provide.</li>
-            <li><strong>QKD links go down.</strong> Fibre gets bent, detectors need recalibration, an attack drives the error rate up. A network that simply stops when the quantum link stops will never be deployed in anything critical.</li>
+            <li><strong>QKD links go down.</strong> Fiber gets bent, detectors need recalibration, an attack drives the error rate up. A network that simply stops when the quantum link stops will never be deployed in anything critical.</li>
             <li><strong>Real deployments are networks, not links.</strong> Test beds in Europe, Japan and China already connect many sites through intermediate nodes. The question of how to share keys fairly and efficiently across many users is unavoidable.</li>
             <li><strong>The security story must hold end to end.</strong> A perfect quantum key is worthless if the node that relays it, the software that hands it out or the classical protocol that uses it is the weak point.</li>
           </ul>
@@ -71,8 +71,8 @@
           <p>Most proposals converge on a layered picture: QKD links at the bottom, a <strong>key management layer</strong> in the middle that stores and routes keys, and applications on top that request keys through a standard interface — much like they would ask an operating system for random numbers.</p>
 
           <figure class="opa-fig">
-            <img src="../assets/op/op18-fig1.png" alt="Hybrid network: Site A, a trusted node and Site B in a row, each pair connected by an orange QKD link and a grey classical fibre carrying data. Each site has a key store. A key management layer above connects to all key stores, and users and applications above it send key requests." loading="lazy">
-            <figcaption><strong>Figure 1. A hybrid QKD network.</strong> Every hop has two links side by side: the orange QKD link makes keys, the grey classical fibre carries the data. Keys pile up in the <em>key stores</em> at each site. The key management layer decides which application gets which key. Note the middle building: Site A and Site B never share a direct QKD link, so the <em>trusted node</em> has to relay the key between them.</figcaption>
+            <img src="../assets/op/op18-fig1.png" alt="Hybrid network: Site A, a trusted node and Site B in a row, each pair connected by an orange QKD link and a gray classical fiber carrying data. Each site has a key store. A key management layer above connects to all key stores, and users and applications above it send key requests." loading="lazy">
+            <figcaption><strong>Figure 1. A hybrid QKD network.</strong> Every hop has two links side by side: the orange QKD link makes keys, the gray classical fiber carries the data. Keys pile up in the <em>key stores</em> at each site. The key management layer decides which application gets which key. Note the middle building: Site A and Site B never share a direct QKD link, so the <em>trusted node</em> has to relay the key between them.</figcaption>
           </figure>
 
           <p>Within that picture, a good design has to answer four practical questions:</p>
@@ -83,7 +83,7 @@
                 <tr><td><strong>Rate matching</strong></td><td>How do we use a slow key stream to protect a fast data stream — and how often must keys be refreshed?</td></tr>
                 <tr><td><strong>Graceful degradation</strong></td><td>When the key store runs low or a link fails, what does the system do — wait, reroute, or fall back to a classical method?</td></tr>
                 <tr><td><strong>Key allocation</strong></td><td>With many users and links sharing limited key, who gets served first, and how do we avoid one user starving the others?</td></tr>
-                <tr><td><strong>Joint optimisation</strong></td><td>Can latency, throughput and security level be traded off together, rather than tuned separately by different teams?</td></tr>
+                <tr><td><strong>Joint optimization</strong></td><td>Can latency, throughput and security level be traded off together, rather than tuned separately by different teams?</td></tr>
               </tbody>
             </table>
           </div>
@@ -99,7 +99,7 @@
           <h2>Why is it hard?</h2>
           <ul>
             <li><strong>Two very different time scales.</strong> Key generation depends on physics and changes slowly and unpredictably; data traffic is bursty and changes in milliseconds. Buffering bridges the gap, but buffers can run dry exactly when traffic peaks.</li>
-            <li><strong>Sharing fibre hurts the quantum signal.</strong> Running the quantum channel on the same fibre as strong classical data saves money, but light from the data channel scatters into the quantum channel and raises the error rate (and therefore lowers the key rate).</li>
+            <li><strong>Sharing fiber hurts the quantum signal.</strong> Running the quantum channel on the same fiber as strong classical data saves money, but light from the data channel scatters into the quantum channel and raises the error rate (and therefore lowers the key rate).</li>
             <li><strong>Trust is not uniform.</strong> Every trusted node, key store and management server becomes a target. Routing must consider not just capacity but which nodes a given user is willing to trust.</li>
             <li><strong>Fallbacks can become backdoors.</strong> If the system silently drops to a weaker classical method when QKD fails, an attacker only needs to disrupt the quantum link to force the downgrade.</li>
             <li><strong>Few shared benchmarks.</strong> There is no widely agreed way to measure "how good" a hybrid design is end to end, which makes different proposals hard to compare.</li>
@@ -108,8 +108,8 @@
           <h2>What has been tried so far</h2>
           <ul>
             <li><strong>Network test beds.</strong> Large field trials — including networks in Vienna, Tokyo and a space-to-ground network in China — have shown that multi-node QKD with trusted relays and key management can run for long periods.</li>
-            <li><strong>Standards for key delivery.</strong> Bodies such as ETSI and ITU-T have defined how applications request keys from a QKD system and how QKD networks are layered, which makes key management a recognisable component rather than a custom script.</li>
-            <li><strong>Coexistence on one fibre.</strong> Experiments have shown that QKD can share fibre with high-speed classical data, by choosing wavelengths and filters carefully to keep scattered light out of the quantum channel.</li>
+            <li><strong>Standards for key delivery.</strong> Bodies such as ETSI and ITU-T have defined how applications request keys from a QKD system and how QKD networks are layered, which makes key management a recognizable component rather than a custom script.</li>
+            <li><strong>Coexistence on one fiber.</strong> Experiments have shown that QKD can share fiber with high-speed classical data, by choosing wavelengths and filters carefully to keep scattered light out of the quantum channel.</li>
             <li><strong>Routing and resource allocation.</strong> Research on routing keys through networks of trusted nodes, and on scheduling key resources across many users, often borrowing ideas from classical traffic engineering.</li>
             <li><strong>Hybrid with post-quantum cryptography.</strong> Combining QKD keys with keys from post-quantum algorithms, so that an attacker must break both to read the traffic.</li>
           </ul>
@@ -119,7 +119,7 @@
           <ol>
             <li>Build a network simulator with a few QKD links of different, time-varying key rates and a realistic mix of classical traffic, including bursts.</li>
             <li>Model each link's key supply using the kind of adaptive link from OP-17, and each application's demand with a security class (one-time-pad, frequent re-keying, or best effort).</li>
-            <li>Compare simple policies — first come first served, fixed quotas, priority by security class — against an optimiser that uses short-term forecasts of supply and demand.</li>
+            <li>Compare simple policies — first come first served, fixed quotas, priority by security class — against an optimizer that uses short-term forecasts of supply and demand.</li>
             <li>Measure what matters to an operator: how often traffic waits for key, how often it falls back, how long keys stay in use, and how much each node must be trusted.</li>
             <li>Add disruption: cut a QKD link or raise its error rate, and check that the system degrades in a controlled way and never downgrades security silently.</li>
           </ol>
@@ -150,7 +150,7 @@
             <li>Patel et al. — Coexistence of High-Bit-Rate Quantum Key Distribution and Data on Optical Fiber (Physical Review X 2012)</li>
             <li>Diamanti, Lo, Qi &amp; Yuan — Practical Challenges in Quantum Key Distribution (npj Quantum Information 2016)</li>
             <li>Pirandola et al. — Advances in Quantum Cryptography (Advances in Optics and Photonics 2020)</li>
-            <li>Chen et al. — An Integrated Space-to-Ground Quantum Communication Network over 4,600 Kilometres (Nature 2021)</li>
+            <li>Chen et al. — An Integrated Space-to-Ground Quantum Communication Network over 4,600 Kilometers (Nature 2021)</li>
           </ul>
           <nav class="opa-nav">
             <a href="op-17.html"><small>Previous</small>OP-17 · Can BB84 dynamically adapt to changing channel conditions?</a>

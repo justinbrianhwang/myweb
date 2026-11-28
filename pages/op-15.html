@@ -54,8 +54,8 @@
 
         <div class="opa-body">
           <h2>What is the problem?</h2>
-          <p>A self-driving car is heading down a motorway in a winter storm. Slush from the truck in front splashes across the front camera, leaving a brown smear over half the image. Heavy snowflakes create thousands of false points in the LiDAR. Between tall buildings, the GPS position jumps by fifteen metres. The radar, meanwhile, works almost perfectly.</p>
-          <p>The car's perception system combines all of these sensors — this is called <em>sensor fusion</em>. Each sensor has different strengths: cameras see colour and read signs, LiDAR measures precise 3D shape, radar measures distance and speed and copes well with rain and fog, GPS says roughly where on the map the car is. Together they are much better than any one alone.</p>
+          <p>A self-driving car is heading down a motorway in a winter storm. Slush from the truck in front splashes across the front camera, leaving a brown smear over half the image. Heavy snowflakes create thousands of false points in the LiDAR. Between tall buildings, the GPS position jumps by fifteen meters. The radar, meanwhile, works almost perfectly.</p>
+          <p>The car's perception system combines all of these sensors — this is called <em>sensor fusion</em>. Each sensor has different strengths: cameras see color and read signs, LiDAR measures precise 3D shape, radar measures distance and speed and copes well with rain and fog, GPS says roughly where on the map the car is. Together they are much better than any one alone.</p>
           <p>The catch is that many fusion systems are built and trained as if <strong>every sensor always arrives intact</strong>. They have learned to rely heavily on whichever sensor was most useful in the training data — often the camera or LiDAR. When that sensor quietly degrades, the fused output can get worse than if the bad sensor had simply been switched off. This open problem asks: <em>can the system understand which sensors are trustworthy right now — and keep driving safely when some are not?</em></p>
 
           <h2>Why does it matter?</h2>
@@ -81,9 +81,9 @@
             <table class="opa-table">
               <thead><tr><th>Evidence</th><th>The question it asks</th></tr></thead>
               <tbody>
-                <tr><td><strong>Self-check</strong></td><td>Does this sensor's data look normal on its own? (A camera image that is mostly one blurry colour; a LiDAR scan full of points floating in mid-air.)</td></tr>
+                <tr><td><strong>Self-check</strong></td><td>Does this sensor's data look normal on its own? (A camera image that is mostly one blurry color; a LiDAR scan full of points floating in mid-air.)</td></tr>
                 <tr><td><strong>Cross-check</strong></td><td>Does it agree with the other sensors? If radar and LiDAR both see a car at 30 m and the camera sees nothing there, the camera is suspicious.</td></tr>
-                <tr><td><strong>Consistency over time</strong></td><td>Does it agree with itself a moment ago? Real cars do not jump fifteen metres between frames; GPS sometimes does.</td></tr>
+                <tr><td><strong>Consistency over time</strong></td><td>Does it agree with itself a moment ago? Real cars do not jump fifteen meters between frames; GPS sometimes does.</td></tr>
                 <tr><td><strong>Context</strong></td><td>Is it raining, dark, inside a tunnel? Some sensors are known to struggle in some conditions.</td></tr>
               </tbody>
             </table>
@@ -107,7 +107,7 @@
             <li><strong>Adverse-weather datasets</strong> — recordings in fog, snow and rain, which make it possible to test fusion in the conditions that actually break it.</li>
             <li><strong>Redundancy by design</strong> — duplicate sensors and independent fallback systems. Effective but expensive.</li>
           </ul>
-          <p>What I think is still missing is a monitor that estimates sensor trust <em>live, without labels</em>, explains which sensor it distrusts and why, and hands that information to the rest of the car so its behaviour can change too (OP-12).</p>
+          <p>What I think is still missing is a monitor that estimates sensor trust <em>live, without labels</em>, explains which sensor it distrusts and why, and hands that information to the rest of the car so its behavior can change too (OP-12).</p>
 
           <h2>How I would approach it</h2>
           <ol>
@@ -127,7 +127,7 @@
             <li>Could vehicles in a fleet share what sensor faults look like, without sharing raw data? (see OP-10, OP-11)</li>
           </ol>
 
-          <p>This problem feeds into deciding when not to trust oneself (OP-12) and recognising never-seen situations (OP-13): a car cannot judge its own understanding if it does not know which of its senses are working.</p>
+          <p>This problem feeds into deciding when not to trust oneself (OP-12) and recognizing never-seen situations (OP-13): a car cannot judge its own understanding if it does not know which of its senses are working.</p>
 
           <section class="opa-collab">
             <h2>Work on this together</h2>

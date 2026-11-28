@@ -65,7 +65,7 @@
             <li>a car can slow down or hand control back to the driver,</li>
             <li>a medical tool can ask for a second reading instead of giving a confident wrong diagnosis,</li>
             <li>a language model can say <em>"I'm not sure"</em> instead of inventing an answer,</li>
-            <li>an operator moving a model to a new hospital, city or season can find out whether it still works there before labelled data arrives.</li>
+            <li>an operator moving a model to a new hospital, city or season can find out whether it still works there before labeled data arrives.</li>
           </ul>
 
           <h2>What would a solution look like?</h2>
@@ -73,7 +73,7 @@
 
           <figure class="opa-fig">
             <img src="../assets/op/op01-fig1.png" alt="Architecture: an input passes through four network layers to a prediction. Dashed lines from the intermediate layers feed a Failure Monitor with four modules — uncertainty, feature geometry, topology, layer disagreement — which combine into a failure risk score that leads to trust, abstain, ask a human, or safe fallback." loading="lazy">
-            <figcaption><strong>Figure 1. The failure monitor.</strong> The grey path is the ordinary model: input → layers → prediction. The orange path is the monitor. Notice that it taps the <em>middle</em> layers, not only the output — the hope is that trouble shows up inside the network before it shows up in the answer. The four boxes are different kinds of evidence (explained below), combined into one risk score that drives the final decision.</figcaption>
+            <figcaption><strong>Figure 1. The failure monitor.</strong> The gray path is the ordinary model: input → layers → prediction. The orange path is the monitor. Notice that it taps the <em>middle</em> layers, not only the output — the hope is that trouble shows up inside the network before it shows up in the answer. The four boxes are different kinds of evidence (explained below), combined into one risk score that drives the final decision.</figcaption>
           </figure>
 
           <p>Each box in the monitor is a different way of asking <em>"is the model on solid ground here?"</em></p>
@@ -116,9 +116,9 @@
             <li><strong>Using the model's own confidence</strong>, and correcting it so that "90% sure" really means right about 90% of the time (calibration). Simple and fast, but it can stay confidently wrong when the data changes.</li>
             <li><strong>Asking many models</strong> (ensembles) or the same model many times with random variations (MC dropout) and checking whether they agree. Works better under change, but costs more computation.</li>
             <li><strong>Letting the model abstain</strong> on the inputs it is least sure about, and measuring how errors fall as it skips more (selective prediction).</li>
-            <li><strong>Training a separate network</strong> to predict when the main one is wrong. Powerful, but it learns from past mistakes and may not recognise new kinds of failure.</li>
+            <li><strong>Training a separate network</strong> to predict when the main one is wrong. Powerful, but it learns from past mistakes and may not recognize new kinds of failure.</li>
             <li><strong>Measuring distance inside the network</strong> to tell whether an input looks like the training data. Good at spotting very different inputs, less precise for individual errors.</li>
-            <li><strong>Estimating accuracy on a new dataset</strong> from unlabelled data alone. Useful for deployment, but depends on assumptions about how the data changed.</li>
+            <li><strong>Estimating accuracy on a new dataset</strong> from unlabeled data alone. Useful for deployment, but depends on assumptions about how the data changed.</li>
           </ul>
           <p>Most of these read the signal from the <strong>output</strong> or from a <strong>distance</strong>. Fewer look at how the <em>shape</em> of the representation changes as the model approaches failure — which is where I think a lot of the missing information is.</p>
 
@@ -140,7 +140,7 @@
             <li>How would this work when data cannot be collected in one place, as in federated learning? (see OP-10, OP-11)</li>
           </ol>
 
-          <p>This problem also sits underneath several others on the list: recognising never-seen situations in autonomous driving (OP-13), spotting unreliable clients in federated learning (OP-11), and LLMs knowing when they are wrong (OP-19).</p>
+          <p>This problem also sits underneath several others on the list: recognizing never-seen situations in autonomous driving (OP-13), spotting unreliable clients in federated learning (OP-11), and LLMs knowing when they are wrong (OP-19).</p>
 
           <section class="opa-collab">
             <h2>Work on this together</h2>

@@ -59,7 +59,7 @@
           <p>This open problem is about closing that loop. Not just <em>"how uncertain am I?"</em> but <em>"given how much I trust myself right now, what is the right way to behave?"</em> — and doing that in real time, on a moving vehicle, without either freezing up at every shadow or ignoring real danger.</p>
 
           <h2>Why does it matter?</h2>
-          <p>Humans do this all the time without thinking about it. A good driver who suddenly cannot see well does not keep driving as if the road were clear. They slow down, increase the gap to the car in front, turn the wipers on, and, if it gets bad enough, pull over. The <em>uncertainty</em> is not the useful part; the <em>change in behaviour</em> is.</p>
+          <p>Humans do this all the time without thinking about it. A good driver who suddenly cannot see well does not keep driving as if the road were clear. They slow down, increase the gap to the car in front, turn the wipers on, and, if it gets bad enough, pull over. The <em>uncertainty</em> is not the useful part; the <em>change in behavior</em> is.</p>
           <ul>
             <li><strong>Safety.</strong> Most dangerous moments for an autonomous system are moments when it is wrong <em>and does not act like it might be wrong</em>.</li>
             <li><strong>Handover.</strong> Cars with a human safety driver, and robots with a remote operator, need to know <em>when</em> to ask for help — early enough that the human can actually take over.</li>
@@ -72,7 +72,7 @@
 
           <figure class="opa-fig">
             <img src="../assets/op/op12-fig1.png" alt="Pipeline: Sensors feed Perception and Planning. An orange arrow goes to a Self-Trust Check with three inputs — uncertainty, whether the situation is familiar, and sensor health. Its output selects one of four modes on a scale from high to low trust: normal driving, cautious (slow down, keep distance), ask for help or hand over, and minimal-risk stop." loading="lazy">
-            <figcaption><strong>Figure 1. From uncertainty to action.</strong> The grey path is the usual stack: sensors, then perception and planning. The orange part is what this problem adds. The self-trust check does not just report a number — it selects a behaviour. As trust falls, the vehicle moves down the ladder of modes, from normal driving to a minimal-risk stop, instead of jumping straight from "fine" to "emergency".</figcaption>
+            <figcaption><strong>Figure 1. From uncertainty to action.</strong> The gray path is the usual stack: sensors, then perception and planning. The orange part is what this problem adds. The self-trust check does not just report a number — it selects a behavior. As trust falls, the vehicle moves down the ladder of modes, from normal driving to a minimal-risk stop, instead of jumping straight from "fine" to "emergency".</figcaption>
           </figure>
 
           <p>Three ingredients make this different from simply thresholding an uncertainty score:</p>
@@ -81,7 +81,7 @@
               <thead><tr><th>Ingredient</th><th>What it means in practice</th></tr></thead>
               <tbody>
                 <tr><td><strong>Several kinds of evidence</strong></td><td>Model uncertainty, "have I seen a situation like this before?" (OP-13) and "are my sensors healthy?" (OP-15) are different questions and can fail independently.</td></tr>
-                <tr><td><strong>Graded responses</strong></td><td>Not a single on/off alarm, but a ladder of behaviours, each one cheaper to reverse than the next.</td></tr>
+                <tr><td><strong>Graded responses</strong></td><td>Not a single on/off alarm, but a ladder of behaviors, each one cheaper to reverse than the next.</td></tr>
                 <tr><td><strong>Context-aware cost</strong></td><td>Being unsure on an empty motorway is not the same as being unsure next to a school. The same trust level should lead to different actions depending on what is at stake.</td></tr>
               </tbody>
             </table>
@@ -103,7 +103,7 @@
           <h2>What has been tried so far</h2>
           <ul>
             <li><strong>Better uncertainty estimates</strong> — ensembles, MC dropout, Bayesian layers, and separating "noise in the data" from "lack of knowledge in the model". These give a better number, but do not say what to do with it.</li>
-            <li><strong>Safety envelopes and fallback controllers</strong> — a simple, verified controller (or a "minimal-risk manoeuvre" like a controlled stop) takes over when the main system leaves a safe region. Robust, but often an all-or-nothing switch.</li>
+            <li><strong>Safety envelopes and fallback controllers</strong> — a simple, verified controller (or a "minimal-risk maneuver" like a controlled stop) takes over when the main system leaves a safe region. Robust, but often an all-or-nothing switch.</li>
             <li><strong>Uncertainty-aware planning</strong> — planners that treat the world state as a probability distribution and choose actions that are safe across many possibilities. Principled, but expensive and only as good as the probabilities they are given.</li>
             <li><strong>Learning when to defer</strong> — training a model to hand difficult cases to a human or an expert system. Well studied for classification, much less for continuous control on a moving vehicle.</li>
             <li><strong>Introspective perception</strong> — training a separate component to predict when the perception system is likely to fail, from its inputs and internal state.</li>
@@ -114,7 +114,7 @@
           <ol>
             <li>Start in simulation (for example a driving simulator), where I can control exactly how hard the situation is: fog, sensor dropouts, unusual objects.</li>
             <li>Give the self-trust check separate signals for model uncertainty, novelty and sensor health, rather than one score.</li>
-            <li>Define a small ladder of behaviours — normal, cautious, request help, minimal-risk stop — and compare simple rules against a learned policy for choosing between them.</li>
+            <li>Define a small ladder of behaviors — normal, cautious, request help, minimal-risk stop — and compare simple rules against a learned policy for choosing between them.</li>
             <li>Measure two things together: how often the system ends up in a dangerous state, and how much it unnecessarily slows down or stops. A good policy should improve the first without wrecking the second.</li>
           </ol>
 
@@ -128,7 +128,7 @@
             <li>When a fleet of vehicles learns together (federated learning), can they share what made them distrust themselves without sharing raw data? (see OP-10, OP-11)</li>
           </ol>
 
-          <p>This problem is the "action" half of several others: detecting failure before it happens (OP-01), recognising never-seen situations on the road (OP-13), and staying reliable when sensors fail (OP-15).</p>
+          <p>This problem is the "action" half of several others: detecting failure before it happens (OP-01), recognizing never-seen situations on the road (OP-13), and staying reliable when sensors fail (OP-15).</p>
 
           <section class="opa-collab">
             <h2>Work on this together</h2>
